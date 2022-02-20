@@ -1,22 +1,54 @@
+import axios from 'axios';
 import { useState } from 'react';
 
-const LogIn = ({ setShowLogIn }: { setShowLogIn: any }) => {
-	const [formData, setFormData] = useState({
+type Props = {
+	setShowLogIn: Function;
+	setLoggedUser: Function;
+};
+
+const LogIn: React.FC<Props> = ({ setShowLogIn, setLoggedUser }) => {
+	const [errors, setErrors] = useState<Array<{ msg: string }>>();
+	const [logInFormData, setLogInFormData] = useState({
 		email: '',
 		password: '',
 	});
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		setFormData((prevState) => ({
+		setLogInFormData((prevState) => ({
 			...prevState,
 			[name]: value,
 		}));
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		try {
+			e.preventDefault();
+			const res: any = await axios.post('/api/log-in', logInFormData, {
+				headers: { 'Content-type': 'application/json' },
+			});
+			setLoggedUser(res.data);
+		} catch (error: any) {
+			if (!Array.isArray(error.response.data)) {
+				if (typeof error.response.data === 'object') {
+					setErrors([error.response.data]);
+				}
+				if (typeof error.response.data === 'string') {
+					setErrors([{ msg: error.response.data }]);
+				}
+			} else {
+				setErrors(error.response.data);
+			}
+		}
 	};
+
+	const errorsDisplay = errors?.map((error, index) => {
+		return (
+			<li key={index} className='error-msg'>
+				{error.msg}
+			</li>
+		);
+	});
 
 	return (
 		<div className='log-in'>
@@ -29,7 +61,7 @@ const LogIn = ({ setShowLogIn }: { setShowLogIn: any }) => {
 					name='email'
 					minLength={4}
 					maxLength={32}
-					value={formData.email}
+					value={logInFormData.email}
 					onChange={(e) => {
 						handleChange(e);
 					}}
@@ -43,13 +75,14 @@ const LogIn = ({ setShowLogIn }: { setShowLogIn: any }) => {
 					name='password'
 					minLength={8}
 					maxLength={64}
-					value={formData.password}
+					value={logInFormData.password}
 					onChange={(e) => {
 						handleChange(e);
 					}}
 					required
 					placeholder='Password'
 				/>
+				{errorsDisplay ? <ul className='error-list'>{errorsDisplay}</ul> : null}
 				<button type='submit'>Log In</button>
 			</form>
 			<h4>Don't have an account?</h4>
