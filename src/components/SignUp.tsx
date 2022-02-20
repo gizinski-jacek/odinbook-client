@@ -1,7 +1,9 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
-	const [formData, setFormData] = useState({
+	const [errors, setErrors] = useState<Array<{ msg: string }>>();
+	const [signUpFormData, setSignUpFormData] = useState({
 		first_name: '',
 		last_name: '',
 		email: '',
@@ -10,15 +12,40 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		setFormData((prevState) => ({
+		setSignUpFormData((prevState) => ({
 			...prevState,
 			[name]: value,
 		}));
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		try {
+			e.preventDefault();
+			const res = await axios.post('/api/sign-up', signUpFormData, {
+				headers: { 'Content-type': 'application/json' },
+			});
+			setShowLogIn(true);
+		} catch (error: any) {
+			if (!Array.isArray(error.response.data)) {
+				if (typeof error.response.data === 'object') {
+					setErrors([error.response.data]);
+				}
+				if (typeof error.response.data === 'string') {
+					setErrors([{ msg: error.response.data }]);
+				}
+			} else {
+				setErrors(error.response.data);
+			}
+		}
 	};
+
+	const errorsDisplay = errors?.map((error, index) => {
+		return (
+			<li key={index} className='error-msg'>
+				{error.msg}
+			</li>
+		);
+	});
 
 	return (
 		<div className='sign-up'>
@@ -33,7 +60,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 							name='first_name'
 							minLength={4}
 							maxLength={32}
-							value={formData.first_name}
+							value={signUpFormData.first_name}
 							onChange={(e) => {
 								handleChange(e);
 							}}
@@ -49,7 +76,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 							name='last_name'
 							minLength={4}
 							maxLength={32}
-							value={formData.last_name}
+							value={signUpFormData.last_name}
 							onChange={(e) => {
 								handleChange(e);
 							}}
@@ -67,7 +94,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 							name='email'
 							minLength={4}
 							maxLength={32}
-							value={formData.email}
+							value={signUpFormData.email}
 							onChange={(e) => {
 								handleChange(e);
 							}}
@@ -83,7 +110,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 							name='password'
 							minLength={8}
 							maxLength={64}
-							value={formData.password}
+							value={signUpFormData.password}
 							onChange={(e) => {
 								handleChange(e);
 							}}
@@ -92,6 +119,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 						/>
 					</label>
 				</fieldset>
+				{errorsDisplay ? <ul className='error-list'>{errorsDisplay}</ul> : null}
 				<button type='submit'>Register</button>
 			</form>
 			<h4>Already have an account?</h4>
