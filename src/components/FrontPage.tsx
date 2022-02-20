@@ -1,15 +1,17 @@
+// @ts-nocheck
+
 import { useState } from 'react';
 import LogIn from './LogIn';
 import SignUp from './SignUp';
 
-const FrontPage = () => {
+const FrontPage = ({ setLoggedUser }: { setLoggedUser: Function }) => {
 	const [showLogIn, setShowLogIn] = useState(true);
 
 	return (
 		<div className='front-container'>
 			<div className='welcome'>Odinbook</div>
 			{showLogIn ? (
-				<LogIn setShowLogIn={setShowLogIn} />
+				<LogIn setShowLogIn={setShowLogIn} setLoggedUser={setLoggedUser} />
 			) : (
 				<SignUp setShowLogIn={setShowLogIn} />
 			)}
