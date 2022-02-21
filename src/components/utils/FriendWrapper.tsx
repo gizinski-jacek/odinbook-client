@@ -1,35 +1,22 @@
 type Props = {
 	friend: {
 		_id: string;
-		author: {
-			_id: string;
-			first_name: string;
-			last_name: string;
-		};
-		text: string;
-		comments: string[];
-		likes: string[];
-		createdAt: string;
-		updatedAt: string;
+		first_name: string;
+		last_name: string;
 	};
+	openChat: Function;
 };
 
-const FriendWrapper: React.FC<Props> = ({ friend }) => {
+const FriendWrapper: React.FC<Props> = ({ friend, openChat }) => {
 	return (
 		<div className='friend'>
-			<div>
+			<div onClick={() => openChat(friend)}>
 				<div>profile picture</div>
 				<div>
 					<div>
-						{friend.author.first_name} {friend.author.last_name}
+						{friend.first_name} {friend.last_name}
 					</div>
-					<div>{friend.createdAt}</div>
 				</div>
-			</div>
-			<div>{friend.text}</div>
-			<div>
-				<div>like comment</div>
-				<div>comment</div>
 			</div>
 		</div>
 	);
