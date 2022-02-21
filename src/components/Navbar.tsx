@@ -24,9 +24,7 @@ const Navbar: React.FC<Props> = ({ loggedUser, setLoggedUser }) => {
 
 	const handleLogOut = async () => {
 		try {
-			await axios.get('/api/log-out', {
-				headers: { 'Content-type': 'application/json' },
-			});
+			await axios.get('/api/log-out');
 			setLoggedUser(null);
 		} catch (error) {
 			console.error(error);
