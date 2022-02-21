@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import styles from '../../styling/Post.module.scss';
+import CommentWrapper from './CommentWrapper';
 
 type Props = {
 	post: {
@@ -17,7 +20,23 @@ type Props = {
 };
 
 const PostWrapper: React.FC<Props> = ({ post }) => {
+	const [commentsData, setCommentsData] =
+		useState<Array<{ _id: string; text: string }>>();
 	const [newCommentFormData, setNewCommentFormData] = useState({ text: '' });
+
+	useEffect(() => {
+		(async () => {
+			try {
+				const resCommentsData = await axios.get(
+					`/api/posts/${post._id}/comments`,
+					{ withCredentials: true }
+				);
+				setCommentsData(resCommentsData.data);
+			} catch (error: any) {
+				console.error(error);
+			}
+		})();
+	}, []);
 
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
@@ -27,23 +46,42 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		}));
 	};
 
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		try {
+			const resCommentsData = await axios.post(
+				`/api/posts/${post._id}/comments`,
+				newCommentFormData,
+				{ withCredentials: true }
+			);
+			setCommentsData(resCommentsData.data);
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
+	const commentsDisplay = commentsData?.map((comment) => {
+		return <CommentWrapper key={comment._id} comment={comment} />;
+	});
+
 	return (
-		<div className='timeline-post'>
+		<div className={styles.post}>
 			<div>
 				<div>profile picture</div>
 				<div>
 					<div>
 						{post.author.first_name} {post.author.last_name}
 					</div>
-					<div>{post.createdAt}</div>
+					<div>{new Date(post.createdAt).toLocaleString('en-gb')}</div>
 				</div>
 			</div>
 			<div>{post.text}</div>
 			<div>
-				<div>like comment</div>
-				<div>comment</div>
+				<div>like post</div>
+				<div>add comment</div>
 			</div>
-			<div>
+			<form className={styles.new_comment} onSubmit={(e) => handleSubmit(e)}>
+				<div>profile picture</div>
 				<textarea
 					id='text'
 					name='text'
@@ -54,7 +92,9 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 					required
 					placeholder='Write a comment'
 				/>
-			</div>
+				<button type='submit'>Submit</button>
+			</form>
+			{commentsDisplay ? commentsDisplay : null}
 		</div>
 	);
 };
