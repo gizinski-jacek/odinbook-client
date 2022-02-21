@@ -17,26 +17,18 @@ type Props = {
 };
 
 const Timeline: React.FC<Props> = ({ loggedUser }) => {
-	const [showCreateModal, setShowCreateModal] = useState(false);
+	const [showCreatePostModal, setShowCreatePostModal] = useState(false);
 	const [newPostFormData, setNewPostFormData] = useState({ text: '' });
 	const [timelinePosts, setTimelinePosts] = useState();
 
 	useEffect(() => {
 		(async () => {
 			try {
-				const resUserPosts = await axios.get('/api/posts/user-posts', {
-					withCredentials: true,
-					headers: { 'Content-type': 'application/json' },
-				});
-				const resUserFriendsPosts = await axios.get(
-					'/api/posts/user-friends-posts',
-					{
-						withCredentials: true,
-						headers: { 'Content-type': 'application/json' },
-					}
+				const resTimelinePosts = await axios.get(
+					'/api/posts/user-timeline-posts',
+					{ withCredentials: true }
 				);
-				const posts = resUserPosts.data.concat(resUserFriendsPosts.data);
-				setTimelinePosts(posts);
+				setTimelinePosts(resTimelinePosts.data);
 			} catch (error: any) {
 				console.error(error);
 			}
@@ -51,10 +43,20 @@ const Timeline: React.FC<Props> = ({ loggedUser }) => {
 		}));
 	};
 
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		try {
+			const resPosts = await axios.post('/api/posts', newPostFormData);
+			setTimelinePosts(resPosts.data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	const toggleModal = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		if (e.target === e.currentTarget) {
-			setShowCreateModal(false);
+			setShowCreatePostModal(false);
 		}
 	};
 
@@ -66,11 +68,11 @@ const Timeline: React.FC<Props> = ({ loggedUser }) => {
 		<div className={styles.posts}>
 			<div className='create-a-post'>
 				<img src='' alt='user-profile-pic' />
-				<div onClick={() => setShowCreateModal(true)}>
+				<div onClick={() => setShowCreatePostModal(true)}>
 					<h3>{`What's on your mind, ${loggedUser.first_name}?`}</h3>
 				</div>
 			</div>
-			{showCreateModal ? (
+			{showCreatePostModal ? (
 				<div className='new-post-modal' onClick={(e) => toggleModal(e)}>
 					<div className='new-post-container'>
 						<div className='top'>
@@ -80,7 +82,7 @@ const Timeline: React.FC<Props> = ({ loggedUser }) => {
 								<h4>{`${loggedUser.first_name} ${loggedUser.last_name}`}</h4>
 							</span>
 						</div>
-						<div>
+						<form onSubmit={(e) => handleSubmit(e)}>
 							<textarea
 								id='text'
 								name='text'
@@ -93,14 +95,12 @@ const Timeline: React.FC<Props> = ({ loggedUser }) => {
 								required
 								placeholder={`What's on your mind, ${loggedUser.first_name}?`}
 							/>
-						</div>
+							<button type='submit'>Submit</button>
+						</form>
 					</div>
 				</div>
 			) : null}
-			<div>
-				Timeline
-				{timelineDisplay ? timelineDisplay : null}
-			</div>
+			{timelineDisplay ? timelineDisplay : null}
 		</div>
 	);
 };
