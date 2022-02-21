@@ -11,6 +11,7 @@ import FrontPage from './components/FrontPage';
 import HomePage from './components/HomePage';
 import MyProfile from './components/MyProfile';
 import UserProfile from './components/UserProfile';
+import LoadingIcon from './components/utils/LoadingIcon';
 
 type StateObject = { _id: string; email: string } | null;
 
@@ -21,11 +22,15 @@ const App = () => {
 
 	useEffect(() => {
 		(async () => {
-			const resUser = await axios.get('/api/verify-token', {
-				withCredentials: true,
-				headers: { 'Content-type': 'application/json' },
-			});
-			setLoggedUser(resUser.data);
+			try {
+				const resUser = await axios.get('/api/verify-token', {
+					withCredentials: true,
+				});
+				setLoggedUser(resUser.data);
+				setIsLoading(false);
+			} catch (error) {
+				console.error(error);
+			}
 		})();
 	}, [location]);
 
@@ -35,7 +40,9 @@ const App = () => {
 				path='/'
 				element={
 					<main className='main'>
-						{loggedUser ? (
+						{isLoading ? (
+							<LoadingIcon />
+						) : loggedUser ? (
 							<>
 								<Navbar loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
 								<Outlet />
