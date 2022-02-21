@@ -22,11 +22,9 @@ const LogIn: React.FC<Props> = ({ setShowLogIn, setLoggedUser }) => {
 	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
 		try {
-			e.preventDefault();
-			const res: any = await axios.post('/api/log-in', logInFormData, {
-				headers: { 'Content-type': 'application/json' },
-			});
+			const res: any = await axios.post('/api/log-in', logInFormData);
 			setLoggedUser(res.data);
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {

@@ -19,11 +19,9 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
 		try {
-			e.preventDefault();
-			const res = await axios.post('/api/sign-up', signUpFormData, {
-				headers: { 'Content-type': 'application/json' },
-			});
+			const res = await axios.post('/api/sign-up', signUpFormData);
 			setShowLogIn(true);
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {
