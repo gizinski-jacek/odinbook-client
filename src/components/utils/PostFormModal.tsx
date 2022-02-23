@@ -20,7 +20,7 @@ const PostFormModal: React.FC<Props> = ({
 	post,
 }) => {
 	const { user } = useContext(UserContext);
-	const [postFormData, setPostFormData] = useState(post ? post.text : '');
+	const [postFormData, setPostFormData] = useState(post ? post : { text: '' });
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -42,6 +42,14 @@ const PostFormModal: React.FC<Props> = ({
 		}
 	};
 
+	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		const { name, value } = e.target;
+		setPostFormData((prevState) => ({
+			...prevState,
+			[name]: value,
+		}));
+	};
+
 	return (
 		<div className='post-form-modal' onClick={(e) => toggleModal(e)}>
 			<div className='new-post-container'>
@@ -54,16 +62,14 @@ const PostFormModal: React.FC<Props> = ({
 						</h4>
 					</span>
 				</div>
-				<form onSubmit={post ? (e) => handleSubmit(e) : (e) => handleUpdate(e)}>
+				<form onSubmit={post ? (e) => handleUpdate(e) : (e) => handleSubmit(e)}>
 					<textarea
 						id='text'
 						name='text'
 						minLength={8}
 						maxLength={512}
-						onChange={(e) => {
-							setPostFormData(e.target.value);
-						}}
-						value={postFormData}
+						onChange={(e) => handleChange(e)}
+						value={postFormData.text}
 						required
 						placeholder={`What's on your mind, ${user.first_name}?`}
 					/>
