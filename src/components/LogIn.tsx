@@ -61,9 +61,7 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 					minLength={4}
 					maxLength={32}
 					value={logInFormData.email}
-					onChange={(e) => {
-						handleChange(e);
-					}}
+					onChange={(e) => handleChange(e)}
 					required
 					placeholder='Email'
 				/>
@@ -75,9 +73,7 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 					minLength={8}
 					maxLength={64}
 					value={logInFormData.password}
-					onChange={(e) => {
-						handleChange(e);
-					}}
+					onChange={(e) => handleChange(e)}
 					required
 					placeholder='Password'
 				/>

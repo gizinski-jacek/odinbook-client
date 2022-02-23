@@ -21,7 +21,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const res = await axios.post('/api/sign-up', signUpFormData);
+			await axios.post('/api/sign-up', signUpFormData);
 			setShowLogIn(true);
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {
@@ -59,9 +59,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 							minLength={4}
 							maxLength={32}
 							value={signUpFormData.first_name}
-							onChange={(e) => {
-								handleChange(e);
-							}}
+							onChange={(e) => handleChange(e)}
 							required
 							placeholder='First Name'
 						/>
@@ -75,9 +73,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 							minLength={4}
 							maxLength={32}
 							value={signUpFormData.last_name}
-							onChange={(e) => {
-								handleChange(e);
-							}}
+							onChange={(e) => handleChange(e)}
 							required
 							placeholder='Last Name'
 						/>
@@ -93,9 +89,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 							minLength={4}
 							maxLength={32}
 							value={signUpFormData.email}
-							onChange={(e) => {
-								handleChange(e);
-							}}
+							onChange={(e) => handleChange(e)}
 							required
 							placeholder='Email'
 						/>
@@ -109,9 +103,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 							minLength={8}
 							maxLength={64}
 							value={signUpFormData.password}
-							onChange={(e) => {
-								handleChange(e);
-							}}
+							onChange={(e) => handleChange(e)}
 							required
 							placeholder='Password'
 						/>
