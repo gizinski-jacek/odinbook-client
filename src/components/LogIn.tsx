@@ -1,12 +1,13 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { UserContext } from './hooks/UserContext';
 
 type Props = {
 	setShowLogIn: Function;
-	setLoggedUser: Function;
 };
 
-const LogIn: React.FC<Props> = ({ setShowLogIn, setLoggedUser }) => {
+const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
+	const { setUser } = useContext(UserContext);
 	const [errors, setErrors] = useState<Array<{ msg: string }>>();
 	const [logInFormData, setLogInFormData] = useState({
 		email: '',
@@ -25,7 +26,7 @@ const LogIn: React.FC<Props> = ({ setShowLogIn, setLoggedUser }) => {
 		e.preventDefault();
 		try {
 			const res: any = await axios.post('/api/log-in', logInFormData);
-			setLoggedUser(res.data);
+			setUser(res.data);
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {
 				if (typeof error.response.data === 'object') {

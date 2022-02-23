@@ -6,18 +6,7 @@ import styles from '../styling/FriendList.module.scss';
 import FriendWrapper from './utils/FriendWrapper';
 import RequestWrapper from './utils/RequestWrapper';
 
-type Props = {
-	loggedUser: {
-		_id: string;
-		email: string;
-		first_name: string;
-		last_name: string;
-		friendList: string[];
-		friendRequiests: string[];
-	};
-};
-
-const FriendList: React.FC<Props> = ({ loggedUser }) => {
+const FriendList = () => {
 	const [friendList, setFriendList] = useState();
 	const [friendRequests, setFriendRequests] = useState();
 

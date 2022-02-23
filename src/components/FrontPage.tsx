@@ -4,14 +4,14 @@ import { useState } from 'react';
 import LogIn from './LogIn';
 import SignUp from './SignUp';
 
-const FrontPage = ({ setLoggedUser }: { setLoggedUser: Function }) => {
+const FrontPage = () => {
 	const [showLogIn, setShowLogIn] = useState(true);
 
 	return (
 		<div className='front-container'>
 			<div className='welcome'>Odinbook</div>
 			{showLogIn ? (
-				<LogIn setShowLogIn={setShowLogIn} setLoggedUser={setLoggedUser} />
+				<LogIn setShowLogIn={setShowLogIn} />
 			) : (
 				<SignUp setShowLogIn={setShowLogIn} />
 			)}
