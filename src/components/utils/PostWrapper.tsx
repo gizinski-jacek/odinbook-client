@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styles from '../../styling/Post.module.scss';
 import CommentWrapper from './CommentWrapper';
+import PostFormModal from './PostFormModal';
 
 type Props = {
 	post: {
@@ -17,12 +18,22 @@ type Props = {
 		createdAt: string;
 		updatedAt: string;
 	};
+	setTimelinePosts: Function;
 };
 
-const PostWrapper: React.FC<Props> = ({ post }) => {
-	const [commentsData, setCommentsData] =
-		useState<Array<{ _id: string; text: string }>>();
-	const [newCommentFormData, setNewCommentFormData] = useState({ text: '' });
+type CommentsData = Array<{
+	_id: string;
+	text: string;
+	createdAt: string;
+	updatedAt: string;
+}>;
+
+const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
+	const [commentsData, setCommentsData] = useState<CommentsData>();
+	const [commentFormData, setCommentFormData] = useState({ text: '' });
+	const [showComments, setShowComments] = useState(false);
+	const [showOptions, setShowOptions] = useState(false);
+	const [showPostFormModal, setShowPostFormModal] = useState(false);
 
 	useEffect(() => {
 		(async () => {
@@ -36,11 +47,11 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 				console.error(error);
 			}
 		})();
-	}, []);
+	}, [post._id]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
-		setNewCommentFormData((prevState) => ({
+		setCommentFormData((prevState) => ({
 			...prevState,
 			[name]: value,
 		}));
@@ -51,12 +62,49 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		try {
 			const resCommentsData = await axios.post(
 				`/api/posts/${post._id}/comments`,
-				newCommentFormData,
+				commentFormData,
 				{ withCredentials: true }
 			);
 			setCommentsData(resCommentsData.data);
 		} catch (error: any) {
 			console.error(error);
+		}
+	};
+
+	const handleDelete = async () => {
+		try {
+			const resPosts = await axios.delete(`/api/posts/${post._id}`);
+			setTimelinePosts(resPosts.data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const toggleOptions = (e: any) => {
+		e.stopPropagation();
+		if (!showOptions) {
+			setShowOptions(true);
+			document.addEventListener('click', closeOptions);
+		} else if (showOptions) {
+			closeOptions(e);
+		}
+	};
+
+	const closeOptions = (e: any) => {
+		e.stopPropagation();
+		if (
+			e.target.className &&
+			!e.target.className.includes('Post_options_menu')
+		) {
+			setShowOptions(false);
+			document.removeEventListener('click', closeOptions);
+		}
+	};
+
+	const toggleModal = (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.stopPropagation();
+		if (e.target === e.currentTarget) {
+			setShowPostFormModal(false);
 		}
 	};
 
@@ -66,35 +114,71 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 
 	return (
 		<div className={styles.post}>
-			<div>
-				<div>profile picture</div>
-				<div>
-					<div>
-						{post.author.first_name} {post.author.last_name}
+			<div className={styles.top}>
+				<div className={styles.left}>
+					<img src='' alt='profile-pic' />
+					<div className={styles.metadata}>
+						<div>
+							{post.author.first_name} {post.author.last_name}
+						</div>
+						<div>{new Date(post.createdAt).toLocaleString('en-gb')}</div>
 					</div>
-					<div>{new Date(post.createdAt).toLocaleString('en-gb')}</div>
+				</div>
+				<div className={styles.right}>
+					<button
+						className={styles.options_toggle}
+						onClick={(e) => toggleOptions(e)}
+					>
+						Options
+					</button>
+					{showOptions ? (
+						<div className={styles.options_menu}>
+							<button onClick={(e) => toggleModal(e)}>Edit post</button>
+							<button onClick={() => handleDelete()}>Delete post</button>
+						</div>
+					) : null}
+					{showPostFormModal ? (
+						<PostFormModal
+							toggleModal={toggleModal}
+							setTimelinePosts={setTimelinePosts}
+							post={post}
+						/>
+					) : null}
 				</div>
 			</div>
-			<div>{post.text}</div>
+			<div className={styles.text}>{post.text}</div>
 			<div>
-				<div>like post</div>
-				<div>add comment</div>
+				<div onClick={() => setShowComments((prevState) => !prevState)}>
+					{commentsData ? (
+						commentsData?.length > 0 ? (
+							<p>{commentsData?.length} comments</p>
+						) : null
+					) : null}
+				</div>
+				<span>
+					<div>Like</div>
+					<div onClick={() => setShowComments((prevState) => !prevState)}>
+						Comment
+					</div>
+				</span>
+			</div>
+			<div className={styles.comments_container}>
+				{showComments ? (commentsDisplay ? commentsDisplay : null) : null}
 			</div>
 			<form className={styles.new_comment} onSubmit={(e) => handleSubmit(e)}>
 				<div>profile picture</div>
 				<textarea
 					id='text'
 					name='text'
-					minLength={8}
+					minLength={4}
 					maxLength={512}
 					onChange={(e) => handleChange(e)}
-					value={newCommentFormData.text}
+					value={commentFormData.text}
 					required
 					placeholder='Write a comment'
 				/>
 				<button type='submit'>Submit</button>
 			</form>
-			{commentsDisplay ? commentsDisplay : null}
 		</div>
 	);
 };
