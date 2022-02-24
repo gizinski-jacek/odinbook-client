@@ -1,14 +1,18 @@
-// @ts-nocheck
-
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import styles from '../styling/FriendList.module.scss';
-import FriendWrapper from './utils/FriendWrapper';
-import RequestWrapper from './utils/RequestWrapper';
+import styles from './styling/FriendList.module.scss';
+
+type StateList = {
+	_id: string;
+	first_name: string;
+	last_name: string;
+}[];
+
+type StateRequests = StateList;
 
 const FriendList = () => {
-	const [friendList, setFriendList] = useState();
-	const [friendRequests, setFriendRequests] = useState();
+	const [friendList, setFriendList] = useState<StateList>([]);
+	const [friendRequests, setFriendRequests] = useState<StateRequests>([]);
 
 	useEffect(() => {
 		(async () => {
@@ -24,7 +28,11 @@ const FriendList = () => {
 		})();
 	}, []);
 
-	const acceptRequest = async (request) => {
+	const acceptRequest = async (request: {
+		_id: string;
+		first_name: string;
+		last_name: string;
+	}) => {
 		try {
 			const resFriendsData = await axios.post(
 				`/api/user/accept-request/${request._id}`,
@@ -40,7 +48,11 @@ const FriendList = () => {
 		}
 	};
 
-	const declineRequest = async (request) => {
+	const declineRequest = async (request: {
+		_id: string;
+		first_name: string;
+		last_name: string;
+	}) => {
 		try {
 			const resFriendRequests = await axios.post(
 				`/api/user/decline-request/${request._id}`,
@@ -55,7 +67,11 @@ const FriendList = () => {
 		}
 	};
 
-	const openChat = async (friend) => {
+	const openChat = async (friend: {
+		_id: string;
+		first_name: string;
+		last_name: string;
+	}) => {
 		try {
 			// fetch past messages and load chat window
 			console.log('load chat window');
@@ -66,27 +82,58 @@ const FriendList = () => {
 
 	const friendListDisplay = friendList?.map((friend) => {
 		return (
-			<FriendWrapper key={friend._id} friend={friend} openChat={openChat} />
+			<li key={friend._id} className={styles.friend}>
+				<div onClick={() => openChat(friend)}>
+					<div>profile picture</div>
+					<div>
+						<div>
+							{friend.first_name} {friend.last_name}
+						</div>
+					</div>
+				</div>
+			</li>
 		);
 	});
 
 	const friendRequestsDisplay = friendRequests?.map((request) => {
 		return (
-			<RequestWrapper
-				key={request._id}
-				request={request}
-				acceptRequest={acceptRequest}
-				declineRequest={declineRequest}
-			/>
+			<li key={request._id} className={styles.request}>
+				<div className={styles.info}>
+					<div>profile picture</div>
+					<div>
+						<div>
+							{request.first_name} {request.last_name}
+						</div>
+					</div>
+				</div>
+				<div className={styles.controls}>
+					<button
+						className='button-accept'
+						onClick={() => acceptRequest(request)}
+					>
+						accept
+					</button>
+					<button
+						className='button-decline'
+						onClick={() => declineRequest(request)}
+					>
+						decline
+					</button>
+				</div>
+			</li>
 		);
 	});
 
 	return (
-		<div className={styles.friends}>
-			<div>Friend Requests</div>
-			<div>{friendRequestsDisplay}</div>
-			<div>Friend List</div>
-			<div>{friendListDisplay}</div>
+		<div className={styles.friend_list}>
+			{friendRequests.length > 0 ? (
+				<>
+					<div>Requests</div>
+					<ul className={styles.friend_requests}>{friendRequestsDisplay}</ul>
+				</>
+			) : null}
+			<div className={styles.contacts}>Contacts</div>
+			<ul className={styles.friend_list}>{friendListDisplay}</ul>
 		</div>
 	);
 };
