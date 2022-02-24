@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import styles from './styling/FriendList.module.scss';
+import styles from './styling/Contacts.module.scss';
 
 type StateList = {
 	_id: string;
@@ -10,7 +10,7 @@ type StateList = {
 
 type StateRequests = StateList;
 
-const FriendList = () => {
+const Contacts = () => {
 	const [friendList, setFriendList] = useState<StateList>([]);
 	const [friendRequests, setFriendRequests] = useState<StateRequests>([]);
 
@@ -125,7 +125,7 @@ const FriendList = () => {
 	});
 
 	return (
-		<div className={styles.friend_list}>
+		<div className={styles.contacts}>
 			{friendRequests.length > 0 ? (
 				<>
 					<div>Requests</div>
@@ -138,4 +138,4 @@ const FriendList = () => {
 	);
 };
 
-export default FriendList;
+export default Contacts;
