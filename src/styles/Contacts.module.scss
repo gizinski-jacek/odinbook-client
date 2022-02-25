@@ -1,0 +1,33 @@
+@use '../styles/variables';
+
+.contacts {
+	flex: 1;
+	margin-top: 12px;
+	padding: 12px;
+	display: flex;
+	flex-direction: column;
+
+	.friend_requests,
+	.friend_list {
+		.request,
+		.friend {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			border-radius: 12px;
+			padding: 12px;
+			cursor: pointer;
+		}
+
+		.info,
+		.controls {
+			display: flex;
+			flex-direction: row;
+		}
+
+		.request:hover,
+		.friend:hover {
+			background-color: variables.$hover-gray;
+		}
+	}
+}
