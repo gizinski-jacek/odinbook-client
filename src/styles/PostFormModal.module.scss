@@ -1,0 +1,64 @@
+@use './variables';
+
+.post_form_modal {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: variables.$gray-transparent;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.new_post_container {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		border-radius: 12px;
+		background-color: variables.$white;
+		min-width: 500px;
+		min-height: 400px;
+
+		.top {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			height: 60px;
+			border-bottom: 1px solid variables.$gray;
+
+			h3 {
+				font-weight: 600;
+			}
+		}
+
+		.metadata {
+			display: flex;
+			padding: 12px;
+		}
+
+		form {
+			padding: 12px;
+
+			textarea {
+				width: 100%;
+				resize: none;
+				font-size: 1rem;
+				border: none;
+				outline: none;
+			}
+
+			button {
+				margin-top: 12px;
+				color: variables.$gray-transparent;
+				width: 100%;
+			}
+
+			button:not(:disabled) {
+				color: variables.$white;
+				background-color: variables.$blue;
+			}
+		}
+	}
+}
