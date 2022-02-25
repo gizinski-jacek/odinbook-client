@@ -1,0 +1,48 @@
+@use './variables';
+
+.post {
+	margin-bottom: 24px;
+	padding: 12px;
+	border-radius: 12px;
+	background-color: variables.$white;
+}
+
+.confirm_delete_modal {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: variables.$gray-transparent;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.confirm_delete {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		padding: 24px;
+		border-radius: 12px;
+		background-color: variables.$white;
+		min-width: 500px;
+		min-height: 200px;
+
+		h3 {
+			border-bottom: 1px solid variables.$dark-gray;
+			padding-bottom: 12px;
+			margin-bottom: 12px;
+			font-weight: 600;
+		}
+
+		span {
+			flex: 1;
+		}
+
+		.controls {
+			button {
+				float: right;
+			}
+		}
+	}
+}
