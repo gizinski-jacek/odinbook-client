@@ -1,13 +1,13 @@
 import SideMenu from './SideMenu';
 import Timeline from './Timeline';
-import FriendList from './FriendList';
+import Contacts from './Contacts';
 
 const HomePage = () => {
 	return (
 		<div className='home-container'>
 			<SideMenu />
 			<Timeline />
-			<FriendList />
+			<Contacts />
 		</div>
 	);
 };
