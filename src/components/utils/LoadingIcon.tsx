@@ -1,8 +1,19 @@
 const LoadingIcon = () => {
+	const styles = {
+		loading_icon: {
+			display: 'flex',
+			justifyContent: 'center',
+			alignItems: 'center',
+			flex: 1,
+			width: '100%',
+		},
+		svg: { width: '256px', height: '256px' },
+	};
+
 	return (
-		<div className='loading-icon'>
-			<h3>Loading Data</h3>
-			<svg focusable='false' viewBox='0 0 40 40'>
+		<div style={styles.loading_icon}>
+			<h3 style={{ position: 'absolute' }}>Loading Data</h3>
+			<svg style={styles.svg} focusable='false' viewBox='0 0 40 40'>
 				<path
 					fill='#4267b2'
 					d='M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
