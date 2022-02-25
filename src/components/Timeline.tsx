@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
-import styles from '../styling/Timeline.module.scss';
+import styles from '../styles/Timeline.module.scss';
 import { UserContext } from './hooks/UserContext';
 import PostFormModal from './utils/PostFormModal';
 import PostWrapper from './utils/PostWrapper';
@@ -25,6 +25,7 @@ const Timeline = () => {
 	const { user } = useContext(UserContext);
 	const [showPostFormModal, setShowPostFormModal] = useState(false);
 	const [timelinePosts, setTimelinePosts] = useState<TimelinePosts>();
+	const [postText, setPostText] = useState('');
 
 	useEffect(() => {
 		(async () => {
@@ -40,10 +41,11 @@ const Timeline = () => {
 		})();
 	}, []);
 
-	const toggleModal = (e: React.MouseEvent<HTMLDivElement>) => {
+	const toggleModal = (e: React.MouseEvent<HTMLDivElement>, text: string) => {
 		e.stopPropagation();
 		if (e.target === e.currentTarget) {
 			setShowPostFormModal(false);
+			setPostText(text);
 		}
 	};
 
@@ -53,23 +55,28 @@ const Timeline = () => {
 				key={post._id}
 				post={post}
 				setTimelinePosts={setTimelinePosts}
+				setShowPostFormModal={setShowPostFormModal}
 			/>
 		);
 	});
 
 	return (
-		<div className={styles.posts}>
-			<div className='create-a-post'>
-				<img src='' alt='user-profile-pic' />
-				<button onClick={() => setShowPostFormModal(true)}>
-					<h4>{`What's on your mind, ${user.first_name}?`}</h4>
-				</button>
+		<div className={styles.timeline}>
+			<div className={styles.create_new_post}>
+				<div className='profile-picture'>
+					<img src='placeholder_profile_pic.png' alt='user-profile-pic' />
+				</div>
+				<span onClick={() => setShowPostFormModal(true)}>
+					<h4>
+						{postText ? postText : `What's on your mind, ${user.first_name}?`}
+					</h4>
+				</span>
 			</div>
 			{showPostFormModal ? (
 				<PostFormModal
 					toggleModal={toggleModal}
 					setTimelinePosts={setTimelinePosts}
-					post={null}
+					post={{ text: postText }}
 				/>
 			) : null}
 			{timelineDisplay ? timelineDisplay : null}
