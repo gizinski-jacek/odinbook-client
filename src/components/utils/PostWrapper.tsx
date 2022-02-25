@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import styles from '../../styling/Post.module.scss';
+import styles from '../../styles/Post.module.scss';
 import CommentWrapper from './CommentWrapper';
 import PostFormModal from './PostFormModal';
 
@@ -19,6 +19,7 @@ type Props = {
 		updatedAt: string;
 	};
 	setTimelinePosts: Function;
+	setShowPostFormModal: Function;
 };
 
 type CommentsData = Array<{
@@ -34,6 +35,7 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 	const [showComments, setShowComments] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
 	const [showPostFormModal, setShowPostFormModal] = useState(false);
+	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
 	useEffect(() => {
 		(async () => {
@@ -116,7 +118,9 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 		<div className={styles.post}>
 			<div className={styles.top}>
 				<div className={styles.left}>
-					<img src='' alt='profile-pic' />
+					<div className='profile-picture'>
+						<img src='placeholder_profile_pic.png' alt='user-profile-pic' />
+					</div>
 					<div className={styles.metadata}>
 						<div>
 							{post.author.first_name} {post.author.last_name}
@@ -134,7 +138,36 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 					{showOptions ? (
 						<div className={styles.options_menu}>
 							<button onClick={(e) => toggleModal(e)}>Edit post</button>
-							<button onClick={() => handleDelete()}>Delete post</button>
+							<button onClick={() => setShowConfirmDelete(true)}>
+								Delete post
+							</button>
+						</div>
+					) : null}
+					{showConfirmDelete ? (
+						<div className={styles.confirm_delete_modal}>
+							<div className={styles.confirm_delete}>
+								<h3>Delete this post?</h3>
+								<span>
+									Are you sure you want to delete this post? This action is
+									irreversible!
+								</span>
+								<div className={styles.controls}>
+									<button
+										className='btn-confirm'
+										type='button'
+										onClick={() => handleDelete()}
+									>
+										Delete
+									</button>
+									<button
+										className='btn-cancel'
+										type='button'
+										onClick={() => setShowConfirmDelete(false)}
+									>
+										Cancel
+									</button>
+								</div>
+							</div>
 						</div>
 					) : null}
 					{showPostFormModal ? (
@@ -170,14 +203,16 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 				<textarea
 					id='text'
 					name='text'
-					minLength={4}
+					minLength={1}
 					maxLength={512}
 					onChange={(e) => handleChange(e)}
 					value={commentFormData.text}
 					required
 					placeholder='Write a comment'
 				/>
-				<button type='submit'>Submit</button>
+				<button className='btn-form-submit' type='submit'>
+					Submit
+				</button>
 			</form>
 		</div>
 	);
