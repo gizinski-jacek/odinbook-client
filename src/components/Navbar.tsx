@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import styles from '../styling/Navbar.module.scss';
+import styles from '../styles/Navbar.module.scss';
 import { UserContext } from './hooks/UserContext';
 
 const Navbar = () => {
@@ -31,24 +31,36 @@ const Navbar = () => {
 		}
 		switch (e.currentTarget.className) {
 			case 'account':
+				if (showAccountMenu) {
+					setShowMenuContainer(false);
+				}
 				setShowMainMenu(false);
 				setShowMessengerMenu(false);
 				setShowNotificationsMenu(false);
 				setShowAccountMenu(!showAccountMenu);
 				break;
 			case 'notifications':
+				if (showNotificationsMenu) {
+					setShowMenuContainer(false);
+				}
 				setShowMainMenu(false);
 				setShowMessengerMenu(false);
 				setShowNotificationsMenu(!showNotificationsMenu);
 				setShowAccountMenu(false);
 				break;
 			case 'messenger':
+				if (showMessengerMenu) {
+					setShowMenuContainer(false);
+				}
 				setShowMainMenu(false);
 				setShowMessengerMenu(!showMessengerMenu);
 				setShowNotificationsMenu(false);
 				setShowAccountMenu(false);
 				break;
 			case 'mainM':
+				if (showMainMenu) {
+					setShowMenuContainer(false);
+				}
 				setShowMainMenu(!showMainMenu);
 				setShowMessengerMenu(false);
 				setShowNotificationsMenu(false);
@@ -77,27 +89,26 @@ const Navbar = () => {
 	};
 
 	return (
-		<nav className={styles.nav}>
+		<nav className={styles.navbar}>
 			<div className={styles.left}>
 				<div className={styles.logo}>logo</div>
-				<div className={styles.search}>
-					<input
-						type='text'
-						id='search_odinbook'
-						name='search_odinbook'
-						minLength={1}
-						maxLength={512}
-						value={searchOdinbookInput}
-						onChange={(e) => setSearchOdinbookInput(e.target.value)}
-						placeholder='Search Odinbook'
-					/>
-				</div>
+				<input
+					className={styles.search}
+					type='text'
+					id='search_odinbook'
+					name='search_odinbook'
+					minLength={1}
+					maxLength={512}
+					value={searchOdinbookInput}
+					onChange={(e) => setSearchOdinbookInput(e.target.value)}
+					placeholder='Search Odinbook'
+				/>
 			</div>
 			<div className={styles.center}>
 				<ul className={styles.navigation}>
 					<li>
 						<Link to='/'>
-							<span className={styles.button}>
+							<span className={styles.btn}>
 								<svg
 									viewBox='0 0 28 28'
 									height='28'
@@ -111,7 +122,7 @@ const Navbar = () => {
 					</li>
 					<li>
 						<Link to='/friends'>
-							<span className={styles.button}>
+							<span className={styles.btn}>
 								<svg
 									viewBox='0 0 28 28'
 									height='28'
@@ -125,7 +136,7 @@ const Navbar = () => {
 					</li>
 					<li>
 						<Link to='/groups'>
-							<span className={styles.button}>
+							<span className={styles.btn}>
 								<svg
 									viewBox='0 0 28 28'
 									height='28'
@@ -198,80 +209,90 @@ const Navbar = () => {
 						</span>
 					</li>
 					<li>
-						<Link to='/me'>{user.first_name}</Link>
+						<Link to='/me'>
+							{user.first_name}
+							<div className='profile-picture'>
+								<img src='placeholder_profile_pic.png' alt='user-profile-pic' />
+							</div>
+						</Link>
 					</li>
 					<li>
 						<Link to='/friends'>Find Friends</Link>
 					</li>
-					{showMenuContainer ? (
-						<div className={styles.menu_container}>
-							{showAccountMenu ? (
-								<div className={styles.menu_account}>
-									<Link to='/me'>
-										<img src='' alt='profile-pic' />
-										<span>
-											<h3>
-												{user.first_name} {user.last_name}
-											</h3>
-											<h4>See your profile</h4>
-										</span>
-									</Link>
-									<Link to='/feedback'>
-										<h4>Give feedback</h4>
-										<span>{'>'}</span>
-									</Link>
-									<Link to='settings-privacy'>
-										<h4>{'Settings & privacy'}</h4>
-										<span>{'>'}</span>
-									</Link>
-									<Link to='display-accesibility'>
-										<h4>{'Display & accessibility'}</h4>
-										<span>{'>'}</span>
-									</Link>
-									<Link to='/' onClick={() => handleLogOut()}>
-										Log Out
-									</Link>
-								</div>
-							) : null}
-							{showNotificationsMenu ? (
-								<div className={styles.menu_notifications}>
-									Notifications
-									<button>Options</button>
-									<button>All</button>
-									<button>Unread</button>
-									<div>Notification-list</div>
-								</div>
-							) : null}
-							{showMessengerMenu ? (
-								<div className={styles.menu_messenger}>
-									<button>Options</button>
-									<input
-										type='text'
-										id='messenger_search'
-										name='messenger_search'
-										minLength={1}
-										maxLength={512}
-										value={searchMessengerInput}
-										onChange={(e) => setSearchMessengerInput(e.target.value)}
-										placeholder='Search Messenger'
-									/>
-									<div>Messages-list</div>
-									<Link to='/messages'>See all in messenger</Link>
-								</div>
-							) : null}
-							{showMainMenu ? (
-								<div className={styles.menu_main}>
-									Menu
-									<div>
-										Create
-										<div>Post</div>
-									</div>
-								</div>
-							) : null}
-						</div>
-					) : null}
 				</ul>
 			</div>
+			{showMenuContainer ? (
+				<div className={styles.menu_container}>
+					{showAccountMenu ? (
+						<div className={styles.menu_account}>
+							<Link to='/me'>
+								<div className='profile-picture'>
+									<img
+										src='placeholder_profile_pic.png'
+										alt='user-profile-pic'
+									/>
+								</div>
+								<span>
+									<h3>
+										{user.first_name} {user.last_name}
+									</h3>
+									<h4>See your profile</h4>
+								</span>
+							</Link>
+							<Link to='/feedback'>
+								<h4>Give feedback</h4>
+								<span>{'>'}</span>
+							</Link>
+							<Link to='settings-privacy'>
+								<h4>{'Settings & privacy'}</h4>
+								<span>{'>'}</span>
+							</Link>
+							<Link to='display-accesibility'>
+								<h4>{'Display & accessibility'}</h4>
+								<span>{'>'}</span>
+							</Link>
+							<Link to='/' onClick={() => handleLogOut()}>
+								Log Out
+							</Link>
+						</div>
+					) : null}
+					{showNotificationsMenu ? (
+						<div className={styles.menu_notifications}>
+							Notifications
+							<button>Options</button>
+							<button>All</button>
+							<button>Unread</button>
+							<div>Notification-list</div>
+						</div>
+					) : null}
+					{showMessengerMenu ? (
+						<div className={styles.menu_messenger}>
+							<button>Options</button>
+							<input
+								type='text'
+								id='messenger_search'
+								name='messenger_search'
+								minLength={1}
+								maxLength={512}
+								value={searchMessengerInput}
+								onChange={(e) => setSearchMessengerInput(e.target.value)}
+								placeholder='Search Messenger'
+							/>
+							<div>Messages-list</div>
+							<Link to='/messages'>See all in messenger</Link>
+						</div>
+					) : null}
+					{showMainMenu ? (
+						<div className={styles.menu_main}>
+							Menu
+							<div>
+								Create
+								<div>Post</div>
+							</div>
+						</div>
+					) : null}
+				</div>
+			) : null}
 		</nav>
 	);
 };
