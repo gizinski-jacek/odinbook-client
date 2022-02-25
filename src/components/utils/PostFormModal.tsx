@@ -1,17 +1,18 @@
 import axios from 'axios';
 import { useContext, useState } from 'react';
 import { UserContext } from '../hooks/UserContext';
+import styles from '../../styles/PostFormModal.module.scss';
 
 type Props = {
 	toggleModal: Function;
 	setTimelinePosts: Function;
-	post: {
-		_id: string;
+	post?: {
+		_id?: string;
 		text: string;
-		likes: string[];
-		createdAt: string;
-		updatedAt: string;
-	} | null;
+		likes?: string[];
+		createdAt?: string;
+		updatedAt?: string;
+	};
 };
 
 const PostFormModal: React.FC<Props> = ({
@@ -27,6 +28,7 @@ const PostFormModal: React.FC<Props> = ({
 		try {
 			const resPosts = await axios.post('/api/posts', postFormData);
 			setTimelinePosts(resPosts.data);
+			toggleModal(e, '');
 		} catch (error) {
 			console.error(error);
 		}
@@ -37,6 +39,7 @@ const PostFormModal: React.FC<Props> = ({
 		try {
 			const resPosts = await axios.put(`/api/posts/${post?._id}`, postFormData);
 			setTimelinePosts(resPosts.data);
+			toggleModal(e, '');
 		} catch (error) {
 			console.error(error);
 		}
@@ -51,29 +54,47 @@ const PostFormModal: React.FC<Props> = ({
 	};
 
 	return (
-		<div className='post-form-modal' onClick={(e) => toggleModal(e)}>
-			<div className='new-post-container'>
-				<div className='top'>
+		<div
+			className={styles.post_form_modal}
+			onClick={(e) => toggleModal(e, postFormData.text)}
+		>
+			<div className={styles.new_post_container}>
+				<div className={styles.top}>
 					<h3>Create post</h3>
-					<span>
-						<img src='' alt='profile-pic' />
-						<h4>
-							{user.first_name} {user.last_name}
-						</h4>
-					</span>
+					<span
+						className='close_x_btn'
+						onClick={(e) => toggleModal(e, postFormData.text)}
+					></span>
 				</div>
-				<form onSubmit={post ? (e) => handleUpdate(e) : (e) => handleSubmit(e)}>
+				<span className={styles.metadata}>
+					<div className='profile-picture'>
+						<img src='placeholder_profile_pic.png' alt='user-profile-pic' />
+					</div>
+					<h4>
+						{user.first_name} {user.last_name}
+					</h4>
+				</span>
+				<form
+					onSubmit={post?._id ? (e) => handleUpdate(e) : (e) => handleSubmit(e)}
+				>
 					<textarea
 						id='text'
 						name='text'
-						minLength={8}
+						minLength={1}
 						maxLength={512}
+						rows={12}
 						onChange={(e) => handleChange(e)}
 						value={postFormData.text}
 						required
 						placeholder={`What's on your mind, ${user.first_name}?`}
 					/>
-					<button type='submit'>Submit</button>
+					<button
+						className='btn-form-submit'
+						type='submit'
+						disabled={postFormData.text.length > 0 ? false : true}
+					>
+						Post
+					</button>
 				</form>
 			</div>
 		</div>
