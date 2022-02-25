@@ -1,38 +1,201 @@
-.App {
-	text-align: center;
+@use './styles/variables';
+
+* {
+	box-sizing: border-box;
 }
 
-.App-logo {
-	height: 40vmin;
-	pointer-events: none;
+body {
+	font-family: 16 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande';
 }
 
-@media (prefers-reduced-motion: no-preference) {
-	.App-logo {
-		animation: App-logo-spin infinite 20s linear;
-	}
+h1 {
+	font-size: 2rem;
 }
 
-.App-header {
-	background-color: #282c34;
+h2 {
+	font-size: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+}
+
+h4 {
+	font-size: 1rem;
+}
+
+h5 {
+	font-size: 0.8rem;
+}
+
+a {
+	color: variables.$black;
+	text-decoration: none;
+}
+
+.main {
+	width: 100%;
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	font-size: calc(10px + 2vmin);
-	color: white;
-}
+	background-color: variables.$light-gray;
 
-.App-link {
-	color: #61dafb;
-}
+	.front-container {
+		flex: 1;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
 
-@keyframes App-logo-spin {
-	from {
-		transform: rotate(0deg);
+		.log-in {
+			padding: 24px;
+			display: flex;
+			flex-direction: column;
+
+			form {
+				display: flex;
+				flex-direction: column;
+			}
+		}
+
+		.sign-up {
+			padding: 24px;
+			display: flex;
+			flex-direction: column;
+
+			form {
+				display: flex;
+				flex-direction: column;
+
+				fieldset {
+					display: flex;
+					flex-direction: row;
+
+					label {
+						display: flex;
+						flex-direction: column;
+					}
+				}
+			}
+		}
 	}
-	to {
-		transform: rotate(360deg);
+
+	.home-container {
+		margin-top: variables.$navbar-height;
+		flex: 1;
+		display: flex;
+		flex-direction: row;
+	}
+
+	.footer {
+		width: 100%;
+		text-align: center;
+	}
+}
+
+.btn-accept {
+	background-color: variables.$green;
+	border-radius: 12px;
+	border: none;
+	padding: 8px 12px;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.btn-decline {
+	background-color: variables.$red;
+	border-radius: 12px;
+	border: none;
+	padding: 8px 12px;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.btn-confirm {
+	background-color: variables.$blue;
+	color: variables.$white;
+	border-radius: 12px;
+	border: none;
+	padding: 8px 12px;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.btn-confirm:hover {
+	filter: brightness(90%);
+}
+
+.btn-cancel {
+	background-color: variables.$white;
+	color: variables.$black;
+	border-radius: 12px;
+	border: none;
+	padding: 8px 12px;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.btn-cancel:hover {
+	filter: brightness(90%);
+}
+
+.btn-form-submit {
+	background-color: variables.$gray-transparent;
+	border-radius: 12px;
+	border: none;
+	padding: 8px 12px;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.btn-form-submit:hover {
+}
+
+.close_x_btn {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	width: 36px;
+	height: 36px;
+	background-color: variables.$light-gray;
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+.close_x_btn:before,
+.close_x_btn:after {
+	position: absolute;
+	top: 8px;
+	left: 17px;
+	content: ' ';
+	height: 20px;
+	width: 3px;
+	background-color: variables.$dark-gray;
+	color: variables.$dark-gray;
+}
+
+.close_x_btn:before {
+	transform: rotate(45deg);
+}
+
+.close_x_btn:after {
+	transform: rotate(-45deg);
+}
+
+.close_x_btn:hover {
+	filter: brightness(90%);
+}
+
+.profile-picture {
+	img {
+		display: inline-block;
+		border-radius: 50%;
+		margin-right: 12px;
 	}
 }
