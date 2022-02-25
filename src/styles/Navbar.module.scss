@@ -1,0 +1,121 @@
+@use '../styles/variables';
+
+.navbar {
+	height: variables.$navbar-height;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background-color: white;
+
+	.left {
+		height: variables.$navbar-height;
+		position: fixed;
+		top: 0;
+		left: 0;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		z-index: 10;
+
+		.logo {
+			margin: 0 12px;
+		}
+
+		input {
+			padding: 8px 16px;
+			margin: 4px;
+			border: none;
+			border-radius: 24px;
+			background-color: variables.$light-gray;
+		}
+	}
+
+	.center {
+		height: variables.$navbar-height;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+
+		ul {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+
+			li {
+				padding: 12px 16px;
+				margin: 0 24px;
+			}
+
+			li:hover {
+				cursor: pointer;
+				background-color: variables.$light-gray;
+			}
+		}
+	}
+
+	.right {
+		height: variables.$navbar-height;
+		position: fixed;
+		top: 0;
+		right: 0;
+		z-index: 10;
+		direction: rtl;
+
+		ul {
+			display: flex;
+			flex-direction: row;
+
+			li {
+				padding: 8px 16px;
+				border: none;
+				cursor: pointer;
+			}
+
+			li:last-child {
+				padding: 8px 16px;
+				border: none;
+				border-radius: 24px;
+				background-color: variables.$light-gray;
+			}
+		}
+	}
+
+	.menu_container {
+		width: 360px;
+		position: absolute;
+		top: variables.$navbar-height;
+		right: variables.$navbar-height;
+		background-color: variables.$white;
+		box-shadow: 0 0 12px 0 variables.$black;
+		border-radius: 12px;
+		padding: 24px;
+		direction: ltr;
+		z-index: 20;
+
+		a {
+			padding: 12px;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			text-decoration: none;
+		}
+
+		a:first-child {
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+
+			img {
+				margin-right: 12px;
+			}
+
+			span {
+				h4 {
+					color: variables.$dark-gray;
+				}
+			}
+		}
+	}
+}
