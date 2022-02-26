@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import styles from '../../styles/Post.module.scss';
 import CommentWrapper from './CommentWrapper';
 import PostFormModal from './PostFormModal';
+import dateFormatter from './_dateFormatter';
 
 type Props = {
 	post: {
@@ -71,6 +72,7 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 				{ withCredentials: true }
 			);
 			setCommentsData(resCommentsData.data);
+			setCommentFormData({ text: '' });
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -78,8 +80,8 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 
 	const handleDelete = async () => {
 		try {
-			const resPosts = await axios.delete(`/api/posts/${post._id}`);
-			setTimelinePosts(resPosts.data);
+			const resPostsData = await axios.delete(`/api/posts/${post._id}`);
+			setTimelinePosts(resPostsData.data);
 		} catch (error) {
 			console.error(error);
 		}
@@ -146,7 +148,7 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 						<div>
 							{post.author.first_name} {post.author.last_name}
 						</div>
-						<div>{new Date(post.createdAt).toLocaleString('en-gb')}</div>
+						<div>{dateFormatter(post.createdAt)}</div>
 					</div>
 				</div>
 				<div className={styles.right}>
@@ -158,13 +160,13 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 						{showOptions ? (
 							<div className={styles.options_menu}>
 								<div
-									className={styles.edit_controller}
+									className={styles.edit_btn}
 									onClick={(e) => togglePostFormModal(e)}
 								>
 									Edit post
 								</div>
 								<div
-									className={styles.delete_controller}
+									className={styles.delete_btn}
 									onClick={() => setShowConfirmDelete(true)}
 								>
 									Delete post
@@ -183,7 +185,7 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 									Are you sure you want to delete this post? This action is
 									irreversible!
 								</span>
-								<div className={styles.controls}>
+								<div className={styles.delete_controls}>
 									<button
 										className='btn-confirm'
 										type='button'
@@ -220,9 +222,9 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 					) : null}
 				</div>
 				<span className={styles.controls}>
-					<div className={styles.like_controller}>Like</div>
+					<div className={styles.like_btn}>Like</div>
 					<div
-						className={styles.comment_controller}
+						className={styles.comment_btn}
 						onClick={() => {
 							setShowComments(true);
 							commentInputRef.current.focus();
