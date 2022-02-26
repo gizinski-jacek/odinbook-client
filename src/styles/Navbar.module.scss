@@ -6,7 +6,7 @@
 	top: 0;
 	left: 0;
 	right: 0;
-	background-color: white;
+	background-color: variables.$white;
 
 	.left {
 		height: variables.$navbar-height;
@@ -16,18 +16,26 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		z-index: 10;
+		z-index: 20;
+		margin-left: 8px;
 
 		.logo {
 			margin: 0 12px;
 		}
 
-		input {
+		label {
 			padding: 8px 16px;
-			margin: 4px;
-			border: none;
+			background-color: variables.$background;
 			border-radius: 24px;
-			background-color: variables.$light-gray;
+
+			input {
+				margin-left: 8px;
+				border: none;
+				outline: none;
+				background-color: variables.$background;
+				color: variables.$black-a60;
+				font-size: 1rem;
+			}
 		}
 	}
 
@@ -39,18 +47,22 @@
 		right: 0;
 
 		ul {
+			height: variables.$navbar-height;
 			display: flex;
 			flex-direction: row;
 			justify-content: center;
+			align-items: center;
 
 			li {
-				padding: 12px 16px;
+				padding: 8px 40px;
 				margin: 0 24px;
+				border-radius: 8px;
+				background-color: variables.$white;
 			}
 
 			li:hover {
 				cursor: pointer;
-				background-color: variables.$light-gray;
+				filter: brightness(95%);
 			}
 		}
 	}
@@ -60,24 +72,68 @@
 		position: fixed;
 		top: 0;
 		right: 0;
-		z-index: 10;
+		z-index: 20;
 		direction: rtl;
 
 		ul {
+			height: variables.$navbar-height;
 			display: flex;
 			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			z-index: 20;
+			margin-right: 8px;
 
 			li {
-				padding: 8px 16px;
+				margin-right: 8px;
 				border: none;
 				cursor: pointer;
+
+				.icon {
+					display: block;
+					padding: 10px;
+					background-color: variables.$background;
+					border-radius: 50%;
+
+					svg {
+						display: block;
+						margin: auto;
+					}
+				}
 			}
 
-			li:last-child {
-				padding: 8px 16px;
-				border: none;
+			.me_link {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				padding: 6px 8px;
 				border-radius: 24px;
-				background-color: variables.$light-gray;
+				background-color: variables.$white;
+
+				h4 {
+					font-weight: 600;
+					border: none;
+					margin-right: 8px;
+				}
+
+				img {
+					width: 28px;
+					height: 28px;
+				}
+			}
+
+			.find_friends_link {
+				h4 {
+					font-weight: 600;
+					padding: 12px 16px;
+					border: none;
+					border-radius: 24px;
+					background-color: variables.$background;
+				}
+			}
+
+			li:hover {
+				filter: brightness(95%);
 			}
 		}
 	}
@@ -107,13 +163,9 @@
 			flex-direction: row;
 			justify-content: flex-start;
 
-			img {
-				margin-right: 12px;
-			}
-
 			span {
 				h4 {
-					color: variables.$dark-gray;
+					color: variables.$black-a40;
 				}
 			}
 		}
