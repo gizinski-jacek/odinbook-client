@@ -43,6 +43,10 @@ const Timeline = () => {
 
 	const toggleModal = (e: React.MouseEvent<HTMLDivElement>, text: string) => {
 		e.stopPropagation();
+		if (!text) {
+			setShowPostFormModal(false);
+			setPostText(text);
+		}
 		if (e.target === e.currentTarget) {
 			setShowPostFormModal(false);
 			setPostText(text);
@@ -66,7 +70,10 @@ const Timeline = () => {
 				<div className='profile-picture'>
 					<img src='placeholder_profile_pic.png' alt='user-profile-pic' />
 				</div>
-				<span onClick={() => setShowPostFormModal(true)}>
+				<span
+					className={postText ? styles.not_empty : ''}
+					onClick={() => setShowPostFormModal(true)}
+				>
 					<h4>
 						{postText ? postText : `What's on your mind, ${user.first_name}?`}
 					</h4>
