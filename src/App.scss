@@ -5,7 +5,8 @@
 }
 
 body {
-	font-family: 16 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande';
+	font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+	font-size: 16px;
 }
 
 h1 {
@@ -28,6 +29,14 @@ h5 {
 	font-size: 0.8rem;
 }
 
+h6 {
+	font-size: 0.7rem;
+}
+
+p {
+	font-size: 0.9rem;
+}
+
 a {
 	color: variables.$black;
 	text-decoration: none;
@@ -38,7 +47,7 @@ a {
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
-	background-color: variables.$light-gray;
+	background-color: variables.$background;
 
 	.front-container {
 		flex: 1;
@@ -95,7 +104,7 @@ a {
 
 .btn-accept {
 	background-color: variables.$green;
-	border-radius: 12px;
+	border-radius: 8px;
 	border: none;
 	padding: 8px 12px;
 	font-size: 1rem;
@@ -105,7 +114,7 @@ a {
 
 .btn-decline {
 	background-color: variables.$red;
-	border-radius: 12px;
+	border-radius: 8px;
 	border: none;
 	padding: 8px 12px;
 	font-size: 1rem;
@@ -116,7 +125,7 @@ a {
 .btn-confirm {
 	background-color: variables.$blue;
 	color: variables.$white;
-	border-radius: 12px;
+	border-radius: 8px;
 	border: none;
 	padding: 8px 12px;
 	font-size: 1rem;
@@ -125,13 +134,13 @@ a {
 }
 
 .btn-confirm:hover {
-	filter: brightness(90%);
+	filter: brightness(95%);
 }
 
 .btn-cancel {
 	background-color: variables.$white;
 	color: variables.$black;
-	border-radius: 12px;
+	border-radius: 8px;
 	border: none;
 	padding: 8px 12px;
 	font-size: 1rem;
@@ -140,12 +149,13 @@ a {
 }
 
 .btn-cancel:hover {
-	filter: brightness(90%);
+	filter: brightness(95%);
 }
 
 .btn-form-submit {
-	background-color: variables.$gray-transparent;
-	border-radius: 12px;
+	color: variables.$white;
+	background-color: variables.$blue;
+	border-radius: 8px;
 	border: none;
 	padding: 8px 12px;
 	font-size: 1rem;
@@ -153,16 +163,23 @@ a {
 	cursor: pointer;
 }
 
+.btn-form-submit:disabled {
+	margin-top: 12px;
+	background-color: variables.$black-a10;
+	color: variables.$black-a20;
+}
+
 .btn-form-submit:hover {
+	filter: brightness(95%);
 }
 
 .close_x_btn {
 	position: absolute;
 	top: 12px;
 	right: 12px;
-	width: 36px;
-	height: 36px;
-	background-color: variables.$light-gray;
+	width: 37px;
+	height: 37px;
+	background-color: variables.$black-a10;
 	border: none;
 	border-radius: 50%;
 	cursor: pointer;
@@ -172,12 +189,12 @@ a {
 .close_x_btn:after {
 	position: absolute;
 	top: 8px;
-	left: 17px;
+	left: 18px;
 	content: ' ';
-	height: 20px;
-	width: 3px;
-	background-color: variables.$dark-gray;
-	color: variables.$dark-gray;
+	height: 21px;
+	width: 2px;
+	background-color: variables.$black-a60;
+	color: variables.$black-a60;
 }
 
 .close_x_btn:before {
@@ -189,13 +206,24 @@ a {
 }
 
 .close_x_btn:hover {
-	filter: brightness(90%);
+	filter: brightness(95%);
 }
 
-.profile-picture {
+.profile-picture,
+.site-logo {
+	cursor: pointer;
+
 	img {
-		display: inline-block;
+		display: block;
 		border-radius: 50%;
 		margin-right: 12px;
 	}
+}
+
+.site-logo {
+	margin-left: 12px;
+}
+
+.site-logo:hover {
+	filter: brightness(95%);
 }
