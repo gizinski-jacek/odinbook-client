@@ -41,12 +41,10 @@ const Timeline = () => {
 		})();
 	}, []);
 
-	const toggleModal = (e: React.MouseEvent<HTMLDivElement>, text: string) => {
-		e.stopPropagation();
-		if (!text) {
-			setShowPostFormModal(false);
-			setPostText(text);
-		}
+	const togglePostFormModal = (
+		e: React.MouseEvent<HTMLDivElement>,
+		text: string
+	) => {
 		if (e.target === e.currentTarget) {
 			setShowPostFormModal(false);
 			setPostText(text);
@@ -81,7 +79,7 @@ const Timeline = () => {
 			</div>
 			{showPostFormModal ? (
 				<PostFormModal
-					toggleModal={toggleModal}
+					togglePostFormModal={togglePostFormModal}
 					setTimelinePosts={setTimelinePosts}
 					post={{ text: postText }}
 				/>
