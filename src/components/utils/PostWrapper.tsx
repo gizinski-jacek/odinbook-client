@@ -1,5 +1,6 @@
+//@ts-nocheck
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from '../../styles/Post.module.scss';
 import CommentWrapper from './CommentWrapper';
 import PostFormModal from './PostFormModal';
@@ -30,6 +31,8 @@ type CommentsData = Array<{
 }>;
 
 const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
+	const commentInputRef = useRef(null);
+
 	const [commentsData, setCommentsData] = useState<CommentsData>();
 	const [commentFormData, setCommentFormData] = useState({ text: '' });
 	const [showComments, setShowComments] = useState(false);
@@ -93,6 +96,8 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 	};
 
 	const closeOptions = (e: any) => {
+		console.log(e.target);
+		console.log(e.currentTarget);
 		e.stopPropagation();
 		if (
 			e.target.className &&
@@ -103,7 +108,17 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 		}
 	};
 
-	const toggleModal = (e: React.MouseEvent<HTMLButtonElement>) => {
+	const toggleDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+		if (e.target !== e.currentTarget) {
+			setShowConfirmDelete(true);
+			document.addEventListener('click', closeOptions);
+		} else {
+			setShowConfirmDelete(false);
+		}
+	};
+
+	const togglePostFormModal = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		if (e.target === e.currentTarget) {
 			setShowPostFormModal(false);
@@ -111,7 +126,13 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 	};
 
 	const commentsDisplay = commentsData?.map((comment) => {
-		return <CommentWrapper key={comment._id} comment={comment} />;
+		return (
+			<CommentWrapper
+				key={comment._id}
+				comment={comment}
+				setCommentsData={setCommentsData}
+			/>
+		);
 	});
 
 	return (
@@ -129,22 +150,33 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 					</div>
 				</div>
 				<div className={styles.right}>
-					<button
+					<div
 						className={styles.options_toggle}
 						onClick={(e) => toggleOptions(e)}
 					>
-						Options
-					</button>
-					{showOptions ? (
-						<div className={styles.options_menu}>
-							<button onClick={(e) => toggleModal(e)}>Edit post</button>
-							<button onClick={() => setShowConfirmDelete(true)}>
-								Delete post
-							</button>
-						</div>
-					) : null}
+						<span></span>
+						{showOptions ? (
+							<div className={styles.options_menu}>
+								<div
+									className={styles.edit_controller}
+									onClick={(e) => togglePostFormModal(e)}
+								>
+									Edit post
+								</div>
+								<div
+									className={styles.delete_controller}
+									onClick={() => setShowConfirmDelete(true)}
+								>
+									Delete post
+								</div>
+							</div>
+						) : null}
+					</div>
 					{showConfirmDelete ? (
-						<div className={styles.confirm_delete_modal}>
+						<div
+							className={styles.confirm_delete_modal}
+							onClick={(e) => toggleDeleteModal(e)}
+						>
 							<div className={styles.confirm_delete}>
 								<h3>Delete this post?</h3>
 								<span>
@@ -159,11 +191,7 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 									>
 										Delete
 									</button>
-									<button
-										className='btn-cancel'
-										type='button'
-										onClick={() => setShowConfirmDelete(false)}
-									>
+									<button className='btn-cancel' type='button'>
 										Cancel
 									</button>
 								</div>
@@ -172,25 +200,34 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 					) : null}
 					{showPostFormModal ? (
 						<PostFormModal
-							toggleModal={toggleModal}
+							togglePostFormModal={togglePostFormModal}
 							setTimelinePosts={setTimelinePosts}
 							post={post}
 						/>
 					) : null}
 				</div>
 			</div>
-			<div className={styles.text}>{post.text}</div>
-			<div>
-				<div onClick={() => setShowComments((prevState) => !prevState)}>
+			<p>{post.text}</p>
+			<div className={styles.bottom}>
+				<div
+					className={styles.comment_count}
+					onClick={() => setShowComments((prevState) => !prevState)}
+				>
 					{commentsData ? (
 						commentsData?.length > 0 ? (
 							<p>{commentsData?.length} comments</p>
 						) : null
 					) : null}
 				</div>
-				<span>
-					<div>Like</div>
-					<div onClick={() => setShowComments((prevState) => !prevState)}>
+				<span className={styles.controls}>
+					<div className={styles.like_controller}>Like</div>
+					<div
+						className={styles.comment_controller}
+						onClick={() => {
+							setShowComments(true);
+							commentInputRef.current.focus();
+						}}
+					>
 						Comment
 					</div>
 				</span>
@@ -198,22 +235,27 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 			<div className={styles.comments_container}>
 				{showComments ? (commentsDisplay ? commentsDisplay : null) : null}
 			</div>
-			<form className={styles.new_comment} onSubmit={(e) => handleSubmit(e)}>
-				<div>profile picture</div>
-				<textarea
-					id='text'
-					name='text'
-					minLength={1}
-					maxLength={512}
-					onChange={(e) => handleChange(e)}
-					value={commentFormData.text}
-					required
-					placeholder='Write a comment'
-				/>
-				<button className='btn-form-submit' type='submit'>
-					Submit
-				</button>
-			</form>
+			<div className={styles.new_comment_form}>
+				<div className='profile-picture'>
+					<img src='placeholder_profile_pic.png' alt='user-profile-pic' />
+				</div>
+				<form className={styles.new_comment} onSubmit={(e) => handleSubmit(e)}>
+					<textarea
+						id='text'
+						name='text'
+						ref={commentInputRef}
+						minLength={1}
+						maxLength={512}
+						onChange={(e) => handleChange(e)}
+						value={commentFormData.text}
+						required
+						placeholder='Write a comment...'
+					/>
+					<button className='btn-form-submit' type='submit'>
+						Submit
+					</button>
+				</form>
+			</div>
 		</div>
 	);
 };
