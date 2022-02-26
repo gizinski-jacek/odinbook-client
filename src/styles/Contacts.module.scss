@@ -16,6 +16,7 @@
 			justify-content: space-between;
 			border-radius: 12px;
 			padding: 12px;
+			background-color: variables.$background;
 			cursor: pointer;
 		}
 
@@ -27,7 +28,7 @@
 
 		.request:hover,
 		.friend:hover {
-			background-color: variables.$hover-gray;
+			filter: brightness(95%);
 		}
 	}
 }
