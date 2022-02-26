@@ -10,18 +10,23 @@
 
 	.create_new_post {
 		margin-bottom: 24px;
-		padding: 12px;
+		padding: 8px 16px;
 		border-radius: 12px;
 		background-color: variables.$white;
 		display: flex;
 		align-items: center;
+		border: 1px solid variables.$black-a20;
+
+		img:hover {
+			filter: brightness(95%);
+		}
 
 		span {
 			border: none;
 			border-radius: 24px;
 			padding: 12px 16px;
-			background-color: variables.$light-gray;
-			color: variables.$dark-gray;
+			background-color: variables.$background;
+			color: variables.$black-a40;
 			flex: 1;
 			text-align: left;
 			cursor: pointer;
@@ -38,7 +43,11 @@
 		}
 
 		span:hover {
-			background-color: variables.$hover-gray;
+			filter: brightness(95%);
+		}
+
+		.not_empty {
+			color: variables.$black;
 		}
 	}
 }
