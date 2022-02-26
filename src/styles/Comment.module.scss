@@ -1,0 +1,145 @@
+@use './variables';
+
+.comment {
+	display: flex;
+	flex-direction: row;
+	margin: 4px 0;
+
+	.body {
+		.metadata {
+			display: flex;
+			flex-direction: column;
+			background-color: variables.$background;
+			padding: 8px 12px;
+			border-radius: 16px;
+			line-height: 0.7rem;
+
+			a {
+				font-weight: 600;
+				font-size: 0.8rem;
+			}
+
+			p {
+				font-size: 0.8rem;
+			}
+		}
+
+		.controls {
+			width: fit-content;
+			margin: 2px 8px;
+			display: flex;
+			flex-direction: row;
+			font-size: 0.7rem;
+			color: variables.$black-a60;
+
+			.like_btn,
+			.reply_btn {
+				font-weight: 600;
+				margin-right: 12px;
+				cursor: pointer;
+			}
+		}
+	}
+
+	.options_toggle {
+		margin: 0 4px;
+		margin-top: 28px;
+		position: relative;
+		width: 28px;
+		height: 28px;
+		min-width: 28px;
+		min-height: 28px;
+		border-radius: 50%;
+		cursor: pointer;
+
+		span {
+			position: absolute;
+			top: 12px;
+			left: 12px;
+			content: '';
+			background-color: variables.$black-a40;
+			border-radius: 50%;
+			padding: 2px;
+		}
+
+		span:before {
+			position: absolute;
+			top: 0;
+			right: 6px;
+			content: '';
+			background-color: variables.$black-a40;
+			border-radius: 50%;
+			padding: 2px;
+		}
+
+		span:after {
+			position: absolute;
+			top: 0;
+			left: 6px;
+			content: '';
+			background-color: variables.$black-a40;
+			border-radius: 50%;
+			padding: 2px;
+		}
+	}
+
+	.options_toggle:hover {
+		background-color: variables.$black-a05;
+	}
+
+	.options_menu {
+		position: absolute;
+		top: 40px;
+		right: 0;
+		padding: 8px;
+		width: 260px;
+		border-radius: 8px;
+		background-color: variables.$white;
+		box-shadow: 0 0 4px 0 variables.$black-a60;
+
+		.edit_btn,
+		.delete_btn {
+			padding: 8px;
+			border-radius: 8px;
+			cursor: pointer;
+		}
+
+		div:hover {
+			background-color: variables.$black-a05;
+		}
+	}
+
+	.edit_comment_form {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+
+		form {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			flex: 1;
+
+			textarea {
+				flex: 1;
+				border: none;
+				resize: none;
+				padding: 8px 12px;
+				height: 32px;
+				border-radius: 24px;
+				background-color: variables.$background;
+				outline: none;
+			}
+
+			button {
+				margin-left: 12px;
+				padding: 4px 8px;
+			}
+		}
+
+		img {
+			width: 32px;
+			height: 32px;
+		}
+	}
+}
