@@ -4,7 +4,7 @@ import { UserContext } from '../hooks/UserContext';
 import styles from '../../styles/PostFormModal.module.scss';
 
 type Props = {
-	toggleModal: Function;
+	togglePostFormModal: Function;
 	setTimelinePosts: Function;
 	post?: {
 		_id?: string;
@@ -16,7 +16,7 @@ type Props = {
 };
 
 const PostFormModal: React.FC<Props> = ({
-	toggleModal,
+	togglePostFormModal,
 	setTimelinePosts,
 	post,
 }) => {
@@ -28,7 +28,7 @@ const PostFormModal: React.FC<Props> = ({
 		try {
 			const resPosts = await axios.post('/api/posts', postFormData);
 			setTimelinePosts(resPosts.data);
-			toggleModal(e, '');
+			togglePostFormModal(e, '');
 		} catch (error) {
 			console.error(error);
 		}
@@ -39,7 +39,7 @@ const PostFormModal: React.FC<Props> = ({
 		try {
 			const resPosts = await axios.put(`/api/posts/${post?._id}`, postFormData);
 			setTimelinePosts(resPosts.data);
-			toggleModal(e, '');
+			togglePostFormModal(e, '');
 		} catch (error) {
 			console.error(error);
 		}
@@ -56,14 +56,14 @@ const PostFormModal: React.FC<Props> = ({
 	return (
 		<div
 			className={styles.post_form_modal}
-			onClick={(e) => toggleModal(e, postFormData.text)}
+			onClick={(e) => togglePostFormModal(e, postFormData.text)}
 		>
 			<div className={styles.new_post_container}>
 				<div className={styles.top}>
 					<h3>Create post</h3>
 					<span
 						className='close_x_btn'
-						onClick={(e) => toggleModal(e, postFormData.text)}
+						onClick={(e) => togglePostFormModal(e, postFormData.text)}
 					></span>
 				</div>
 				<span className={styles.metadata}>
