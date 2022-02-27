@@ -92,8 +92,11 @@ const Navbar = () => {
 		<nav className={styles.navbar}>
 			<div className={styles.left}>
 				<Link to='/'>
-					<div className='site-logo'>
-						<img src='placeholder_profile_pic.png' alt='user-profile-pic' />
+					<div className='profile-pic-style'>
+						<img
+							src='icons/placeholder_profile_pic.png'
+							alt='user-profile-pic'
+						/>
 					</div>
 				</Link>
 				<label>
@@ -239,10 +242,13 @@ const Navbar = () => {
 						</span>
 					</li>
 					<li>
-						<Link className={styles.me_link} to='/me'>
+						<Link to='/me' className={styles.me_link}>
 							<h4>{user.first_name}</h4>
-							<div className='profile-picture'>
-								<img src='placeholder_profile_pic.png' alt='user-profile-pic' />
+							<div className='profile-pic-style'>
+								<img
+									src='icons/placeholder_profile_pic.png'
+									alt='user-profile-pic'
+								/>
 							</div>
 						</Link>
 					</li>
@@ -257,10 +263,10 @@ const Navbar = () => {
 				<div className={styles.menu_container}>
 					{showAccountMenu ? (
 						<div className={styles.menu_account}>
-							<Link to='/me'>
-								<div className='profile-picture'>
+							<Link to='/me' className={styles.me_link}>
+								<div className='profile-pic-style'>
 									<img
-										src='placeholder_profile_pic.png'
+										src='icons/placeholder_profile_pic.png'
 										alt='user-profile-pic'
 									/>
 								</div>
@@ -268,23 +274,53 @@ const Navbar = () => {
 									<h3>
 										{user.first_name} {user.last_name}
 									</h3>
-									<h4>See your profile</h4>
+									<h5>See your profile</h5>
 								</span>
 							</Link>
-							<Link to='/feedback'>
+							<hr />
+							<Link to='/feedback' className={styles.feedback_link}>
+								<div className={styles.icon}>
+									<i />
+								</div>
 								<h4>Give feedback</h4>
-								<span>{'>'}</span>
 							</Link>
-							<Link to='settings-privacy'>
+							<hr />
+							<Link
+								to='settings-privacy'
+								className={styles.settings_privacy_link}
+							>
+								<div className={styles.icon}>
+									<i />
+								</div>
 								<h4>{'Settings & privacy'}</h4>
-								<span>{'>'}</span>
+								<span className={styles.arrows}></span>
 							</Link>
-							<Link to='display-accesibility'>
+							<Link to='help-support' className={styles.help_support_link}>
+								<div className={styles.icon}>
+									<i />
+								</div>
+								<h4>{'Help & support'}</h4>
+								<span className={styles.arrows}></span>
+							</Link>
+							<Link
+								to='display-accesibility'
+								className={styles.display_accesibility_link}
+							>
+								<div className={styles.icon}>
+									<i />
+								</div>
 								<h4>{'Display & accessibility'}</h4>
-								<span>{'>'}</span>
+								<span className={styles.arrows}></span>
 							</Link>
-							<Link to='/' onClick={() => handleLogOut()}>
-								Log Out
+							<Link
+								to='/'
+								onClick={() => handleLogOut()}
+								className={styles.log_out_btn}
+							>
+								<div className={styles.icon}>
+									<i />
+								</div>
+								<h4>Log Out</h4>
 							</Link>
 						</div>
 					) : null}
