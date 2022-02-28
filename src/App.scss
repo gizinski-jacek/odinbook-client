@@ -102,63 +102,48 @@ a:hover {
 	}
 }
 
-.btn-remove {
-	background-color: variables.$black-a10;
-	color: variables.$black;
+.btn-default {
 	border-radius: 8px;
 	border: none;
 	padding: 8px 12px;
-
 	font-weight: 600;
 	cursor: pointer;
+}
+
+.btn-default:hover {
+	filter: brightness(95%);
+}
+
+.btn-remove {
+	background-color: variables.$black-a10;
+	color: variables.$black;
 }
 
 .btn-confirm {
 	background-color: variables.$blue;
 	color: variables.$white;
-	border-radius: 8px;
-	border: none;
-	padding: 8px 12px;
-	font-weight: 600;
-	cursor: pointer;
-}
-
-.btn-confirm:hover {
-	filter: brightness(95%);
 }
 
 .btn-cancel {
 	background-color: variables.$white;
 	color: variables.$black;
-	border-radius: 8px;
-	border: none;
-	padding: 8px 12px;
-	font-weight: 600;
-	cursor: pointer;
 }
 
-.btn-cancel:hover {
-	filter: brightness(95%);
+.btn-active {
+	background-color: variables.$blue-a30 !important;
+	color: variables.$blue;
+	fill: variables.$blue;
 }
 
 .btn-form-submit {
 	color: variables.$white;
 	background-color: variables.$blue;
-	border-radius: 8px;
-	border: none;
-	padding: 8px 12px;
-	font-weight: 600;
-	cursor: pointer;
 }
 
 .btn-form-submit:disabled {
 	margin-top: 12px;
 	background-color: variables.$black-a10;
 	color: variables.$black-a20;
-}
-
-.btn-form-submit:hover {
-	filter: brightness(95%);
 }
 
 .close_x_btn {
