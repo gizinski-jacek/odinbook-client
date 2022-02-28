@@ -5,12 +5,7 @@
 	padding: 8px 16px;
 	border-radius: 12px;
 	background-color: variables.$white;
-	border: 1px solid variables.$black-a20;
-
-	img {
-		width: 32px;
-		height: 32px;
-	}
+	box-shadow: 0 0 2px 0 variables.$black-a20;
 
 	img:hover {
 		filter: brightness(95%);
@@ -25,6 +20,20 @@
 		.left {
 			display: flex;
 			flex-direction: row;
+
+			.metadata {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-evenly;
+
+				h4 {
+					font-weight: 600;
+				}
+
+				h5 {
+					color: variables.$black-a60;
+				}
+			}
 		}
 
 		.right {
@@ -89,7 +98,8 @@
 					cursor: pointer;
 				}
 
-				div:hover {
+				.edit_btn:hover,
+				.delete_btn:hover {
 					background-color: variables.$black-a05;
 				}
 			}
@@ -168,7 +178,7 @@
 
 			button {
 				margin-left: 12px;
-				padding: 4px 8px;
+				padding: 6px;
 			}
 		}
 
@@ -185,7 +195,7 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: variables.$white-transparent;
+	background-color: variables.$white-a60;
 	display: flex;
 	justify-content: center;
 	align-items: center;
