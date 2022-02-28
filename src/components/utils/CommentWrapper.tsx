@@ -1,12 +1,19 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { userInfo } from 'os';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../../styles/Comment.module.scss';
+import { UserContext } from '../hooks/UserContext';
 import dateFormatter from './_dateFormatter';
 
 type Props = {
 	comment: {
 		_id: string;
+		author: {
+			_id: string;
+			first_name: string;
+			last_name: string;
+		};
 		post_ref: string;
 		text: string;
 		createdAt: string;
@@ -16,6 +23,7 @@ type Props = {
 };
 
 const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
+	const { user } = useContext(UserContext);
 	const [commentFormData, setCommentFormData] = useState({ text: '' });
 	const [editingComment, setEditingComment] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
@@ -108,13 +116,18 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 			setEditingComment(false);
 		}
 	};
-
+	console.log(comment);
 	return (
 		<>
 			{editingComment ? (
 				<div className={styles.edit_comment_form}>
-					<div className='profile-picture'>
-						<img src='placeholder_profile_pic.png' alt='user-profile-pic' />
+					<div className='profile-pic-style'>
+						<Link to={`/profile/${comment.author._id}`}>
+							<img
+								src='icons/placeholder_profile_pic.png'
+								alt='user-profile-pic'
+							/>
+						</Link>
 					</div>
 					<form
 						className={styles.new_comment}
@@ -137,12 +150,19 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 				</div>
 			) : (
 				<div className={styles.comment}>
-					<div className='profile-picture'>
-						<img src='placeholder_profile_pic.png' alt='user-profile-pic' />
+					<div className='profile-pic-style'>
+						<Link to={`/profile/${comment.author._id}`}>
+							<img
+								src='icons/placeholder_profile_pic.png'
+								alt='user-profile-pic'
+							/>
+						</Link>
 					</div>
 					<div className={styles.body}>
 						<div className={styles.metadata}>
-							<Link to='user-profile'>full name</Link>
+							<Link to={`/profile/${comment.author._id}`}>
+								{comment.author.first_name} {comment.author.last_name}
+							</Link>
 							<p>{comment.text}</p>
 						</div>
 						<span className={styles.controls}>
@@ -152,57 +172,61 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 							<div className={styles.reply_btn} onClick={() => handleReply()}>
 								Reply
 							</div>
-							<h6>{dateFormatter(comment.createdAt)}</h6>
+							<Link to={`/posts/:postid`}>
+								{dateFormatter(comment.createdAt)}
+							</Link>
 						</span>
 					</div>
-					<span
-						className={styles.options_toggle}
-						onClick={(e) => toggleOptions(e)}
-					>
-						<span></span>
-						{showOptions ? (
-							<div className={styles.options_menu}>
-								<div
-									className={styles.edit_btn}
-									onClick={(e) => togglePostFormModal(e)}
-								>
-									Edit comment
-								</div>
-								<div
-									className={styles.delete_btn}
-									onClick={() => setShowConfirmDelete(true)}
-								>
-									Delete comment
-								</div>
-							</div>
-						) : null}
-						{showConfirmDelete ? (
-							<div
-								className={styles.confirm_delete_modal}
-								onClick={(e) => toggleDeleteModal(e)}
-							>
-								<div className={styles.confirm_delete}>
-									<h3>Delete this post?</h3>
-									<span>
-										Are you sure you want to delete this post? This action is
-										irreversible!
-									</span>
-									<div className={styles.delete_controls}>
-										<button
-											className='btn-confirm'
-											type='button'
-											onClick={() => handleDelete()}
-										>
-											Delete
-										</button>
-										<button className='btn-cancel' type='button'>
-											Cancel
-										</button>
+					{user._id === comment.author._id ? (
+						<span
+							className={styles.options_toggle}
+							onClick={(e) => toggleOptions(e)}
+						>
+							<span></span>
+							{showOptions ? (
+								<div className={styles.options_menu}>
+									<div
+										className={styles.edit_btn}
+										onClick={(e) => togglePostFormModal(e)}
+									>
+										Edit comment
+									</div>
+									<div
+										className={styles.delete_btn}
+										onClick={() => setShowConfirmDelete(true)}
+									>
+										Delete comment
 									</div>
 								</div>
-							</div>
-						) : null}
-					</span>
+							) : null}
+							{showConfirmDelete ? (
+								<div
+									className={styles.confirm_delete_modal}
+									onClick={(e) => toggleDeleteModal(e)}
+								>
+									<div className={styles.confirm_delete}>
+										<h3>Delete this post?</h3>
+										<span>
+											Are you sure you want to delete this post? This action is
+											irreversible!
+										</span>
+										<div className={styles.delete_controls}>
+											<button
+												className='btn-confirm'
+												type='button'
+												onClick={() => handleDelete()}
+											>
+												Delete
+											</button>
+											<button className='btn-cancel' type='button'>
+												Cancel
+											</button>
+										</div>
+									</div>
+								</div>
+							) : null}
+						</span>
+					) : null}
 				</div>
 			)}
 		</>
