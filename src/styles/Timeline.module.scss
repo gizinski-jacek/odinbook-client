@@ -2,8 +2,8 @@
 
 .timeline {
 	flex: 2.5;
-	margin: 40px;
-	margin-top: 12px;
+	margin: 24px;
+	margin-top: 4px;
 	padding: 12px;
 	display: flex;
 	flex-direction: column;
@@ -15,7 +15,7 @@
 		background-color: variables.$white;
 		display: flex;
 		align-items: center;
-		border: 1px solid variables.$black-a20;
+		box-shadow: 0 0 2px 0 variables.$black-a20;
 
 		img:hover {
 			filter: brightness(95%);
