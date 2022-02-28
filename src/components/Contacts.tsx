@@ -98,13 +98,13 @@ const Contacts = () => {
 					</h4>
 					<div className={styles.controls}>
 						<button
-							className='btn-confirm'
+							className='btn-default btn-confirm'
 							onClick={() => acceptRequest(request)}
 						>
 							Confirm
 						</button>
 						<button
-							className='btn-remove'
+							className='btn-default btn-remove'
 							onClick={() => declineRequest(request)}
 						>
 							Remove
