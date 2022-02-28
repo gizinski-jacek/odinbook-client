@@ -161,7 +161,7 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 					</div>
 				</div>
 				<div className={styles.right}>
-					<div
+					<span
 						className={styles.options_toggle}
 						onClick={(e) => toggleOptions(e)}
 					>
@@ -182,7 +182,7 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 								</div>
 							</div>
 						) : null}
-					</div>
+					</span>
 					{showConfirmDelete ? (
 						<div
 							className={styles.confirm_delete_modal}
@@ -196,13 +196,13 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 								</span>
 								<div className={styles.delete_controls}>
 									<button
-										className='btn-confirm'
+										className='btn-default btn-confirm'
 										type='button'
 										onClick={() => handleDelete()}
 									>
 										Delete
 									</button>
-									<button className='btn-cancel' type='button'>
+									<button className='btn-default btn-cancel' type='button'>
 										Cancel
 									</button>
 								</div>
@@ -265,7 +265,7 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 						required
 						placeholder='Write a comment...'
 					/>
-					<button className='btn-form-submit' type='submit'>
+					<button className='btn-default btn-form-submit' type='submit'>
 						Submit
 					</button>
 				</form>
