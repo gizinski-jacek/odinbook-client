@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from '../styles/Timeline.module.scss';
 import { UserContext } from './hooks/UserContext';
 import PostFormModal from './utils/PostFormModal';
@@ -65,8 +66,13 @@ const Timeline = () => {
 	return (
 		<div className={styles.timeline}>
 			<div className={styles.create_new_post}>
-				<div className='profile-picture'>
-					<img src='placeholder_profile_pic.png' alt='user-profile-pic' />
+				<div className='profile-pic-style'>
+					<Link to={`/profile/${user._id}`}>
+						<img
+							src='icons/placeholder_profile_pic.png'
+							alt='user-profile-pic'
+						/>
+					</Link>
 				</div>
 				<span
 					className={postText ? styles.not_empty : ''}
