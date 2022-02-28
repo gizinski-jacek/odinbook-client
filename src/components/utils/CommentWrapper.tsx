@@ -143,7 +143,7 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 							required
 							placeholder='Write a comment...'
 						/>
-						<button className='btn-form-submit' type='submit'>
+						<button className='btn-default btn-form-submit' type='submit'>
 							Submit
 						</button>
 					</form>
@@ -212,13 +212,13 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 										</span>
 										<div className={styles.delete_controls}>
 											<button
-												className='btn-confirm'
+												className='btn-default btn-confirm'
 												type='button'
 												onClick={() => handleDelete()}
 											>
 												Delete
 											</button>
-											<button className='btn-cancel' type='button'>
+											<button className='btn-default btn-cancel' type='button'>
 												Cancel
 											</button>
 										</div>
