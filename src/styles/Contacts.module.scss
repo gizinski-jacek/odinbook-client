@@ -7,98 +7,98 @@
 	max-width: 360px;
 	display: flex;
 	flex-direction: column;
+}
 
-	.friend_requests {
-		padding: 16px;
-		background-color: variables.$white;
-		border-radius: 8px;
-		box-shadow: 0 0 2px 0 variables.$black-a20;
+.friend_requests {
+	padding: 16px;
+	background-color: variables.$white;
+	border-radius: 8px;
+	box-shadow: 0 0 2px 0 variables.$black-a20;
 
-		.top {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			margin-top: 4px;
-			margin-bottom: 8px;
+	.top {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		margin-top: 4px;
+		margin-bottom: 8px;
 
-			img {
-				width: 20px;
-				height: 20px;
-				margin-right: 8px;
-			}
-		}
-
-		.request {
-			display: flex;
-			flex-direction: row;
-			border-radius: 12px;
-			padding: 12px 8px;
-			margin-bottom: 4px;
-			cursor: pointer;
-
-			img {
-				width: 60px;
-				height: 60px;
-			}
-
-			.contents {
-				display: flex;
-				flex-direction: column;
-				justify-content: space-between;
-
-				h4 {
-					font-weight: 600;
-					white-space: nowrap;
-					margin: 0 4px;
-				}
-
-				.controls {
-					display: flex;
-					flex-wrap: wrap;
-
-					button {
-						flex: 1;
-						margin: 4px;
-					}
-
-					button:hover {
-						filter: unset;
-					}
-				}
-			}
-		}
-
-		.request:hover {
-			background-color: variables.$black-a10;
+		img {
+			width: 20px;
+			height: 20px;
+			margin-right: 8px;
 		}
 	}
+}
 
-	.friend_list {
-		border-radius: 8px;
+.request {
+	display: flex;
+	flex-direction: row;
+	border-radius: 12px;
+	padding: 12px 8px;
+	margin-bottom: 4px;
+	cursor: pointer;
 
-		.top {
-			color: variables.$black-a60;
+	img {
+		width: 60px;
+		height: 60px;
+	}
+
+	.contents {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
+		h4 {
 			font-weight: 600;
-			margin-bottom: 8px;
+			white-space: nowrap;
+			margin: 0 4px;
 		}
 
-		.friend {
+		.controls {
 			display: flex;
-			flex-direction: row;
-			align-items: center;
-			border-radius: 12px;
-			padding: 8px;
-			margin-bottom: 4px;
-			cursor: pointer;
+			flex-wrap: wrap;
 
-			img {
-				width: 36px;
-				height: 36px;
+			button {
+				flex: 1;
+				margin: 4px;
+			}
+
+			button:hover {
+				filter: unset;
 			}
 		}
-
-		.friend:hover {
-			background-color: variables.$black-a10;
-		}
 	}
+}
+
+.request:hover {
+	background-color: variables.$black-a10;
+}
+
+.friend_list {
+	border-radius: 8px;
+
+	.top {
+		color: variables.$black-a60;
+		font-weight: 600;
+		margin-bottom: 8px;
+	}
+}
+
+.friend {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	border-radius: 12px;
+	padding: 8px;
+	margin-bottom: 4px;
+	cursor: pointer;
+
+	img {
+		width: 36px;
+		height: 36px;
+	}
+}
+
+.friend:hover {
+	background-color: variables.$black-a10;
 }
