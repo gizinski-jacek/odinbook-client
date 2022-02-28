@@ -1,6 +1,8 @@
 //@ts-nocheck
+
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from '../../styles/Post.module.scss';
 import CommentWrapper from './CommentWrapper';
 import PostFormModal from './PostFormModal';
@@ -98,8 +100,6 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 	};
 
 	const closeOptions = (e: any) => {
-		console.log(e.target);
-		console.log(e.currentTarget);
 		e.stopPropagation();
 		if (
 			e.target.className &&
@@ -141,14 +141,23 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 		<div className={styles.post}>
 			<div className={styles.top}>
 				<div className={styles.left}>
-					<div className='profile-picture'>
-						<img src='placeholder_profile_pic.png' alt='user-profile-pic' />
+					<div className='profile-pic-style'>
+						<Link to={`/profile/${post.author._id}`}>
+							<img
+								src='icons/placeholder_profile_pic.png'
+								alt='user-profile-pic'
+							/>
+						</Link>
 					</div>
 					<div className={styles.metadata}>
-						<div>
-							{post.author.first_name} {post.author.last_name}
-						</div>
-						<div>{dateFormatter(post.createdAt)}</div>
+						<Link to={`/profile/${post.author._id}`}>
+							<h4>
+								{post.author.first_name} {post.author.last_name}
+							</h4>
+						</Link>
+						<Link to={`/posts/${post._id}`}>
+							<h5>{dateFormatter(post.createdAt)}</h5>
+						</Link>
 					</div>
 				</div>
 				<div className={styles.right}>
@@ -238,8 +247,11 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 				{showComments ? (commentsDisplay ? commentsDisplay : null) : null}
 			</div>
 			<div className={styles.new_comment_form}>
-				<div className='profile-picture'>
-					<img src='placeholder_profile_pic.png' alt='user-profile-pic' />
+				<div
+					className='profile-pic-style'
+					onClick={() => commentInputRef.current.focus()}
+				>
+					<img src='icons/placeholder_profile_pic.png' alt='user-profile-pic' />
 				</div>
 				<form className={styles.new_comment} onSubmit={(e) => handleSubmit(e)}>
 					<textarea
