@@ -13,6 +13,7 @@ const Navbar = () => {
 	const [showAccountMenu, setShowAccountMenu] = useState(false);
 	const [searchOdinbookInput, setSearchOdinbookInput] = useState('');
 	const [searchMessengerInput, setSearchMessengerInput] = useState('');
+	const [showAllNotifications, setShowAllNotifications] = useState(true);
 
 	const handleLogOut = async () => {
 		try {
@@ -29,8 +30,14 @@ const Navbar = () => {
 			setShowMenuContainer(true);
 			document.addEventListener('click', closeMenuContainer);
 		}
+		e.currentTarget.parentElement.childNodes.forEach((ele: any) => {
+			ele.firstChild.classList.remove('btn-active');
+		});
 		switch (e.currentTarget.className) {
 			case 'account':
+				if (!showAccountMenu) {
+					e.currentTarget.firstChild.classList.add('btn-active');
+				}
 				if (showAccountMenu) {
 					setShowMenuContainer(false);
 				}
@@ -40,6 +47,9 @@ const Navbar = () => {
 				setShowAccountMenu(!showAccountMenu);
 				break;
 			case 'notifications':
+				if (!showNotificationsMenu) {
+					e.currentTarget.firstChild.classList.add('btn-active');
+				}
 				if (showNotificationsMenu) {
 					setShowMenuContainer(false);
 				}
@@ -49,6 +59,9 @@ const Navbar = () => {
 				setShowAccountMenu(false);
 				break;
 			case 'messenger':
+				if (!showMessengerMenu) {
+					e.currentTarget.firstChild.classList.add('btn-active');
+				}
 				if (showMessengerMenu) {
 					setShowMenuContainer(false);
 				}
@@ -57,7 +70,10 @@ const Navbar = () => {
 				setShowNotificationsMenu(false);
 				setShowAccountMenu(false);
 				break;
-			case 'mainM':
+			case 'mainMenu':
+				if (!showMainMenu) {
+					e.currentTarget.firstChild.classList.add('btn-active');
+				}
 				if (showMainMenu) {
 					setShowMenuContainer(false);
 				}
@@ -88,6 +104,18 @@ const Navbar = () => {
 		}
 	};
 
+	const changeNotificationList = (e: any) => {
+		e.stopPropagation();
+		if (e.target.className.includes('all')) {
+			// fetch all notifications
+			setShowAllNotifications(true);
+		}
+		if (e.target.className.includes('unread')) {
+			// fetch unread notifications
+			setShowAllNotifications(false);
+		}
+	};
+
 	return (
 		<nav className={styles.navbar}>
 			<div className={styles.left}>
@@ -99,7 +127,7 @@ const Navbar = () => {
 						/>
 					</div>
 				</Link>
-				<label>
+				<div className={styles.search_odinbook}>
 					<span>
 						<svg viewBox='0 0 16 16' width='16' height='16'>
 							<g transform='translate(-448 -544)'>
@@ -125,7 +153,6 @@ const Navbar = () => {
 						</svg>
 					</span>
 					<input
-						className={styles.search}
 						type='text'
 						id='search_odinbook'
 						name='search_odinbook'
@@ -135,7 +162,7 @@ const Navbar = () => {
 						onChange={(e) => setSearchOdinbookInput(e.target.value)}
 						placeholder='Search Odinbook'
 					/>
-				</label>
+				</div>
 			</div>
 			<div className={styles.center}>
 				<ul className={styles.navigation}>
@@ -221,7 +248,7 @@ const Navbar = () => {
 							</svg>
 						</span>
 					</li>
-					<li className='mainM' onClick={(e) => toggleMenu(e)}>
+					<li className='mainMenu' onClick={(e) => toggleMenu(e)}>
 						<span className={styles.icon}>
 							<svg
 								viewBox='0 0 44 44'
@@ -254,7 +281,7 @@ const Navbar = () => {
 					</li>
 					<li>
 						<Link className={styles.find_friends_link} to='/friends'>
-							<h4>Find Friends</h4>
+							<h5>Find Friends</h5>
 						</Link>
 					</li>
 				</ul>
@@ -326,36 +353,206 @@ const Navbar = () => {
 					) : null}
 					{showNotificationsMenu ? (
 						<div className={styles.menu_notifications}>
-							Notifications
-							<button>Options</button>
-							<button>All</button>
-							<button>Unread</button>
-							<div>Notification-list</div>
+							<div className={styles.top}>
+								<h2>Notifications</h2>
+								<span className={styles.options_toggle}>
+									<span></span>
+								</span>
+							</div>
+							<div className={styles.controls}>
+								<div
+									className={`all btn-default ${
+										showAllNotifications ? 'btn-active' : ''
+									}`}
+									onClick={(e) => changeNotificationList(e)}
+								>
+									All
+								</div>
+								<div
+									className={`unread btn-default ${
+										showAllNotifications ? '' : 'btn-active'
+									}`}
+									onClick={(e) => changeNotificationList(e)}
+								>
+									Unread
+								</div>
+							</div>
+							<div className={styles.notification_list}>
+								<ul>
+									<li>Notification 1</li>
+									<li>Notification 2</li>
+									<li>Notification 3</li>
+								</ul>
+							</div>
 						</div>
 					) : null}
 					{showMessengerMenu ? (
 						<div className={styles.menu_messenger}>
-							<button>Options</button>
-							<input
-								type='text'
-								id='messenger_search'
-								name='messenger_search'
-								minLength={1}
-								maxLength={512}
-								value={searchMessengerInput}
-								onChange={(e) => setSearchMessengerInput(e.target.value)}
-								placeholder='Search Messenger'
-							/>
-							<div>Messages-list</div>
+							<div className={styles.top}>
+								<h2>Messenger</h2>
+								<span className={styles.options_toggle}>
+									<span></span>
+								</span>
+							</div>
+							<div className={styles.search_messenger}>
+								<span>
+									<svg viewBox='0 0 16 16' width='16' height='16'>
+										<g transform='translate(-448 -544)'>
+											<g>
+												<path
+													d='M10.743 2.257a6 6 0 1 1-8.485 8.486 6 6 0 0 1 8.485-8.486zm-1.06 1.06a4.5 4.5 0 1 0-6.365 6.364 4.5 4.5 0 0 0 6.364-6.363z'
+													transform='translate(448 544)'
+												></path>
+												<path
+													d='M10.39 8.75a2.94 2.94 0 0 0-.199.432c-.155.417-.23.849-.172 1.284.055.415.232.794.54 1.103a.75.75 0 0 0 1.112-1.004l-.051-.057a.39.39 0 0 1-.114-.24c-.021-.155.014-.356.09-.563.031-.081.06-.145.08-.182l.012-.022a.75.75 0 1 0-1.299-.752z'
+													transform='translate(448 544)'
+												></path>
+												<path
+													d='M9.557 11.659c.038-.018.09-.04.15-.064.207-.077.408-.112.562-.092.08.01.143.034.198.077l.041.036a.75.75 0 0 0 1.06-1.06 1.881 1.881 0 0 0-1.103-.54c-.435-.058-.867.018-1.284.175-.189.07-.336.143-.433.2a.75.75 0 0 0 .624 1.356l.066-.027.12-.061z'
+													transform='translate(448 544)'
+												></path>
+												<path
+													d='m13.463 15.142-.04-.044-3.574-4.192c-.599-.703.355-1.656 1.058-1.057l4.191 3.574.044.04c.058.059.122.137.182.24.249.425.249.96-.154 1.41l-.057.057c-.45.403-.986.403-1.411.154a1.182 1.182 0 0 1-.24-.182zm.617-.616.444-.444a.31.31 0 0 0-.063-.052c-.093-.055-.263-.055-.35.024l.208.232.207-.206.006.007-.22.257-.026-.024.033-.034.025.027-.257.22-.007-.007zm-.027-.415c-.078.088-.078.257-.023.35a.31.31 0 0 0 .051.063l.205-.204-.233-.209z'
+													transform='translate(448 544)'
+												></path>
+											</g>
+										</g>
+									</svg>
+								</span>
+								<input
+									type='text'
+									id='search_messenger'
+									name='search_messenger'
+									minLength={1}
+									maxLength={512}
+									value={searchMessengerInput}
+									onChange={(e) => setSearchMessengerInput(e.target.value)}
+									placeholder='Search Messenger'
+								/>
+							</div>
+							<div className={styles.message_list}>
+								<ul>
+									<li>Messages 1</li>
+									<li>Messages 2</li>
+									<li>Messages 3</li>
+								</ul>
+							</div>
+							<hr />
 							<Link to='/messages'>See all in messenger</Link>
 						</div>
 					) : null}
 					{showMainMenu ? (
 						<div className={styles.menu_main}>
-							Menu
+							<h2>Menu</h2>
 							<div>
-								Create
-								<div>Post</div>
+								<div className={styles.left_side}>
+									<div className={styles.menu_search_odinbook}>
+										<span>
+											<svg viewBox='0 0 16 16' width='16' height='16'>
+												<g transform='translate(-448 -544)'>
+													<g>
+														<path
+															d='M10.743 2.257a6 6 0 1 1-8.485 8.486 6 6 0 0 1 8.485-8.486zm-1.06 1.06a4.5 4.5 0 1 0-6.365 6.364 4.5 4.5 0 0 0 6.364-6.363z'
+															transform='translate(448 544)'
+														></path>
+														<path
+															d='M10.39 8.75a2.94 2.94 0 0 0-.199.432c-.155.417-.23.849-.172 1.284.055.415.232.794.54 1.103a.75.75 0 0 0 1.112-1.004l-.051-.057a.39.39 0 0 1-.114-.24c-.021-.155.014-.356.09-.563.031-.081.06-.145.08-.182l.012-.022a.75.75 0 1 0-1.299-.752z'
+															transform='translate(448 544)'
+														></path>
+														<path
+															d='M9.557 11.659c.038-.018.09-.04.15-.064.207-.077.408-.112.562-.092.08.01.143.034.198.077l.041.036a.75.75 0 0 0 1.06-1.06 1.881 1.881 0 0 0-1.103-.54c-.435-.058-.867.018-1.284.175-.189.07-.336.143-.433.2a.75.75 0 0 0 .624 1.356l.066-.027.12-.061z'
+															transform='translate(448 544)'
+														></path>
+														<path
+															d='m13.463 15.142-.04-.044-3.574-4.192c-.599-.703.355-1.656 1.058-1.057l4.191 3.574.044.04c.058.059.122.137.182.24.249.425.249.96-.154 1.41l-.057.057c-.45.403-.986.403-1.411.154a1.182 1.182 0 0 1-.24-.182zm.617-.616.444-.444a.31.31 0 0 0-.063-.052c-.093-.055-.263-.055-.35.024l.208.232.207-.206.006.007-.22.257-.026-.024.033-.034.025.027-.257.22-.007-.007zm-.027-.415c-.078.088-.078.257-.023.35a.31.31 0 0 0 .051.063l.205-.204-.233-.209z'
+															transform='translate(448 544)'
+														></path>
+													</g>
+												</g>
+											</svg>
+										</span>
+										<input
+											type='text'
+											id='menu_search_odinbook'
+											name='menu_search_odinbook'
+											minLength={1}
+											maxLength={512}
+											value={searchOdinbookInput}
+											onChange={(e) => setSearchOdinbookInput(e.target.value)}
+											placeholder='Search Odinbook'
+										/>
+									</div>
+									<h3>Social</h3>
+									<ul>
+										<li>
+											Find Friends
+											<p>Search for friends or people you may know.</p>
+										</li>
+										<li>
+											Groups
+											<p>Connect with people who share your interests.</p>
+										</li>
+										<li>
+											Events
+											<p>
+												Organise or find events and other things to do online
+												and nearby.
+											</p>
+										</li>
+										<li>
+											News Feed
+											<p>
+												See relevant posts from people and Pages that you
+												follow..
+											</p>
+										</li>
+										<li>
+											Pages
+											<p>Discover and connect with businesses on Facebook.</p>
+										</li>
+									</ul>
+									<hr />
+									<h3>Entertainment</h3>
+									<ul>
+										<li>
+											Gaming video
+											<p>
+												Watch and connect with your favourite games and
+												streamers.
+											</p>
+										</li>
+										<li>
+											Play games
+											<p>Play your favourite games.</p>
+										</li>
+										<li>
+											Watch
+											<p>
+												A video destination personalised to your interests and
+												connections.
+											</p>
+										</li>
+									</ul>
+								</div>
+								<div className={styles.right_side}>
+									<div>
+										<h3>Create</h3>
+										<ul>
+											<li>Post</li>
+											<li>Story</li>
+											<li>Life Event</li>
+										</ul>
+										<hr />
+										<ul>
+											<li>Group</li>
+											<li>Page</li>
+											<li>Ad</li>
+											<li>Event</li>
+											<li>Marketplace Listing</li>
+											<li>Fundraiser</li>
+										</ul>
+									</div>
+								</div>
 							</div>
 						</div>
 					) : null}
