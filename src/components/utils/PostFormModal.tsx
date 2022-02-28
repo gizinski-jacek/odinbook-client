@@ -80,28 +80,32 @@ const PostFormModal: React.FC<Props> = ({
 						{user.first_name} {user.last_name}
 					</h4>
 				</span>
-				<form
-					onSubmit={post?._id ? (e) => handleUpdate(e) : (e) => handleSubmit(e)}
-				>
-					<textarea
-						id='text'
-						name='text'
-						minLength={1}
-						maxLength={512}
-						rows={12}
-						onChange={(e) => handleChange(e)}
-						value={postFormData.text}
-						required
-						placeholder={`What's on your mind, ${user.first_name}?`}
-					/>
-					<button
-						className='btn-default btn-form-submit'
-						type='submit'
-						disabled={postFormData.text.length > 0 ? false : true}
+				<div className={styles.post_form}>
+					<form
+						onSubmit={
+							post?._id ? (e) => handleUpdate(e) : (e) => handleSubmit(e)
+						}
 					>
-						Post
-					</button>
-				</form>
+						<textarea
+							id='text'
+							name='text'
+							minLength={1}
+							maxLength={512}
+							rows={12}
+							onChange={(e) => handleChange(e)}
+							value={postFormData.text}
+							required
+							placeholder={`What's on your mind, ${user.first_name}?`}
+						/>
+						<button
+							className='btn-default btn-form-submit'
+							type='submit'
+							disabled={postFormData.text.length > 0 ? false : true}
+						>
+							Post
+						</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	);
