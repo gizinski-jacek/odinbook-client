@@ -95,7 +95,7 @@ const PostFormModal: React.FC<Props> = ({
 						placeholder={`What's on your mind, ${user.first_name}?`}
 					/>
 					<button
-						className='btn-form-submit'
+						className='btn-default btn-form-submit'
 						type='submit'
 						disabled={postFormData.text.length > 0 ? false : true}
 					>
