@@ -7,6 +7,8 @@
 	left: 0;
 	right: 0;
 	background-color: variables.$white;
+	box-shadow: 0 0 4px 1px variables.$black-a10;
+	z-index: 20;
 
 	.left {
 		height: variables.$navbar-height;
@@ -16,11 +18,11 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		z-index: 20;
+		z-index: 30;
 		margin-left: 8px;
 
-		.logo {
-			margin: 0 12px;
+		a > div {
+			margin: 12px;
 		}
 
 		label {
@@ -57,12 +59,11 @@
 				padding: 8px 40px;
 				margin: 0 24px;
 				border-radius: 8px;
-				background-color: variables.$white;
+				cursor: pointer;
 			}
 
 			li:hover {
-				cursor: pointer;
-				filter: brightness(95%);
+				background-color: variables.$black-a05;
 			}
 		}
 	}
@@ -72,7 +73,7 @@
 		position: fixed;
 		top: 0;
 		right: 0;
-		z-index: 20;
+		z-index: 30;
 		direction: rtl;
 
 		ul {
@@ -81,7 +82,6 @@
 			flex-direction: row;
 			justify-content: center;
 			align-items: center;
-			z-index: 20;
 			margin-right: 8px;
 
 			li {
@@ -142,30 +142,119 @@
 		width: 360px;
 		position: absolute;
 		top: variables.$navbar-height;
-		right: variables.$navbar-height;
+		right: 16px;
 		background-color: variables.$white;
-		box-shadow: 0 0 12px 0 variables.$black;
-		border-radius: 12px;
-		padding: 24px;
+		box-shadow: 0 8px 16px 0 variables.$black-a20;
+		border-radius: 8px;
+		padding: 8px;
 		direction: ltr;
-		z-index: 20;
+		z-index: 30;
 
 		a {
-			padding: 12px;
+			padding: 8px;
 			display: flex;
 			flex-direction: row;
-			justify-content: space-between;
+			align-items: center;
 			text-decoration: none;
+			border-radius: 8px;
 		}
 
-		a:first-child {
-			display: flex;
-			flex-direction: row;
-			justify-content: flex-start;
+		a:hover {
+			background-color: variables.$black-a05;
+		}
 
-			span {
-				h4 {
-					color: variables.$black-a40;
+		.menu_account {
+			.icon {
+				padding: 8px;
+				margin-right: 12px;
+				background-color: variables.$black-a10;
+				border-radius: 50%;
+
+				i {
+					width: 20px;
+					height: 20px;
+					display: block;
+					background-size: auto;
+					background-repeat: no-repeat;
+				}
+			}
+
+			hr {
+				margin-left: 8px;
+				margin-right: 8px;
+				height: 1px;
+				border: none;
+				background-color: variables.$black-a20;
+			}
+
+			.arrows {
+				width: 24px;
+				height: 24px;
+				display: inline-block;
+				background-size: auto;
+				background-repeat: no-repeat;
+				background-image: url('../../public/icons/icons_6.png');
+				background-position: -83px -13px;
+				margin-left: auto;
+			}
+
+			.me_link {
+				display: flex;
+				flex-direction: row;
+				justify-content: flex-start;
+
+				img {
+					width: 56px;
+					height: 56px;
+				}
+
+				span {
+					display: flex;
+					flex-direction: column;
+					justify-content: space-evenly;
+
+					h3 {
+						font-weight: 600;
+					}
+
+					h5 {
+						color: variables.$black-a40;
+					}
+				}
+			}
+
+			.feedback_link {
+				i {
+					background-image: url('../../public/icons/icons_1.png');
+					background-position: 0px -25px;
+				}
+			}
+
+			.settings_privacy_link {
+				i {
+					background-image: url('../../public/icons/icons_4.png');
+					background-position: 0px -314px;
+				}
+			}
+
+			.help_support_link {
+				i {
+					background-image: url('../../public/icons/icons_3.png');
+					background-position: 0px -189px;
+				}
+			}
+
+			.display_accesibility_link {
+				i {
+					background-image: url('../../public/icons/icons_2.png');
+					background-position: 0px -63px;
+				}
+			}
+
+			.log_out_btn {
+				i {
+					background-image: url('../../public/icons/icons_5.png');
+					background-position: 0px -46px;
 				}
 			}
 		}
