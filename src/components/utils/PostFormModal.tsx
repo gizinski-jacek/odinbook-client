@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useContext, useState } from 'react';
 import { UserContext } from '../hooks/UserContext';
 import styles from '../../styles/PostFormModal.module.scss';
+import { Link } from 'react-router-dom';
 
 type Props = {
 	togglePostFormModal: Function;
@@ -67,8 +68,13 @@ const PostFormModal: React.FC<Props> = ({
 					></span>
 				</div>
 				<span className={styles.metadata}>
-					<div className='profile-picture'>
-						<img src='placeholder_profile_pic.png' alt='user-profile-pic' />
+					<div className='profile-pic-style'>
+						<Link to={`/profile/${user._id}`}>
+							<img
+								src='icons/placeholder_profile_pic.png'
+								alt='user-profile-pic'
+							/>
+						</Link>
 					</div>
 					<h4>
 						{user.first_name} {user.last_name}
