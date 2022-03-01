@@ -230,7 +230,7 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 				>
 					{commentsData ? (
 						commentsData?.length > 0 ? (
-							<p>{commentsData?.length} comments</p>
+							<h4>{commentsData?.length} comments</h4>
 						) : null
 					) : null}
 				</div>
