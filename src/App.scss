@@ -146,42 +146,6 @@ a:hover {
 	color: variables.$black-a20;
 }
 
-.close_x_btn {
-	position: absolute;
-	top: 12px;
-	right: 12px;
-	width: 37px;
-	height: 37px;
-	background-color: variables.$black-a10;
-	border: none;
-	border-radius: 50%;
-	cursor: pointer;
-}
-
-.close_x_btn:before,
-.close_x_btn:after {
-	position: absolute;
-	top: 8px;
-	left: 18px;
-	content: ' ';
-	height: 21px;
-	width: 2px;
-	background-color: variables.$black-a60;
-	color: variables.$black-a60;
-}
-
-.close_x_btn:before {
-	transform: rotate(45deg);
-}
-
-.close_x_btn:after {
-	transform: rotate(-45deg);
-}
-
-.close_x_btn:hover {
-	filter: brightness(95%);
-}
-
 .profile-pic-style {
 	cursor: pointer;
 	width: fit-content;
