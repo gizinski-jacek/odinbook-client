@@ -176,7 +176,7 @@ const Contacts = () => {
 				<div className={styles.friend_requests}>
 					<ul>
 						<div className={styles.top}>
-							<img src='icons/requests_icon.png' alt='requests-icon' />
+							<img src='icons/friends_icon.png' alt='friends_icon' />
 							<h5>Friend requests</h5>
 						</div>
 						{friendRequestsDisplay}
