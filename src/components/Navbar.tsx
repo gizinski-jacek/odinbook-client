@@ -451,7 +451,7 @@ const Navbar = () => {
 					{showMainMenu ? (
 						<div className={styles.menu_main}>
 							<h2>Menu</h2>
-							<div>
+							<div className={styles.both_sides}>
 								<div className={styles.left_side}>
 									<div className={styles.menu_search_odinbook}>
 										<span>
@@ -490,73 +490,208 @@ const Navbar = () => {
 										/>
 									</div>
 									<h3>Social</h3>
-									<ul>
-										<li>
-											Find Friends
-											<p>Search for friends or people you may know.</p>
-										</li>
-										<li>
-											Groups
-											<p>Connect with people who share your interests.</p>
-										</li>
-										<li>
-											Events
-											<p>
-												Organise or find events and other things to do online
-												and nearby.
-											</p>
-										</li>
-										<li>
-											News Feed
-											<p>
-												See relevant posts from people and Pages that you
-												follow..
-											</p>
-										</li>
-										<li>
-											Pages
-											<p>Discover and connect with businesses on Facebook.</p>
-										</li>
-									</ul>
+									<div className={styles.social}>
+										<ul>
+											<li>
+												<Link to='/groups'>
+													<img
+														src='icons/friends_icon.png'
+														alt='friends_icon'
+													/>
+													<span>
+														<h4>Find Friends</h4>
+														<h5>Search for friends or people you may know.</h5>
+													</span>
+												</Link>
+											</li>
+											<li>
+												<Link to='/groups'>
+													<img
+														src='icons/friends_icon.png'
+														alt='friends_icon'
+													/>
+													<span>
+														<h4>Groups</h4>
+														<h5>
+															Connect with people who share your interests.
+														</h5>
+													</span>
+												</Link>
+											</li>
+											<li>
+												<Link to='/groups'>
+													<img
+														src='icons/friends_icon.png'
+														alt='friends_icon'
+													/>
+													<span>
+														<h4>Events</h4>
+														<h5>
+															Organise or find events and other things to do
+															online and nearby.
+														</h5>
+													</span>
+												</Link>
+											</li>
+											<li>
+												<Link to='/groups'>
+													<img
+														src='icons/friends_icon.png'
+														alt='friends_icon'
+													/>
+													<span>
+														<h4>News Feed</h4>
+														<h5>
+															See relevant posts from people and Pages that you
+															follow.
+														</h5>
+													</span>
+												</Link>
+											</li>
+											<li>
+												<Link to='/groups'>
+													<img
+														src='icons/friends_icon.png'
+														alt='friends_icon'
+													/>
+													<span>
+														<h4>Pages</h4>
+														<h5>
+															Discover and connect with businesses on Facebook.
+														</h5>
+													</span>
+												</Link>
+											</li>
+										</ul>
+									</div>
 									<hr />
-									<h3>Entertainment</h3>
-									<ul>
-										<li>
-											Gaming video
-											<p>
-												Watch and connect with your favourite games and
-												streamers.
-											</p>
-										</li>
-										<li>
-											Play games
-											<p>Play your favourite games.</p>
-										</li>
-										<li>
-											Watch
-											<p>
-												A video destination personalised to your interests and
-												connections.
-											</p>
-										</li>
-									</ul>
+									<div className={styles.entertainment}>
+										<h3>Entertainment</h3>
+										<ul>
+											<li>
+												<Link to='/groups'>
+													<img
+														src='icons/friends_icon.png'
+														alt='friends_icon'
+													/>
+													<span>
+														<h4>Gaming video</h4>
+														<h5>
+															Watch and connect with your favourite games and
+															streamers.
+														</h5>
+													</span>
+												</Link>
+											</li>
+											<li>
+												<Link to='/groups'>
+													<img
+														src='icons/friends_icon.png'
+														alt='friends_icon'
+													/>
+													<span>
+														<h4>Play games</h4>
+														<h5>Play your favourite games.</h5>
+													</span>
+												</Link>
+											</li>
+											<li>
+												<Link to='/groups'>
+													<img
+														src='icons/friends_icon.png'
+														alt='friends_icon'
+													/>
+													<span>
+														<h4>Watch</h4>
+														<h5>
+															A video destination personalised to your interests
+															and connections.
+														</h5>
+													</span>
+												</Link>
+											</li>
+										</ul>
+									</div>
 								</div>
 								<div className={styles.right_side}>
 									<div>
 										<h3>Create</h3>
 										<ul>
-											<li>Post</li>
-											<li>Story</li>
-											<li>Life Event</li>
+											<li>
+												<Link to='/groups' className={styles.post_link}>
+													<div className={styles.icon}>
+														<span></span>
+													</div>
+													<h4>Post</h4>
+												</Link>
+											</li>
+											<li>
+												<Link to='/groups' className={styles.story_link}>
+													<div className={styles.icon}>
+														<span></span>
+													</div>
+													<h4>Story</h4>
+												</Link>
+											</li>
+											<li>
+												<Link to='/groups' className={styles.life_event_link}>
+													<div className={styles.icon}>
+														<span></span>
+													</div>
+													<h4>Life Event</h4>
+												</Link>
+											</li>
 										</ul>
 										<hr />
 										<ul>
-											<li>Group</li>
-											<li>Page</li>
-											<li>Ad</li>
-											<li>Event</li>
-											<li>Marketplace Listing</li>
-											<li>Fundraiser</li>
+											<li>
+												<Link to='/groups' className={styles.group_link}>
+													<div className={styles.icon}>
+														<span></span>
+													</div>
+													<h4>Group</h4>
+												</Link>
+											</li>
+											<li>
+												<Link to='/groups' className={styles.page_link}>
+													<div className={styles.icon}>
+														<span></span>
+													</div>
+													<h4>Page</h4>
+												</Link>
+											</li>
+											<li>
+												<Link to='/groups' className={styles.ad_link}>
+													<div className={styles.icon}>
+														<span></span>
+													</div>
+													<h4>Ad</h4>
+												</Link>
+											</li>
+											<li>
+												<Link to='/groups' className={styles.event_link}>
+													<div className={styles.icon}>
+														<span></span>
+													</div>
+													<h4>Event</h4>
+												</Link>
+											</li>
+											<li>
+												<Link to='/groups' className={styles.marketplace_link}>
+													<div className={styles.icon}>
+														<span></span>
+													</div>
+													<h4>Marketplace Listing</h4>
+												</Link>
+											</li>
+											<li>
+												<Link to='/groups' className={styles.fundraiser_link}>
+													<div className={styles.icon}>
+														<span></span>
+													</div>
+													<h4>Fundraiser</h4>
+												</Link>
+											</li>
 										</ul>
 									</div>
 								</div>
