@@ -61,11 +61,15 @@ const PostFormModal: React.FC<Props> = ({
 		>
 			<div className={styles.new_post_container}>
 				<div className={styles.top}>
-					<h3>Create post</h3>
-					<span
-						className='close_x_btn'
+					<div className={styles.title}>
+						<h3>Create post</h3>
+					</div>
+					<div
+						className={styles.close_btn}
 						onClick={(e) => togglePostFormModal(e, postFormData.text)}
-					></span>
+					>
+						<span></span>
+					</div>
 				</div>
 				<span className={styles.metadata}>
 					<div className='profile-pic-style'>
