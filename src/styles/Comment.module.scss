@@ -60,42 +60,16 @@
 		visibility: hidden;
 		margin: auto 4px;
 		display: block;
-		position: relative;
-		width: 28px;
-		height: 28px;
-		min-width: 28px;
-		min-height: 28px;
+		height: fit-content;
+		padding: 4px;
 		border-radius: 50%;
 		cursor: pointer;
 
-		span {
-			position: absolute;
-			top: 12px;
-			right: 12px;
-			content: '';
-			background-color: variables.$black-a40;
-			border-radius: 50%;
-			padding: 2px;
-		}
-
-		span:before {
-			position: absolute;
-			top: 0;
-			right: 6px;
-			content: '';
-			background-color: variables.$black-a40;
-			border-radius: 50%;
-			padding: 2px;
-		}
-
-		span:after {
-			position: absolute;
-			top: 0;
-			left: 6px;
-			content: '';
-			background-color: variables.$black-a40;
-			border-radius: 50%;
-			padding: 2px;
+		svg {
+			display: block;
+			width: 20px;
+			height: 20px;
+			fill: variables.$black-a60;
 		}
 	}
 
