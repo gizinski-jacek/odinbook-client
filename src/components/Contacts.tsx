@@ -11,9 +11,12 @@ type StateFriendList = {
 
 type StateFriendRequests = StateFriendList;
 
+type StateGroupConvos = StateFriendList;
+
 const Contacts = () => {
-	const [friendList, setFriendList] = useState<StateFriendList>([]);
 	const [friendRequests, setFriendRequests] = useState<StateFriendRequests>([]);
+	const [friendList, setFriendList] = useState<StateFriendList>([]);
+	const [groupConvos, setGroupConvos] = useState<StateGroupConvos>([]);
 
 	useEffect(() => {
 		(async () => {
@@ -139,6 +142,34 @@ const Contacts = () => {
 		);
 	});
 
+	const groupConvosDisplay = friendList?.map((group) => {
+		return (
+			<li
+				key={group._id}
+				className={styles.group}
+				onClick={() => openChat(group)}
+			>
+				<div className='profile-pic-style'>
+					<span>
+						<img
+							src='icons/placeholder_profile_pic.png'
+							alt='user-profile-pic'
+						/>
+						<img
+							src='icons/placeholder_profile_pic.png'
+							alt='user-profile-pic'
+						/>
+					</span>
+				</div>
+				<div>
+					<div>
+						{group.first_name} {group.last_name}
+					</div>
+				</div>
+			</li>
+		);
+	});
+
 	return (
 		<div className={styles.contacts}>
 			{friendRequests.length > 0 ? (
@@ -152,11 +183,27 @@ const Contacts = () => {
 					</ul>
 				</div>
 			) : null}
+			{friendRequests.length > 0 ? <hr /> : null}
 			<div className={styles.friend_list}>
 				<div className={styles.top}>
 					<h3>Contacts</h3>
 				</div>
 				<ul>{friendListDisplay}</ul>
+			</div>
+			<hr />
+			<div className={styles.group_conversations}>
+				<div className={styles.top}>
+					<h3>Group conversations</h3>
+				</div>
+				<ul>
+					{groupConvosDisplay}
+					<li className={styles.new_group}>
+						<div className={styles.plus_btn}>
+							<span></span>
+						</div>
+						<h4>Create New Group</h4>
+					</li>
+				</ul>
 			</div>
 		</div>
 	);
