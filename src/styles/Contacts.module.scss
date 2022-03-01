@@ -7,13 +7,20 @@
 	max-width: 360px;
 	display: flex;
 	flex-direction: column;
+
+	hr {
+		width: 100%;
+		height: 1px;
+		border: none;
+		background-color: variables.$black-a20;
+	}
 }
 
 .friend_requests {
 	padding: 16px;
 	background-color: variables.$white;
 	border-radius: 8px;
-	box-shadow: 0 0 2px 0 variables.$black-a20;
+	box-shadow: 0 1px 2px 0 variables.$black-a20;
 	margin-bottom: 8px;
 
 	.top {
@@ -106,7 +113,7 @@
 
 .group_conversations {
 	border-radius: 8px;
-	margin-bottom: 8px;
+	margin: 8px 0;
 
 	.top {
 		color: variables.$black-a60;
@@ -180,12 +187,4 @@
 
 .group:hover {
 	filter: brightness(95%);
-}
-
-hr {
-	margin-bottom: 16px;
-	width: 100%;
-	height: 1px;
-	border: none;
-	background-color: variables.$black-a20;
 }
