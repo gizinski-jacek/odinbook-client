@@ -10,6 +10,38 @@
 	box-shadow: 0 0 4px 1px variables.$black-a10;
 	z-index: 20;
 
+	.search_odinbook,
+	.search_messenger,
+	.menu_search_odinbook {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		height: 40px;
+		padding: 0 12px;
+		background-color: variables.$background;
+		border-radius: 24px;
+
+		input {
+			width: 100%;
+			height: 100%;
+			padding: 8px;
+			border: none;
+			outline: none;
+			background-color: transparent;
+			color: variables.$black-a60;
+			font-size: 0.9rem;
+		}
+	}
+
+	.search_messenger {
+		margin: 0 16px;
+		margin-bottom: 8px;
+	}
+
+	.menu_search_odinbook {
+		margin-bottom: 24px;
+	}
+
 	.left {
 		height: variables.$navbar-height;
 		position: fixed;
@@ -23,25 +55,6 @@
 
 		a > div {
 			margin: 12px;
-		}
-
-		.search_odinbook {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			height: 40px;
-			padding: 0 12px;
-			background-color: variables.$background;
-			border-radius: 24px;
-
-			input {
-				margin-left: 8px;
-				border: none;
-				outline: none;
-				background-color: transparent;
-				color: variables.$black-a60;
-				font-size: 0.9rem;
-			}
 		}
 	}
 
@@ -204,9 +217,43 @@
 		}
 	}
 
+	.feedback_link {
+		span {
+			background-image: url('../../public/icons/icons_1.png');
+			background-position: 0px -25px;
+		}
+	}
+
+	.settings_privacy_link {
+		span {
+			background-image: url('../../public/icons/icons_4.png');
+			background-position: 0px -314px;
+		}
+	}
+
+	.help_support_link {
+		span {
+			background-image: url('../../public/icons/icons_3.png');
+			background-position: 0px -189px;
+		}
+	}
+
+	.display_accesibility_link {
+		span {
+			background-image: url('../../public/icons/icons_2.png');
+			background-position: 0px -63px;
+		}
+	}
+
+	.log_out_btn {
+		span {
+			background-image: url('../../public/icons/icons_5.png');
+			background-position: 0px -46px;
+		}
+	}
+
 	hr {
-		margin-left: 8px;
-		margin-right: 8px;
+		margin: 8px;
 		height: 1px;
 		border: none;
 		background-color: variables.$black-a20;
@@ -247,41 +294,6 @@
 				margin: 4px 0;
 				color: variables.$black-a40;
 			}
-		}
-	}
-
-	.feedback_link {
-		span {
-			background-image: url('../../public/icons/icons_1.png');
-			background-position: 0px -25px;
-		}
-	}
-
-	.settings_privacy_link {
-		span {
-			background-image: url('../../public/icons/icons_4.png');
-			background-position: 0px -314px;
-		}
-	}
-
-	.help_support_link {
-		span {
-			background-image: url('../../public/icons/icons_3.png');
-			background-position: 0px -189px;
-		}
-	}
-
-	.display_accesibility_link {
-		span {
-			background-image: url('../../public/icons/icons_2.png');
-			background-position: 0px -63px;
-		}
-	}
-
-	.log_out_btn {
-		span {
-			background-image: url('../../public/icons/icons_5.png');
-			background-position: 0px -46px;
 		}
 	}
 }
@@ -345,7 +357,7 @@
 		margin: 8px;
 
 		li {
-			margin: 4px 0;
+			border: 1px solid red;
 		}
 	}
 }
@@ -386,32 +398,11 @@
 		}
 	}
 
-	.search_messenger {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		height: 36px;
-		padding: 0 8px;
-		margin: 0px 16px;
-		margin-bottom: 8px;
-		background-color: variables.$background;
-		border-radius: 24px;
-
-		input {
-			margin-left: 8px;
-			border: none;
-			outline: none;
-			background-color: transparent;
-			color: variables.$black-a60;
-			font-size: 0.9rem;
-		}
-	}
-
 	.message_list {
-		margin: 8px;
+		margin: 0 16px;
 
 		li {
-			margin: 8px;
+			border: 1px solid red;
 		}
 	}
 
@@ -441,14 +432,22 @@
 .menu_main {
 	display: flex;
 	flex-direction: column;
-	background-color: variables.$white-a60;
+	background-color: variables.$white-a50;
+	border-radius: 8px;
+
+	hr {
+		width: 100%;
+		height: 1px;
+		border: none;
+		background-color: variables.$black-a20;
+	}
 
 	h2 {
 		font-weight: 600;
 		margin: 12px 16px;
 	}
 
-	> div {
+	.both_sides {
 		display: flex;
 		flex-direction: row;
 	}
@@ -458,29 +457,44 @@
 		flex-direction: column;
 		background-color: variables.$white;
 		padding: 16px;
-		margin: 4px 16px;
+		margin: 0 16px;
 		border-radius: 8px;
-		box-shadow: 0 0 2px 0 variables.$black-a20;
+		box-shadow: 0 1px 2px 0 variables.$black-a20;
 		max-width: 360px;
+		overflow-y: auto;
 
-		.menu_search_odinbook {
+		a {
 			display: flex;
 			flex-direction: row;
-			align-items: center;
-			height: 36px;
-			padding: 0 8px;
-			margin-bottom: 8px;
-			background-color: variables.$background;
-			border-radius: 24px;
+			align-items: flex-start;
+		}
 
-			input {
-				margin-left: 8px;
-				border: none;
-				outline: none;
-				background-color: transparent;
-				color: variables.$black-a60;
-				font-size: 0.9rem;
-			}
+		img {
+			margin-right: 12px;
+			width: 36px;
+			height: 36px;
+		}
+
+		h3 {
+			font-weight: 600;
+			margin-bottom: 16px;
+		}
+
+		h4 {
+			margin-bottom: 4px;
+		}
+
+		h5 {
+			color: variables.$black-a60;
+			line-height: 1rem;
+		}
+
+		.social {
+			margin: 8px 0;
+		}
+
+		.entertainment {
+			margin: 8px 0;
 		}
 	}
 
@@ -488,10 +502,94 @@
 		display: flex;
 		flex-direction: column;
 		background-color: variables.$white;
-		padding: 16px;
-		margin: 4px 0;
+		max-width: 200px;
+		padding: 8px;
 		margin-right: 16px;
 		border-radius: 8px;
-		box-shadow: 0 0 2px 0 variables.$black-a20;
+		box-shadow: 0 1px 2px 0 variables.$black-a20;
+
+		h3 {
+			font-weight: 600;
+			margin: 8px;
+			margin-bottom: 16px;
+		}
+	}
+
+	.icon {
+		padding: 8px;
+		margin-right: 12px;
+		background-color: variables.$black-a10;
+		border-radius: 50%;
+
+		span {
+			width: 20px;
+			height: 20px;
+			display: block;
+			background-size: auto;
+			background-repeat: no-repeat;
+		}
+	}
+
+	.post_link {
+		span {
+			background-image: url('../../public/icons/icons_6.png');
+			background-position: -84px -67px;
+		}
+	}
+
+	.story_link {
+		span {
+			background-image: url('../../public/icons/icons_7.png');
+			background-position: 0px -824px;
+		}
+	}
+
+	.life_event_link {
+		span {
+			background-image: url('../../public/icons/icons_7.png');
+			background-position: 0px -635px;
+		}
+	}
+
+	.group_link {
+		span {
+			background-image: url('../../public/icons/icons_8.png');
+			background-position: 0px -150px;
+		}
+	}
+
+	.page_link {
+		span {
+			background-image: url('../../public/icons/icons_8.png');
+			background-position: 0px -171px;
+		}
+	}
+
+	.ad_link {
+		span {
+			background-image: url('../../public/icons/icons_9.png');
+			background-position: 0px -384px;
+		}
+	}
+
+	.event_link {
+		span {
+			background-image: url('../../public/icons/icons_8.png');
+			background-position: 0px -213px;
+		}
+	}
+
+	.marketplace_link {
+		span {
+			background-image: url('../../public/icons/icons_8.png');
+			background-position: 0px -738px;
+		}
+	}
+
+	.fundraiser_link {
+		span {
+			background-image: url('../../public/icons/icons_7.png');
+			background-position: 0px -551px;
+		}
 	}
 }
