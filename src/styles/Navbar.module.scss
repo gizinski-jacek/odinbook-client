@@ -121,6 +121,7 @@
 				align-items: center;
 				padding: 6px 8px;
 				border-radius: 24px;
+				background-color: variables.$white;
 				text-decoration: none;
 
 				h4 {
@@ -136,7 +137,7 @@
 			}
 
 			.me_link:hover {
-				background-color: variables.$black-a05;
+				filter: brightness(95%);
 			}
 
 			.find_friends_link {
@@ -194,7 +195,7 @@
 		background-color: variables.$black-a10;
 		border-radius: 50%;
 
-		i {
+		span {
 			width: 20px;
 			height: 20px;
 			display: block;
@@ -250,35 +251,35 @@
 	}
 
 	.feedback_link {
-		i {
+		span {
 			background-image: url('../../public/icons/icons_1.png');
 			background-position: 0px -25px;
 		}
 	}
 
 	.settings_privacy_link {
-		i {
+		span {
 			background-image: url('../../public/icons/icons_4.png');
 			background-position: 0px -314px;
 		}
 	}
 
 	.help_support_link {
-		i {
+		span {
 			background-image: url('../../public/icons/icons_3.png');
 			background-position: 0px -189px;
 		}
 	}
 
 	.display_accesibility_link {
-		i {
+		span {
 			background-image: url('../../public/icons/icons_2.png');
 			background-position: 0px -63px;
 		}
 	}
 
 	.log_out_btn {
-		i {
+		span {
 			background-image: url('../../public/icons/icons_5.png');
 			background-position: 0px -46px;
 		}
@@ -303,42 +304,16 @@
 
 		.options_toggle {
 			display: block;
-			position: relative;
-			width: 28px;
-			height: 28px;
-			min-width: 28px;
-			min-height: 28px;
+			height: fit-content;
+			padding: 4px;
 			border-radius: 50%;
 			cursor: pointer;
 
-			span {
-				position: absolute;
-				top: 12px;
-				right: 12px;
-				content: '';
-				background-color: variables.$black-a40;
-				border-radius: 50%;
-				padding: 2px;
-			}
-
-			span:before {
-				position: absolute;
-				top: 0;
-				right: 6px;
-				content: '';
-				background-color: variables.$black-a40;
-				border-radius: 50%;
-				padding: 2px;
-			}
-
-			span:after {
-				position: absolute;
-				top: 0;
-				left: 6px;
-				content: '';
-				background-color: variables.$black-a40;
-				border-radius: 50%;
-				padding: 2px;
+			svg {
+				display: block;
+				width: 20px;
+				height: 20px;
+				fill: variables.$black-a60;
 			}
 		}
 
@@ -393,42 +368,16 @@
 
 		.options_toggle {
 			display: block;
-			position: relative;
-			width: 28px;
-			height: 28px;
-			min-width: 28px;
-			min-height: 28px;
+			height: fit-content;
+			padding: 4px;
 			border-radius: 50%;
 			cursor: pointer;
 
-			span {
-				position: absolute;
-				top: 12px;
-				right: 12px;
-				content: '';
-				background-color: variables.$black-a40;
-				border-radius: 50%;
-				padding: 2px;
-			}
-
-			span:before {
-				position: absolute;
-				top: 0;
-				right: 6px;
-				content: '';
-				background-color: variables.$black-a40;
-				border-radius: 50%;
-				padding: 2px;
-			}
-
-			span:after {
-				position: absolute;
-				top: 0;
-				left: 6px;
-				content: '';
-				background-color: variables.$black-a40;
-				border-radius: 50%;
-				padding: 2px;
+			svg {
+				display: block;
+				width: 20px;
+				height: 20px;
+				fill: variables.$black-a60;
 			}
 		}
 
