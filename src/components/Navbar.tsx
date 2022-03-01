@@ -30,14 +30,8 @@ const Navbar = () => {
 			setShowMenuContainer(true);
 			document.addEventListener('click', closeMenuContainer);
 		}
-		e.currentTarget.parentElement.childNodes.forEach((ele: any) => {
-			ele.firstChild.classList.remove('btn-active');
-		});
 		switch (e.currentTarget.className) {
 			case 'account':
-				if (!showAccountMenu) {
-					e.currentTarget.firstChild.classList.add('btn-active');
-				}
 				if (showAccountMenu) {
 					setShowMenuContainer(false);
 				}
@@ -47,9 +41,6 @@ const Navbar = () => {
 				setShowAccountMenu(!showAccountMenu);
 				break;
 			case 'notifications':
-				if (!showNotificationsMenu) {
-					e.currentTarget.firstChild.classList.add('btn-active');
-				}
 				if (showNotificationsMenu) {
 					setShowMenuContainer(false);
 				}
@@ -59,9 +50,6 @@ const Navbar = () => {
 				setShowAccountMenu(false);
 				break;
 			case 'messenger':
-				if (!showMessengerMenu) {
-					e.currentTarget.firstChild.classList.add('btn-active');
-				}
 				if (showMessengerMenu) {
 					setShowMenuContainer(false);
 				}
@@ -71,9 +59,6 @@ const Navbar = () => {
 				setShowAccountMenu(false);
 				break;
 			case 'mainMenu':
-				if (!showMainMenu) {
-					e.currentTarget.firstChild.classList.add('btn-active');
-				}
 				if (showMainMenu) {
 					setShowMenuContainer(false);
 				}
@@ -213,7 +198,11 @@ const Navbar = () => {
 			<div className={styles.right}>
 				<ul className={styles.user_controls}>
 					<li className='account' onClick={(e) => toggleMenu(e)}>
-						<span className={styles.icon}>
+						<span
+							className={`${styles.icon} ${
+								showAccountMenu ? 'btn-active' : ''
+							}`}
+						>
 							<svg
 								viewBox='0 0 20 20'
 								width='20'
@@ -225,7 +214,11 @@ const Navbar = () => {
 						</span>
 					</li>
 					<li className='notifications' onClick={(e) => toggleMenu(e)}>
-						<span className={styles.icon}>
+						<span
+							className={`${styles.icon} ${
+								showNotificationsMenu ? 'btn-active' : ''
+							}`}
+						>
 							<svg
 								viewBox='0 0 28 28'
 								height='20'
@@ -237,7 +230,11 @@ const Navbar = () => {
 						</span>
 					</li>
 					<li className='messenger' onClick={(e) => toggleMenu(e)}>
-						<span className={styles.icon}>
+						<span
+							className={`${styles.icon} ${
+								showMessengerMenu ? 'btn-active' : ''
+							}`}
+						>
 							<svg
 								viewBox='0 0 28 28'
 								height='20'
@@ -249,7 +246,9 @@ const Navbar = () => {
 						</span>
 					</li>
 					<li className='mainMenu' onClick={(e) => toggleMenu(e)}>
-						<span className={styles.icon}>
+						<span
+							className={`${styles.icon} ${showMainMenu ? 'btn-active' : ''}`}
+						>
 							<svg
 								viewBox='0 0 44 44'
 								width='20'
@@ -280,7 +279,7 @@ const Navbar = () => {
 						</Link>
 					</li>
 					<li>
-						<Link className={styles.find_friends_link} to='/friends'>
+						<Link to='/friends' className={styles.find_friends_link}>
 							<h5>Find Friends</h5>
 						</Link>
 					</li>
@@ -307,7 +306,7 @@ const Navbar = () => {
 							<hr />
 							<Link to='/feedback' className={styles.feedback_link}>
 								<div className={styles.icon}>
-									<i />
+									<span></span>
 								</div>
 								<h4>Give feedback</h4>
 							</Link>
@@ -317,14 +316,14 @@ const Navbar = () => {
 								className={styles.settings_privacy_link}
 							>
 								<div className={styles.icon}>
-									<i />
+									<span></span>
 								</div>
 								<h4>{'Settings & privacy'}</h4>
 								<span className={styles.arrows}></span>
 							</Link>
 							<Link to='help-support' className={styles.help_support_link}>
 								<div className={styles.icon}>
-									<i />
+									<span></span>
 								</div>
 								<h4>{'Help & support'}</h4>
 								<span className={styles.arrows}></span>
@@ -334,7 +333,7 @@ const Navbar = () => {
 								className={styles.display_accesibility_link}
 							>
 								<div className={styles.icon}>
-									<i />
+									<span></span>
 								</div>
 								<h4>{'Display & accessibility'}</h4>
 								<span className={styles.arrows}></span>
@@ -345,7 +344,7 @@ const Navbar = () => {
 								className={styles.log_out_btn}
 							>
 								<div className={styles.icon}>
-									<i />
+									<span></span>
 								</div>
 								<h4>Log Out</h4>
 							</Link>
@@ -356,7 +355,11 @@ const Navbar = () => {
 							<div className={styles.top}>
 								<h2>Notifications</h2>
 								<span className={styles.options_toggle}>
-									<span></span>
+									<svg viewBox='0 0 20 20' width='20' height='20'>
+										<g transform='translate(-446 -350)'>
+											<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
+										</g>
+									</svg>
 								</span>
 							</div>
 							<div className={styles.controls}>
@@ -391,7 +394,11 @@ const Navbar = () => {
 							<div className={styles.top}>
 								<h2>Messenger</h2>
 								<span className={styles.options_toggle}>
-									<span></span>
+									<svg viewBox='0 0 20 20' width='20' height='20'>
+										<g transform='translate(-446 -350)'>
+											<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
+										</g>
+									</svg>
 								</span>
 							</div>
 							<div className={styles.search_messenger}>
