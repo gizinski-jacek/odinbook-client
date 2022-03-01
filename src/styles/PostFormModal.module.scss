@@ -17,7 +17,7 @@
 	position: absolute;
 	display: flex;
 	flex-direction: column;
-	border-radius: 12px;
+	border-radius: 8px;
 	background-color: variables.$white;
 	box-shadow: 0 4px 12px 4px variables.$black-a20;
 	min-width: 500px;
@@ -28,17 +28,40 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 	width: 100%;
 	height: 60px;
 	border-bottom: 1px solid variables.$black-a20;
+	font-weight: 600;
+}
 
-	h3 {
-		font-weight: 600;
+.close_btn {
+	position: absolute;
+	right: 12px;
+	padding: 8px;
+	background-color: variables.$black-a10;
+	border-radius: 50%;
+	cursor: pointer;
+
+	span {
+		width: 20px;
+		height: 20px;
+		display: block;
+		background-size: auto;
+		background-repeat: no-repeat;
+		background-image: url('../../public/icons/icons_6.png');
+		background-position: -105px -67px;
 	}
+}
+
+.close_btn:hover {
+	background-color: variables.$black-a20;
 }
 
 .metadata {
 	display: flex;
+	flex-direction: row;
+	align-items: center;
 	padding: 12px;
 }
 
