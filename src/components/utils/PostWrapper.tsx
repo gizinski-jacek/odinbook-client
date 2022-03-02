@@ -40,8 +40,8 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 	const [commentFormData, setCommentFormData] = useState({ text: '' });
 	const [showComments, setShowComments] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
-	const [showPostFormModal, setShowPostFormModal] = useState(false);
-	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+	const [showEditPostFormModal, setShowEditPostFormModal] = useState(false);
+	const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
 
 	useEffect(() => {
 		(async () => {
@@ -113,17 +113,17 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 	const toggleDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		if (e.target !== e.currentTarget) {
-			setShowConfirmDelete(true);
+			setShowConfirmDeleteModal(true);
 			document.addEventListener('click', closeOptions);
 		} else {
-			setShowConfirmDelete(false);
+			setShowConfirmDeleteModal(false);
 		}
 	};
 
 	const togglePostFormModal = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		if (e.target === e.currentTarget) {
-			setShowPostFormModal(false);
+			setShowEditPostFormModal(true);
 		}
 	};
 
@@ -180,49 +180,18 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 								</div>
 								<div
 									className={styles.delete_btn}
-									onClick={() => setShowConfirmDelete(true)}
+									onClick={() => setShowConfirmDeleteModal(true)}
 								>
 									Delete post
 								</div>
 							</div>
 						) : null}
 					</span>
-					{showConfirmDelete ? (
-						<div
-							className={styles.confirm_delete_modal}
-							onClick={(e) => toggleDeleteModal(e)}
-						>
-							<div className={styles.confirm_delete}>
-								<h3>Delete this post?</h3>
-								<span>
-									Are you sure you want to delete this post? This action is
-									irreversible!
-								</span>
-								<div className={styles.delete_controls}>
-									<button
-										className='btn-default btn-confirm'
-										type='button'
-										onClick={() => handleDelete()}
-									>
-										Delete
-									</button>
-									<button className='btn-default btn-cancel' type='button'>
-										Cancel
-									</button>
-								</div>
-							</div>
-						</div>
-					) : null}
-					{showPostFormModal ? (
-						<PostFormModal
-							togglePostFormModal={togglePostFormModal}
-							setTimelinePosts={setTimelinePosts}
-							post={post}
-						/>
-					) : null}
 				</div>
 			</div>
-			<p>{post.text}</p>
+			<div className={styles.post_text}>
+				<p>{post.text}</p>
+			</div>
 			<div className={styles.bottom}>
 				<div
 					className={styles.comment_count}
@@ -250,14 +219,16 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 			<div className={styles.comments_container}>
 				{showComments ? (commentsDisplay ? commentsDisplay : null) : null}
 			</div>
-			<div className={styles.new_comment_form}>
-				<div
-					className='profile-pic-style'
-					onClick={() => commentInputRef.current.focus()}
-				>
-					<img src='icons/placeholder_profile_pic.png' alt='user-profile-pic' />
+			<div className={styles.new_comment}>
+				<div className='profile-pic-style'>
+					<Link to={`/profile/${post.author._id}`}>
+						<img
+							src='icons/placeholder_profile_pic.png'
+							alt='user-profile-pic'
+						/>
+					</Link>
 				</div>
-				<form className={styles.new_comment} onSubmit={(e) => handleSubmit(e)}>
+				<form onSubmit={(e) => handleSubmit(e)}>
 					<textarea
 						id='text'
 						name='text'
@@ -270,10 +241,47 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 						placeholder='Write a comment...'
 					/>
 					<button className='btn-default btn-form-submit' type='submit'>
-						Submit
+						Comment
 					</button>
 				</form>
 			</div>
+			{showEditPostFormModal ? (
+				<PostFormModal
+					togglePostFormModal={togglePostFormModal}
+					setTimelinePosts={setTimelinePosts}
+					post={post}
+				/>
+			) : null}
+			{showConfirmDeleteModal ? (
+				<div
+					className={styles.confirm_delete_modal}
+					onClick={(e) => toggleDeleteModal(e)}
+				>
+					<div className={styles.confirm_delete}>
+						<h3>Delete this post?</h3>
+						<span>
+							Are you sure you want to delete this post? This action is
+							irreversible!
+						</span>
+						<div className={styles.delete_controls}>
+							<button
+								type='button'
+								className='btn-default btn-cancel'
+								onClick={(e) => toggleDeleteModal(e)}
+							>
+								Cancel
+							</button>
+							<button
+								type='button'
+								className='btn-default btn-confirm'
+								onClick={() => handleDelete()}
+							>
+								Delete
+							</button>
+						</div>
+					</div>
+				</div>
+			) : null}
 		</div>
 	);
 };
