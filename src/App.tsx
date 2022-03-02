@@ -9,10 +9,13 @@ import './App.scss';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import FrontPage from './components/FrontPage';
-import HomePage from './components/HomePage';
 import MyProfile from './components/MyProfile';
 import UserProfile from './components/UserProfile';
 import LoadingIcon from './components/utils/LoadingIcon';
+import Friends from './components/Friends';
+import SideMenu from './components/SideMenu';
+import Timeline from './components/Timeline';
+import Contacts from './components/Contacts';
 
 const App = () => {
 	const location = useLocation();
@@ -45,7 +48,9 @@ const App = () => {
 							) : user ? (
 								<>
 									<Navbar />
-									<Outlet />
+									<div className='home-container'>
+										<Outlet />
+									</div>
 									<Footer />
 								</>
 							) : (
@@ -57,9 +62,19 @@ const App = () => {
 						</main>
 					}
 				>
-					<Route path='' element={<HomePage />} />
-					<Route path='profile' element={<MyProfile />}></Route>
-					<Route path='user' element={<UserProfile />}></Route>
+					<Route
+						path=''
+						element={
+							<>
+								<SideMenu />
+								<Timeline />
+								<Contacts />
+							</>
+						}
+					></Route>
+					<Route path='me' element={<MyProfile />}></Route>
+					<Route path='profile' element={<UserProfile />}></Route>
+					<Route path='friends' element={<Friends />}></Route>
 				</Route>
 			</Routes>
 		</UserContext.Provider>
