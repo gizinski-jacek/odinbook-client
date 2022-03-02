@@ -3,27 +3,29 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../styles/Contacts.module.scss';
 
-type StateFriendList = {
+type FriendList = {
 	_id: string;
+	email: string;
 	first_name: string;
 	last_name: string;
 }[];
 
-type StateFriendRequests = StateFriendList;
+type FriendRequests = FriendList;
 
-type StateGroupConvos = StateFriendList;
+type GroupConvos = FriendList;
 
 const Contacts = () => {
-	const [friendRequests, setFriendRequests] = useState<StateFriendRequests>([]);
-	const [friendList, setFriendList] = useState<StateFriendList>([]);
-	const [groupConvos, setGroupConvos] = useState<StateGroupConvos>([]);
+	const [friendRequests, setFriendRequests] = useState<FriendRequests>([]);
+	const [friendList, setFriendList] = useState<FriendList>([]);
+	const [groupConvos, setGroupConvos] = useState<GroupConvos>([]);
 
 	useEffect(() => {
 		(async () => {
 			try {
-				const resFriendsData = await axios.get('/api/user/user-friends-data/', {
-					withCredentials: true,
-				});
+				const resFriendsData = await axios.get(
+					'/api/users/user-friends-data/',
+					{ withCredentials: true }
+				);
 				setFriendList(resFriendsData.data[0]);
 				setFriendRequests(resFriendsData.data[1]);
 			} catch (error: any) {
@@ -32,14 +34,10 @@ const Contacts = () => {
 		})();
 	}, []);
 
-	const acceptRequest = async (request: {
-		_id: string;
-		first_name: string;
-		last_name: string;
-	}) => {
+	const acceptRequest = async (requestId: string) => {
 		try {
-			const resFriendsData = await axios.post(
-				`/api/user/accept-request/${request._id}`,
+			const resFriendsData = await axios.put(
+				`/api/users/accept-request/${requestId}`,
 				null,
 				{
 					withCredentials: true,
@@ -52,14 +50,10 @@ const Contacts = () => {
 		}
 	};
 
-	const declineRequest = async (request: {
-		_id: string;
-		first_name: string;
-		last_name: string;
-	}) => {
+	const declineRequest = async (requestId: string) => {
 		try {
-			const resFriendRequests = await axios.post(
-				`/api/user/decline-request/${request._id}`,
+			const resFriendRequests = await axios.put(
+				`/api/users/decline-request/${requestId}`,
 				null,
 				{
 					withCredentials: true,
@@ -102,13 +96,13 @@ const Contacts = () => {
 					<div className={styles.controls}>
 						<button
 							className='btn-default btn-confirm'
-							onClick={() => acceptRequest(request)}
+							onClick={() => acceptRequest(request._id)}
 						>
 							Confirm
 						</button>
 						<button
 							className='btn-default btn-remove'
-							onClick={() => declineRequest(request)}
+							onClick={() => declineRequest(request._id)}
 						>
 							Remove
 						</button>
