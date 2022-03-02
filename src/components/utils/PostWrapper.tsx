@@ -1,4 +1,4 @@
-//@ts-nocheck
+// @ts-nocheck
 
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
@@ -26,17 +26,19 @@ type Props = {
 	setShowPostFormModal: Function;
 };
 
-type CommentsData = Array<{
-	_id: string;
-	text: string;
-	createdAt: string;
-	updatedAt: string;
-}>;
+type CommentsData = [
+	comment: {
+		_id: string;
+		text: string;
+		createdAt: string;
+		updatedAt: string;
+	}
+];
 
 const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 	const commentInputRef = useRef(null);
 
-	const [commentsData, setCommentsData] = useState<CommentsData>();
+	const [commentsData, setCommentsData] = useState<CommentsData>([]);
 	const [commentFormData, setCommentFormData] = useState({ text: '' });
 	const [showComments, setShowComments] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
@@ -65,11 +67,14 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 		}));
 	};
 
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (
+		e: React.FormEvent<HTMLFormElement>,
+		postId: string
+	) => {
 		e.preventDefault();
 		try {
 			const resCommentsData = await axios.post(
-				`/api/posts/${post._id}/comments`,
+				`/api/posts/${postId}/comments`,
 				commentFormData,
 				{ withCredentials: true }
 			);
@@ -80,9 +85,9 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 		}
 	};
 
-	const handleDelete = async () => {
+	const handleDelete = async (postId: string) => {
 		try {
-			const resPostsData = await axios.delete(`/api/posts/${post._id}`);
+			const resPostsData = await axios.delete(`/api/posts/${postId}`);
 			setTimelinePosts(resPostsData.data);
 		} catch (error) {
 			console.error(error);
@@ -228,7 +233,7 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 						/>
 					</Link>
 				</div>
-				<form onSubmit={(e) => handleSubmit(e)}>
+				<form onSubmit={(e) => handleSubmit(e, post._id)}>
 					<textarea
 						id='text'
 						name='text'
@@ -274,7 +279,7 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 							<button
 								type='button'
 								className='btn-default btn-confirm'
-								onClick={() => handleDelete()}
+								onClick={() => handleDelete(post._id)}
 							>
 								Delete
 							</button>
