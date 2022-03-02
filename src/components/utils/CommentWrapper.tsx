@@ -1,5 +1,6 @@
+// @ts-nocheck
+
 import axios from 'axios';
-import { userInfo } from 'os';
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../../styles/Comment.module.scss';
@@ -32,7 +33,7 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 	const handleLike = async () => {
 		try {
 			const resCommentList = await axios.put(
-				`/api/post/${comment.post_ref}/comments/${comment._id}/like`
+				`/api/posts/${comment.post_ref}/comments/${comment._id}/like`
 			);
 			setCommentsData(resCommentList);
 		} catch (error) {
@@ -50,7 +51,9 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 	const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
 		try {
 			const resCommentList = await axios.put(
-				`/api/post/${comment.post_ref}/comments/${comment._id}`
+				`/api/posts/${comment.post_ref}/comments/${comment._id}`,
+				commentFormData,
+				{ withCredentials: true }
 			);
 			setCommentsData(resCommentList.data);
 		} catch (error) {
@@ -69,7 +72,8 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 	const handleDelete = async () => {
 		try {
 			const resCommentList = await axios.delete(
-				`/api/post/${comment.post_ref}/comments/${comment._id}`
+				`/api/posts/${comment.post_ref}/comments/${comment._id}`,
+				{ withCredentials: true }
 			);
 			setCommentsData(resCommentList.data);
 		} catch (error) {
@@ -87,19 +91,6 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 		}
 	};
 
-	const closeOptions = (e: any) => {
-		console.log(e.target);
-		console.log(e.currentTarget);
-		e.stopPropagation();
-		if (
-			e.target.className &&
-			!e.target.className.includes('Post_options_menu')
-		) {
-			setShowOptions(false);
-			document.removeEventListener('click', closeOptions);
-		}
-	};
-
 	const toggleDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		if (e.target !== e.currentTarget) {
@@ -110,45 +101,27 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 		}
 	};
 
-	const togglePostFormModal = (e: React.MouseEvent<HTMLDivElement>) => {
+	const closeOptions = (e: any) => {
+		e.stopPropagation();
+		if (
+			e.target.className &&
+			!e.target.className.includes('Post_options_menu')
+		) {
+			setShowOptions(false);
+			document.removeEventListener('click', closeOptions);
+		}
+	};
+
+	const toggleCommentForm = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		if (e.target === e.currentTarget) {
-			setEditingComment(false);
+			setEditingComment(true);
 		}
 	};
 
 	return (
 		<>
-			{editingComment ? (
-				<div className={styles.edit_comment_form}>
-					<div className='profile-pic-style'>
-						<Link to={`/profile/${comment.author._id}`}>
-							<img
-								src='icons/placeholder_profile_pic.png'
-								alt='user-profile-pic'
-							/>
-						</Link>
-					</div>
-					<form
-						className={styles.new_comment}
-						onSubmit={(e) => handleUpdate(e)}
-					>
-						<textarea
-							id='text'
-							name='text'
-							minLength={1}
-							maxLength={512}
-							onChange={(e) => handleChange(e)}
-							value={commentFormData.text}
-							required
-							placeholder='Write a comment...'
-						/>
-						<button className='btn-default btn-form-submit' type='submit'>
-							Submit
-						</button>
-					</form>
-				</div>
-			) : (
+			{!editingComment ? (
 				<div className={styles.comment}>
 					<div className='profile-pic-style'>
 						<Link to={`/profile/${comment.author._id}`}>
@@ -191,7 +164,7 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 								<div className={styles.options_menu}>
 									<div
 										className={styles.edit_btn}
-										onClick={(e) => togglePostFormModal(e)}
+										onClick={(e) => toggleCommentForm(e)}
 									>
 										Edit comment
 									</div>
@@ -203,34 +176,73 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 									</div>
 								</div>
 							) : null}
-							{showConfirmDelete ? (
-								<div
-									className={styles.confirm_delete_modal}
-									onClick={(e) => toggleDeleteModal(e)}
-								>
-									<div className={styles.confirm_delete}>
-										<h3>Delete this post?</h3>
-										<span>
-											Are you sure you want to delete this post? This action is
-											irreversible!
-										</span>
-										<div className={styles.delete_controls}>
-											<button
-												className='btn-default btn-confirm'
-												type='button'
-												onClick={() => handleDelete()}
-											>
-												Delete
-											</button>
-											<button className='btn-default btn-cancel' type='button'>
-												Cancel
-											</button>
-										</div>
-									</div>
-								</div>
-							) : null}
 						</span>
 					) : null}
+					{showConfirmDelete ? (
+						<div
+							className={styles.confirm_delete_modal}
+							onClick={(e) => toggleDeleteModal(e)}
+						>
+							<div className={styles.confirm_delete}>
+								<h3>Delete this comment?</h3>
+								<span>Are you sure you want to delete this comment?</span>
+								<div className={styles.delete_controls}>
+									<button
+										type='button'
+										className='btn-default btn-cancel'
+										onClick={(e) => toggleDeleteModal(e)}
+									>
+										Cancel
+									</button>
+									<button
+										type='button'
+										className='btn-default btn-confirm'
+										onClick={() => handleDelete()}
+									>
+										Delete
+									</button>
+								</div>
+							</div>
+						</div>
+					) : null}
+				</div>
+			) : (
+				<div className={styles.edit_comment}>
+					<div className='profile-pic-style'>
+						<Link to={`/profile/${comment.author._id}`}>
+							<img
+								src='icons/placeholder_profile_pic.png'
+								alt='user-profile-pic'
+							/>
+						</Link>
+					</div>
+					<form onSubmit={(e) => handleUpdate(e)}>
+						<textarea
+							id='text'
+							name='text'
+							minLength={1}
+							maxLength={512}
+							onChange={(e) => handleChange(e)}
+							value={commentFormData.text ? commentFormData.text : comment.text}
+							required
+							placeholder='Write a comment...'
+						/>
+						<div className={styles.edit_controls}>
+							<button
+								type='button'
+								className='btn-default btn-cancel'
+								onClick={() => {
+									setCommentFormData({ text: '' });
+									setEditingComment(false);
+								}}
+							>
+								Cancel
+							</button>
+							<button type='submit' className='btn-default btn-form-submit'>
+								Update
+							</button>
+						</div>
+					</form>
 				</div>
 			)}
 		</>
