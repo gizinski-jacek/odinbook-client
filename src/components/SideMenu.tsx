@@ -35,7 +35,7 @@ const SideMenu = () => {
 				</li>
 				<li>
 					<div className='profile-pic-style'>
-						<Link to={`/friends`}>
+						<Link to='/'>
 							<img src='icons/placeholder_profile_pic.png' alt='welcome-icon' />
 						</Link>
 					</div>
@@ -43,7 +43,7 @@ const SideMenu = () => {
 				</li>
 				<li>
 					<div className='profile-pic-style'>
-						<Link to={`/friends`}>
+						<Link to='/'>
 							<img src='icons/placeholder_profile_pic.png' alt='groups-icon' />
 						</Link>
 					</div>
@@ -51,7 +51,7 @@ const SideMenu = () => {
 				</li>
 				<li>
 					<div className='profile-pic-style'>
-						<Link to={`/friends`}>
+						<Link to='/'>
 							<img
 								src='icons/placeholder_profile_pic.png'
 								alt='marketplace-icon'
@@ -62,7 +62,7 @@ const SideMenu = () => {
 				</li>
 				<li>
 					<div className='profile-pic-style'>
-						<Link to={`/friends`}>
+						<Link to='/'>
 							<img src='icons/placeholder_profile_pic.png' alt='watch-icon' />
 						</Link>
 					</div>
@@ -70,7 +70,7 @@ const SideMenu = () => {
 				</li>
 				<li>
 					<div className='profile-pic-style'>
-						<Link to={`/friends`}>
+						<Link to='/'>
 							<img
 								src='icons/placeholder_profile_pic.png'
 								alt='memories-icon'
@@ -81,7 +81,7 @@ const SideMenu = () => {
 				</li>
 				<li>
 					<div className='profile-pic-style'>
-						<Link to={`/friends`}>
+						<Link to='/'>
 							<img src='icons/placeholder_profile_pic.png' alt='saved-icon' />
 						</Link>
 					</div>
@@ -89,7 +89,7 @@ const SideMenu = () => {
 				</li>
 				<li>
 					<div className='profile-pic-style'>
-						<Link to={`/friends`}>
+						<Link to='/'>
 							<img src='icons/placeholder_profile_pic.png' alt='pages-icon' />
 						</Link>
 					</div>
@@ -97,7 +97,7 @@ const SideMenu = () => {
 				</li>
 				<li>
 					<div className='profile-pic-style'>
-						<Link to={`/friends`}>
+						<Link to='/'>
 							<img src='icons/placeholder_profile_pic.png' alt='events-icon' />
 						</Link>
 					</div>
@@ -105,7 +105,7 @@ const SideMenu = () => {
 				</li>
 				<li>
 					<div className='profile-pic-style'>
-						<Link to={`/friends`}>
+						<Link to='/'>
 							<img
 								src='icons/placeholder_profile_pic.png'
 								alt='most-recent-icon'
