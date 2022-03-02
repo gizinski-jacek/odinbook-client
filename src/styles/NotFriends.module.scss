@@ -1,0 +1,52 @@
+@use '../styles/variables';
+
+.not_friend_list {
+	flex: 2.5;
+	margin: 24px;
+	margin-top: 4px;
+	padding: 12px;
+	display: flex;
+	flex-direction: column;
+
+	h4 {
+		font-weight: 600;
+	}
+
+	ul {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+}
+
+.not_friend {
+	display: flex;
+	flex-direction: column;
+	border-radius: 8px;
+	width: 250px;
+	margin: 8px;
+	background-color: variables.$white;
+
+	.pic_link {
+		height: fit-content;
+
+		img {
+			display: block;
+			width: 100%;
+			border-top-left-radius: 8px;
+			border-top-right-radius: 8px;
+		}
+	}
+
+	h4 {
+		margin: 16px;
+	}
+
+	.controls {
+		padding: 16px;
+
+		button {
+			width: 100%;
+		}
+	}
+}
