@@ -35,10 +35,13 @@ const PostFormModal: React.FC<Props> = ({
 		}
 	};
 
-	const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleUpdate = async (
+		e: React.FormEvent<HTMLFormElement>,
+		postId: string | undefined
+	) => {
 		e.preventDefault();
 		try {
-			const resPosts = await axios.put(`/api/posts/${post?._id}`, postFormData);
+			const resPosts = await axios.put(`/api/posts/${postId}`, postFormData);
 			setTimelinePosts(resPosts.data);
 			togglePostFormModal(e, '');
 		} catch (error) {
@@ -87,7 +90,9 @@ const PostFormModal: React.FC<Props> = ({
 				<div className={styles.post_form}>
 					<form
 						onSubmit={
-							post?._id ? (e) => handleUpdate(e) : (e) => handleSubmit(e)
+							post?._id
+								? (e) => handleUpdate(e, post._id)
+								: (e) => handleSubmit(e)
 						}
 					>
 						<textarea

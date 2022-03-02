@@ -30,10 +30,10 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 	const [showOptions, setShowOptions] = useState(false);
 	const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
 
-	const handleLike = async () => {
+	const handleLike = async (commentId: string) => {
 		try {
 			const resCommentList = await axios.put(
-				`/api/posts/${comment.post_ref}/comments/${comment._id}/like`
+				`/api/posts/${comment.post_ref}/comments/${commentId}/like`
 			);
 			setCommentsData(resCommentList);
 		} catch (error) {
@@ -41,17 +41,22 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 		}
 	};
 
-	const handleReply = async () => {
+	const handleReply = async (commentId: string) => {
 		try {
 		} catch (error) {
 			console.error(error);
 		}
 	};
 
-	const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleUpdate = async (
+		e: React.FormEvent<HTMLFormElement>,
+		commentPostRef: string,
+		commentId: string
+	) => {
+		e.preventDefault();
 		try {
 			const resCommentList = await axios.put(
-				`/api/posts/${comment.post_ref}/comments/${comment._id}`,
+				`/api/posts/${commentPostRef}/comments/${commentId}`,
 				commentFormData,
 				{ withCredentials: true }
 			);
@@ -69,10 +74,10 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 		}));
 	};
 
-	const handleDelete = async () => {
+	const handleDelete = async (commentPostRef: string, commentId: string) => {
 		try {
 			const resCommentList = await axios.delete(
-				`/api/posts/${comment.post_ref}/comments/${comment._id}`,
+				`/api/posts/${commentPostRef}/comments/${commentId}`,
 				{ withCredentials: true }
 			);
 			setCommentsData(resCommentList.data);
@@ -139,10 +144,16 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 							<p>{comment.text}</p>
 						</div>
 						<span className={styles.controls}>
-							<div className={styles.like_btn} onClick={() => handleLike()}>
+							<div
+								className={styles.like_btn}
+								onClick={() => handleLike(comment._id)}
+							>
 								Like
 							</div>
-							<div className={styles.reply_btn} onClick={() => handleReply()}>
+							<div
+								className={styles.reply_btn}
+								onClick={() => handleReply(comment._id)}
+							>
 								Reply
 							</div>
 							<Link to={`/posts/:postid`}>
@@ -197,7 +208,7 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 									<button
 										type='button'
 										className='btn-default btn-confirm'
-										onClick={() => handleDelete()}
+										onClick={() => handleDelete(comment.post_ref, comment._id)}
 									>
 										Delete
 									</button>
@@ -216,7 +227,9 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 							/>
 						</Link>
 					</div>
-					<form onSubmit={(e) => handleUpdate(e)}>
+					<form
+						onSubmit={(e) => handleUpdate(e, comment.post_ref, comment._id)}
+					>
 						<textarea
 							id='text'
 							name='text'
