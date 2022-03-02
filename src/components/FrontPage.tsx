@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import { useState } from 'react';
 import LogIn from './LogIn';
 import SignUp from './SignUp';
