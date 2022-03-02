@@ -12,7 +12,7 @@ import FrontPage from './components/FrontPage';
 import MyProfile from './components/MyProfile';
 import UserProfile from './components/UserProfile';
 import LoadingIcon from './components/utils/LoadingIcon';
-import Friends from './components/Friends';
+import NotFriends from './components/NotFriends';
 import SideMenu from './components/SideMenu';
 import Timeline from './components/Timeline';
 import Contacts from './components/Contacts';
@@ -74,7 +74,7 @@ const App = () => {
 					></Route>
 					<Route path='me' element={<MyProfile />}></Route>
 					<Route path='profile' element={<UserProfile />}></Route>
-					<Route path='friends' element={<Friends />}></Route>
+					<Route path='friends' element={<NotFriends />}></Route>
 				</Route>
 			</Routes>
 		</UserContext.Provider>
