@@ -28,7 +28,7 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 	const [commentFormData, setCommentFormData] = useState({ text: '' });
 	const [editingComment, setEditingComment] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
-	const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+	const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
 
 	const handleLike = async () => {
 		try {
@@ -94,10 +94,10 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 	const toggleDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		if (e.target !== e.currentTarget) {
-			setShowConfirmDelete(true);
+			setShowConfirmDeleteModal(true);
 			document.addEventListener('click', closeOptions);
 		} else {
-			setShowConfirmDelete(false);
+			setShowConfirmDeleteModal(false);
 		}
 	};
 
@@ -170,7 +170,7 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 									</div>
 									<div
 										className={styles.delete_btn}
-										onClick={() => setShowConfirmDelete(true)}
+										onClick={() => setShowConfirmDeleteModal(true)}
 									>
 										Delete comment
 									</div>
@@ -178,7 +178,7 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 							) : null}
 						</span>
 					) : null}
-					{showConfirmDelete ? (
+					{showConfirmDeleteModal ? (
 						<div
 							className={styles.confirm_delete_modal}
 							onClick={(e) => toggleDeleteModal(e)}
