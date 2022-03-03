@@ -89,14 +89,12 @@
 
 .post_text {
 	p {
-		margin: 16px 0;
-		line-height: 1.25rem;
 		height: fit-content;
 	}
 }
 
 .comment_count {
-	margin: 16px 0;
+	margin: 8px 0;
 	width: 100%;
 	text-align: right;
 	color: variables.$black-a60;
