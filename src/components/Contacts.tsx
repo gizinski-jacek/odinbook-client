@@ -136,6 +136,7 @@ const Contacts = () => {
 		);
 	});
 
+	// Placeholder
 	const groupConvosDisplay = friendList?.map((group) => {
 		return (
 			<li
