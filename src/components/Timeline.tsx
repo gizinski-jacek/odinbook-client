@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -6,27 +8,27 @@ import { UserContext } from './hooks/UserContext';
 import PostFormModal from './utils/PostFormModal';
 import PostWrapper from './utils/PostWrapper';
 
-type TimelinePosts = [
-	post: {
+type Post = {
+	_id?: string;
+	author?: {
 		_id: string;
-		author: {
-			_id: string;
-			first_name: string;
-			last_name: string;
-		};
-		text: string;
-		comments: string[];
-		likes: string[];
-		createdAt: string;
-		updatedAt: string;
-	}
-];
+		first_name: string;
+		last_name: string;
+	};
+	text: string;
+	comments?: string[];
+	likes?: string[];
+	createdAt?: string;
+	updatedAt?: string;
+};
+
+type TimelinePosts = [Post];
 
 const Timeline = () => {
 	const { user } = useContext(UserContext);
-	const [showPostFormModal, setShowPostFormModal] = useState(false);
+	const [showModal, setShowModal] = useState(false);
 	const [timelinePosts, setTimelinePosts] = useState<TimelinePosts>();
-	const [postText, setPostText] = useState('');
+	const [postFormData, setPostFormData] = useState<Post>({ text: '' });
 
 	useEffect(() => {
 		(async () => {
@@ -42,25 +44,63 @@ const Timeline = () => {
 		})();
 	}, []);
 
-	const togglePostFormModal = (
-		e: React.MouseEvent<HTMLDivElement>,
-		text: string
-	) => {
-		if (e.target === e.currentTarget) {
-			setShowPostFormModal(false);
-			setPostText(text);
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		try {
+			const resPosts = await axios.post('/api/posts', postFormData, {
+				withCredentials: false,
+			});
+			setTimelinePosts(resPosts.data);
+			setPostFormData({ text: '' });
+			setShowModal(false);
+		} catch (error) {
+			console.error(error);
 		}
 	};
 
+	const handleUpdate = async (
+		e: React.FormEvent<HTMLFormElement>,
+		postId: string | undefined
+	) => {
+		e.preventDefault();
+		try {
+			const resPosts = await axios.put(`/api/posts/${postId}`, postFormData, {
+				withCredentials: true,
+			});
+			setTimelinePosts(resPosts.data);
+			setPostFormData({ text: '' });
+			setShowModal(false);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const openModal = (e: React.MouseEvent<HTMLDivElement>, post?: Post) => {
+		e.stopPropagation();
+		if (post) {
+			setPostFormData(post);
+		}
+		setShowModal(true);
+	};
+
+	const closeModal = (
+		e: React.MouseEvent<HTMLDivElement>,
+		postFormData?: string
+	) => {
+		e.stopPropagation();
+		if (postFormData._id) {
+			setPostFormData({ text: '' });
+		} else {
+			setPostFormData((prevState) => ({
+				...prevState,
+				text: postFormData.text,
+			}));
+		}
+		setShowModal(false);
+	};
+
 	const timelineDisplay = timelinePosts?.map((post) => {
-		return (
-			<PostWrapper
-				key={post._id}
-				post={post}
-				setTimelinePosts={setTimelinePosts}
-				setShowPostFormModal={setShowPostFormModal}
-			/>
-		);
+		return <PostWrapper key={post._id} post={post} openModal={openModal} />;
 	});
 
 	return (
@@ -75,19 +115,22 @@ const Timeline = () => {
 					</Link>
 				</div>
 				<span
-					className={postText ? styles.not_empty : ''}
-					onClick={() => setShowPostFormModal(true)}
+					className={postFormData.text ? styles.not_empty : ''}
+					onClick={(e) => openModal(e)}
 				>
 					<h4>
-						{postText ? postText : `What's on your mind, ${user.first_name}?`}
+						{postFormData.text
+							? postFormData.text
+							: `What's on your mind, ${user.first_name}?`}
 					</h4>
 				</span>
 			</div>
-			{showPostFormModal ? (
+			{showModal ? (
 				<PostFormModal
-					togglePostFormModal={togglePostFormModal}
-					setTimelinePosts={setTimelinePosts}
-					post={{ text: postText }}
+					closeModal={closeModal}
+					handleSubmit={handleSubmit}
+					handleUpdate={handleUpdate}
+					post={postFormData}
 				/>
 			) : null}
 			{timelineDisplay ? timelineDisplay : null}
