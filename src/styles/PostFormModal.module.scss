@@ -1,20 +1,27 @@
 @use './variables';
 
-.post_form_modal {
+.modal_container {
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: variables.$white-a80;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	z-index: 10;
 }
 
-.new_post_container {
+.grayout_bg {
 	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: variables.$white-a80;
+}
+
+.new_post_container {
 	display: flex;
 	flex-direction: column;
 	border-radius: 8px;
@@ -22,6 +29,7 @@
 	box-shadow: 0 4px 12px 4px variables.$black-a20;
 	min-width: 500px;
 	min-height: 400px;
+	z-index: 10;
 }
 
 .top {
