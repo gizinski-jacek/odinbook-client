@@ -1,12 +1,12 @@
-import axios from 'axios';
 import { useContext, useState } from 'react';
 import { UserContext } from '../hooks/UserContext';
 import styles from '../../styles/PostFormModal.module.scss';
 import { Link } from 'react-router-dom';
 
 type Props = {
-	togglePostFormModal: Function;
-	setTimelinePosts: Function;
+	closeModal: Function;
+	handleSubmit: Function;
+	handleUpdate: Function;
 	post?: {
 		_id?: string;
 		text: string;
@@ -17,37 +17,14 @@ type Props = {
 };
 
 const PostFormModal: React.FC<Props> = ({
-	togglePostFormModal,
-	setTimelinePosts,
+	closeModal,
+	handleSubmit,
+	handleUpdate,
 	post,
 }) => {
 	const { user } = useContext(UserContext);
+
 	const [postFormData, setPostFormData] = useState(post ? post : { text: '' });
-
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		try {
-			const resPosts = await axios.post('/api/posts', postFormData);
-			setTimelinePosts(resPosts.data);
-			togglePostFormModal(e, '');
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
-	const handleUpdate = async (
-		e: React.FormEvent<HTMLFormElement>,
-		postId: string | undefined
-	) => {
-		e.preventDefault();
-		try {
-			const resPosts = await axios.put(`/api/posts/${postId}`, postFormData);
-			setTimelinePosts(resPosts.data);
-			togglePostFormModal(e, '');
-		} catch (error) {
-			console.error(error);
-		}
-	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
@@ -58,10 +35,11 @@ const PostFormModal: React.FC<Props> = ({
 	};
 
 	return (
-		<div
-			className={styles.post_form_modal}
-			onClick={(e) => togglePostFormModal(e, postFormData.text)}
-		>
+		<div className={styles.modal_container}>
+			<span
+				className={styles.grayout_bg}
+				onClick={(e) => closeModal(e, postFormData)}
+			></span>
 			<div className={styles.new_post_container}>
 				<div className={styles.top}>
 					<div className={styles.title}>
@@ -69,7 +47,7 @@ const PostFormModal: React.FC<Props> = ({
 					</div>
 					<div
 						className={styles.close_btn}
-						onClick={(e) => togglePostFormModal(e, postFormData.text)}
+						onClick={(e) => closeModal(e, postFormData)}
 					>
 						<span></span>
 					</div>
@@ -109,9 +87,9 @@ const PostFormModal: React.FC<Props> = ({
 						<button
 							type='submit'
 							className='btn-default btn-form-submit'
-							disabled={postFormData.text.length > 0 ? false : true}
+							disabled={postFormData.text ? false : true}
 						>
-							Post
+							{post?._id ? 'Update' : 'Post'}
 						</button>
 					</form>
 				</div>
