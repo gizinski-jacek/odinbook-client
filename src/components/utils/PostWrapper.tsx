@@ -190,19 +190,17 @@ const PostWrapper: React.FC<Props> = ({ openModal, post }) => {
 				<p>{post.text}</p>
 			</div>
 			<div className={styles.bottom}>
-				<div
-					className={styles.comment_count}
-					onClick={() => {
-						setShowComments((prevState) => !prevState);
-						commentInputRef.current.focus();
-					}}
-				>
-					{commentsData ? (
-						commentsData?.length > 0 ? (
-							<h4>{commentsData?.length} comments</h4>
-						) : null
-					) : null}
-				</div>
+				{commentsData?.length > 0 ? (
+					<div
+						className={styles.comment_count}
+						onClick={() => {
+							setShowComments((prevState) => !prevState);
+							commentInputRef.current.focus();
+						}}
+					>
+						<h5>{commentsData?.length} comments</h5>
+					</div>
+				) : null}
 				<span className={styles.controls}>
 					<div className={styles.like_btn}>Like</div>
 					<div
