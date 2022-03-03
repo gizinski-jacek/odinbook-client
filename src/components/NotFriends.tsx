@@ -30,7 +30,11 @@ const NotFriends = () => {
 
 	const handleSendRequest = async (userId: string) => {
 		try {
-			await axios.put(`/api/users/${userId}/send-request`);
+			const resNotFriendsData = await axios.put(
+				`/api/users/${userId}/send-request`,
+				{ withCredentials: true }
+			);
+			// setNotFriendsList(resNotFriendsData.data);
 		} catch (error) {
 			console.error(error);
 		}
@@ -47,7 +51,6 @@ const NotFriends = () => {
 						/>
 					</div>
 				</Link>
-
 				<Link to={`/profile/${notFriend._id}`}>
 					<h4>
 						{notFriend.first_name} {notFriend.last_name}
