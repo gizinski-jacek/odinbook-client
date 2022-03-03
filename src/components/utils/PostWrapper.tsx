@@ -5,10 +5,11 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../../styles/Post.module.scss';
 import CommentWrapper from './CommentWrapper';
-import PostFormModal from './PostFormModal';
+import DeleteModal from './DeleteModal';
 import dateFormatter from './_dateFormatter';
 
 type Props = {
+	openModal: Function;
 	post: {
 		_id: string;
 		author: {
@@ -22,8 +23,6 @@ type Props = {
 		createdAt: string;
 		updatedAt: string;
 	};
-	setTimelinePosts: Function;
-	setShowPostFormModal: Function;
 };
 
 type CommentsData = [
@@ -35,15 +34,14 @@ type CommentsData = [
 	}
 ];
 
-const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
+const PostWrapper: React.FC<Props> = ({ openModal, post }) => {
 	const commentInputRef = useRef(null);
 
 	const [commentsData, setCommentsData] = useState<CommentsData>([]);
 	const [commentFormData, setCommentFormData] = useState({ text: '' });
 	const [showComments, setShowComments] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
-	const [showEditPostFormModal, setShowEditPostFormModal] = useState(false);
-	const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
+	const [showModal, setShowModal] = useState(false);
 
 	useEffect(() => {
 		(async () => {
@@ -85,10 +83,11 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 		}
 	};
 
-	const handleDelete = async (postId: string) => {
+	const handleDelete = async () => {
 		try {
-			const resPostsData = await axios.delete(`/api/posts/${postId}`);
+			const resPostsData = await axios.delete(`/api/posts/${post._id}`);
 			setTimelinePosts(resPostsData.data);
+			setShowModal(false);
 		} catch (error) {
 			console.error(error);
 		}
@@ -115,21 +114,14 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 		}
 	};
 
-	const toggleDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
+	const openDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		if (e.target !== e.currentTarget) {
-			setShowConfirmDeleteModal(true);
-			document.addEventListener('click', closeOptions);
-		} else {
-			setShowConfirmDeleteModal(false);
-		}
+		setShowModal(true);
 	};
 
-	const togglePostFormModal = (e: React.MouseEvent<HTMLDivElement>) => {
+	const closeDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		if (e.target === e.currentTarget) {
-			setShowEditPostFormModal(true);
-		}
+		setShowModal(false);
 	};
 
 	const commentsDisplay = commentsData?.map((comment) => {
@@ -179,13 +171,13 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 							<div className={styles.options_menu}>
 								<div
 									className={styles.edit_btn}
-									onClick={(e) => togglePostFormModal(e)}
+									onClick={(e) => openModal(e, post)}
 								>
 									Edit post
 								</div>
 								<div
 									className={styles.delete_btn}
-									onClick={() => setShowConfirmDeleteModal(true)}
+									onClick={(e) => openDeleteModal(e)}
 								>
 									Delete post
 								</div>
@@ -200,7 +192,10 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 			<div className={styles.bottom}>
 				<div
 					className={styles.comment_count}
-					onClick={() => setShowComments((prevState) => !prevState)}
+					onClick={() => {
+						setShowComments((prevState) => !prevState);
+						commentInputRef.current.focus();
+					}}
 				>
 					{commentsData ? (
 						commentsData?.length > 0 ? (
@@ -250,42 +245,12 @@ const PostWrapper: React.FC<Props> = ({ post, setTimelinePosts }) => {
 					</button>
 				</form>
 			</div>
-			{showEditPostFormModal ? (
-				<PostFormModal
-					togglePostFormModal={togglePostFormModal}
-					setTimelinePosts={setTimelinePosts}
-					post={post}
+			{showModal ? (
+				<DeleteModal
+					closeModal={closeDeleteModal}
+					handleDelete={handleDelete}
+					text={'post'}
 				/>
-			) : null}
-			{showConfirmDeleteModal ? (
-				<div
-					className={styles.confirm_delete_modal}
-					onClick={(e) => toggleDeleteModal(e)}
-				>
-					<div className={styles.confirm_delete}>
-						<h3>Delete this post?</h3>
-						<span>
-							Are you sure you want to delete this post? This action is
-							irreversible!
-						</span>
-						<div className={styles.delete_controls}>
-							<button
-								type='button'
-								className='btn-default btn-cancel'
-								onClick={(e) => toggleDeleteModal(e)}
-							>
-								Cancel
-							</button>
-							<button
-								type='button'
-								className='btn-default btn-confirm'
-								onClick={() => handleDelete(post._id)}
-							>
-								Delete
-							</button>
-						</div>
-					</div>
-				</div>
 			) : null}
 		</div>
 	);
