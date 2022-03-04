@@ -56,7 +56,7 @@ hr {
 	background-color: variables.$background;
 }
 
-.front-container {
+.welcome-page-container {
 	flex: 1;
 	display: flex;
 	flex-direction: row;
@@ -64,20 +64,21 @@ hr {
 	align-items: center;
 	margin: 0 auto;
 
-	> div {
-		flex: 1;
-	}
-
 	h1 {
 		font-weight: 600;
 		color: variables.$blue;
 		user-select: none;
 	}
-}
 
-.welcome {
-	width: 560px;
-	margin-right: 40px;
+	.left {
+		flex: 1;
+		width: 560px;
+		margin-right: 40px;
+	}
+
+	.right {
+		flex: 1;
+	}
 }
 
 .home-container {
@@ -152,5 +153,17 @@ hr {
 		display: block;
 		border-radius: 50%;
 		box-shadow: 0 0 1px 0 variables.$black;
+	}
+}
+
+.error-list {
+	color: variables.$red;
+	text-align: left;
+	line-height: 1rem;
+
+	.error-msg {
+		margin: 4px;
+		padding-left: 4px;
+		border-left: 2px solid variables.$red;
 	}
 }
