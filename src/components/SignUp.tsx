@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import styles from '../styles/SignUp.module.scss';
 
 const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 	const [errors, setErrors] = useState<Array<{ msg: string }>>();
@@ -46,12 +47,13 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 	});
 
 	return (
-		<div className='sign-up'>
-			<h3>Sign Up</h3>
-			<form className='sign-up-form' onSubmit={handleSubmit}>
-				<fieldset>
-					<label htmlFor='first_name'>
-						First Name
+		<div className={styles.sign_up}>
+			<h2>Sign Up</h2>
+			<hr />
+			<div className={styles.body}>
+				<form onSubmit={handleSubmit}>
+					<fieldset>
+						<label htmlFor='first_name'>First Name</label>
 						<input
 							type='text'
 							id='first_name'
@@ -63,9 +65,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 							required
 							placeholder='First Name'
 						/>
-					</label>
-					<label htmlFor='last_name'>
-						Last Name
+						<label htmlFor='last_name'>Last Name</label>
 						<input
 							type='text'
 							id='last_name'
@@ -77,43 +77,50 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 							required
 							placeholder='Last Name'
 						/>
-					</label>
-				</fieldset>
-				<fieldset>
-					<label htmlFor='email'>
-						Email
-						<input
-							type='email'
-							id='email'
-							name='email'
-							minLength={4}
-							maxLength={32}
-							value={signUpFormData.email}
-							onChange={(e) => handleChange(e)}
-							required
-							placeholder='Email'
-						/>
-					</label>
-					<label htmlFor='password'>
-						Password
-						<input
-							type='password'
-							id='password'
-							name='password'
-							minLength={8}
-							maxLength={64}
-							value={signUpFormData.password}
-							onChange={(e) => handleChange(e)}
-							required
-							placeholder='Password'
-						/>
-					</label>
-				</fieldset>
-				{errorsDisplay ? <ul className='error-list'>{errorsDisplay}</ul> : null}
-				<button type='submit'>Register</button>
-			</form>
-			<h4>Already have an account?</h4>
-			<button onClick={() => setShowLogIn(true)}>Log in now!</button>
+					</fieldset>
+					<label htmlFor='email'>Email</label>
+					<input
+						type='email'
+						id='email'
+						name='email'
+						minLength={4}
+						maxLength={32}
+						value={signUpFormData.email}
+						onChange={(e) => handleChange(e)}
+						required
+						placeholder='Email'
+					/>
+					<label htmlFor='password'>Password</label>
+					<input
+						type='password'
+						id='password'
+						name='password'
+						minLength={8}
+						maxLength={64}
+						value={signUpFormData.password}
+						onChange={(e) => handleChange(e)}
+						required
+						placeholder='Password'
+					/>
+					{errorsDisplay ? (
+						<ul className='error-list'>{errorsDisplay}</ul>
+					) : null}
+					<button type='submit' className='btn-default btn-register'>
+						Register
+					</button>
+				</form>
+			</div>
+			<hr />
+			<div className={styles.bottom}>
+				<h4>Already have an account?</h4>
+				<button
+					type='button'
+					onClick={() => setShowLogIn(true)}
+					className='btn-default btn-confirm'
+				>
+					Log in now!
+				</button>
+			</div>
 		</div>
 	);
 };
