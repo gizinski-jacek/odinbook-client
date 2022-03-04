@@ -100,7 +100,7 @@ const Timeline = () => {
 	};
 
 	const timelineDisplay = timelinePosts?.map((post) => {
-		return <PostWrapper key={post._id} post={post} openModal={openModal} />;
+		return <PostWrapper key={post._id} post={post} openEditModal={openModal} />;
 	});
 
 	return (
