@@ -4,7 +4,8 @@
 	display: flex;
 	flex-direction: column;
 	width: 500px;
-	height: 460px;
+	min-height: 480px;
+	max-height: 540px;
 	background-color: variables.$white;
 	border-radius: 8px;
 	padding: 16px 0;
