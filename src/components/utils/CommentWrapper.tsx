@@ -82,7 +82,7 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 
 	const toggleOptions = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		setShowOptions(!prevState);
+		setShowOptions((prevState) => !prevState);
 		window.addEventListener('click', windowListener);
 	};
 

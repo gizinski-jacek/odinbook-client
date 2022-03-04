@@ -95,7 +95,7 @@ const PostWrapper: React.FC<Props> = ({ openEditModal, post }) => {
 
 	const toggleOptions = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		setShowOptions(!prevState);
+		setShowOptions((prevState) => !prevState);
 		window.addEventListener('click', windowListener);
 	};
 
@@ -198,7 +198,7 @@ const PostWrapper: React.FC<Props> = ({ openEditModal, post }) => {
 					<div
 						className={styles.comment_count}
 						onClick={() => {
-							setShowComments(!prevState);
+							setShowComments((prevState) => !prevState);
 							commentInputRef.current.focus();
 						}}
 					>
