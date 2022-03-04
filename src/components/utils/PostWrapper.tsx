@@ -65,6 +65,19 @@ const PostWrapper: React.FC<Props> = ({ openEditModal, post }) => {
 		}));
 	};
 
+	const handleLike = async (postId: string) => {
+		try {
+			const resCommentList = await axios.put(
+				`/api/posts/${postId}/like`,
+				{ postId },
+				{ withCredentials: true }
+			);
+			setCommentsData(resCommentList);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
 		postId: string
@@ -85,7 +98,9 @@ const PostWrapper: React.FC<Props> = ({ openEditModal, post }) => {
 
 	const handleDelete = async () => {
 		try {
-			const resPostsData = await axios.delete(`/api/posts/${post._id}`);
+			const resPostsData = await axios.delete(`/api/posts/${post._id}`, {
+				withCredentials: true,
+			});
 			setTimelinePosts(resPostsData.data);
 			setShowModal(false);
 		} catch (error) {
@@ -206,7 +221,9 @@ const PostWrapper: React.FC<Props> = ({ openEditModal, post }) => {
 					</div>
 				) : null}
 				<span className={styles.controls}>
-					<div className={styles.like_btn}>Like</div>
+					<div className={styles.like_btn} onClick={() => handleLike(post._id)}>
+						Like
+					</div>
 					<div
 						className={styles.comment_btn}
 						onClick={() => {
