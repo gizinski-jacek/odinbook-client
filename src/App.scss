@@ -10,11 +10,11 @@ body {
 }
 
 h1 {
-	font-size: 2rem;
+	font-size: 4rem;
 }
 
 h2 {
-	font-size: 1.5rem;
+	font-size: 2rem;
 }
 
 h3 {
@@ -42,6 +42,12 @@ a:hover {
 	text-decoration: underline;
 }
 
+hr {
+	height: 1px;
+	border: none;
+	background-color: variables.$black-a20;
+}
+
 .main {
 	width: 100%;
 	min-height: 100vh;
@@ -56,38 +62,22 @@ a:hover {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-}
+	margin: 0 auto;
 
-.log-in {
-	padding: 24px;
-	display: flex;
-	flex-direction: column;
+	> div {
+		flex: 1;
+	}
 
-	form {
-		display: flex;
-		flex-direction: column;
+	h1 {
+		font-weight: 600;
+		color: variables.$blue;
+		user-select: none;
 	}
 }
 
-.sign-up {
-	padding: 24px;
-	display: flex;
-	flex-direction: column;
-
-	form {
-		display: flex;
-		flex-direction: column;
-
-		fieldset {
-			display: flex;
-			flex-direction: row;
-
-			label {
-				display: flex;
-				flex-direction: column;
-			}
-		}
-	}
+.welcome {
+	width: 560px;
+	margin-right: 40px;
 }
 
 .home-container {
@@ -144,6 +134,12 @@ a:hover {
 	margin-top: 12px;
 	background-color: variables.$black-a10;
 	color: variables.$black-a20;
+}
+
+.btn-register {
+	background-color: variables.$green;
+	color: variables.$white;
+	font-size: 1.1rem;
 }
 
 .profile-pic-style {
