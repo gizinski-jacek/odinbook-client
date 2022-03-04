@@ -1,0 +1,35 @@
+@use '../styles/variables';
+
+.not_friend {
+	display: flex;
+	flex-direction: column;
+	border-radius: 8px;
+	width: 250px;
+	margin: 8px;
+	background-color: variables.$white;
+
+	.pic_link {
+		height: fit-content;
+
+		img {
+			display: block;
+			width: 100%;
+			border-top-left-radius: 8px;
+			border-top-right-radius: 8px;
+		}
+	}
+
+	h4 {
+		margin: 16px;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+
+	.controls {
+		padding: 16px;
+
+		button {
+			width: 100%;
+		}
+	}
+}
