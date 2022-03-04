@@ -107,7 +107,7 @@ const PostWrapper: React.FC<Props> = ({ openEditModal, post }) => {
 	const windowListener = (e: any) => {
 		e.stopPropagation();
 		if (!e.target.className.includes('options_menu')) {
-			document.removeEventListener('click', windowListener);
+			window.removeEventListener('click', windowListener);
 			setShowOptions(false);
 		}
 	};

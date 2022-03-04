@@ -28,7 +28,7 @@ const Navbar = () => {
 		e.stopPropagation();
 		if (!showMenuContainer) {
 			setShowMenuContainer(true);
-			document.addEventListener('click', closeMenuContainer);
+			window.addEventListener('click', closeMenuContainer);
 		}
 		switch (e.currentTarget.className) {
 			case 'account':
@@ -85,7 +85,7 @@ const Navbar = () => {
 			setShowNotificationsMenu(false);
 			setShowAccountMenu(false);
 			setShowMenuContainer(false);
-			document.removeEventListener('click', closeMenuContainer);
+			window.removeEventListener('click', closeMenuContainer);
 		}
 	};
 
