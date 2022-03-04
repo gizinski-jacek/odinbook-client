@@ -1,0 +1,78 @@
+@use './variables';
+
+.sign_up {
+	display: flex;
+	flex-direction: column;
+	width: 500px;
+	height: 460px;
+	background-color: variables.$white;
+	border-radius: 8px;
+	padding: 16px 0;
+	box-shadow: 0 4px 16px 0 variables.$black-a20;
+	color: variables.$blue;
+
+	h2 {
+		font-weight: 600;
+		text-align: center;
+	}
+
+	hr {
+		margin: 16px 0;
+	}
+
+	.body {
+		text-align: center;
+		font-weight: 600;
+		padding: 0 16px;
+	}
+
+	form {
+		display: flex;
+		flex-direction: column;
+		padding: 0 8px;
+
+		button {
+			margin-top: 16px;
+		}
+	}
+
+	fieldset {
+		display: flex;
+		flex-direction: row;
+	}
+
+	label {
+		display: none;
+	}
+
+	input {
+		border-radius: 8px;
+		border: 1px solid variables.$black-a20;
+		padding: 12px;
+		width: 100%;
+		font-size: 1rem;
+		margin: 8px 0;
+		outline: none;
+	}
+
+	input:focus {
+		border: 1px solid variables.$blue;
+	}
+
+	input[name='first_name'] {
+		margin-right: 16px;
+	}
+
+	.bottom {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		button {
+			font-size: 1.1rem;
+			margin-top: 4px;
+		}
+	}
+}
