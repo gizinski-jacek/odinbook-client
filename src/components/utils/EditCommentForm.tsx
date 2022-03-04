@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from '../../styles/EditCommentForm.module.scss';
 
 type Props = {
-	setCommentsData: Function;
 	handleUpdate: Function;
-	handleChange: Function;
 	setEditingComment: Function;
 	comment: {
 		_id: string;
@@ -25,7 +23,7 @@ const EditCommentForm: React.FC<Props> = ({
 	setEditingComment,
 	comment,
 }) => {
-	const [commentFormData, setCommentFormData] = useState({ text: '' });
+	const [commentFormData, setCommentFormData] = useState(comment);
 
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
@@ -42,14 +40,18 @@ const EditCommentForm: React.FC<Props> = ({
 					<img src='icons/placeholder_profile_pic.png' alt='user-profile-pic' />
 				</Link>
 			</div>
-			<form onSubmit={(e) => handleUpdate(e, comment.post_ref, comment._id)}>
+			<form
+				onSubmit={(e) =>
+					handleUpdate(e, comment.post_ref, comment._id, commentFormData)
+				}
+			>
 				<textarea
 					id='text'
 					name='text'
 					minLength={1}
 					maxLength={512}
 					onChange={(e) => handleChange(e)}
-					value={commentFormData.text ? commentFormData.text : comment.text}
+					value={commentFormData.text}
 					required
 					placeholder='Write a comment...'
 				/>
@@ -57,10 +59,7 @@ const EditCommentForm: React.FC<Props> = ({
 					<button
 						type='button'
 						className='btn-default btn-cancel'
-						onClick={() => {
-							setCommentFormData({ text: '' });
-							setEditingComment(false);
-						}}
+						onClick={() => setEditingComment(false)}
 					>
 						Cancel
 					</button>
