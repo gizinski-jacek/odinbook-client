@@ -31,6 +31,8 @@ const App = () => {
 				setUser(resUser.data);
 				setIsLoading(false);
 			} catch (error) {
+				setUser(null);
+				setIsLoading(false);
 				console.error(error);
 			}
 		})();
