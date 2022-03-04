@@ -37,8 +37,8 @@ const Contacts = () => {
 	const acceptRequest = async (requestId: string) => {
 		try {
 			const resFriendsData = await axios.put(
-				`/api/users/accept-request/${requestId}`,
-				null,
+				`/api/users/friends/accept`,
+				{ requestId },
 				{
 					withCredentials: true,
 				}
@@ -53,8 +53,8 @@ const Contacts = () => {
 	const declineRequest = async (requestId: string) => {
 		try {
 			const resFriendRequests = await axios.put(
-				`/api/users/decline-request/${requestId}`,
-				null,
+				`/api/users/friends/decline`,
+				{ requestId },
 				{
 					withCredentials: true,
 				}

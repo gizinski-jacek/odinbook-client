@@ -48,7 +48,7 @@ const Timeline = () => {
 		e.preventDefault();
 		try {
 			const resPosts = await axios.post('/api/posts', postFormData, {
-				withCredentials: false,
+				withCredentials: true,
 			});
 			setTimelinePosts(resPosts.data);
 			setPostFormData({ text: '' });

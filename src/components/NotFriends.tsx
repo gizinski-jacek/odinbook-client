@@ -31,7 +31,8 @@ const NotFriends = () => {
 	const handleSendRequest = async (userId: string) => {
 		try {
 			const resNotFriendsData = await axios.put(
-				`/api/users/${userId}/send-request`,
+				`/api/users/friends/request`,
+				{ userId },
 				{ withCredentials: true }
 			);
 			// setNotFriendsList(resNotFriendsData.data);

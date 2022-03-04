@@ -31,10 +31,12 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 	const [showOptions, setShowOptions] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 
-	const handleLike = async (commentId: string) => {
+	const handleLike = async (commentPostRef: string, commentId: string) => {
 		try {
 			const resCommentList = await axios.put(
-				`/api/posts/${comment.post_ref}/comments/${commentId}/like`
+				`/api/posts/${commentPostRef}/comments/${commentId}/like`,
+				{ commentPostRef, commentId },
+				{ withCredentials: true }
 			);
 			setCommentsData(resCommentList);
 		} catch (error) {
@@ -182,13 +184,13 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 						<span className={styles.controls}>
 							<div
 								className={styles.like_btn}
-								onClick={() => handleLike(comment._id)}
+								onClick={() => handleLike(comment.post_ref, comment._id)}
 							>
 								Like
 							</div>
 							<div
 								className={styles.reply_btn}
-								onClick={() => handleReply(comment._id)}
+								onClick={() => handleReply(comment.post_ref, comment._id)}
 							>
 								Reply
 							</div>
@@ -197,7 +199,6 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 							</Link>
 						</span>
 					</div>
-
 					{showModal ? (
 						<DeleteModal
 							closeModal={closeDeleteModal}
