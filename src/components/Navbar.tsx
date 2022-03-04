@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useContext, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import styles from '../styles/Navbar.module.scss';
 import { UserContext } from './hooks/UserContext';
+import styles from '../styles/Navbar.module.scss';
 
 const Navbar = () => {
 	const { user, setUser } = useContext(UserContext);
