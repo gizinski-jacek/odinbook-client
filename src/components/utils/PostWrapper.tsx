@@ -9,7 +9,7 @@ import DeleteModal from './DeleteModal';
 import dateFormatter from './_dateFormatter';
 
 type Props = {
-	openModal: Function;
+	openEditModal: Function;
 	post: {
 		_id: string;
 		author: {
@@ -34,7 +34,7 @@ type CommentsData = [
 	}
 ];
 
-const PostWrapper: React.FC<Props> = ({ openModal, post }) => {
+const PostWrapper: React.FC<Props> = ({ openEditModal, post }) => {
 	const commentInputRef = useRef(null);
 
 	const [commentsData, setCommentsData] = useState<CommentsData>([]);
@@ -93,24 +93,22 @@ const PostWrapper: React.FC<Props> = ({ openModal, post }) => {
 		}
 	};
 
-	const toggleOptions = (e: any) => {
+	const toggleOptions = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		if (!showOptions) {
-			setShowOptions(true);
-			document.addEventListener('click', closeOptions);
-		} else if (showOptions) {
-			closeOptions(e);
-		}
+		setShowOptions((prevState) => !prevState);
+		document.addEventListener('click', menuListener);
 	};
 
-	const closeOptions = (e: any) => {
+	const closeOptions = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		if (
-			e.target.className &&
-			!e.target.className.includes('Post_options_menu')
-		) {
+		setShowOptions(false);
+	};
+
+	const menuListener = (e: any) => {
+		e.stopPropagation();
+		if (!e.target.className.includes('options_menu')) {
+			document.removeEventListener('click', menuListener);
 			setShowOptions(false);
-			document.removeEventListener('click', closeOptions);
 		}
 	};
 
@@ -167,23 +165,29 @@ const PostWrapper: React.FC<Props> = ({ openModal, post }) => {
 								<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
 							</g>
 						</svg>
-						{showOptions ? (
-							<div className={styles.options_menu}>
-								<div
-									className={styles.edit_btn}
-									onClick={(e) => openModal(e, post)}
-								>
-									Edit post
-								</div>
-								<div
-									className={styles.delete_btn}
-									onClick={(e) => openDeleteModal(e)}
-								>
-									Delete post
-								</div>
-							</div>
-						) : null}
 					</span>
+					{showOptions ? (
+						<div className={styles.options_menu}>
+							<div
+								className={styles.edit_btn}
+								onClick={(e) => {
+									openEditModal(e, post);
+									closeOptions(e);
+								}}
+							>
+								Edit post
+							</div>
+							<div
+								className={styles.delete_btn}
+								onClick={(e) => {
+									openDeleteModal(e);
+									closeOptions(e);
+								}}
+							>
+								Delete post
+							</div>
+						</div>
+					) : null}
 				</div>
 			</div>
 			<div className={styles.post_text}>

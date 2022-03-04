@@ -52,7 +52,8 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 	const handleUpdate = async (
 		e: React.FormEvent<HTMLFormElement>,
 		commentPostRef: string,
-		commentId: string
+		commentId: string,
+		commentFormData: Props['comment']
 	) => {
 		e.preventDefault();
 		try {
@@ -79,24 +80,22 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 		}
 	};
 
-	const toggleOptions = (e: any) => {
+	const toggleOptions = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		if (!showOptions) {
-			setShowOptions(true);
-			document.addEventListener('click', closeOptions);
-		} else if (showOptions) {
-			closeOptions(e);
-		}
+		setShowOptions((prevState) => !prevState);
+		document.addEventListener('click', menuListener);
 	};
 
-	const closeOptions = (e: any) => {
+	const closeOptions = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		if (
-			e.target.className &&
-			!e.target.className.includes('Post_options_menu')
-		) {
+		setShowOptions(false);
+	};
+
+	const menuListener = (e: any) => {
+		e.stopPropagation();
+		if (!e.target.className.includes('options_menu')) {
+			document.removeEventListener('click', menuListener);
 			setShowOptions(false);
-			document.removeEventListener('click', closeOptions);
 		}
 	};
 
@@ -143,34 +142,42 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 								</Link>
 								<p>{comment.text}</p>
 							</div>
-							{user._id === comment.author._id ? (
-								<span
-									className={styles.options_toggle}
-									onClick={(e) => toggleOptions(e)}
-								>
-									<svg viewBox='0 0 20 20' width='20' height='20'>
-										<g transform='translate(-446 -350)'>
-											<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
-										</g>
-									</svg>
-									{showOptions ? (
-										<div className={styles.options_menu}>
-											<div
-												className={styles.edit_btn}
-												onClick={(e) => toggleCommentForm(e)}
-											>
-												Edit comment
-											</div>
-											<div
-												className={styles.delete_btn}
-												onClick={(e) => openDeleteModal(e)}
-											>
-												Delete comment
-											</div>
+							<div className={styles.right}>
+								{user._id === comment.author._id ? (
+									<span
+										className={styles.options_toggle}
+										onClick={(e) => toggleOptions(e)}
+									>
+										<svg viewBox='0 0 20 20' width='20' height='20'>
+											<g transform='translate(-446 -350)'>
+												<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
+											</g>
+										</svg>
+									</span>
+								) : null}
+								{showOptions ? (
+									<div className={styles.options_menu}>
+										<div
+											className={styles.edit_btn}
+											onClick={(e) => {
+												toggleCommentForm(e);
+												closeOptions(e);
+											}}
+										>
+											Edit comment
 										</div>
-									) : null}
-								</span>
-							) : null}
+										<div
+											className={styles.delete_btn}
+											onClick={(e) => {
+												openDeleteModal(e);
+												closeOptions(e);
+											}}
+										>
+											Delete comment
+										</div>
+									</div>
+								) : null}
+							</div>
 						</div>
 						<span className={styles.controls}>
 							<div
