@@ -95,8 +95,8 @@ const PostWrapper: React.FC<Props> = ({ openEditModal, post }) => {
 
 	const toggleOptions = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		setShowOptions((prevState) => !prevState);
-		document.addEventListener('click', menuListener);
+		setShowOptions(!prevState);
+		window.addEventListener('click', windowListener);
 	};
 
 	const closeOptions = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -104,10 +104,10 @@ const PostWrapper: React.FC<Props> = ({ openEditModal, post }) => {
 		setShowOptions(false);
 	};
 
-	const menuListener = (e: any) => {
+	const windowListener = (e: any) => {
 		e.stopPropagation();
 		if (!e.target.className.includes('options_menu')) {
-			document.removeEventListener('click', menuListener);
+			document.removeEventListener('click', windowListener);
 			setShowOptions(false);
 		}
 	};
@@ -198,7 +198,7 @@ const PostWrapper: React.FC<Props> = ({ openEditModal, post }) => {
 					<div
 						className={styles.comment_count}
 						onClick={() => {
-							setShowComments((prevState) => !prevState);
+							setShowComments(!prevState);
 							commentInputRef.current.focus();
 						}}
 					>

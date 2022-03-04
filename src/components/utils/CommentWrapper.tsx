@@ -82,8 +82,8 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 
 	const toggleOptions = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		setShowOptions((prevState) => !prevState);
-		document.addEventListener('click', menuListener);
+		setShowOptions(!prevState);
+		window.addEventListener('click', windowListener);
 	};
 
 	const closeOptions = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -91,10 +91,10 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 		setShowOptions(false);
 	};
 
-	const menuListener = (e: any) => {
+	const windowListener = (e: any) => {
 		e.stopPropagation();
 		if (!e.target.className.includes('options_menu')) {
-			document.removeEventListener('click', menuListener);
+			document.removeEventListener('click', windowListener);
 			setShowOptions(false);
 		}
 	};

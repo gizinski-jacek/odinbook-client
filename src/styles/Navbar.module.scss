@@ -13,6 +13,11 @@
 	.search_odinbook,
 	.search_messenger,
 	.menu_search_odinbook {
+		svg {
+			display: block;
+			fill: variables.$black-a60;
+		}
+
 		label {
 			display: flex;
 			flex-direction: row;
