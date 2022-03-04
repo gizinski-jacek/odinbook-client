@@ -120,8 +120,8 @@ const Navbar = () => {
 									y2='0%'
 									id='jsc_c_2'
 								>
-									<stop offset='0%' stop-color='#0062E0'></stop>
-									<stop offset='100%' stop-color='#19AFFF'></stop>
+									<stop offset='0%' stopColor='#0062E0'></stop>
+									<stop offset='100%' stopColor='#19AFFF'></stop>
 								</linearGradient>
 							</defs>
 							<path d='M15 35.8C6.5 34.3 0 26.9 0 18 0 8.1 8.1 0 18 0s18 8.1 18 18c0 8.9-6.5 16.3-15 17.8l-1-.8h-4l-1 .8z'></path>
