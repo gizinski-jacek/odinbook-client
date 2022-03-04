@@ -218,9 +218,9 @@ const PostWrapper: React.FC<Props> = ({ openEditModal, post }) => {
 					</div>
 				</span>
 			</div>
-			<div className={styles.comments_container}>
-				{showComments ? (commentsDisplay ? commentsDisplay : null) : null}
-			</div>
+			{showComments && commentsDisplay.length > 0 ? (
+				<div className={styles.comments_container}>{commentsDisplay}</div>
+			) : null}
 			<div className={styles.new_comment}>
 				<div className='profile-pic-style'>
 					<Link to={`/profile/${post.author._id}`}>
