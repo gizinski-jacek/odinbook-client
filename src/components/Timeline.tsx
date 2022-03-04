@@ -108,10 +108,7 @@ const Timeline = () => {
 			<div className={styles.create_new_post}>
 				<div className='profile-pic-style'>
 					<Link to={`/profile/${user._id}`}>
-						<img
-							src='icons/placeholder_profile_pic.png'
-							alt='user-profile-pic'
-						/>
+						<img src='placeholder_profile_pic.png' alt='User profile picture' />
 					</Link>
 				</div>
 				<span

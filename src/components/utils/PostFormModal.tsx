@@ -56,8 +56,8 @@ const PostFormModal: React.FC<Props> = ({
 					<div className='profile-pic-style'>
 						<Link to={`/profile/${user._id}`}>
 							<img
-								src='icons/placeholder_profile_pic.png'
-								alt='user-profile-pic'
+								src='placeholder_profile_pic.png'
+								alt='User profile picture'
 							/>
 						</Link>
 					</div>

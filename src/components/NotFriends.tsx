@@ -45,10 +45,7 @@ const NotFriends = () => {
 			<li key={notFriend._id} className={styles.not_friend}>
 				<Link to={`/profile/${notFriend._id}`}>
 					<div className={styles.pic_link}>
-						<img
-							src='icons/placeholder_profile_pic.png'
-							alt='user-profile-pic'
-						/>
+						<img src='placeholder_profile_pic.png' alt='User profile picture' />
 					</div>
 				</Link>
 				<Link to={`/profile/${notFriend._id}`}>

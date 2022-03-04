@@ -105,11 +105,31 @@ const Navbar = () => {
 		<nav className={styles.navbar}>
 			<div className={styles.left}>
 				<Link to='/'>
-					<div className='profile-pic-style'>
-						<img
-							src='icons/placeholder_profile_pic.png'
-							alt='user-profile-pic'
-						/>
+					<div className={styles.logo}>
+						<svg
+							viewBox='0 0 36 36'
+							fill='url(#jsc_c_2)'
+							height='40'
+							width='40'
+						>
+							<defs>
+								<linearGradient
+									x1='50%'
+									x2='50%'
+									y1='97.0782153%'
+									y2='0%'
+									id='jsc_c_2'
+								>
+									<stop offset='0%' stop-color='#0062E0'></stop>
+									<stop offset='100%' stop-color='#19AFFF'></stop>
+								</linearGradient>
+							</defs>
+							<path d='M15 35.8C6.5 34.3 0 26.9 0 18 0 8.1 8.1 0 18 0s18 8.1 18 18c0 8.9-6.5 16.3-15 17.8l-1-.8h-4l-1 .8z'></path>
+							<path
+								className={styles.logo_f}
+								d='M25 23l.8-5H21v-3.5c0-1.4.5-2.5 2.7-2.5H26V7.4c-1.3-.2-2.7-.4-4-.4-4.1 0-7 2.5-7 7v4h-4.5v5H15v12.7c1 .2 2 .3 3 .3s2-.1 3-.3V23h4z'
+							></path>
+						</svg>
 					</div>
 				</Link>
 				<div className={styles.search_odinbook}>
@@ -287,8 +307,8 @@ const Navbar = () => {
 							<h4>{user.first_name}</h4>
 							<div className='profile-pic-style'>
 								<img
-									src='icons/placeholder_profile_pic.png'
-									alt='user-profile-pic'
+									src='placeholder_profile_pic.png'
+									alt='User profile picture'
 								/>
 							</div>
 						</Link>
@@ -307,8 +327,8 @@ const Navbar = () => {
 							<Link to='/me' className={styles.me_link}>
 								<div className='profile-pic-style'>
 									<img
-										src='icons/placeholder_profile_pic.png'
-										alt='user-profile-pic'
+										src='placeholder_profile_pic.png'
+										alt='User profile picture'
 									/>
 								</div>
 								<span>
@@ -514,8 +534,8 @@ const Navbar = () => {
 											<li>
 												<Link to='/'>
 													<img
-														src='icons/friends_icon.png'
-														alt='friends_icon'
+														src='single_icons/friends_icon.png'
+														alt='Find friends'
 													/>
 													<span>
 														<h4>Find Friends</h4>
@@ -526,8 +546,8 @@ const Navbar = () => {
 											<li>
 												<Link to='/'>
 													<img
-														src='icons/friends_icon.png'
-														alt='friends_icon'
+														src='single_icons/groups_icon.png'
+														alt='Groups'
 													/>
 													<span>
 														<h4>Groups</h4>
@@ -540,8 +560,8 @@ const Navbar = () => {
 											<li>
 												<Link to='/'>
 													<img
-														src='icons/friends_icon.png'
-														alt='friends_icon'
+														src='single_icons/events_icon.png'
+														alt='Events'
 													/>
 													<span>
 														<h4>Events</h4>
@@ -555,8 +575,8 @@ const Navbar = () => {
 											<li>
 												<Link to='/'>
 													<img
-														src='icons/friends_icon.png'
-														alt='friends_icon'
+														src='single_icons/news_feed_icon.png'
+														alt='News Feed'
 													/>
 													<span>
 														<h4>News Feed</h4>
@@ -569,14 +589,11 @@ const Navbar = () => {
 											</li>
 											<li>
 												<Link to='/'>
-													<img
-														src='icons/friends_icon.png'
-														alt='friends_icon'
-													/>
+													<img src='single_icons/pages_icon.png' alt='Pages' />
 													<span>
 														<h4>Pages</h4>
 														<h5>
-															Discover and connect with businesses on Facebook.
+															Discover and connect with businesses on Odinbook.
 														</h5>
 													</span>
 												</Link>
@@ -589,9 +606,21 @@ const Navbar = () => {
 										<ul>
 											<li>
 												<Link to='/'>
+													<img src='single_icons/watch_icon.png' alt='Watch' />
+													<span>
+														<h4>Watch</h4>
+														<h5>
+															A video destination personalised to your interests
+															and connections.
+														</h5>
+													</span>
+												</Link>
+											</li>
+											<li>
+												<Link to='/'>
 													<img
-														src='icons/friends_icon.png'
-														alt='friends_icon'
+														src='single_icons/gaming_video_icon.png'
+														alt='Gaming video'
 													/>
 													<span>
 														<h4>Gaming video</h4>
@@ -605,8 +634,8 @@ const Navbar = () => {
 											<li>
 												<Link to='/'>
 													<img
-														src='icons/friends_icon.png'
-														alt='friends_icon'
+														src='single_icons/play_games_icon.png'
+														alt='Play games'
 													/>
 													<span>
 														<h4>Play games</h4>
@@ -614,17 +643,41 @@ const Navbar = () => {
 													</span>
 												</Link>
 											</li>
+										</ul>
+									</div>
+									<hr />
+									<div className={styles.shopping}>
+										<h3>Shopping</h3>
+										<ul>
 											<li>
 												<Link to='/'>
 													<img
-														src='icons/friends_icon.png'
-														alt='friends_icon'
+														src='single_icons/marketplace_icon.png'
+														alt='Watch'
 													/>
 													<span>
-														<h4>Watch</h4>
+														<h4>Marketplace</h4>
+														<h5>Buy and sell in your community.</h5>
+													</span>
+												</Link>
+											</li>
+										</ul>
+									</div>
+									<hr />
+									<div className={styles.personal}>
+										<h3>Personal</h3>
+										<ul>
+											<li>
+												<Link to='/'>
+													<img
+														src='single_icons/memories_icon.png'
+														alt='Watch'
+													/>
+													<span>
+														<h4>Memories</h4>
 														<h5>
-															A video destination personalised to your interests
-															and connections.
+															Browse your old photos, videos and posts on
+															Odinbook.
 														</h5>
 													</span>
 												</Link>

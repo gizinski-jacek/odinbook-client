@@ -83,10 +83,7 @@ const Contacts = () => {
 			<li key={request._id} className={styles.request}>
 				<div className='profile-pic-style'>
 					<Link to={`/profile/${request._id}`}>
-						<img
-							src='icons/placeholder_profile_pic.png'
-							alt='user-profile-pic'
-						/>
+						<img src='placeholder_profile_pic.png' alt='User profile picture' />
 					</Link>
 				</div>
 				<div className={styles.contents}>
@@ -121,10 +118,7 @@ const Contacts = () => {
 			>
 				<div className='profile-pic-style'>
 					<Link to={`/profile/${friend._id}`}>
-						<img
-							src='icons/placeholder_profile_pic.png'
-							alt='user-profile-pic'
-						/>
+						<img src='placeholder_profile_pic.png' alt='User profile picture' />
 					</Link>
 				</div>
 				<div>
@@ -146,14 +140,8 @@ const Contacts = () => {
 			>
 				<div className='profile-pic-style'>
 					<span>
-						<img
-							src='icons/placeholder_profile_pic.png'
-							alt='user-profile-pic'
-						/>
-						<img
-							src='icons/placeholder_profile_pic.png'
-							alt='user-profile-pic'
-						/>
+						<img src='placeholder_profile_pic.png' alt='User profile picture' />
+						<img src='placeholder_profile_pic.png' alt='User profile picture' />
 					</span>
 				</div>
 				<div>
@@ -171,7 +159,7 @@ const Contacts = () => {
 				<div className={styles.friend_requests}>
 					<ul>
 						<div className={styles.top}>
-							<img src='icons/friends_icon.png' alt='friends_icon' />
+							<img src='icons/friends_icon.png' alt='Friend requests' />
 							<h5>Friend requests</h5>
 						</div>
 						{friendRequestsDisplay}

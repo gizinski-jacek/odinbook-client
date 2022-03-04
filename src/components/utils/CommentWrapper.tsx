@@ -129,8 +129,8 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 					<div className='profile-pic-style'>
 						<Link to={`/profile/${comment.author._id}`}>
 							<img
-								src='icons/placeholder_profile_pic.png'
-								alt='user-profile-pic'
+								src='placeholder_profile_pic.png'
+								alt='User profile picture'
 							/>
 						</Link>
 					</div>

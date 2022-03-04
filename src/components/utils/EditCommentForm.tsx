@@ -37,7 +37,7 @@ const EditCommentForm: React.FC<Props> = ({
 		<div className={styles.edit_comment}>
 			<div className='profile-pic-style'>
 				<Link to={`/profile/${comment.author._id}`}>
-					<img src='icons/placeholder_profile_pic.png' alt='user-profile-pic' />
+					<img src='placeholder_profile_pic.png' alt='User profile picture' />
 				</Link>
 			</div>
 			<form

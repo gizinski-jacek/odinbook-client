@@ -139,8 +139,8 @@ const PostWrapper: React.FC<Props> = ({ openEditModal, post }) => {
 					<div className='profile-pic-style'>
 						<Link to={`/profile/${post.author._id}`}>
 							<img
-								src='icons/placeholder_profile_pic.png'
-								alt='user-profile-pic'
+								src='placeholder_profile_pic.png'
+								alt='User profile picture'
 							/>
 						</Link>
 					</div>
@@ -224,10 +224,7 @@ const PostWrapper: React.FC<Props> = ({ openEditModal, post }) => {
 			<div className={styles.new_comment}>
 				<div className='profile-pic-style'>
 					<Link to={`/profile/${post.author._id}`}>
-						<img
-							src='icons/placeholder_profile_pic.png'
-							alt='user-profile-pic'
-						/>
+						<img src='placeholder_profile_pic.png' alt='User profile picture' />
 					</Link>
 				</div>
 				<form onSubmit={(e) => handleSubmit(e, post._id)}>
