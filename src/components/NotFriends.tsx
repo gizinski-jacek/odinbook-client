@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import styles from '../styles/NotFriends.module.scss';
+import NotFriendWrapper from './utils/NotFriendWrapper';
 
 type AllUsers = [
 	user: {
@@ -40,38 +40,22 @@ const NotFriends = () => {
 		}
 	};
 
-	const notFriendsListDisplay = notFriendsList?.map((notFriend) => {
-		return (
-			<li key={notFriend._id} className={styles.not_friend}>
-				<Link to={`/profile/${notFriend._id}`}>
-					<div className={styles.pic_link}>
-						<img src='placeholder_profile_pic.png' alt='User profile picture' />
-					</div>
-				</Link>
-				<Link to={`/profile/${notFriend._id}`}>
-					<h4>
-						{notFriend.first_name} {notFriend.last_name}
-					</h4>
-				</Link>
-				<div className={styles.controls}>
-					<button
-						type='button'
-						className='btn-default btn-active'
-						onClick={() => {
-							handleSendRequest(notFriend._id);
-						}}
-					>
-						Add Friend
-					</button>
-				</div>
-			</li>
-		);
-	});
-
 	return (
 		<div className={styles.not_friend_list}>
 			<h3>People you may want to know</h3>
-			<ul>{notFriendsListDisplay ? notFriendsListDisplay : null}</ul>
+			{notFriendsList ? (
+				<ul>
+					{notFriendsList.map((notFriend) => {
+						return (
+							<NotFriendWrapper
+								key={notFriend._id}
+								notFriend={notFriend}
+								handleSendRequest={handleSendRequest}
+							/>
+						);
+					})}
+				</ul>
+			) : null}
 		</div>
 	);
 };
