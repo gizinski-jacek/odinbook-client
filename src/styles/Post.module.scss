@@ -21,7 +21,8 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	margin: 8px 0;
+	margin-top: 8px;
+	margin-bottom: 16px;
 
 	.left {
 		display: flex;
@@ -91,52 +92,52 @@
 	}
 }
 
-.post_text {
-	padding: 8px 0;
+.bottom {
 	margin: 8px 0;
-}
 
-.comment_count {
-	margin: 8px 0;
-	width: 100%;
-	text-align: right;
-	color: variables.$black-a60;
-	cursor: pointer;
-}
-
-.comment_count:hover {
-	text-decoration: underline;
-}
-
-.controls {
-	font-weight: 600;
-	display: flex;
-	flex-direction: row;
-	color: variables.$black-a40;
-	border-top: 1px solid variables.$black-a20;
-	border-bottom: 1px solid variables.$black-a20;
-
-	.like_btn,
-	.comment_btn {
-		flex: 1;
-		margin: 4px;
-		padding: 8px 0;
-		border-radius: 4px;
-		text-align: center;
-		background-color: variables.$white;
+	.comment_count {
+		float: right;
+		margin-bottom: 8px;
+		width: fit-content;
+		text-align: right;
+		color: variables.$black-a60;
 		cursor: pointer;
 	}
 
-	.like_btn:hover,
-	.comment_btn:hover {
-		filter: brightness(95%);
+	.comment_count:hover {
+		text-decoration: underline;
+	}
+
+	.controls {
+		clear: right;
+		font-weight: 600;
+		display: flex;
+		flex-direction: row;
+		color: variables.$black-a40;
+		border-top: 1px solid variables.$black-a20;
+		border-bottom: 1px solid variables.$black-a20;
+
+		.like_btn,
+		.comment_btn {
+			flex: 1;
+			margin: 4px;
+			padding: 8px 0;
+			border-radius: 4px;
+			text-align: center;
+			background-color: variables.$white;
+			cursor: pointer;
+		}
+
+		.like_btn:hover,
+		.comment_btn:hover {
+			filter: brightness(95%);
+		}
 	}
 }
 
 .comments_container {
 	display: flex;
 	flex-direction: column;
-	margin: 4px 0;
 }
 
 .new_comment {
