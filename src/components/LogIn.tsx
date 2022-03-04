@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useContext, useState } from 'react';
 import { UserContext } from './hooks/UserContext';
+import styles from '../styles/LogIn.module.scss';
 
 type Props = {
 	setShowLogIn: Function;
@@ -50,38 +51,61 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 	});
 
 	return (
-		<div className='log-in'>
-			<h3>Log In</h3>
-			<form className='log-in-form' onSubmit={handleSubmit}>
-				<label htmlFor='email'>Email</label>
-				<input
-					type='email'
-					id='email'
-					name='email'
-					minLength={4}
-					maxLength={32}
-					value={logInFormData.email}
-					onChange={(e) => handleChange(e)}
-					required
-					placeholder='Email'
-				/>
-				<label htmlFor='password'>Password</label>
-				<input
-					type='password'
-					id='password'
-					name='password'
-					minLength={8}
-					maxLength={64}
-					value={logInFormData.password}
-					onChange={(e) => handleChange(e)}
-					required
-					placeholder='Password'
-				/>
-				{errorsDisplay ? <ul className='error-list'>{errorsDisplay}</ul> : null}
-				<button type='submit'>Log In</button>
-			</form>
-			<h4>Don't have an account?</h4>
-			<button onClick={() => setShowLogIn(false)}>Create one now!</button>
+		<div className={styles.log_in}>
+			<div className={styles.body}>
+				<h2>Log In</h2>
+				<form onSubmit={handleSubmit}>
+					<fieldset>
+						<label htmlFor='email'>Email</label>
+						<input
+							type='email'
+							id='email'
+							name='email'
+							minLength={4}
+							maxLength={32}
+							value={logInFormData.email}
+							onChange={(e) => handleChange(e)}
+							required
+							placeholder='Email'
+						/>
+					</fieldset>
+					<fieldset>
+						<label htmlFor='password'>Password</label>
+						<input
+							type='password'
+							id='password'
+							name='password'
+							minLength={8}
+							maxLength={64}
+							value={logInFormData.password}
+							onChange={(e) => handleChange(e)}
+							required
+							placeholder='Password'
+						/>
+					</fieldset>
+					{errorsDisplay ? (
+						<ul className='error-list'>{errorsDisplay}</ul>
+					) : null}
+					<button type='submit' className='btn-default btn-confirm'>
+						Log In
+					</button>
+				</form>
+			</div>
+			<div className={styles.bottom}>
+				<h4>Or if you prefer</h4>
+				<button type='button' className='btn-default btn-confirm'>
+					Log In with Facebook
+				</button>
+				<hr />
+				<h4>Don't have an account?</h4>
+				<button
+					type='button'
+					onClick={() => setShowLogIn(false)}
+					className='btn-default btn-register'
+				>
+					Create one now!
+				</button>
+			</div>
 		</div>
 	);
 };
