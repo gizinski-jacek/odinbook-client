@@ -7,10 +7,16 @@ type Props = {
 	setShowLogIn: Function;
 };
 
+type FormData = {
+	email: string;
+	password: string;
+};
+
 const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 	const { setUser } = useContext(UserContext);
+
 	const [errors, setErrors] = useState<{ msg: string }[]>();
-	const [formData, setFormData] = useState({
+	const [formData, setFormData] = useState<FormData>({
 		email: '',
 		password: '',
 	});

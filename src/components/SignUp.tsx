@@ -1,10 +1,21 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from '../styles/SignUp.module.scss';
 
-const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
+type Props = {
+	setShowLogIn: Function;
+};
+
+type FormData = {
+	first_name: string;
+	last_name: string;
+	email: string;
+	password: string;
+};
+
+const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 	const [errors, setErrors] = useState<{ msg: string }[]>();
-	const [formData, setFormData] = useState({
+	const [formData, setFormData] = useState<FormData>({
 		first_name: '',
 		last_name: '',
 		email: '',
