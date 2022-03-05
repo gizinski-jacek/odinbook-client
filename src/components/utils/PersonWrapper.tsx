@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styles from '../../styles/Person.module.scss';
-import type { User } from '../../myTypesTS';
+import type { User } from '../../myTypes';
 
 type Props = {
 	handleSendRequest: Function;
