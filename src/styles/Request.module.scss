@@ -1,0 +1,44 @@
+@use '../styles/variables';
+.request {
+	display: flex;
+	flex-direction: row;
+	border-radius: 8px;
+	padding: 8px;
+	cursor: pointer;
+
+	img {
+		width: 60px;
+		height: 60px;
+	}
+
+	.contents {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	h4 {
+		font-weight: 600;
+		white-space: nowrap;
+		margin: 0 4px;
+		margin-bottom: 4px;
+	}
+
+	.controls {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	button {
+		flex: 1;
+		margin: 4px;
+	}
+
+	button:hover {
+		filter: unset;
+	}
+}
+
+.request:hover {
+	background-color: variables.$black-a10;
+}
