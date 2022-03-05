@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import axios from 'axios';
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,27 +5,17 @@ import styles from '../../styles/Comment.module.scss';
 import { UserContext } from '../hooks/UserContext';
 import DeleteModal from './DeleteModal';
 import EditCommentForm from './EditCommentForm';
-import dateFormatter from './_dateFormatter';
+import timeSinceDate from './_timeSinceDate';
+import type { Comment } from '../../myTypes';
 
 type Props = {
-	comment: {
-		_id: string;
-		author: {
-			_id: string;
-			first_name: string;
-			last_name: string;
-		};
-		post_ref: string;
-		text: string;
-		createdAt: string;
-		updatedAt: string;
-	};
 	setCommentsData: Function;
+	comment: Comment;
 };
 
 const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 	const { user } = useContext(UserContext);
-	const [editingComment, setEditingComment] = useState(false);
+	const [editComment, setEditComment] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 
@@ -39,14 +27,14 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 				{ withCredentials: true }
 			);
 			setCommentsData(resCommentList);
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error);
 		}
 	};
 
 	const handleReply = async (commentId: string) => {
 		try {
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error);
 		}
 	};
@@ -65,7 +53,7 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 				{ withCredentials: true }
 			);
 			setCommentsData(resCommentList.data);
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error);
 		}
 	};
@@ -77,12 +65,12 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 				{ withCredentials: true }
 			);
 			setCommentsData(resCommentList.data);
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error);
 		}
 	};
 
-	const toggleOptions = (e: React.MouseEvent<HTMLDivElement>) => {
+	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
 		setShowOptions((prevState) => !prevState);
 		window.addEventListener('click', windowListener);
@@ -104,7 +92,7 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 	const toggleCommentForm = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		if (e.target === e.currentTarget) {
-			setEditingComment(true);
+			setEditComment(true);
 		}
 	};
 
@@ -120,27 +108,24 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 
 	return (
 		<>
-			{editingComment ? (
+			{editComment ? (
 				<EditCommentForm
 					handleUpdate={handleUpdate}
-					setEditingComment={setEditingComment}
+					setEditComment={setEditComment}
 					comment={comment}
 				/>
 			) : (
 				<div className={styles.comment}>
 					<div className='profile-pic-style'>
 						<Link to={`/profile/${comment.author._id}`}>
-							<img
-								src='placeholder_profile_pic.png'
-								alt='User profile picture'
-							/>
+							<img src='placeholder_profile_pic.png' alt='User profile pic' />
 						</Link>
 					</div>
 					<div className={styles.body}>
 						<div className={styles.upper}>
 							<div className={styles.contents}>
 								<Link to={`/profile/${comment.author._id}`}>
-									{comment.author.first_name} {comment.author.last_name}
+									{comment.author.full_name}
 								</Link>
 								<p>{comment.text}</p>
 							</div>
@@ -190,12 +175,12 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 							</div>
 							<div
 								className={styles.reply_btn}
-								onClick={() => handleReply(comment.post_ref, comment._id)}
+								onClick={() => handleReply(comment._id)}
 							>
 								Reply
 							</div>
 							<Link to={`/posts/:postid`}>
-								{dateFormatter(comment.createdAt)}
+								{timeSinceDate(comment.createdAt)}
 							</Link>
 						</span>
 					</div>
@@ -203,7 +188,7 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 						<DeleteModal
 							closeModal={closeDeleteModal}
 							handleDelete={handleDelete}
-							text={'comment'}
+							item={'comment'}
 						/>
 					) : null}
 				</div>
