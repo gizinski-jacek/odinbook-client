@@ -19,7 +19,7 @@ const Navbar = () => {
 		try {
 			await axios.get('/api/log-out');
 			setUser(null);
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error);
 		}
 	};
@@ -306,10 +306,7 @@ const Navbar = () => {
 						<Link to='/me' className={styles.me_link}>
 							<h4>{user.first_name}</h4>
 							<div className='profile-pic-style'>
-								<img
-									src='placeholder_profile_pic.png'
-									alt='User profile picture'
-								/>
+								<img src='placeholder_profile_pic.png' alt='User profile pic' />
 							</div>
 						</Link>
 					</li>
@@ -328,13 +325,11 @@ const Navbar = () => {
 								<div className='profile-pic-style'>
 									<img
 										src='placeholder_profile_pic.png'
-										alt='User profile picture'
+										alt='User profile pic'
 									/>
 								</div>
 								<span>
-									<h3>
-										{user.first_name} {user.last_name}
-									</h3>
+									<h3>{user.full_name}</h3>
 									<h5>See your profile</h5>
 								</span>
 							</Link>
