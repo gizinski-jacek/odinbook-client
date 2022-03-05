@@ -17,7 +17,7 @@ const RequestWrapper: React.FC<Props> = ({
 		<li className={styles.request}>
 			<div className='profile-pic-style'>
 				<Link to={`/profile/${request._id}`}>
-					<img src='placeholder_profile_pic.png' alt='User profile pic' />
+					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 				</Link>
 			</div>
 			<div className={styles.contents}>

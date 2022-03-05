@@ -135,7 +135,7 @@ const PostWrapper: React.FC<Props> = ({
 				<div className={styles.left}>
 					<div className='profile-pic-style'>
 						<Link to={`/profile/${post.author._id}`}>
-							<img src='placeholder_profile_pic.png' alt='User profile pic' />
+							<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 						</Link>
 					</div>
 					<div className={styles.metadata}>
@@ -218,7 +218,7 @@ const PostWrapper: React.FC<Props> = ({
 			<div className={styles.new_comment}>
 				<div className='profile-pic-style'>
 					<Link to={`/profile/${post.author._id}`}>
-						<img src='placeholder_profile_pic.png' alt='User profile pic' />
+						<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 					</Link>
 				</div>
 				<form onSubmit={(e) => handleSubmit(e, post._id)}>

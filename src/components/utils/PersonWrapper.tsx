@@ -12,7 +12,7 @@ const PersonWrapper: React.FC<Props> = ({ person, handleSendRequest }) => {
 		<li className={styles.not_friend}>
 			<Link to={`/profile/${person._id}`}>
 				<div className={styles.pic_link}>
-					<img src='placeholder_profile_pic.png' alt='User profile pic' />
+					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 				</div>
 			</Link>
 			<Link to={`/profile/${person._id}`}>

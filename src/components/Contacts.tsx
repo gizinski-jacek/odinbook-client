@@ -85,8 +85,8 @@ const Contacts = () => {
 			<li key={group._id} className={styles.group} onClick={() => openChat()}>
 				<div className='profile-pic-style'>
 					<span>
-						<img src='placeholder_profile_pic.png' alt='User profile pic' />
-						<img src='placeholder_profile_pic.png' alt='User profile pic' />
+						<img src='/placeholder_profile_pic.png' alt='User profile pic' />
+						<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 					</span>
 				</div>
 				<div>

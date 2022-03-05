@@ -306,7 +306,10 @@ const Navbar = () => {
 						<Link to='/me' className={styles.me_link}>
 							<h4>{user.first_name}</h4>
 							<div className='profile-pic-style'>
-								<img src='placeholder_profile_pic.png' alt='User profile pic' />
+								<img
+									src='/placeholder_profile_pic.png'
+									alt='User profile pic'
+								/>
 							</div>
 						</Link>
 					</li>
@@ -324,7 +327,7 @@ const Navbar = () => {
 							<Link to='/me' className={styles.me_link}>
 								<div className='profile-pic-style'>
 									<img
-										src='placeholder_profile_pic.png'
+										src='/placeholder_profile_pic.png'
 										alt='User profile pic'
 									/>
 								</div>

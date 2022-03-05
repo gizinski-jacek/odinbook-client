@@ -12,7 +12,7 @@ const FriendWrapper: React.FC<Props> = ({ friend, openChat }) => {
 		<li className={styles.friend} onClick={() => openChat()}>
 			<div className='profile-pic-style'>
 				<Link to={`/profile/${friend._id}`}>
-					<img src='placeholder_profile_pic.png' alt='User profile pic' />
+					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 				</Link>
 			</div>
 			<div>
