@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,28 +5,13 @@ import styles from '../styles/Timeline.module.scss';
 import { UserContext } from './hooks/UserContext';
 import PostFormModal from './utils/PostFormModal';
 import PostWrapper from './utils/PostWrapper';
-
-type Post = {
-	_id?: string;
-	author?: {
-		_id: string;
-		first_name: string;
-		last_name: string;
-	};
-	text: string;
-	comments?: string[];
-	likes?: string[];
-	createdAt?: string;
-	updatedAt?: string;
-};
-
-type TimelinePosts = [Post];
+import type { Post, PostEdit } from '../myTypes';
 
 const Timeline = () => {
 	const { user } = useContext(UserContext);
 	const [showModal, setShowModal] = useState(false);
-	const [timelinePosts, setTimelinePosts] = useState<TimelinePosts>();
-	const [postFormData, setPostFormData] = useState<Post>({ text: '' });
+	const [timelinePostsData, setTimelinePostsData] = useState<Post[]>();
+	const [formData, setFormData] = useState<PostEdit>({ text: '' });
 
 	useEffect(() => {
 		(async () => {
@@ -37,7 +20,7 @@ const Timeline = () => {
 					'/api/posts/user-timeline-posts',
 					{ withCredentials: true }
 				);
-				setTimelinePosts(resTimelinePosts.data);
+				setTimelinePostsData(resTimelinePosts.data);
 			} catch (error: any) {
 				console.error(error);
 			}
@@ -47,13 +30,13 @@ const Timeline = () => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const resPosts = await axios.post('/api/posts', postFormData, {
+			const resTimelinePosts = await axios.post('/api/posts', formData, {
 				withCredentials: true,
 			});
-			setTimelinePosts(resPosts.data);
-			setPostFormData({ text: '' });
+			setTimelinePostsData(resTimelinePosts.data);
+			setFormData({ text: '' });
 			setShowModal(false);
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error);
 		}
 	};
@@ -64,34 +47,44 @@ const Timeline = () => {
 	) => {
 		e.preventDefault();
 		try {
-			const resPosts = await axios.put(`/api/posts/${postId}`, postFormData, {
-				withCredentials: true,
-			});
-			setTimelinePosts(resPosts.data);
-			setPostFormData({ text: '' });
+			const resTimelinePosts = await axios.put(
+				`/api/posts/${postId}`,
+				formData,
+				{
+					withCredentials: true,
+				}
+			);
+			setTimelinePostsData(resTimelinePosts.data);
+			setFormData({ text: '' });
 			setShowModal(false);
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error);
 		}
 	};
 
-	const openModal = (e: React.MouseEvent<HTMLDivElement>, post?: Post) => {
+	const openModal = (e: React.MouseEvent<HTMLSpanElement>, post?: Post) => {
 		e.stopPropagation();
 		if (post) {
-			setPostFormData(post);
+			setFormData(post);
 		}
 		setShowModal(true);
 	};
 
 	const closeModal = (
 		e: React.MouseEvent<HTMLDivElement>,
-		postFormData?: string
+		postFormData: {
+			_id?: string;
+			text: string;
+			likes?: string[];
+			createdAt?: string;
+			updatedAt?: string;
+		}
 	) => {
 		e.stopPropagation();
 		if (postFormData._id) {
-			setPostFormData({ text: '' });
+			setFormData({ text: '' });
 		} else {
-			setPostFormData((prevState) => ({
+			setFormData((prevState) => ({
 				...prevState,
 				text: postFormData.text,
 			}));
@@ -99,8 +92,15 @@ const Timeline = () => {
 		setShowModal(false);
 	};
 
-	const timelineDisplay = timelinePosts?.map((post) => {
-		return <PostWrapper key={post._id} post={post} openEditModal={openModal} />;
+	const timelineDisplay = timelinePostsData?.map((post) => {
+		return (
+			<PostWrapper
+				key={post._id}
+				setTimelinePostsData={setTimelinePostsData}
+				post={post}
+				openEditModal={openModal}
+			/>
+		);
 	});
 
 	return (
@@ -108,16 +108,16 @@ const Timeline = () => {
 			<div className={styles.create_new_post}>
 				<div className='profile-pic-style'>
 					<Link to={`/profile/${user._id}`}>
-						<img src='placeholder_profile_pic.png' alt='User profile picture' />
+						<img src='placeholder_profile_pic.png' alt='User profile pic' />
 					</Link>
 				</div>
 				<span
-					className={postFormData.text ? styles.not_empty : ''}
+					className={formData.text ? styles.not_empty : ''}
 					onClick={(e) => openModal(e)}
 				>
 					<h4>
-						{postFormData.text
-							? postFormData.text
+						{formData.text
+							? formData.text
 							: `What's on your mind, ${user.first_name}?`}
 					</h4>
 				</span>
@@ -127,7 +127,7 @@ const Timeline = () => {
 					closeModal={closeModal}
 					handleSubmit={handleSubmit}
 					handleUpdate={handleUpdate}
-					post={postFormData}
+					editData={formData}
 				/>
 			) : null}
 			{timelineDisplay ? timelineDisplay : null}
