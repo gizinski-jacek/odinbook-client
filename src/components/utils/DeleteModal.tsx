@@ -3,19 +3,16 @@ import styles from '../../styles/DeleteModal.module.scss';
 type Props = {
 	closeModal: Function;
 	handleDelete: Function;
-	text: string;
+	item: string;
 };
 
-const DeleteModal: React.FC<Props> = ({ closeModal, handleDelete, text }) => {
+const DeleteModal: React.FC<Props> = ({ closeModal, handleDelete, item }) => {
 	return (
 		<div className={styles.modal_container}>
 			<span className={styles.grayout_bg} onClick={(e) => closeModal(e)}></span>
 			<div className={styles.confirm_delete}>
-				<h3>Delete this {text}?</h3>
-				<span>
-					Are you sure you want to delete this {text}? This action is
-					irreversible!
-				</span>
+				<h3>Delete {item}?</h3>
+				<span>Are you sure that you want to delete this {item}?</span>
 				<div className={styles.delete_controls}>
 					<button
 						type='button'
