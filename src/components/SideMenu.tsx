@@ -12,15 +12,10 @@ const SideMenu = () => {
 				<li>
 					<div className={`profile-pic-style ${styles.icon}`}>
 						<Link to={`/profile/${user._id}`}>
-							<img
-								src='placeholder_profile_pic.png'
-								alt='User profile picture'
-							/>
+							<img src='placeholder_profile_pic.png' alt='User profile pic' />
 						</Link>
 					</div>
-					<h4>
-						{user.first_name} {user.last_name}
-					</h4>
+					<h4>{user.full_name}</h4>
 				</li>
 				<li>
 					<div className={styles.icon}>
