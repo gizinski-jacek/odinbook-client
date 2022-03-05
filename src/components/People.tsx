@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styles from '../styles/People.module.scss';
 import PersonWrapper from './utils/PersonWrapper';
-import type { User } from '../myTypesTS';
+import type { User } from '../myTypes';
 
 const People = () => {
 	const [peopleData, setPeopleData] = useState<User[]>();
@@ -14,10 +14,8 @@ const People = () => {
 					withCredentials: true,
 				});
 				setPeopleData(resPeople.data);
-			} catch (error: unknown) {
-				if (error instanceof Error) {
-					console.error(error);
-				}
+			} catch (error: any) {
+				console.error(error);
 			}
 		})();
 	}, []);
@@ -30,10 +28,8 @@ const People = () => {
 				{ withCredentials: true }
 			);
 			// setPeopleList(resPeople.data);
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				console.error(error);
-			}
+		} catch (error: any) {
+			console.error(error);
 		}
 	};
 
