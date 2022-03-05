@@ -50,4 +50,4 @@ type User = {
 	full_name: string;
 };
 
-export type { Post, PostEdit, Comment, User };
+export type { User, Post, PostEdit, Comment };
