@@ -9,15 +9,15 @@ type Props = {
 
 const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 	const { setUser } = useContext(UserContext);
-	const [errors, setErrors] = useState<Array<{ msg: string }>>();
-	const [logInFormData, setLogInFormData] = useState({
+	const [errors, setErrors] = useState<{ msg: string }[]>();
+	const [formData, setFormData] = useState({
 		email: '',
 		password: '',
 	});
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		setLogInFormData((prevState) => ({
+		setFormData((prevState) => ({
 			...prevState,
 			[name]: value,
 		}));
@@ -26,8 +26,8 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const res: any = await axios.post('/api/log-in', logInFormData);
-			setUser(res.data);
+			const resUser = await axios.post('/api/log-in', formData);
+			setUser(resUser.data);
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {
 				if (typeof error.response.data === 'object') {
@@ -63,7 +63,7 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 							name='email'
 							minLength={4}
 							maxLength={32}
-							value={logInFormData.email}
+							value={formData.email}
 							onChange={(e) => handleChange(e)}
 							required
 							placeholder='Email'
@@ -77,7 +77,7 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 							name='password'
 							minLength={8}
 							maxLength={64}
-							value={logInFormData.password}
+							value={formData.password}
 							onChange={(e) => handleChange(e)}
 							required
 							placeholder='Password'

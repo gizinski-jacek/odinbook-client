@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import styles from '../styles/SignUp.module.scss';
 
 const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
-	const [errors, setErrors] = useState<Array<{ msg: string }>>();
-	const [signUpFormData, setSignUpFormData] = useState({
+	const [errors, setErrors] = useState<{ msg: string }[]>();
+	const [formData, setFormData] = useState({
 		first_name: '',
 		last_name: '',
 		email: '',
@@ -13,7 +13,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		setSignUpFormData((prevState) => ({
+		setFormData((prevState) => ({
 			...prevState,
 			[name]: value,
 		}));
@@ -22,7 +22,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			await axios.post('/api/sign-up', signUpFormData);
+			await axios.post('/api/sign-up', formData);
 			setShowLogIn(true);
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {
@@ -60,7 +60,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 							name='first_name'
 							minLength={4}
 							maxLength={32}
-							value={signUpFormData.first_name}
+							value={formData.first_name}
 							onChange={(e) => handleChange(e)}
 							required
 							placeholder='First Name'
@@ -72,7 +72,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 							name='last_name'
 							minLength={4}
 							maxLength={32}
-							value={signUpFormData.last_name}
+							value={formData.last_name}
 							onChange={(e) => handleChange(e)}
 							required
 							placeholder='Last Name'
@@ -85,7 +85,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 						name='email'
 						minLength={4}
 						maxLength={32}
-						value={signUpFormData.email}
+						value={formData.email}
 						onChange={(e) => handleChange(e)}
 						required
 						placeholder='Email'
@@ -97,7 +97,7 @@ const SignUp = ({ setShowLogIn }: { setShowLogIn: any }) => {
 						name='password'
 						minLength={8}
 						maxLength={64}
-						value={signUpFormData.password}
+						value={formData.password}
 						onChange={(e) => handleChange(e)}
 						required
 						placeholder='Password'
