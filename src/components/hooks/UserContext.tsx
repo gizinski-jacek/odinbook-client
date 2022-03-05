@@ -5,6 +5,7 @@ type User = {
 	email: string | null;
 	first_name: string | null;
 	last_name: string | null;
+	full_name: string | null;
 } | null;
 
 const defaultUser: User = {
@@ -12,6 +13,7 @@ const defaultUser: User = {
 	email: null,
 	first_name: null,
 	last_name: null,
+	full_name: null,
 };
 
 export const UserContext = createContext({
