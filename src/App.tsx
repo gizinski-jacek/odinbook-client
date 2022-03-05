@@ -9,10 +9,10 @@ import './App.scss';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import FrontPage from './components/FrontPage';
-import MyProfile from './components/MyProfile';
-import UserProfile from './components/UserProfile';
+import MePage from './components/MePage';
+import UserPage from './components/UserPage';
 import LoadingIcon from './components/utils/LoadingIcon';
-import NotFriends from './components/NotFriends';
+import People from './components/People';
 import SideMenu from './components/SideMenu';
 import Timeline from './components/Timeline';
 import Contacts from './components/Contacts';
@@ -30,7 +30,7 @@ const App = () => {
 				});
 				setUser(resUser.data);
 				setIsLoading(false);
-			} catch (error) {
+			} catch (error: any) {
 				setUser(null);
 				setIsLoading(false);
 				console.error(error);
@@ -74,9 +74,9 @@ const App = () => {
 							</>
 						}
 					></Route>
-					<Route path='me' element={<MyProfile />}></Route>
-					<Route path='profile' element={<UserProfile />}></Route>
-					<Route path='friends' element={<NotFriends />}></Route>
+					<Route path='me' element={<MePage />}></Route>
+					<Route path='profile/:userid' element={<UserPage />}></Route>
+					<Route path='friends' element={<People />}></Route>
 				</Route>
 			</Routes>
 		</UserContext.Provider>
