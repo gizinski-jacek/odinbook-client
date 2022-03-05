@@ -1,7 +1,8 @@
-//@ts-nocheck
+// @ts-nocheck
+
 import { DateTime } from 'luxon';
 
-const dateFormatter = (timestamp: string) => {
+const timeSinceDate = (timestamp: string) => {
 	const currentDate = DateTime.now();
 	const pastDate = DateTime.fromISO(timestamp, 'dd LLLL yyyy');
 	const { years, months, days, hours, minutes } = currentDate
@@ -40,4 +41,4 @@ const dateFormatter = (timestamp: string) => {
 	}
 };
 
-export default dateFormatter;
+export default timeSinceDate;
