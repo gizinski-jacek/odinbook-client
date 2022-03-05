@@ -400,7 +400,6 @@
 
 		> div:hover {
 			background-color: variables.$black-a20;
-			filter: brightness(90%);
 		}
 	}
 
@@ -408,7 +407,8 @@
 		margin: 8px;
 
 		li {
-			border: 1px solid red;
+			padding: 4px;
+			margin: 8px 0;
 		}
 	}
 }
@@ -454,7 +454,8 @@
 		margin: 0 16px;
 
 		li {
-			border: 1px solid red;
+			padding: 4px;
+			margin: 8px 0;
 		}
 	}
 

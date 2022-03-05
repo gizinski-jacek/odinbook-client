@@ -399,7 +399,7 @@ const Navbar = () => {
 							</div>
 							<div className={styles.controls}>
 								<div
-									className={`all btn-default ${
+									className={`btn-default ${
 										showAllNotifications ? 'btn-active' : ''
 									}`}
 									onClick={(e) => changeNotificationList(e)}
@@ -407,7 +407,7 @@ const Navbar = () => {
 									All
 								</div>
 								<div
-									className={`unread btn-default ${
+									className={`btn-default ${
 										showAllNotifications ? '' : 'btn-active'
 									}`}
 									onClick={(e) => changeNotificationList(e)}
