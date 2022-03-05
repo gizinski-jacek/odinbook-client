@@ -309,10 +309,10 @@
 		}
 	}
 
-	.arrows {
+	span.arrows {
 		width: 24px;
 		height: 24px;
-		display: inline-block;
+		display: block;
 		background-size: auto;
 		background-repeat: no-repeat;
 		background-image: url('../../public/multi_icons/icons_6.png');
