@@ -2,33 +2,28 @@ import { useContext, useState } from 'react';
 import { UserContext } from '../hooks/UserContext';
 import styles from '../../styles/PostFormModal.module.scss';
 import { Link } from 'react-router-dom';
+import type { PostEdit } from '../../myTypes';
 
 type Props = {
 	closeModal: Function;
 	handleSubmit: Function;
 	handleUpdate: Function;
-	post?: {
-		_id?: string;
-		text: string;
-		likes?: string[];
-		createdAt?: string;
-		updatedAt?: string;
-	};
+	editData: PostEdit;
 };
 
 const PostFormModal: React.FC<Props> = ({
 	closeModal,
 	handleSubmit,
 	handleUpdate,
-	post,
+	editData,
 }) => {
 	const { user } = useContext(UserContext);
 
-	const [postFormData, setPostFormData] = useState(post ? post : { text: '' });
+	const [formData, setFormData] = useState(editData);
 
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
-		setPostFormData((prevState) => ({
+		setFormData((prevState) => ({
 			...prevState,
 			[name]: value,
 		}));
@@ -38,7 +33,7 @@ const PostFormModal: React.FC<Props> = ({
 		<div className={styles.modal_container}>
 			<span
 				className={styles.grayout_bg}
-				onClick={(e) => closeModal(e, postFormData)}
+				onClick={(e) => closeModal(e, formData)}
 			></span>
 			<div className={styles.new_post_container}>
 				<div className={styles.top}>
@@ -47,7 +42,7 @@ const PostFormModal: React.FC<Props> = ({
 					</div>
 					<div
 						className={styles.close_btn}
-						onClick={(e) => closeModal(e, postFormData)}
+						onClick={(e) => closeModal(e, formData)}
 					>
 						<span></span>
 					</div>
@@ -55,21 +50,16 @@ const PostFormModal: React.FC<Props> = ({
 				<span className={styles.metadata}>
 					<div className='profile-pic-style'>
 						<Link to={`/profile/${user._id}`}>
-							<img
-								src='placeholder_profile_pic.png'
-								alt='User profile picture'
-							/>
+							<img src='placeholder_profile_pic.png' alt='User profile pic' />
 						</Link>
 					</div>
-					<h4>
-						{user.first_name} {user.last_name}
-					</h4>
+					<h4>{user.full_name}</h4>
 				</span>
 				<div className={styles.post_form}>
 					<form
 						onSubmit={
-							post?._id
-								? (e) => handleUpdate(e, post._id)
+							editData?._id
+								? (e) => handleUpdate(e, editData._id)
 								: (e) => handleSubmit(e)
 						}
 					>
@@ -80,16 +70,16 @@ const PostFormModal: React.FC<Props> = ({
 							maxLength={512}
 							rows={12}
 							onChange={(e) => handleChange(e)}
-							value={postFormData.text}
+							value={formData.text}
 							required
 							placeholder={`What's on your mind, ${user.first_name}?`}
 						/>
 						<button
 							type='submit'
 							className='btn-default btn-form-submit'
-							disabled={postFormData.text ? false : true}
+							disabled={formData.text ? false : true}
 						>
-							{post?._id ? 'Update' : 'Post'}
+							{editData?._id ? 'Update' : 'Post'}
 						</button>
 					</form>
 				</div>
