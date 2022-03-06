@@ -1,23 +1,26 @@
 import axios from 'axios';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../../styles/Post.module.scss';
 import CommentWrapper from './CommentWrapper';
 import DeleteModal from './DeleteModal';
 import timeSinceDate from './_timeSinceDate';
 import type { Post, Comment } from '../../myTypes';
+import { UserContext } from '../hooks/UserContext';
 
 type Props = {
 	openEditModal: Function;
-	setTimelinePostsData: Function;
+	setPostsData: Function;
 	post: Post;
 };
 
 const PostWrapper: React.FC<Props> = ({
 	openEditModal,
-	setTimelinePostsData,
+	setPostsData,
 	post,
 }) => {
+	const { user } = useContext(UserContext);
+
 	const commentInputRef = useRef<HTMLTextAreaElement>(null);
 
 	const [commentsData, setCommentsData] = useState<Comment[]>();
@@ -83,7 +86,7 @@ const PostWrapper: React.FC<Props> = ({
 			const setTimelinePosts = await axios.delete(`/api/posts/${post._id}`, {
 				withCredentials: true,
 			});
-			setTimelinePostsData(setTimelinePosts.data);
+			setPostsData(setTimelinePosts.data);
 			setShowModal(false);
 		} catch (error: any) {
 			console.error(error);
@@ -148,37 +151,41 @@ const PostWrapper: React.FC<Props> = ({
 					</div>
 				</div>
 				<div className={styles.right}>
-					<span
-						className={styles.options_toggle}
-						onClick={(e) => toggleOptions(e)}
-					>
-						<svg viewBox='0 0 20 20' width='20' height='20'>
-							<g transform='translate(-446 -350)'>
-								<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
-							</g>
-						</svg>
-					</span>
-					{showOptions ? (
-						<div className={styles.options_menu}>
-							<div
-								className={styles.edit_btn}
-								onClick={(e) => {
-									openEditModal(e, post);
-									closeOptions(e);
-								}}
+					{user._id === post.author._id ? (
+						<>
+							<span
+								className={styles.options_toggle}
+								onClick={(e) => toggleOptions(e)}
 							>
-								Edit post
-							</div>
-							<div
-								className={styles.delete_btn}
-								onClick={(e) => {
-									openDeleteModal(e);
-									closeOptions(e);
-								}}
-							>
-								Delete post
-							</div>
-						</div>
+								<svg viewBox='0 0 20 20' width='20' height='20'>
+									<g transform='translate(-446 -350)'>
+										<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
+									</g>
+								</svg>
+							</span>
+							{showOptions ? (
+								<div className={styles.options_menu}>
+									<div
+										className={styles.edit_btn}
+										onClick={(e) => {
+											openEditModal(e, post);
+											closeOptions(e);
+										}}
+									>
+										Edit post
+									</div>
+									<div
+										className={styles.delete_btn}
+										onClick={(e) => {
+											openDeleteModal(e);
+											closeOptions(e);
+										}}
+									>
+										Delete post
+									</div>
+								</div>
+							) : null}
+						</>
 					) : null}
 				</div>
 			</div>
