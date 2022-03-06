@@ -15,6 +15,7 @@ type Props = {
 
 const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 	const { user } = useContext(UserContext);
+
 	const [editComment, setEditComment] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
 	const [showModal, setShowModal] = useState(false);
@@ -131,38 +132,41 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 							</div>
 							<div className={styles.right}>
 								{user._id === comment.author._id ? (
-									<span
-										className={styles.options_toggle}
-										onClick={(e) => toggleOptions(e)}
-									>
-										<svg viewBox='0 0 20 20' width='20' height='20'>
-											<g transform='translate(-446 -350)'>
-												<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
-											</g>
-										</svg>
-									</span>
-								) : null}
-								{showOptions ? (
-									<div className={styles.options_menu}>
-										<div
-											className={styles.edit_btn}
-											onClick={(e) => {
-												toggleCommentForm(e);
-												closeOptions(e);
-											}}
+									<>
+										<span
+											className={styles.options_toggle}
+											onClick={(e) => toggleOptions(e)}
 										>
-											Edit comment
-										</div>
-										<div
-											className={styles.delete_btn}
-											onClick={(e) => {
-												openDeleteModal(e);
-												closeOptions(e);
-											}}
-										>
-											Delete comment
-										</div>
-									</div>
+											<svg viewBox='0 0 20 20' width='20' height='20'>
+												<g transform='translate(-446 -350)'>
+													<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
+												</g>
+											</svg>
+										</span>
+										)
+										{showOptions ? (
+											<div className={styles.options_menu}>
+												<div
+													className={styles.edit_btn}
+													onClick={(e) => {
+														toggleCommentForm(e);
+														closeOptions(e);
+													}}
+												>
+													Edit comment
+												</div>
+												<div
+													className={styles.delete_btn}
+													onClick={(e) => {
+														openDeleteModal(e);
+														closeOptions(e);
+													}}
+												>
+													Delete comment
+												</div>
+											</div>
+										) : null}
+									</>
 								) : null}
 							</div>
 						</div>
