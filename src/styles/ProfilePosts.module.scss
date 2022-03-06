@@ -1,0 +1,36 @@
+@use './variables';
+
+.profile_page_posts {
+	align-self: center;
+	display: flex;
+	flex-direction: row;
+	width: 1200px;
+
+	.profile_info {
+		flex: 1;
+
+		h3 {
+			font-weight: 600;
+		}
+
+		> div {
+			padding: 16px;
+			margin: 16px;
+			border-radius: 8px;
+			background-color: variables.$white;
+			box-shadow: 0 1px 2px 0 variables.$black-a20;
+		}
+	}
+
+	.profile_posts {
+		flex: 2;
+		margin: 16px;
+
+		.empty {
+			margin: 16px;
+			font-weight: 600;
+			color: variables.$black-a60;
+			text-align: center;
+		}
+	}
+}
