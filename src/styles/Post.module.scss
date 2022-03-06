@@ -15,6 +15,10 @@
 	img:hover {
 		filter: brightness(95%);
 	}
+
+	a:hover {
+		text-decoration: underline;
+	}
 }
 
 .top {
@@ -93,7 +97,8 @@
 }
 
 .bottom {
-	margin: 8px 0;
+	margin-top: 16px;
+	margin-bottom: 8px;
 
 	.comment_count {
 		float: right;
