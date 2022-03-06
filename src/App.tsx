@@ -50,20 +50,24 @@ const App = () => {
 				<Route
 					path='/'
 					element={
-						isLoading ? (
-							<LoadingIcon />
-						) : user ? (
-							<main className='main'>
-								<Navbar />
-								<Outlet />
-								<Footer />
-							</main>
-						) : (
-							<main className='main'>
-								<FrontPage />
-								<Footer />
-							</main>
-						)
+						<main className='main'>
+							{isLoading ? (
+								<LoadingIcon />
+							) : user ? (
+								<>
+									<Navbar />
+									<div className='home-container'>
+										<Outlet />
+									</div>
+									<Footer />
+								</>
+							) : (
+								<>
+									<FrontPage />
+									<Footer />
+								</>
+							)}
+						</main>
 					}
 				>
 					<Route
