@@ -27,9 +27,13 @@ const Timeline = () => {
 		})();
 	}, []);
 
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (
+		e: React.FormEvent<HTMLFormElement>,
+		formData: PostEdit
+	) => {
 		e.preventDefault();
 		try {
+			console.log(formData);
 			const resTimelinePosts = await axios.post('/api/posts', formData, {
 				withCredentials: true,
 			});
@@ -43,12 +47,12 @@ const Timeline = () => {
 
 	const handleUpdate = async (
 		e: React.FormEvent<HTMLFormElement>,
-		postId: string | undefined
+		formData: Post
 	) => {
 		e.preventDefault();
 		try {
 			const resTimelinePosts = await axios.put(
-				`/api/posts/${postId}`,
+				`/api/posts/${formData._id}`,
 				formData,
 				{
 					withCredentials: true,
