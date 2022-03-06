@@ -59,8 +59,8 @@ const PostFormModal: React.FC<Props> = ({
 					<form
 						onSubmit={
 							editData?._id
-								? (e) => handleUpdate(e, editData._id)
-								: (e) => handleSubmit(e)
+								? (e) => handleUpdate(e, formData)
+								: (e) => handleSubmit(e, formData)
 						}
 					>
 						<textarea
