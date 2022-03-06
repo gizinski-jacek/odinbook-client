@@ -10,7 +10,7 @@ import type { Post, PostEdit } from '../myTypes';
 const Timeline = () => {
 	const { user } = useContext(UserContext);
 	const [showModal, setShowModal] = useState(false);
-	const [timelinePostsData, setTimelinePostsData] = useState<Post[]>();
+	const [postsData, setPostsData] = useState<Post[]>();
 	const [formData, setFormData] = useState<PostEdit>({ text: '' });
 
 	useEffect(() => {
@@ -20,7 +20,7 @@ const Timeline = () => {
 					'/api/posts/user-timeline-posts',
 					{ withCredentials: true }
 				);
-				setTimelinePostsData(resTimelinePosts.data);
+				setPostsData(resTimelinePosts.data);
 			} catch (error: any) {
 				console.error(error);
 			}
@@ -33,7 +33,7 @@ const Timeline = () => {
 			const resTimelinePosts = await axios.post('/api/posts', formData, {
 				withCredentials: true,
 			});
-			setTimelinePostsData(resTimelinePosts.data);
+			setPostsData(resTimelinePosts.data);
 			setFormData({ text: '' });
 			setShowModal(false);
 		} catch (error: any) {
@@ -54,7 +54,7 @@ const Timeline = () => {
 					withCredentials: true,
 				}
 			);
-			setTimelinePostsData(resTimelinePosts.data);
+			setPostsData(resTimelinePosts.data);
 			setFormData({ text: '' });
 			setShowModal(false);
 		} catch (error: any) {
@@ -92,11 +92,11 @@ const Timeline = () => {
 		setShowModal(false);
 	};
 
-	const timelineDisplay = timelinePostsData?.map((post) => {
+	const postsDisplay = postsData?.map((post) => {
 		return (
 			<PostWrapper
 				key={post._id}
-				setTimelinePostsData={setTimelinePostsData}
+				setPostsData={setPostsData}
 				post={post}
 				openEditModal={openModal}
 			/>
@@ -130,7 +130,7 @@ const Timeline = () => {
 					editData={formData}
 				/>
 			) : null}
-			{timelineDisplay ? timelineDisplay : null}
+			{postsDisplay ? postsDisplay : null}
 		</div>
 	);
 };
