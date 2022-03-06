@@ -13,7 +13,7 @@ const Contacts = () => {
 	useEffect(() => {
 		(async () => {
 			try {
-				const resContacts = await axios.get('/api/users/user-friends-data/', {
+				const resContacts = await axios.get('/api/users/user-contacts', {
 					withCredentials: true,
 				});
 				setFriendsData(resContacts.data[0]);

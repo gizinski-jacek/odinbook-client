@@ -10,7 +10,7 @@ const People = () => {
 	useEffect(() => {
 		(async () => {
 			try {
-				const resPeople = await axios.get('/api/users', {
+				const resPeople = await axios.get('/api/users/people', {
 					withCredentials: true,
 				});
 				setPeopleData(resPeople.data);
