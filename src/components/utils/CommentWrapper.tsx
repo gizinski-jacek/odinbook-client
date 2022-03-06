@@ -42,15 +42,13 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 
 	const handleUpdate = async (
 		e: React.FormEvent<HTMLFormElement>,
-		commentPostRef: string,
-		commentId: string,
-		commentFormData: Props['comment']
+		formData: Comment
 	) => {
 		e.preventDefault();
 		try {
 			const resCommentList = await axios.put(
-				`/api/posts/${commentPostRef}/comments/${commentId}`,
-				commentFormData,
+				`/api/posts/${formData.post_ref}/comments/${formData._id}`,
+				formData,
 				{ withCredentials: true }
 			);
 			setCommentsData(resCommentList.data);
@@ -143,7 +141,6 @@ const CommentWrapper: React.FC<Props> = ({ comment, setCommentsData }) => {
 												</g>
 											</svg>
 										</span>
-										)
 										{showOptions ? (
 											<div className={styles.options_menu}>
 												<div
