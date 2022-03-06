@@ -19,6 +19,7 @@ import Contacts from './components/Contacts';
 
 const App = () => {
 	const location = useLocation();
+
 	const [isLoading, setIsLoading] = useState(true);
 	const [user, setUser] = useState(null);
 
