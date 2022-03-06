@@ -31,11 +31,7 @@ const EditCommentForm: React.FC<Props> = ({
 					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 				</Link>
 			</div>
-			<form
-				onSubmit={(e) =>
-					handleUpdate(e, comment.post_ref, comment._id, formData)
-				}
-			>
+			<form onSubmit={(e) => handleUpdate(e, formData)}>
 				<textarea
 					id='text'
 					name='text'
