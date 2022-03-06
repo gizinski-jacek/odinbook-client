@@ -2,12 +2,10 @@
 
 .navbar {
 	height: variables.$navbar-height;
-	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 	background-color: variables.$white;
-	box-shadow: 0 0 4px 1px variables.$black-a10;
 	z-index: 20;
 
 	.search_odinbook,
@@ -76,11 +74,12 @@
 	}
 
 	.center {
-		height: variables.$navbar-height;
 		position: fixed;
 		top: 0;
 		left: 0;
 		right: 0;
+		background-color: variables.$white;
+		box-shadow: 0 0 4px 1px variables.$black-a10;
 
 		ul {
 			height: variables.$navbar-height;
@@ -122,12 +121,8 @@
 				}
 			}
 
-			.li {
-				margin-top: 4px;
-			}
-
-			a :after {
-				content: ' ';
+			a:after {
+				content: '';
 				position: absolute;
 				left: 0;
 				right: 0;
@@ -136,7 +131,7 @@
 				background-color: transparent;
 			}
 
-			a.isActive :after {
+			a.isActive:after {
 				height: 0;
 				border-bottom: 4px solid variables.$blue;
 			}
@@ -148,7 +143,6 @@
 	}
 
 	.right {
-		height: variables.$navbar-height;
 		position: fixed;
 		top: 0;
 		right: 0;
@@ -192,13 +186,8 @@
 				padding: 6px 8px;
 				border-radius: 24px;
 				background-color: variables.$white;
-				text-decoration: none;
-
-				h4 {
-					font-weight: 600;
-					border: none;
-					margin-right: 8px;
-				}
+				font-weight: 600;
+				margin-right: 8px;
 
 				img {
 					width: 28px;
@@ -210,20 +199,18 @@
 				filter: brightness(95%);
 			}
 
-			.find_friends_link {
-				text-decoration: none;
+			.friends_link {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				font-weight: 600;
+				padding: 12px 16px;
+				border-radius: 24px;
+				background-color: variables.$black-a10;
+			}
 
-				h5 {
-					font-weight: 600;
-					padding: 12px 16px;
-					border: none;
-					border-radius: 24px;
-					background-color: variables.$black-a10;
-				}
-
-				h5:hover {
-					background-color: variables.$black-a20;
-				}
+			.friends_link:hover {
+				background-color: variables.$black-a20;
 			}
 		}
 	}
@@ -245,7 +232,6 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		text-decoration: none;
 		border-radius: 8px;
 	}
 
@@ -514,7 +500,6 @@
 		background-color: variables.$white;
 		padding: 16px;
 		margin: 0 16px;
-		margin-bottom: 8px;
 		border-radius: 8px;
 		box-shadow: 0 1px 2px 0 variables.$black-a20;
 		max-width: 360px;
@@ -563,7 +548,6 @@
 		background-color: variables.$white;
 		max-width: 200px;
 		padding: 8px;
-		margin-bottom: 16px;
 		margin-right: 2px;
 		border-radius: 8px;
 		box-shadow: 0 1px 2px 0 variables.$black-a20;
