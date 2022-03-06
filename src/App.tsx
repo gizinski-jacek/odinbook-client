@@ -6,16 +6,21 @@ import { Routes, Route, Outlet } from 'react-router-dom';
 import { UserContext } from './components/hooks/UserContext';
 import axios from 'axios';
 import './App.scss';
+import LoadingIcon from './components/utils/LoadingIcon';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import FrontPage from './components/FrontPage';
-import MePage from './components/MePage';
-import UserPage from './components/UserPage';
-import LoadingIcon from './components/utils/LoadingIcon';
-import People from './components/People';
 import SideMenu from './components/SideMenu';
 import Timeline from './components/Timeline';
 import Contacts from './components/Contacts';
+import People from './components/People';
+import ProfileMain from './components/ProfileMain';
+import ProfileAbout from './components/ProfileAbout';
+import ProfileFriends from './components/ProfileFriends';
+import ProfilePhotos from './components/ProfilePhotos';
+import ProfileVideos from './components/ProfileVideos';
+import ProfilePosts from './components/ProfilePosts';
+import MePage from './components/MePage';
 
 const App = () => {
 	const location = useLocation();
@@ -45,38 +50,48 @@ const App = () => {
 				<Route
 					path='/'
 					element={
-						<main className='main'>
-							{isLoading ? (
-								<LoadingIcon />
-							) : user ? (
-								<>
-									<Navbar />
-									<div className='home-container'>
-										<Outlet />
-									</div>
-									<Footer />
-								</>
-							) : (
-								<>
-									<FrontPage />
-									<Footer />
-								</>
-							)}
-						</main>
+						isLoading ? (
+							<LoadingIcon />
+						) : user ? (
+							<main className='main'>
+								<Navbar />
+								<Outlet />
+								<Footer />
+							</main>
+						) : (
+							<main className='main'>
+								<FrontPage />
+								<Footer />
+							</main>
+						)
 					}
 				>
 					<Route
 						path=''
 						element={
-							<>
+							<div className='home-container'>
 								<SideMenu />
 								<Timeline />
 								<Contacts />
-							</>
+							</div>
 						}
 					></Route>
 					<Route path='me' element={<MePage />}></Route>
-					<Route path='profile/:userid' element={<UserPage />}></Route>
+					<Route
+						path='profile/:userid'
+						element={
+							<div className='profile-container'>
+								<ProfileMain />
+								<Outlet />
+							</div>
+						}
+					>
+						<Route path='' element={<ProfilePosts />}></Route>
+						<Route path='about' element={<ProfileAbout />}></Route>
+						<Route path='friends' element={<ProfileFriends />}></Route>
+						<Route path='photos' element={<ProfilePhotos />}></Route>
+						<Route path='videos' element={<ProfileVideos />}></Route>
+					</Route>
 					<Route path='friends' element={<People />}></Route>
 				</Route>
 			</Routes>
