@@ -1,11 +1,14 @@
 import axios from 'axios';
 import { useContext, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
 import styles from '../styles/Navbar.module.scss';
 
 const Navbar = () => {
 	const { user, setUser } = useContext(UserContext);
+
+	const navigate = useNavigate();
+
 	const [showMenuContainer, setShowMenuContainer] = useState(false);
 	const [showMainMenu, setShowMainMenu] = useState(false);
 	const [showMessengerMenu, setShowMessengerMenu] = useState(false);
@@ -19,6 +22,7 @@ const Navbar = () => {
 		try {
 			await axios.get('/api/log-out');
 			setUser(null);
+			navigate('/');
 		} catch (error: any) {
 			console.error(error);
 		}
