@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { useContext, useState } from 'react';
-import { UserContext } from './hooks/UserContext';
-import styles from '../styles/LogIn.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from './hooks/UserContext';
+import axios from 'axios';
+import styles from '../styles/LogIn.module.scss';
 
 type Props = {
 	setShowLogIn: Function;
