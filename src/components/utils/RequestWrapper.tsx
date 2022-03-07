@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import styles from '../../styles/Request.module.scss';
 import type { User } from '../../myTypes';
+import styles from '../../styles/Request.module.scss';
 
 type Props = {
 	acceptRequest: Function;
