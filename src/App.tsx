@@ -20,7 +20,6 @@ import ProfileFriends from './components/ProfileFriends';
 import ProfilePhotos from './components/ProfilePhotos';
 import ProfileVideos from './components/ProfileVideos';
 import ProfilePosts from './components/ProfilePosts';
-import MePage from './components/MePage';
 
 const App = () => {
 	const location = useLocation();
@@ -80,7 +79,6 @@ const App = () => {
 							</div>
 						}
 					></Route>
-					<Route path='me' element={<MePage />}></Route>
 					<Route
 						path='profile/:userid'
 						element={
