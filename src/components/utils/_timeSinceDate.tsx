@@ -33,7 +33,9 @@ const timeSinceDate = (timestamp: string) => {
 			return `${hours} hours ago`;
 		}
 	} else {
-		if (minutes === 1) {
+		if (minutes <= 1) {
+			return `just now`;
+		} else if (minutes === 1) {
 			return `${Math.round(minutes)} minute ago`;
 		} else {
 			return `${Math.round(minutes)} minutes ago`;
