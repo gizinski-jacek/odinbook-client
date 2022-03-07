@@ -1,46 +1,43 @@
-import axios from 'axios';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import styles from '../../styles/Post.module.scss';
+import { Link, useParams } from 'react-router-dom';
+import { UserContext } from '../hooks/UserContext';
+import { CommentNew, PostFull } from '../../myTypes';
+import { axiosGet, axiosPost, axiosPut } from './axiosFunctions';
 import CommentWrapper from './CommentWrapper';
+import PostFormModal from './PostFormModal';
 import DeleteModal from './DeleteModal';
 import timeSinceDate from './_timeSinceDate';
-import type { Post, Comment } from '../../myTypes';
-import { UserContext } from '../hooks/UserContext';
+import styles from '../../styles/Post.module.scss';
 
 type Props = {
-	openEditModal: Function;
-	setPostsData: Function;
-	post: Post;
+	post: PostFull;
 };
 
-const PostWrapper: React.FC<Props> = ({
-	openEditModal,
-	setPostsData,
-	post,
-}) => {
+const PostWrapper: React.FC<Props> = ({ post }) => {
 	const { user } = useContext(UserContext);
 
 	const commentInputRef = useRef<HTMLTextAreaElement>(null);
 
-	const [commentsData, setCommentsData] = useState<Comment[]>();
+	const params = useParams();
+
+	const [postData, setPostData] = useState<PostFull | null>(post);
 	const [formData, setFormData] = useState({ text: '' });
 	const [showComments, setShowComments] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
-	const [showModal, setShowModal] = useState(false);
+	const [showEditModal, setShowEditModal] = useState(false);
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
 
 	useEffect(() => {
 		(async () => {
-			try {
-				const resComments = await axios.get(`/api/posts/${post._id}/comments`, {
-					withCredentials: true,
-				});
-				setCommentsData(resComments.data);
-			} catch (error: any) {
-				console.error(error);
+			if (!post) {
+				try {
+					setPostData(await axiosGet(`/api/posts/${params.postId}/comments`));
+				} catch (error: any) {
+					console.error(error);
+				}
 			}
 		})();
-	}, [post._id]);
+	}, [post, params]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
@@ -50,44 +47,19 @@ const PostWrapper: React.FC<Props> = ({
 		}));
 	};
 
+	const openModal = (e: React.MouseEvent<HTMLSpanElement>) => {
+		e.stopPropagation();
+		setShowEditModal(true);
+	};
+
+	const closeModal = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+		setShowEditModal(false);
+	};
+
 	const handleLike = async (postId: string) => {
 		try {
-			const resComments = await axios.put(
-				`/api/posts/${postId}/like`,
-				{ postId },
-				{ withCredentials: true }
-			);
-			setCommentsData(resComments.data);
-		} catch (error: any) {
-			console.error(error);
-		}
-	};
-
-	const handleSubmit = async (
-		e: React.FormEvent<HTMLFormElement>,
-		postId: string
-	) => {
-		e.preventDefault();
-		try {
-			const resComments = await axios.post(
-				`/api/posts/${postId}/comments`,
-				formData,
-				{ withCredentials: true }
-			);
-			setCommentsData(resComments.data);
-			setFormData({ text: '' });
-		} catch (error: any) {
-			console.error(error);
-		}
-	};
-
-	const handleDelete = async () => {
-		try {
-			const setTimelinePosts = await axios.delete(`/api/posts/${post._id}`, {
-				withCredentials: true,
-			});
-			setPostsData(setTimelinePosts.data);
-			setShowModal(false);
+			setPostData(await axiosPut(`/api/posts/${postId}/like`, { postId }));
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -114,44 +86,53 @@ const PostWrapper: React.FC<Props> = ({
 
 	const openDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		setShowModal(true);
+		setShowDeleteModal(true);
 	};
 
 	const closeDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		setShowModal(false);
+		setShowDeleteModal(false);
 	};
 
-	const commentsDisplay = commentsData?.map((comment) => {
-		return (
-			<CommentWrapper
-				key={comment._id}
-				comment={comment}
-				setCommentsData={setCommentsData}
-			/>
-		);
+	const handleCommentSubmit = async (
+		e: React.FormEvent<HTMLFormElement>,
+		postId: string,
+		formData: CommentNew
+	) => {
+		e.preventDefault();
+		try {
+			setPostData(await axiosPost(`/api/posts/${postId}/comments`, formData));
+			setShowComments(true);
+			setFormData({ text: '' });
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
+	const commentsDisplay = postData?.comments.map((comment) => {
+		return <CommentWrapper key={comment._id} comment={comment} />;
 	});
 
-	return (
+	return postData ? (
 		<div className={styles.post}>
 			<div className={styles.top}>
 				<div className={styles.left}>
 					<div className='profile-pic-style'>
-						<Link to={`/profile/${post.author._id}`}>
+						<Link to={`/profile/${postData.author._id}`}>
 							<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 						</Link>
 					</div>
 					<div className={styles.metadata}>
-						<Link to={`/profile/${post.author._id}`}>
-							<h4>{post.author.full_name}</h4>
+						<Link to={`/profile/${postData.author._id}`}>
+							<h4>{postData.author.full_name}</h4>
 						</Link>
-						<Link to={`/posts/${post._id}`}>
-							<h5>{timeSinceDate(post.createdAt)}</h5>
+						<Link to={`/posts/${postData._id}`}>
+							<h5>{timeSinceDate(postData.createdAt)}</h5>
 						</Link>
 					</div>
 				</div>
 				<div className={styles.right}>
-					{user._id === post.author._id ? (
+					{user._id === postData.author._id ? (
 						<>
 							<span
 								className={styles.options_toggle}
@@ -168,7 +149,7 @@ const PostWrapper: React.FC<Props> = ({
 									<div
 										className={styles.edit_btn}
 										onClick={(e) => {
-											openEditModal(e, post);
+											openModal(e);
 											closeOptions(e);
 										}}
 									>
@@ -190,22 +171,40 @@ const PostWrapper: React.FC<Props> = ({
 				</div>
 			</div>
 			<div className={styles.post_text}>
-				<p>{post.text}</p>
+				<p>{postData.text}</p>
 			</div>
 			<div className={styles.bottom}>
-				{commentsData && commentsData?.length > 0 ? (
-					<div
-						className={styles.comment_count}
-						onClick={() => {
-							setShowComments((prevState) => !prevState);
-							commentInputRef.current?.focus();
-						}}
-					>
-						<h5>{commentsData?.length} comments</h5>
+				{postData.comments.length > 0 ? (
+					<div className={styles.likes_and_count}>
+						{postData.likes.includes(user._id) ? (
+							<div
+								className={styles.liked}
+								onClick={(e) => handleLike(postData._id)}
+							>
+								<span></span>
+							</div>
+						) : null}
+						<div
+							className={styles.comment_count}
+							onClick={() => {
+								setShowComments((prevState) => !prevState);
+								commentInputRef.current?.focus();
+							}}
+						>
+							<h5>{postData?.comments.length} comments</h5>
+						</div>
 					</div>
 				) : null}
 				<span className={styles.controls}>
-					<div className={styles.like_btn} onClick={() => handleLike(post._id)}>
+					<div
+						className={`${styles.like_btn} ${
+							postData.likes.includes(user._id) ? styles.liked : ''
+						}`}
+						onClick={() => handleLike(postData._id)}
+					>
+						<div className={styles.icon}>
+							<span></span>
+						</div>
 						Like
 					</div>
 					<div
@@ -215,6 +214,9 @@ const PostWrapper: React.FC<Props> = ({
 							commentInputRef.current?.focus();
 						}}
 					>
+						<div className={styles.icon}>
+							<span></span>
+						</div>
 						Comment
 					</div>
 				</span>
@@ -224,17 +226,18 @@ const PostWrapper: React.FC<Props> = ({
 			) : null}
 			<div className={styles.new_comment}>
 				<div className='profile-pic-style'>
-					<Link to={`/profile/${post.author._id}`}>
+					<Link to={`/profile/${postData.author._id}`}>
 						<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 					</Link>
 				</div>
-				<form onSubmit={(e) => handleSubmit(e, post._id)}>
+				<form onSubmit={(e) => handleCommentSubmit(e, postData._id, formData)}>
 					<textarea
 						id='text'
 						name='text'
 						ref={commentInputRef}
 						minLength={1}
 						maxLength={512}
+						rows={2}
 						onChange={(e) => handleChange(e)}
 						value={formData.text}
 						required
@@ -245,15 +248,22 @@ const PostWrapper: React.FC<Props> = ({
 					</button>
 				</form>
 			</div>
-			{showModal ? (
+			{showEditModal ? (
+				<PostFormModal
+					closeModal={closeModal}
+					setData={setPostData}
+					post={postData}
+				/>
+			) : null}
+			{showDeleteModal ? (
 				<DeleteModal
 					closeModal={closeDeleteModal}
-					handleDelete={handleDelete}
-					item={'post'}
+					setData={setPostData}
+					post={postData}
 				/>
 			) : null}
 		</div>
-	);
+	) : null;
 };
 
 export default PostWrapper;
