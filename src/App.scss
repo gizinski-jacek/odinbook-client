@@ -38,6 +38,10 @@ a {
 	text-decoration: none;
 }
 
+img {
+	display: block;
+}
+
 hr {
 	height: 1px;
 	border: none;
@@ -154,7 +158,6 @@ hr {
 	margin-right: 12px;
 
 	img {
-		display: block;
 		border-radius: 50%;
 		box-shadow: 0 0 1px 0 variables.$black;
 	}
