@@ -1,76 +1,31 @@
-import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import styles from '../styles/Timeline.module.scss';
 import { UserContext } from './hooks/UserContext';
+import { PostFull, PostNew } from '../myTypes';
+import { axiosGet } from './utils/axiosFunctions';
 import PostFormModal from './utils/PostFormModal';
 import PostWrapper from './utils/PostWrapper';
-import type { Post, PostEdit } from '../myTypes';
+import styles from '../styles/Timeline.module.scss';
 
 const Timeline = () => {
 	const { user } = useContext(UserContext);
+
+	const [postsData, setPostsData] = useState<PostFull[]>();
+	const [formData, setFormData] = useState<PostNew>({ text: '' });
 	const [showModal, setShowModal] = useState(false);
-	const [postsData, setPostsData] = useState<Post[]>();
-	const [formData, setFormData] = useState<PostEdit>({ text: '' });
 
 	useEffect(() => {
 		(async () => {
 			try {
-				const resTimelinePosts = await axios.get(
-					'/api/posts/user-timeline-posts',
-					{ withCredentials: true }
-				);
-				setPostsData(resTimelinePosts.data);
+				setPostsData(await axiosGet('/api/posts/user-timeline-posts'));
 			} catch (error: any) {
 				console.error(error);
 			}
 		})();
 	}, []);
 
-	const handleSubmit = async (
-		e: React.FormEvent<HTMLFormElement>,
-		formData: PostEdit
-	) => {
-		e.preventDefault();
-		try {
-			console.log(formData);
-			const resTimelinePosts = await axios.post('/api/posts', formData, {
-				withCredentials: true,
-			});
-			setPostsData(resTimelinePosts.data);
-			setFormData({ text: '' });
-			setShowModal(false);
-		} catch (error: any) {
-			console.error(error);
-		}
-	};
-
-	const handleUpdate = async (
-		e: React.FormEvent<HTMLFormElement>,
-		formData: Post
-	) => {
-		e.preventDefault();
-		try {
-			const resTimelinePosts = await axios.put(
-				`/api/posts/${formData._id}`,
-				formData,
-				{
-					withCredentials: true,
-				}
-			);
-			setPostsData(resTimelinePosts.data);
-			setFormData({ text: '' });
-			setShowModal(false);
-		} catch (error: any) {
-			console.error(error);
-		}
-	};
-
-	const openModal = (e: React.MouseEvent<HTMLSpanElement>, post?: Post) => {
+	const openModal = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
-		if (post) {
-			setFormData(post);
-		}
 		setShowModal(true);
 	};
 
@@ -97,14 +52,7 @@ const Timeline = () => {
 	};
 
 	const postsDisplay = postsData?.map((post) => {
-		return (
-			<PostWrapper
-				key={post._id}
-				setPostsData={setPostsData}
-				post={post}
-				openEditModal={openModal}
-			/>
-		);
+		return <PostWrapper key={post._id} post={post} />;
 	});
 
 	return (
@@ -129,9 +77,8 @@ const Timeline = () => {
 			{showModal ? (
 				<PostFormModal
 					closeModal={closeModal}
-					handleSubmit={handleSubmit}
-					handleUpdate={handleUpdate}
-					editData={formData}
+					setData={setPostsData}
+					post={formData}
 				/>
 			) : null}
 			{postsDisplay ? postsDisplay : null}
