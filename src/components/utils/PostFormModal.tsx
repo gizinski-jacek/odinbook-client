@@ -1,25 +1,20 @@
 import { useContext, useState } from 'react';
-import { UserContext } from '../hooks/UserContext';
-import styles from '../../styles/PostFormModal.module.scss';
 import { Link } from 'react-router-dom';
-import type { PostEdit } from '../../myTypes';
+import { UserContext } from '../hooks/UserContext';
+import { PostFull, PostNew } from '../../myTypes';
+import { axiosPost, axiosPut } from './axiosFunctions';
+import styles from '../../styles/PostFormModal.module.scss';
 
 type Props = {
 	closeModal: Function;
-	handleSubmit: Function;
-	handleUpdate: Function;
-	editData: PostEdit;
+	setData: Function;
+	post: PostFull | PostNew;
 };
 
-const PostFormModal: React.FC<Props> = ({
-	closeModal,
-	handleSubmit,
-	handleUpdate,
-	editData,
-}) => {
+const PostFormModal: React.FC<Props> = ({ setData, closeModal, post }) => {
 	const { user } = useContext(UserContext);
 
-	const [formData, setFormData] = useState(editData);
+	const [formData, setFormData] = useState<PostFull | PostNew>(post);
 
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
@@ -27,6 +22,23 @@ const PostFormModal: React.FC<Props> = ({
 			...prevState,
 			[name]: value,
 		}));
+	};
+
+	const handleSubmit = async (
+		e: React.FormEvent<HTMLFormElement>,
+		formData: PostFull | PostNew
+	) => {
+		e.preventDefault();
+		try {
+			if (post._id) {
+				setData(await axiosPut(`/api/posts/${formData._id}`, formData));
+			} else {
+				setData(await axiosPost('/api/posts', formData));
+			}
+			closeModal(e, { text: '' });
+		} catch (error: any) {
+			console.error(error);
+		}
 	};
 
 	return (
@@ -38,7 +50,7 @@ const PostFormModal: React.FC<Props> = ({
 			<div className={styles.new_post_container}>
 				<div className={styles.top}>
 					<div className={styles.title}>
-						<h3>Create post</h3>
+						<h3>{post._id ? 'Update post' : 'Create post'}</h3>
 					</div>
 					<div
 						className={styles.close_btn}
@@ -50,19 +62,13 @@ const PostFormModal: React.FC<Props> = ({
 				<span className={styles.metadata}>
 					<div className='profile-pic-style'>
 						<Link to={`/profile/${user._id}`}>
-							<img src='/placeholder_profile_pic.png' alt='User profile pic' />
+							<img src='placeholder_profile_pic.png' alt='User profile pic' />
 						</Link>
 					</div>
 					<h4>{user.full_name}</h4>
 				</span>
 				<div className={styles.post_form}>
-					<form
-						onSubmit={
-							editData?._id
-								? (e) => handleUpdate(e, formData)
-								: (e) => handleSubmit(e, formData)
-						}
-					>
+					<form onSubmit={(e) => handleSubmit(e, formData)}>
 						<textarea
 							id='text'
 							name='text'
@@ -79,7 +85,7 @@ const PostFormModal: React.FC<Props> = ({
 							className='btn-default btn-form-submit'
 							disabled={formData.text ? false : true}
 						>
-							{editData?._id ? 'Update' : 'Post'}
+							{post._id ? 'Save' : 'Post'}
 						</button>
 					</form>
 				</div>
