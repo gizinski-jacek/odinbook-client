@@ -7,17 +7,8 @@
 	background-color: variables.$white;
 	box-shadow: 0 1px 2px 0 variables.$black-a20;
 
-	img {
-		width: 40px;
-		height: 40px;
-	}
-
 	img:hover {
 		filter: brightness(95%);
-	}
-
-	a:hover {
-		text-decoration: underline;
 	}
 }
 
@@ -32,10 +23,21 @@
 		display: flex;
 		flex-direction: row;
 
+		img {
+			width: 40px;
+			height: 40px;
+		}
+
 		.metadata {
 			display: flex;
 			flex-direction: column;
 			justify-content: space-evenly;
+
+			a:hover {
+				h4 {
+					text-decoration: underline 2px;
+				}
+			}
 
 			h4 {
 				font-weight: 600;
@@ -100,17 +102,42 @@
 	margin-top: 16px;
 	margin-bottom: 8px;
 
-	.comment_count {
-		float: right;
+	.likes_and_count {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		height: 16px;
 		margin-bottom: 8px;
-		width: fit-content;
-		text-align: right;
-		color: variables.$black-a60;
-		cursor: pointer;
-	}
 
-	.comment_count:hover {
-		text-decoration: underline;
+		.liked {
+			span {
+				width: 16px;
+				height: 16px;
+				display: block;
+				background-size: auto;
+				background-repeat: no-repeat;
+				background-image: url('../../public/single_icons/like_icon.png');
+				filter: opacity(80%);
+			}
+		}
+
+		.liked:hover {
+			cursor: pointer;
+		}
+
+		.comment_count {
+			float: right;
+			width: fit-content;
+			text-align: right;
+			color: variables.$black-a60;
+			cursor: pointer;
+			margin-left: auto;
+		}
+
+		.comment_count:hover {
+			text-decoration: underline;
+		}
 	}
 
 	.controls {
@@ -131,11 +158,49 @@
 			text-align: center;
 			background-color: variables.$white;
 			cursor: pointer;
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
 		}
 
 		.like_btn:hover,
 		.comment_btn:hover {
 			filter: brightness(95%);
+		}
+
+		.icon {
+			width: fit-content;
+			border-radius: 50%;
+			margin-right: 4px;
+
+			span {
+				width: 18px;
+				height: 18px;
+				display: block;
+				background-size: auto;
+				background-repeat: no-repeat;
+				background-image: url('../../public/multi_icons/icons_10.png');
+				background-position: 0px -247px;
+			}
+		}
+
+		.liked {
+			background-color: variables.$blue-a30;
+
+			span {
+				background-image: url('../../public/multi_icons/icons_10.png');
+				background-position: 0px -228px;
+			}
+		}
+
+		.comment_btn {
+			div {
+				span {
+					background-image: url('../../public/multi_icons/icons_10.png');
+					background-position: 0px -209px;
+				}
+			}
 		}
 	}
 }
@@ -148,12 +213,11 @@
 .new_comment {
 	display: flex;
 	flex-direction: row;
-	align-items: center;
 
 	form {
 		display: flex;
 		flex-direction: row;
-		align-items: center;
+		align-items: flex-start;
 		flex: 1;
 
 		textarea {
