@@ -3,7 +3,7 @@
 .comment {
 	display: flex;
 	flex-direction: row;
-	margin: 4px 0;
+	margin-bottom: 4px;
 
 	img {
 		width: 32px;
@@ -31,6 +31,7 @@
 	background-color: variables.$background;
 	padding: 8px 12px;
 	border-radius: 16px;
+	position: relative;
 
 	a {
 		font-weight: 600;
@@ -38,8 +39,25 @@
 	}
 
 	p {
+		margin-top: 2px;
 		line-height: 1.1rem;
 		font-size: 0.8rem;
+	}
+
+	.liked {
+		position: absolute;
+		bottom: 0;
+		right: -8px;
+
+		span {
+			width: 16px;
+			height: 16px;
+			display: block;
+			background-size: auto;
+			background-repeat: no-repeat;
+			background-image: url('../../public/single_icons/like_icon.png');
+			filter: opacity(80%);
+		}
 	}
 }
 
@@ -63,8 +81,12 @@
 		text-decoration: underline;
 	}
 
-	a {
+	.time {
 		color: variables.$black-a60;
+	}
+
+	.liked {
+		color: variables.$blue;
 	}
 }
 
