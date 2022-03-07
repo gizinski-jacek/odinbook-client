@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import styles from '../styles/SideMenu.module.scss';
 import { UserContext } from './hooks/UserContext';
+import styles from '../styles/SideMenu.module.scss';
 
 const SideMenu = () => {
 	const { user } = useContext(UserContext);
