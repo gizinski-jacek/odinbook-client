@@ -1,4 +1,4 @@
-type Post = {
+type PostFull = {
 	_id: string;
 	author: {
 		_id: string;
@@ -7,13 +7,13 @@ type Post = {
 		full_name: string;
 	};
 	text: string;
-	comments: string[];
-	likes: string[];
+	comments: CommentFull[];
+	likes: any;
 	createdAt: string;
 	updatedAt: string;
 };
 
-type PostEdit = {
+type PostNew = {
 	_id?: string;
 	author?: {
 		_id: string;
@@ -28,7 +28,7 @@ type PostEdit = {
 	updatedAt?: string;
 };
 
-type Comment = {
+type CommentFull = {
 	_id: string;
 	author: {
 		_id: string;
@@ -38,16 +38,35 @@ type Comment = {
 	};
 	post_ref: string;
 	text: string;
+	likes: any;
 	createdAt: string;
 	updatedAt: string;
 };
 
+type CommentNew = {
+	_id?: string;
+	author?: {
+		_id: string;
+		first_name: string;
+		last_name: string;
+		full_name: string;
+	};
+	post_ref?: string;
+	text: string;
+	likes?: any;
+	createdAt?: string;
+	updatedAt?: string;
+};
+
 type User = {
 	_id: string;
-	email: string;
 	first_name: string;
 	last_name: string;
 	full_name: string;
+	friend_list: string[];
+	blocked_user_list: string[];
+	incoming_friend_requests: string[];
+	outgoing_friend_requests: string[];
 };
 
-export type { User, Post, PostEdit, Comment };
+export type { User, PostFull, PostNew, CommentFull, CommentNew };
