@@ -1,9 +1,9 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import styles from '../styles/Contacts.module.scss';
-import FriendWrapper from './utils/FriendWrapper';
-import RequestWrapper from './utils/RequestWrapper';
 import type { User } from '../myTypes';
+import { axiosGet, axiosPut } from './utils/axiosFunctions';
+import RequestWrapper from './utils/RequestWrapper';
+import FriendWrapper from './utils/FriendWrapper';
+import styles from '../styles/Contacts.module.scss';
 
 const Contacts = () => {
 	const [requestsData, setRequestsData] = useState<User[]>();
@@ -13,11 +13,8 @@ const Contacts = () => {
 	useEffect(() => {
 		(async () => {
 			try {
-				const resContacts = await axios.get('/api/users/user-contacts', {
-					withCredentials: true,
-				});
-				setFriendsData(resContacts.data[0]);
-				setRequestsData(resContacts.data[1]);
+				setRequestsData(await axiosGet('/api/users/requests'));
+				setFriendsData(await axiosGet('/api/users/friends'));
 			} catch (error: any) {
 				console.error(error);
 			}
@@ -26,15 +23,11 @@ const Contacts = () => {
 
 	const acceptRequest = async (requestId: string) => {
 		try {
-			const resContacts = await axios.put(
-				`/api/users/friends/accept`,
-				{ requestId },
-				{
-					withCredentials: true,
-				}
-			);
-			setFriendsData(resContacts.data[0]);
-			setRequestsData(resContacts.data[1]);
+			const resContacts = await axiosPut(`/api/users/friends/accept`, {
+				requestId,
+			});
+			setRequestsData(resContacts.data[0]);
+			setFriendsData(resContacts.data[1]);
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -42,14 +35,9 @@ const Contacts = () => {
 
 	const declineRequest = async (requestId: string) => {
 		try {
-			const resRequests = await axios.put(
-				`/api/users/friends/decline`,
-				{ requestId },
-				{
-					withCredentials: true,
-				}
+			setRequestsData(
+				await axiosPut(`/api/users/friends/decline`, { requestId })
 			);
-			setRequestsData(resRequests.data);
 		} catch (error: any) {
 			console.error(error);
 		}

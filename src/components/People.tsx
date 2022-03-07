@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import styles from '../styles/People.module.scss';
-import PersonWrapper from './utils/PersonWrapper';
 import type { User } from '../myTypes';
+import { axiosGet, axiosPut } from './utils/axiosFunctions';
+import PersonWrapper from './utils/PersonWrapper';
+import styles from '../styles/People.module.scss';
 
 const People = () => {
 	const [peopleData, setPeopleData] = useState<User[]>();
@@ -10,10 +10,7 @@ const People = () => {
 	useEffect(() => {
 		(async () => {
 			try {
-				const resPeople = await axios.get('/api/users/people', {
-					withCredentials: true,
-				});
-				setPeopleData(resPeople.data);
+				setPeopleData(await axiosGet('/api/users/people'));
 			} catch (error: any) {
 				console.error(error);
 			}
@@ -22,12 +19,7 @@ const People = () => {
 
 	const handleSendRequest = async (userId: string) => {
 		try {
-			const resPeople = await axios.put(
-				`/api/users/friends/request`,
-				{ userId },
-				{ withCredentials: true }
-			);
-			// setPeopleList(resPeople.data);
+			setPeopleData(await axiosPut(`/api/users/friends/request`, { userId }));
 		} catch (error: any) {
 			console.error(error);
 		}
