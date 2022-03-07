@@ -5,7 +5,6 @@ const LoadingIcon = () => {
 			justifyContent: 'center',
 			alignItems: 'center',
 			flex: 1,
-			width: '100%',
 		},
 		svg: { width: '256px', height: '256px' },
 	};
