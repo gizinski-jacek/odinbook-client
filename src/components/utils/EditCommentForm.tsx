@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import type { CommentFull } from '../../myTypes';
 import styles from '../../styles/EditCommentForm.module.scss';
-import type { Comment } from '../../myTypes';
 
 type Props = {
 	handleUpdate: Function;
 	setEditComment: Function;
-	comment: Comment;
+	comment: CommentFull;
 };
 
 const EditCommentForm: React.FC<Props> = ({
