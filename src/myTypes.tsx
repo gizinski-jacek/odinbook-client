@@ -65,6 +65,7 @@ type User = {
 	full_name: string;
 	friend_list: string[];
 	blocked_user_list: string[];
+	blocked_by_other_list: string[];
 	incoming_friend_requests: string[];
 	outgoing_friend_requests: string[];
 };
