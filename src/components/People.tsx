@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { User } from '../myTypes';
-import { axiosGet, axiosPut } from './utils/axiosFunctions';
+import { axiosGet } from './utils/axiosFunctions';
 import PersonWrapper from './utils/PersonWrapper';
 import styles from '../styles/People.module.scss';
 
@@ -17,22 +17,8 @@ const People = () => {
 		})();
 	}, []);
 
-	const handleSendRequest = async (userId: string) => {
-		try {
-			setPeopleData(await axiosPut(`/api/users/friends/request`, { userId }));
-		} catch (error: any) {
-			console.error(error);
-		}
-	};
-
 	const peopleDisplay = peopleData?.map((person) => {
-		return (
-			<PersonWrapper
-				key={person._id}
-				person={person}
-				handleSendRequest={handleSendRequest}
-			/>
-		);
+		return <PersonWrapper key={person._id} person={person} />;
 	});
 
 	return (
