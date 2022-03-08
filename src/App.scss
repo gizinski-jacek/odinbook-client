@@ -29,6 +29,10 @@ h5 {
 	font-size: 0.8rem;
 }
 
+h6 {
+	font-size: 0.6rem;
+}
+
 p {
 	font-size: 0.9rem;
 }
@@ -103,6 +107,7 @@ hr {
 	border: none;
 	padding: 8px 12px;
 	font-weight: 600;
+	user-select: none;
 	cursor: pointer;
 }
 
@@ -113,6 +118,10 @@ hr {
 .btn-remove {
 	background-color: variables.$black-a10;
 	color: variables.$black;
+}
+
+.btn-remove:hover {
+	background-color: variables.$black-a20;
 }
 
 .btn-confirm {
@@ -140,7 +149,8 @@ hr {
 	background-color: variables.$blue;
 }
 
-.btn-form-submit:disabled {
+:disabled,
+.btn-disabled {
 	background-color: variables.$black-a10;
 	color: variables.$black-a20;
 }
