@@ -3,13 +3,12 @@
 .edit_comment {
 	display: flex;
 	flex-direction: row;
-	align-items: center;
 	margin-bottom: 8px;
 
 	form {
 		display: flex;
 		flex-direction: row;
-		align-items: center;
+		align-items: flex-start;
 		flex: 1;
 
 		textarea {
@@ -22,10 +21,16 @@
 			background-color: variables.$background;
 			outline: none;
 		}
+	}
+
+	.edit_controls {
+		button:first-child {
+			background-color: variables.$white-a80;
+		}
 
 		button {
 			margin-left: 12px;
-			padding: 6px;
+			padding: 6px 12px;
 		}
 	}
 
