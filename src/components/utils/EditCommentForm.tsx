@@ -37,6 +37,7 @@ const EditCommentForm: React.FC<Props> = ({
 					name='text'
 					minLength={1}
 					maxLength={512}
+					rows={2}
 					onChange={(e) => handleChange(e)}
 					value={formData.text}
 					required
@@ -51,7 +52,7 @@ const EditCommentForm: React.FC<Props> = ({
 						Cancel
 					</button>
 					<button type='submit' className='btn-default btn-form-submit'>
-						Update
+						Save
 					</button>
 				</div>
 			</form>
