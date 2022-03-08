@@ -27,6 +27,27 @@
 	.controls {
 		padding: 16px;
 
+		.sent:hover span,
+		.received:hover span {
+			display: none;
+		}
+
+		.sent:hover {
+			background-color: variables.$black-a20 !important;
+		}
+
+		.sent:hover:after {
+			content: 'Cancel Request';
+		}
+
+		.received:hover {
+			background-color: variables.$black-a20 !important;
+		}
+
+		.received:hover:after {
+			content: 'Cancel Request';
+		}
+
 		button {
 			width: 100%;
 		}
