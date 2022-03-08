@@ -1,20 +1,19 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import styles from '../styles/ProfilePosts.module.scss';
-import type { Post } from '../myTypes';
+import type { PostFull } from '../myTypes';
+import { axiosGet } from './utils/axiosFunctions';
 import PostWrapper from './utils/PostWrapper';
+import styles from '../styles/ProfilePosts.module.scss';
 
 const ProfilePosts = () => {
 	const params = useParams();
 
-	const [postsData, setPostsData] = useState<Post[]>();
+	const [postsData, setPostsData] = useState<PostFull[]>();
 
 	useEffect(() => {
 		(async () => {
 			try {
-				const resPosts = await axios.get(`/api/users/${params.userid}/posts`);
-				setPostsData(resPosts.data);
+				setPostsData(await axiosGet(`/api/users/${params.userid}/posts`));
 			} catch (error: any) {
 				console.error(error);
 			}
@@ -22,14 +21,7 @@ const ProfilePosts = () => {
 	}, [params.userid]);
 
 	const postsDisplay = postsData?.map((post) => {
-		return (
-			<PostWrapper
-				key={post._id}
-				setPostsData={setPostsData}
-				post={post}
-				openEditModal={setPostsData}
-			/>
-		);
+		return <PostWrapper key={post._id} post={post} />;
 	});
 
 	return (
