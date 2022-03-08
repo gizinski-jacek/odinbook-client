@@ -68,7 +68,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
 		setShowOptions((prevState) => !prevState);
-		window.addEventListener('click', windowListener);
+		document.addEventListener('click', windowListener);
 	};
 
 	const closeOptions = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -79,7 +79,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 	const windowListener = (e: any) => {
 		e.stopPropagation();
 		if (!e.target.className.includes('options_menu')) {
-			window.removeEventListener('click', windowListener);
+			document.removeEventListener('click', windowListener);
 			setShowOptions(false);
 		}
 	};
@@ -243,7 +243,11 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 						required
 						placeholder='Write a comment...'
 					/>
-					<button className='btn-default btn-form-submit' type='submit'>
+					<button
+						className='btn-default btn-form-submit'
+						type='submit'
+						disabled={formData.text ? false : true}
+					>
 						Comment
 					</button>
 				</form>
