@@ -4,14 +4,14 @@ import styles from '../../styles/Request.module.scss';
 
 type Props = {
 	acceptRequest: Function;
-	declineRequest: Function;
+	cancelRequest: Function;
 	request: User;
 };
 
 const RequestWrapper: React.FC<Props> = ({
 	request,
 	acceptRequest,
-	declineRequest,
+	cancelRequest,
 }) => {
 	return (
 		<li className={styles.request}>
@@ -31,7 +31,7 @@ const RequestWrapper: React.FC<Props> = ({
 					</button>
 					<button
 						className='btn-default btn-remove'
-						onClick={() => declineRequest(request._id)}
+						onClick={() => cancelRequest(request._id)}
 					>
 						Remove
 					</button>
