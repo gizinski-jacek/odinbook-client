@@ -10,84 +10,84 @@ const SideMenu = () => {
 		<div className={styles.side_menu}>
 			<ul>
 				<li>
-					<div className={`profile-pic-style ${styles.icon}`}>
-						<Link to={`/profile/${user._id}`}>
+					<Link to={`/profile/${user._id}`}>
+						<div className={`profile-pic-style ${styles.icon}`}>
 							<img src='/placeholder_profile_pic.png' alt='User profile pic' />
-						</Link>
-					</div>
-					<h4>{user.full_name}</h4>
+						</div>
+						<h4>{user.full_name}</h4>
+					</Link>
 				</li>
 				<li>
-					<div className={styles.icon}>
-						<Link to={`/friends`}>
+					<Link to={`/friends`}>
+						<div className={styles.icon}>
 							<img src='single_icons/friends_icon.png' alt='Find friends' />
-						</Link>
-					</div>
-					<h4>Find Friends</h4>
+						</div>
+						<h4>Find Friends</h4>
+					</Link>
 				</li>
 				<li>
-					<div className={styles.icon}>
-						<Link to='/'>
+					<Link to='/'>
+						<div className={styles.icon}>
 							<img src='single_icons/groups_icon.png' alt='Groups' />
-						</Link>
-					</div>
-					<h4>Groups</h4>
+						</div>
+						<h4>Groups</h4>
+					</Link>
 				</li>
 				<li>
-					<div className={styles.icon}>
-						<Link to='/'>
+					<Link to='/'>
+						<div className={styles.icon}>
 							<img src='single_icons/facebook_icon.png' alt='Welcome' />
-						</Link>
-					</div>
-					<h4>Welcome</h4>
+						</div>
+						<h4>Welcome</h4>
+					</Link>
 				</li>
 				<li>
-					<div className={styles.icon}>
-						<Link to='/'>
+					<Link to='/'>
+						<div className={styles.icon}>
 							<img src='single_icons/pages_icon.png' alt='Pages' />
-						</Link>
-					</div>
-					<h4>Pages</h4>
+						</div>
+						<h4>Pages</h4>
+					</Link>
 				</li>
 				<li>
-					<div className={styles.icon}>
-						<Link to='/'>
+					<Link to='/'>
+						<div className={styles.icon}>
 							<img src='single_icons/events_icon.png' alt='Events' />
-						</Link>
-					</div>
-					<h4>Events</h4>
+						</div>
+						<h4>Events</h4>
+					</Link>
 				</li>
 				<li>
-					<div className={styles.icon}>
-						<Link to='/'>
+					<Link to='/'>
+						<div className={styles.icon}>
 							<img src='single_icons/marketplace_icon.png' alt='Marketplace' />
-						</Link>
-					</div>
-					<h4>Marketplace</h4>
+						</div>
+						<h4>Marketplace</h4>
+					</Link>
 				</li>
 				<li>
-					<div className={styles.icon}>
-						<Link to='/'>
+					<Link to='/'>
+						<div className={styles.icon}>
 							<img src='single_icons/watch_icon.png' alt='Watch' />
-						</Link>
-					</div>
-					<h4>Watch</h4>
+						</div>
+						<h4>Watch</h4>
+					</Link>
 				</li>
 				<li>
-					<div className={styles.icon}>
-						<Link to='/'>
+					<Link to='/'>
+						<div className={styles.icon}>
 							<img src='single_icons/memories_icon.png' alt='Memories' />
-						</Link>
-					</div>
-					<h4>Memories</h4>
+						</div>
+						<h4>Memories</h4>
+					</Link>
 				</li>
 				<li>
-					<div className={styles.icon}>
-						<Link to='/'>
+					<Link to='/'>
+						<div className={styles.icon}>
 							<img src='single_icons/most_recent_icon.png' alt='Most Recent' />
-						</Link>
-					</div>
-					<h4>Most Recent</h4>
+						</div>
+						<h4>Most Recent</h4>
+					</Link>
 				</li>
 			</ul>
 		</div>
