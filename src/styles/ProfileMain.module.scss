@@ -92,10 +92,72 @@
 	.right {
 		display: flex;
 		flex-direction: row;
+		align-items: center;
 		margin: 0 12px;
+		position: relative;
 
-		> div {
+		> div,
+		> span {
 			margin: 4px;
+		}
+
+		.sent:hover span,
+		.friend:hover span {
+			display: none;
+		}
+
+		.sent:hover {
+			background-color: variables.$black-a20 !important;
+		}
+
+		.sent:hover:after {
+			content: 'Cancel Request';
+		}
+
+		.friend:hover {
+			background-color: variables.$black-a20 !important;
+			color: variables.$black;
+		}
+
+		.friend:hover:after {
+			content: 'Remove Friend';
+		}
+	}
+
+	.options_toggle {
+		position: relative;
+		display: block;
+		height: fit-content;
+
+		svg {
+			display: block;
+			width: 16px;
+			height: 16px;
+			fill: variables.$black-a60;
+		}
+	}
+
+	.options_menu {
+		position: absolute;
+		top: 40px;
+		right: 0;
+		padding: 8px;
+		width: 260px;
+		border-radius: 8px;
+		background-color: variables.$white;
+		box-shadow: 0 4px 16px 0 variables.$black-a20;
+		z-index: 5;
+
+		.cancel_btn,
+		.block_btn {
+			padding: 8px;
+			border-radius: 8px;
+			cursor: pointer;
+		}
+
+		.cancel_btn:hover,
+		.block_btn:hover {
+			background-color: variables.$black-a05;
 		}
 	}
 }
