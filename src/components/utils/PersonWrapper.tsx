@@ -26,6 +26,7 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 
 	const handleAcceptRequest = async (requestId: string | undefined) => {
 		try {
+			await axiosPut(`/api/users/friends/accept`, { requestId });
 			setUserData(null);
 		} catch (error: any) {
 			console.error(error);
