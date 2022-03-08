@@ -108,100 +108,102 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 		setShowModal(false);
 	};
 
-	return editComment ? (
-		<EditCommentForm
-			handleUpdate={handleUpdate}
-			setEditComment={setEditComment}
-			comment={comment}
-		/>
-	) : (
-		<div className={styles.comment}>
-			<div className='profile-pic-style'>
-				<Link to={`/profile/${commentData.author._id}`}>
-					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
-				</Link>
-			</div>
-			<div className={styles.body}>
-				<div className={styles.upper}>
-					<div className={styles.contents}>
-						<Link to={`/profile/${commentData.author._id}`}>
-							{commentData.author.full_name}
-						</Link>
-						<p>{commentData.text}</p>
-						{commentData.likes.includes(user._id) ? (
-							<div className={styles.liked}>
-								<span></span>
-							</div>
-						) : null}
-					</div>
-					<div className={styles.right}>
-						{user._id === commentData.author._id ? (
-							<>
-								<span
-									className={styles.options_toggle}
-									onClick={(e) => toggleOptions(e)}
-								>
-									<svg viewBox='0 0 20 20' width='20' height='20'>
-										<g transform='translate(-446 -350)'>
-											<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
-										</g>
-									</svg>
-								</span>
-								{showOptions ? (
-									<div className={styles.options_menu}>
-										<div
-											className={styles.edit_btn}
-											onClick={(e) => {
-												toggleCommentForm(e);
-												closeOptions(e);
-											}}
-										>
-											Edit comment
-										</div>
-										<div
-											className={styles.delete_btn}
-											onClick={(e) => {
-												openDeleteModal(e);
-												closeOptions(e);
-											}}
-										>
-											Delete comment
-										</div>
-									</div>
-								) : null}
-							</>
-						) : null}
-					</div>
+	return commentData ? (
+		editComment ? (
+			<EditCommentForm
+				handleUpdate={handleUpdate}
+				setEditComment={setEditComment}
+				comment={comment}
+			/>
+		) : (
+			<div className={styles.comment}>
+				<div className='profile-pic-style'>
+					<Link to={`/profile/${commentData.author._id}`}>
+						<img src='/placeholder_profile_pic.png' alt='User profile pic' />
+					</Link>
 				</div>
-				<span className={styles.controls}>
-					<div
-						className={`${styles.like_btn} ${
-							commentData.likes.includes(user._id) ? styles.liked : ''
-						}`}
-						onClick={() => handleLike(commentData.post_ref, commentData._id)}
-					>
-						Like
+				<div className={styles.body}>
+					<div className={styles.upper}>
+						<div className={styles.contents}>
+							<Link to={`/profile/${commentData.author._id}`}>
+								{commentData.author.full_name}
+							</Link>
+							<p>{commentData.text}</p>
+							{commentData.likes.includes(user._id) ? (
+								<div className={styles.liked}>
+									<span></span>
+								</div>
+							) : null}
+						</div>
+						<div className={styles.right}>
+							{user._id === commentData.author._id ? (
+								<>
+									<span
+										className={styles.options_toggle}
+										onClick={(e) => toggleOptions(e)}
+									>
+										<svg viewBox='0 0 20 20' width='20' height='20'>
+											<g transform='translate(-446 -350)'>
+												<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
+											</g>
+										</svg>
+									</span>
+									{showOptions ? (
+										<div className={styles.options_menu}>
+											<div
+												className={styles.edit_btn}
+												onClick={(e) => {
+													toggleCommentForm(e);
+													closeOptions(e);
+												}}
+											>
+												Edit comment
+											</div>
+											<div
+												className={styles.delete_btn}
+												onClick={(e) => {
+													openDeleteModal(e);
+													closeOptions(e);
+												}}
+											>
+												Delete comment
+											</div>
+										</div>
+									) : null}
+								</>
+							) : null}
+						</div>
 					</div>
-					<div
-						className={styles.reply_btn}
-						onClick={() => handleReply(commentData._id)}
-					>
-						Reply
-					</div>
-					<div className={styles.time}>
-						{timeSinceDate(commentData.createdAt)}
-					</div>
-				</span>
+					<span className={styles.controls}>
+						<div
+							className={`${styles.like_btn} ${
+								commentData.likes.includes(user._id) ? styles.liked : ''
+							}`}
+							onClick={() => handleLike(commentData.post_ref, commentData._id)}
+						>
+							Like
+						</div>
+						<div
+							className={styles.reply_btn}
+							onClick={() => handleReply(commentData._id)}
+						>
+							Reply
+						</div>
+						<div className={styles.time}>
+							{timeSinceDate(commentData.createdAt)}
+						</div>
+					</span>
+				</div>
+				{showModal ? (
+					<DeleteModal
+						closeModal={closeDeleteModal}
+						setData={setCommentData}
+						comment={commentData}
+					/>
+				) : null}
 			</div>
-			{showModal ? (
-				<DeleteModal
-					closeModal={closeDeleteModal}
-					setData={setCommentData}
-					comment={commentData}
-				/>
-			) : null}
-		</div>
-	);
+		)
+	) : null;
 };
 
 export default CommentWrapper;
