@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import type { User } from '../myTypes';
 import { axiosGet, axiosPut } from './utils/axiosFunctions';
 import RequestWrapper from './utils/RequestWrapper';
 import FriendWrapper from './utils/FriendWrapper';
 import styles from '../styles/Contacts.module.scss';
+import { UserContext } from './hooks/UserContext';
 
 const Contacts = () => {
+	const { user } = useContext(UserContext);
+
 	const [requestsData, setRequestsData] = useState<User[]>();
 	const [friendsData, setFriendsData] = useState<User[]>();
 	const [conversationsData, setConversationsData] = useState<User[]>();
@@ -21,23 +24,26 @@ const Contacts = () => {
 		})();
 	}, []);
 
-	const acceptRequest = async (requestId: string) => {
+	const handleAcceptRequest = async (requestId: string) => {
 		try {
-			const resContacts = await axiosPut(`/api/users/friends/accept`, {
+			const resData = await axiosPut(`/api/users/friends/accept`, {
 				requestId,
 			});
-			setRequestsData(resContacts.data[0]);
-			setFriendsData(resContacts.data[1]);
+			const data = resData.find((u: User) => u._id === user._id);
+			setRequestsData(data.incoming_friend_requests);
+			setFriendsData(data.friend_list);
 		} catch (error: any) {
 			console.error(error);
 		}
 	};
 
-	const declineRequest = async (requestId: string) => {
+	const handleCancelRequest = async (requestId: string) => {
 		try {
-			setRequestsData(
-				await axiosPut(`/api/users/friends/decline`, { requestId })
-			);
+			const resData = await axiosPut(`/api/users/friends/accept`, {
+				requestId,
+			});
+			const data = resData.find((u: User) => u._id === user._id);
+			setRequestsData(data.incoming_friend_requests);
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -56,8 +62,8 @@ const Contacts = () => {
 			<RequestWrapper
 				key={request._id}
 				request={request}
-				acceptRequest={acceptRequest}
-				declineRequest={declineRequest}
+				acceptRequest={handleAcceptRequest}
+				cancelRequest={handleCancelRequest}
 			/>
 		);
 	});
