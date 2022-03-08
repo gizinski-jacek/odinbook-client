@@ -1,36 +1,95 @@
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../hooks/UserContext';
 import type { User } from '../../myTypes';
+import { axiosPut } from './axiosFunctions';
 import styles from '../../styles/Person.module.scss';
 
 type Props = {
-	handleSendRequest: Function;
 	person: User;
 };
 
-const PersonWrapper: React.FC<Props> = ({ person, handleSendRequest }) => {
-	return (
+const PersonWrapper: React.FC<Props> = ({ person }) => {
+	const { user } = useContext(UserContext);
+
+	const [userData, setUserData] = useState<User | null>(person);
+
+	const handleSendRequest = async (userId: string) => {
+		try {
+			const resData = await axiosPut(`/api/users/friends/request`, { userId });
+			const data = resData.find((u: User) => u._id === userId);
+			setUserData(data);
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
+	const handleAcceptRequest = async (requestId: string | undefined) => {
+		try {
+			setUserData(null);
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
+	const handleCancelRequest = async (requestId: string) => {
+		try {
+			const resData = await axiosPut(`/api/users/friends/cancel`, {
+				requestId,
+			});
+			const data = resData.find((u: User) => u._id === requestId);
+			setUserData(data);
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
+	return userData ? (
 		<li className={styles.not_friend}>
-			<Link to={`/profile/${person._id}`}>
+			<Link to={`/profile/${userData._id}`}>
 				<div className={styles.pic_link}>
 					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 				</div>
 			</Link>
-			<Link to={`/profile/${person._id}`}>
-				<h4>{person.full_name}</h4>
+			<Link to={`/profile/${userData._id}`}>
+				<h4>{userData.full_name}</h4>
 			</Link>
 			<div className={styles.controls}>
-				<button
-					type='button'
-					className='btn-default btn-active'
-					onClick={() => {
-						handleSendRequest(person._id);
-					}}
-				>
-					Add Friend
-				</button>
+				{user._id && userData?.incoming_friend_requests.includes(user._id) ? (
+					<button
+						type='button'
+						className={`btn-default btn-active ${styles.sent}`}
+						onClick={() => {
+							handleCancelRequest(userData._id);
+						}}
+					>
+						<span>Request Sent</span>
+					</button>
+				) : user._id &&
+				  userData?.outgoing_friend_requests.includes(user._id) ? (
+					<button
+						type='button'
+						className='btn-default btn-confirm'
+						onClick={() => {
+							handleAcceptRequest(userData._id);
+						}}
+					>
+						Accept Request
+					</button>
+				) : (
+					<button
+						type='button'
+						className='btn-default btn-confirm'
+						onClick={() => {
+							handleSendRequest(userData._id);
+						}}
+					>
+						Add Friend
+					</button>
+				)}
 			</div>
 		</li>
-	);
+	) : null;
 };
 
 export default PersonWrapper;
