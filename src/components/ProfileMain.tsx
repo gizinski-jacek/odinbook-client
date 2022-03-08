@@ -110,7 +110,7 @@ const Profile = () => {
 					<ul className={styles.left}>
 						<li>
 							<NavLink
-								to='./'
+								to='.'
 								className={({ isActive }) => (isActive ? styles.isActive : '')}
 							>
 								Posts
@@ -152,11 +152,11 @@ const Profile = () => {
 					<div className={styles.right}>
 						{(user._id && userData?.blocked_user_list.includes(user._id)) ||
 						(user._id && userData?.blocked_by_other_list.includes(user._id)) ? (
-							<div className='btn-default btn-disabled'>Blocked</div>
+							<div className='btn-default btn-disabled btn-w180'>Blocked</div>
 						) : user._id &&
 						  userData?.incoming_friend_requests.includes(user._id) ? (
 							<div
-								className={`btn-default btn-active ${styles.sent}`}
+								className={`btn-default btn-active btn-w180 ${styles.sent}`}
 								onClick={() => handleCancelRequest(userData?._id)}
 							>
 								<span>Request Sent</span>
@@ -164,21 +164,21 @@ const Profile = () => {
 						) : user._id &&
 						  userData?.outgoing_friend_requests.includes(user._id) ? (
 							<div
-								className='btn-default btn-confirm'
+								className='btn-default btn-confirm btn-w180'
 								onClick={() => handleAcceptRequest(userData?._id)}
 							>
 								Accept Request
 							</div>
 						) : user._id && userData?.friend_list.includes(user._id) ? (
 							<div
-								className={`btn-default btn-confirm ${styles.friend}`}
+								className={`btn-default btn-confirm btn-w180 ${styles.friend}`}
 								onClick={() => handleRemoveFriend(userData?._id)}
 							>
 								<span>Friend</span>
 							</div>
 						) : (
 							<div
-								className='btn-default btn-confirm'
+								className='btn-default btn-confirm btn-w180'
 								onClick={() => handleSendRequest(userData?._id)}
 							>
 								Add Friend
