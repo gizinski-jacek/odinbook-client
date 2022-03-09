@@ -142,7 +142,7 @@ const Navbar = () => {
 	) => {
 		e.preventDefault();
 		try {
-			setSearchData(await axiosGet(`/api/posts/search?q=${query}`));
+			setSearchData(await axiosGet(`/api/search/posts?q=${query}`));
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -154,17 +154,17 @@ const Navbar = () => {
 		setSearchData(null);
 	};
 
-	const searchDisplay = searchData?.map((item) => {
+	const searchDisplay = searchData?.map((post) => {
 		return (
-			<li key={item._id} onClick={(e) => clearSearch(e)}>
-				<div className={styles.search_item}>
+			<li key={post._id} onClick={(e) => clearSearch(e)}>
+				<div className={styles.search_post}>
 					<div className='profile-pic-style'>
-						<Link to={`/profile/${item.author._id}`}>
+						<Link to={`/profile/${post.author._id}`}>
 							<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 						</Link>
 					</div>
-					<Link to={`/posts/${item._id}`}>
-						<span className={styles.text}>{item.text}</span>
+					<Link to={`/posts/${post._id}`}>
+						<span className={styles.text}>{post.text}</span>
 					</Link>
 				</div>
 			</li>
