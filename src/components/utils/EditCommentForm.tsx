@@ -5,13 +5,13 @@ import styles from '../../styles/EditCommentForm.module.scss';
 
 type Props = {
 	handleUpdate: Function;
-	setEditComment: Function;
+	closeEdit: Function;
 	comment: CommentFull;
 };
 
 const EditCommentForm: React.FC<Props> = ({
 	handleUpdate,
-	setEditComment,
+	closeEdit,
 	comment,
 }) => {
 	const [formData, setFormData] = useState(comment);
@@ -47,7 +47,7 @@ const EditCommentForm: React.FC<Props> = ({
 					<button
 						type='button'
 						className='btn-default btn-cancel'
-						onClick={() => setEditComment(false)}
+						onClick={(e) => closeEdit(e)}
 					>
 						Cancel
 					</button>
