@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { SignUpForm } from '../myTypes';
 import { axiosPost } from './utils/axiosFunctions';
 import styles from '../styles/SignUp.module.scss';
 
@@ -30,10 +31,13 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 		}));
 	};
 
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (
+		e: React.FormEvent<HTMLFormElement>,
+		data: SignUpForm
+	) => {
 		e.preventDefault();
 		try {
-			await axiosPost('/api/sign-up', formData);
+			await axiosPost('/api/sign-up', data);
 			setShowLogIn(true);
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {
@@ -62,7 +66,7 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 			<h2>Sign Up</h2>
 			<hr />
 			<div className={styles.body}>
-				<form onSubmit={handleSubmit}>
+				<form onSubmit={(e) => handleSubmit(e, formData)}>
 					<fieldset>
 						<label htmlFor='first_name'>First Name</label>
 						<input

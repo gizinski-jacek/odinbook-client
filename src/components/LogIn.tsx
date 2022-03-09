@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
+import { LogInForm } from '../myTypes';
 import { axiosPost } from './utils/axiosFunctions';
 import styles from '../styles/LogIn.module.scss';
 
@@ -32,10 +33,13 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 		}));
 	};
 
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (
+		e: React.FormEvent<HTMLFormElement>,
+		data: LogInForm
+	) => {
 		e.preventDefault();
 		try {
-			setUser(await axiosPost('/api/log-in', formData));
+			setUser(await axiosPost('/api/log-in', data));
 			navigate('/');
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {
@@ -63,7 +67,7 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 		<div className={styles.log_in}>
 			<div className={styles.body}>
 				<h2>Log In</h2>
-				<form onSubmit={handleSubmit}>
+				<form onSubmit={(e) => handleSubmit(e, formData)}>
 					<fieldset>
 						<label htmlFor='email'>Email</label>
 						<input
