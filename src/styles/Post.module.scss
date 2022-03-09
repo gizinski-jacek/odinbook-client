@@ -55,7 +55,6 @@
 }
 
 .options_toggle {
-	position: relative;
 	display: block;
 	height: fit-content;
 	padding: 4px;
@@ -96,6 +95,10 @@
 	.delete_btn:hover {
 		background-color: variables.$black-a05;
 	}
+}
+
+.post_text {
+	word-break: break-all;
 }
 
 .bottom {
