@@ -20,7 +20,7 @@
 	border-radius: 8px;
 	font-weight: 600;
 
-	.search_box {
+	.search_friends {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -78,7 +78,6 @@
 .body {
 	display: flex;
 	flex-direction: row;
-
 	padding: 12px;
 	margin: 12px 0;
 	background-color: variables.$white;
@@ -86,13 +85,23 @@
 	border-radius: 8px;
 	min-height: 400px;
 
+	.search_results_container {
+		display: flex;
+		flex-direction: column;
+		font-weight: 600;
+
+		h3 {
+			margin: 8px;
+		}
+	}
+
 	ul {
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
 	}
 
-	.no_friends {
+	.empty_friends {
 		flex: 1;
 		text-align: center;
 		align-self: center;
