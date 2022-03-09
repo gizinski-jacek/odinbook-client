@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { useState } from 'react';
+import { axiosPost } from './utils/axiosFunctions';
 import styles from '../styles/SignUp.module.scss';
 
 type Props = {
@@ -33,7 +33,7 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			await axios.post('/api/sign-up', formData);
+			await axiosPost('/api/sign-up', formData);
 			setShowLogIn(true);
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {

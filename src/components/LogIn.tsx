@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
-import axios from 'axios';
+import { axiosPost } from './utils/axiosFunctions';
 import styles from '../styles/LogIn.module.scss';
 
 type Props = {
@@ -35,8 +35,7 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const resUser = await axios.post('/api/log-in', formData);
-			setUser(resUser.data);
+			setUser(await axiosPost('/api/log-in', formData));
 			navigate('/');
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {

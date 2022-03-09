@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { Routes, Route, Outlet } from 'react-router-dom';
 import { UserContext } from './components/hooks/UserContext';
-import axios from 'axios';
+import { axiosGet } from './components/utils/axiosFunctions';
 import './App.scss';
 import LoadingIcon from './components/utils/LoadingIcon';
 import Navbar from './components/Navbar';
@@ -30,10 +30,7 @@ const App = () => {
 	useEffect(() => {
 		(async () => {
 			try {
-				const resUser = await axios.get('/api/verify-token', {
-					withCredentials: true,
-				});
-				setUser(resUser.data);
+				setUser(await axiosGet('/api/verify-token'));
 				setIsLoading(false);
 			} catch (error: any) {
 				setUser(null);
