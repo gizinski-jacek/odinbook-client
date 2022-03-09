@@ -1,4 +1,4 @@
-type PostFull = {
+export type PostFull = {
 	_id: string;
 	author: {
 		_id: string;
@@ -13,7 +13,7 @@ type PostFull = {
 	updatedAt: string;
 };
 
-type PostNew = {
+export type PostNew = {
 	_id?: string;
 	author?: {
 		_id: string;
@@ -28,7 +28,7 @@ type PostNew = {
 	updatedAt?: string;
 };
 
-type CommentFull = {
+export type CommentFull = {
 	_id: string;
 	author: {
 		_id: string;
@@ -43,7 +43,7 @@ type CommentFull = {
 	updatedAt: string;
 };
 
-type CommentNew = {
+export type CommentNew = {
 	_id?: string;
 	author?: {
 		_id: string;
@@ -58,7 +58,7 @@ type CommentNew = {
 	updatedAt?: string;
 };
 
-type User = {
+export type User = {
 	_id: string;
 	first_name: string;
 	last_name: string;
@@ -70,4 +70,14 @@ type User = {
 	outgoing_friend_requests: string[];
 };
 
-export type { User, PostFull, PostNew, CommentFull, CommentNew };
+export type LogInForm = {
+	email: string;
+	password: string;
+};
+
+export type SignUpForm = {
+	first_name: string;
+	last_name: string;
+	email: string;
+	password: string;
+};
