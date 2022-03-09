@@ -26,14 +26,14 @@ const PostFormModal: React.FC<Props> = ({ setData, closeModal, post }) => {
 
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
-		formData: PostFull | PostNew
+		data: PostFull | PostNew
 	) => {
 		e.preventDefault();
 		try {
 			if (post._id) {
-				setData(await axiosPut(`/api/posts/${formData._id}`, formData));
+				setData(await axiosPut(`/api/posts/${data._id}`, data));
 			} else {
-				setData(await axiosPost('/api/posts', formData));
+				setData(await axiosPost('/api/posts', data));
 			}
 			closeModal(e, { text: '' });
 		} catch (error: any) {
