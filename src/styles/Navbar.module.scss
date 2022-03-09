@@ -57,7 +57,7 @@
 			background-color: variables.$black-a20;
 		}
 
-		.search_posts_container {
+		.search_results_container {
 			position: absolute;
 			top: variables.$navbar-height;
 			left: 0;
@@ -71,7 +71,7 @@
 			scrollbar-width: none;
 		}
 
-		.search_item {
+		.search_result {
 			display: flex;
 			flex-direction: row;
 			margin: 12px 8px;
@@ -96,7 +96,7 @@
 			}
 		}
 
-		.search_item:hover {
+		.search_result:hover {
 			background-color: variables.$black-a10;
 		}
 	}
