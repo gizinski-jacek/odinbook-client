@@ -29,38 +29,11 @@ const Profile = () => {
 		document.addEventListener('click', windowListener);
 	};
 
-	const closeOptions = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-		setShowOptions(false);
-	};
-
 	const windowListener = (e: any) => {
 		e.stopPropagation();
 		if (!e.target.className.includes('options_menu')) {
 			document.removeEventListener('click', windowListener);
 			setShowOptions(false);
-		}
-	};
-
-	const handleSendRequest = async (userId: string | undefined) => {
-		try {
-			const resData = await axiosPut(`/api/users/friends/request`, { userId });
-			const data = resData.find((u: User) => u._id === userId);
-			setUserData(data);
-		} catch (error: any) {
-			console.error(error);
-		}
-	};
-
-	const handleCancelRequest = async (requestId: string | undefined) => {
-		try {
-			const resData = await axiosPut(`/api/users/friends/cancel`, {
-				requestId,
-			});
-			const data = resData.find((u: User) => u._id === requestId);
-			setUserData(data);
-		} catch (error: any) {
-			console.error(error);
 		}
 	};
 
@@ -76,9 +49,33 @@ const Profile = () => {
 		}
 	};
 
+	const handleCancelRequest = async (requestId: string | undefined) => {
+		try {
+			const resData = await axiosPut(`/api/users/friends/cancel`, {
+				requestId,
+			});
+			const data = resData.find((u: User) => u._id === requestId);
+			setUserData(data);
+			setShowOptions(false);
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
 	const handleRemoveFriend = async (userId: string | undefined) => {
 		try {
 			const resData = await axiosPut(`/api/users/friends/remove`, { userId });
+			const data = resData.find((u: User) => u._id === userId);
+			setUserData(data);
+			setShowOptions(false);
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
+	const handleSendRequest = async (userId: string | undefined) => {
+		try {
+			const resData = await axiosPut(`/api/users/friends/request`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
 			setUserData(data);
 		} catch (error: any) {
@@ -91,6 +88,7 @@ const Profile = () => {
 			const resData = await axiosPut(`/api/users/block`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
 			setUserData(data);
+			setShowOptions(false);
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -110,7 +108,7 @@ const Profile = () => {
 					<ul className={styles.left}>
 						<li>
 							<NavLink
-								to='.'
+								to='./'
 								className={({ isActive }) => (isActive ? styles.isActive : '')}
 							>
 								Posts
@@ -210,10 +208,7 @@ const Profile = () => {
 								userData?.outgoing_friend_requests.includes(user._id) ? (
 									<div
 										className={styles.cancel_btn}
-										onClick={(e) => {
-											handleCancelRequest(userData?._id);
-											closeOptions(e);
-										}}
+										onClick={(e) => handleCancelRequest(userData?._id)}
 									>
 										Decline request
 									</div>
@@ -221,10 +216,7 @@ const Profile = () => {
 								{user._id && userData?.friend_list.includes(user._id) ? (
 									<div
 										className={styles.cancel_btn}
-										onClick={(e) => {
-											handleRemoveFriend(userData?._id);
-											closeOptions(e);
-										}}
+										onClick={(e) => handleRemoveFriend(userData?._id)}
 									>
 										Remove friend
 									</div>
@@ -233,20 +225,14 @@ const Profile = () => {
 								userData?.blocked_by_other_list.includes(user._id) ? (
 									<div
 										className={styles.block_btn}
-										onClick={(e) => {
-											handleBlockStatus(userData?._id);
-											closeOptions(e);
-										}}
+										onClick={(e) => handleBlockStatus(userData?._id)}
 									>
 										Unblock user
 									</div>
 								) : (
 									<div
 										className={styles.block_btn}
-										onClick={(e) => {
-											handleBlockStatus(userData?._id);
-											closeOptions(e);
-										}}
+										onClick={(e) => handleBlockStatus(userData?._id)}
 									>
 										Block user
 									</div>
