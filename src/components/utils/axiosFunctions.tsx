@@ -1,46 +1,41 @@
 import axios from 'axios';
 
-const axiosGet = async (url: string) => {
+const options: {} = { withCredentials: true };
+
+const axiosGet = async (url: string, opt = options) => {
+	if (!url) return;
 	try {
-		const res = await axios.get(url, {
-			withCredentials: true,
-		});
+		const res = await axios.get(url, opt);
 		return res.data;
 	} catch (error: any) {
 		console.error(error);
 	}
 };
 
-const axiosPost = async (url: string, data: {} | string) => {
-	if (!url || !data) {
-		return;
-	}
+const axiosPost = async (url: string, data: {}, opt = options) => {
+	if (!url || !data) return;
 	try {
-		const res = await axios.post(url, data, {
-			withCredentials: true,
-		});
+		const res = await axios.post(url, data, opt);
 		return res.data;
 	} catch (error: any) {
 		console.error(error);
 	}
 };
 
-const axiosPut = async (url: string, update: {} | string) => {
+const axiosPut = async (url: string, data: {}, opt = options) => {
+	if (!url || !data) return;
 	try {
-		const res = await axios.put(url, update, {
-			withCredentials: true,
-		});
+		const res = await axios.put(url, data, opt);
 		return res.data;
 	} catch (error: any) {
 		console.error(error);
 	}
 };
 
-const axiosDelete = async (url: string) => {
+const axiosDelete = async (url: string, opt = options) => {
+	if (!url) return;
 	try {
-		const res = await axios.delete(url, {
-			withCredentials: true,
-		});
+		const res = await axios.delete(url, opt);
 		return res.data;
 	} catch (error: any) {
 		console.error(error);
