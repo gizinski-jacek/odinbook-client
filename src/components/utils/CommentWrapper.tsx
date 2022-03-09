@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { UserContext } from '../hooks/UserContext';
 import type { CommentFull } from '../../myTypes';
@@ -16,6 +16,8 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 	const { user } = useContext(UserContext);
 
 	const params = useParams();
+
+	const optionsRef = useRef<HTMLSpanElement>(null);
 
 	const [commentData, setCommentData] = useState<CommentFull>(comment);
 	const [editComment, setEditComment] = useState(false);
@@ -36,6 +38,47 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 		})();
 	}, [comment, params, setCommentData]);
 
+	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
+		e.stopPropagation();
+		setShowOptions((prevState) => !prevState);
+		document.addEventListener('click', windowListener);
+	};
+
+	const closeOptions = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+		setShowOptions(false);
+	};
+
+	const windowListener = (e: any) => {
+		e.stopPropagation();
+		if (optionsRef.current !== e.target) {
+			document.removeEventListener('click', windowListener);
+			setShowOptions(false);
+		}
+	};
+
+	const openEditForm = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+		setEditComment(true);
+		closeOptions(e);
+	};
+
+	const closeEditForm = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+		setEditComment(false);
+	};
+
+	const openDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+		setShowModal(true);
+		closeOptions(e);
+	};
+
+	const closeDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+		setShowModal(false);
+	};
+
 	const handleLike = async (commentPostRef: string, commentId: string) => {
 		try {
 			setCommentData(
@@ -51,6 +94,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 
 	const handleReply = async (commentId: string) => {
 		try {
+			//
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -58,15 +102,12 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 
 	const handleUpdate = async (
 		e: React.FormEvent<HTMLFormElement>,
-		formData: CommentFull
+		data: CommentFull
 	) => {
 		e.preventDefault();
 		try {
 			setCommentData(
-				await axiosPut(
-					`/api/posts/${formData.post_ref}/comments/${formData._id}`,
-					formData
-				)
+				await axiosPut(`/api/posts/${data.post_ref}/comments/${data._id}`, data)
 			);
 			setEditComment(false);
 		} catch (error: any) {
@@ -74,49 +115,15 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 		}
 	};
 
-	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
-		e.stopPropagation();
-		setShowOptions((prevState) => !prevState);
-		document.addEventListener('click', windowListener);
-	};
-
-	const closeOptions = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-		setShowOptions(false);
-	};
-
-	const windowListener = (e: any) => {
-		e.stopPropagation();
-		if (!e.target.className.includes('options_menu')) {
-			document.removeEventListener('click', windowListener);
-			setShowOptions(false);
-		}
-	};
-
-	const toggleCommentForm = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-		setEditComment(true);
-	};
-
-	const openDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-		setShowModal(true);
-	};
-
-	const closeDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-		setShowModal(false);
-	};
-
 	return commentData ? (
 		editComment ? (
 			<EditCommentForm
 				handleUpdate={handleUpdate}
-				setEditComment={setEditComment}
+				closeEdit={closeEditForm}
 				comment={comment}
 			/>
 		) : (
-			<div className={styles.comment}>
+			<li className={styles.comment}>
 				<div className='profile-pic-style'>
 					<Link to={`/profile/${commentData.author._id}`}>
 						<img src='/placeholder_profile_pic.png' alt='User profile pic' />
@@ -128,7 +135,9 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 							<Link to={`/profile/${commentData.author._id}`}>
 								{commentData.author.full_name}
 							</Link>
-							<p>{commentData.text}</p>
+							<span className={styles.comment_text}>
+								<p>{commentData.text}</p>
+							</span>
 							{commentData.likes.includes(user._id) ? (
 								<div className={styles.liked}>
 									<span></span>
@@ -139,6 +148,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 							{user._id === commentData.author._id ? (
 								<>
 									<span
+										ref={optionsRef}
 										className={styles.options_toggle}
 										onClick={(e) => toggleOptions(e)}
 									>
@@ -152,19 +162,13 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 										<div className={styles.options_menu}>
 											<div
 												className={styles.edit_btn}
-												onClick={(e) => {
-													toggleCommentForm(e);
-													closeOptions(e);
-												}}
+												onClick={(e) => openEditForm(e)}
 											>
 												Edit comment
 											</div>
 											<div
 												className={styles.delete_btn}
-												onClick={(e) => {
-													openDeleteModal(e);
-													closeOptions(e);
-												}}
+												onClick={(e) => openDeleteModal(e)}
 											>
 												Delete comment
 											</div>
@@ -201,7 +205,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 						comment={commentData}
 					/>
 				) : null}
-			</div>
+			</li>
 		)
 	) : null;
 };
