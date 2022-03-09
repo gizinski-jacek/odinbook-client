@@ -29,24 +29,12 @@ const Timeline = () => {
 		setShowModal(true);
 	};
 
-	const closeModal = (
-		e: React.MouseEvent<HTMLDivElement>,
-		postFormData: {
-			_id?: string;
-			text: string;
-			likes?: string[];
-			createdAt?: string;
-			updatedAt?: string;
-		}
-	) => {
+	const closeModal = (e: React.MouseEvent<HTMLDivElement>, data: PostNew) => {
 		e.stopPropagation();
-		if (postFormData._id) {
+		if (data._id) {
 			setFormData({ text: '' });
 		} else {
-			setFormData((prevState) => ({
-				...prevState,
-				text: postFormData.text,
-			}));
+			setFormData(data);
 		}
 		setShowModal(false);
 	};
