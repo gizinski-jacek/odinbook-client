@@ -1,12 +1,13 @@
 @use '../styles/variables';
 
-.not_friend {
+.person {
 	display: flex;
 	flex-direction: column;
 	border-radius: 8px;
 	width: 250px;
 	margin: 8px;
-	background-color: variables.$white;
+	background-color: variables.$white-a50;
+	box-shadow: 0 1px 2px 0 variables.$black-a20;
 
 	.pic_link {
 		height: fit-content;
@@ -52,4 +53,8 @@
 			width: 100%;
 		}
 	}
+}
+
+.person:hover {
+	filter: brightness(95%);
 }
