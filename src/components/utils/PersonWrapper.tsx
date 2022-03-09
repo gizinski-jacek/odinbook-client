@@ -46,7 +46,7 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 	};
 
 	return userData ? (
-		<li className={styles.not_friend}>
+		<li className={styles.person}>
 			<Link to={`/profile/${userData._id}`}>
 				<div className={styles.pic_link}>
 					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
@@ -60,9 +60,7 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 					<button
 						type='button'
 						className={`btn-default btn-active ${styles.sent}`}
-						onClick={() => {
-							handleCancelRequest(userData._id);
-						}}
+						onClick={() => handleCancelRequest(userData._id)}
 					>
 						<span>Request Sent</span>
 					</button>
@@ -71,9 +69,7 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 					<button
 						type='button'
 						className='btn-default btn-confirm'
-						onClick={() => {
-							handleAcceptRequest(userData._id);
-						}}
+						onClick={() => handleAcceptRequest(userData._id)}
 					>
 						Accept Request
 					</button>
@@ -81,9 +77,7 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 					<button
 						type='button'
 						className='btn-default btn-confirm'
-						onClick={() => {
-							handleSendRequest(userData._id);
-						}}
+						onClick={() => handleSendRequest(userData._id)}
 					>
 						Add Friend
 					</button>
