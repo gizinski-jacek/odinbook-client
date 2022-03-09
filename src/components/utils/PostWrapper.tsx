@@ -17,15 +17,16 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 	const { user } = useContext(UserContext);
 
 	const commentInputRef = useRef<HTMLTextAreaElement>(null);
+	const optionsRef = useRef<HTMLSpanElement>(null);
 
 	const params = useParams();
 
 	const [postData, setPostData] = useState<PostFull | null>(post);
 	const [formData, setFormData] = useState({ text: '' });
-	const [showComments, setShowComments] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
 	const [showEditModal, setShowEditModal] = useState(false);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
+	const [showCommentsList, setShowCommentsList] = useState(false);
 
 	useEffect(() => {
 		(async () => {
@@ -39,22 +40,40 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		})();
 	}, [post, params]);
 
-	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		const { name, value } = e.target;
-		setFormData((prevState) => ({
-			...prevState,
-			[name]: value,
-		}));
-	};
-
-	const openModal = (e: React.MouseEvent<HTMLSpanElement>) => {
+	const openEditModal = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
 		setShowEditModal(true);
+		setShowOptions(false);
 	};
 
-	const closeModal = (e: React.MouseEvent<HTMLDivElement>) => {
+	const closeEditModal = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		setShowEditModal(false);
+	};
+
+	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
+		e.stopPropagation();
+		setShowOptions((prevState) => !prevState);
+		document.addEventListener('click', windowListener);
+	};
+
+	const windowListener = (e: any) => {
+		e.stopPropagation();
+		if (optionsRef.current !== e.target) {
+			document.removeEventListener('click', windowListener);
+			setShowOptions(false);
+		}
+	};
+
+	const openDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+		setShowDeleteModal(true);
+		setShowOptions(false);
+	};
+
+	const closeDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+		setShowDeleteModal(false);
 	};
 
 	const handleLike = async (postId: string) => {
@@ -65,44 +84,35 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		}
 	};
 
-	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
+	const toggleComments = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		setShowOptions((prevState) => !prevState);
-		document.addEventListener('click', windowListener);
+		setShowCommentsList((prevState) => !prevState);
+		commentInputRef.current?.focus();
 	};
 
-	const closeOptions = (e: React.MouseEvent<HTMLDivElement>) => {
+	const showComments = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		setShowOptions(false);
+		setShowCommentsList(true);
+		commentInputRef.current?.focus();
 	};
 
-	const windowListener = (e: any) => {
-		e.stopPropagation();
-		if (!e.target.className.includes('options_menu')) {
-			document.removeEventListener('click', windowListener);
-			setShowOptions(false);
-		}
-	};
-
-	const openDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-		setShowDeleteModal(true);
-	};
-
-	const closeDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-		setShowDeleteModal(false);
+	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		const { name, value } = e.target;
+		setFormData((prevState) => ({
+			...prevState,
+			[name]: value,
+		}));
 	};
 
 	const handleCommentSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
 		postId: string,
-		formData: CommentNew
+		data: CommentNew
 	) => {
 		e.preventDefault();
 		try {
-			setPostData(await axiosPost(`/api/posts/${postId}/comments`, formData));
-			setShowComments(true);
+			setPostData(await axiosPost(`/api/posts/${postId}/comments`, data));
+			setShowCommentsList(true);
 			setFormData({ text: '' });
 		} catch (error: any) {
 			console.error(error);
@@ -145,26 +155,20 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 								</svg>
 							</span>
 							{showOptions ? (
-								<div className={styles.options_menu}>
+								<span ref={optionsRef} className={styles.options_menu}>
 									<div
 										className={styles.edit_btn}
-										onClick={(e) => {
-											openModal(e);
-											closeOptions(e);
-										}}
+										onClick={(e) => openEditModal(e)}
 									>
 										Edit post
 									</div>
 									<div
 										className={styles.delete_btn}
-										onClick={(e) => {
-											openDeleteModal(e);
-											closeOptions(e);
-										}}
+										onClick={(e) => openDeleteModal(e)}
 									>
 										Delete post
 									</div>
-								</div>
+								</span>
 							) : null}
 						</>
 					) : null}
@@ -186,10 +190,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 						) : null}
 						<div
 							className={styles.comment_count}
-							onClick={() => {
-								setShowComments((prevState) => !prevState);
-								commentInputRef.current?.focus();
-							}}
+							onClick={(e) => toggleComments(e)}
 						>
 							<h5>{postData?.comments.length} comments</h5>
 						</div>
@@ -207,13 +208,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 						</div>
 						Like
 					</div>
-					<div
-						className={styles.comment_btn}
-						onClick={() => {
-							setShowComments(true);
-							commentInputRef.current?.focus();
-						}}
-					>
+					<div className={styles.comment_btn} onClick={(e) => showComments(e)}>
 						<div className={styles.icon}>
 							<span></span>
 						</div>
@@ -221,8 +216,10 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 					</div>
 				</span>
 			</div>
-			{showComments && commentsDisplay && commentsDisplay.length > 0 ? (
-				<div className={styles.comments_container}>{commentsDisplay}</div>
+			{showCommentsList && commentsDisplay && commentsDisplay.length > 0 ? (
+				<div className={styles.comments_container}>
+					<ul>{commentsDisplay}</ul>
+				</div>
 			) : null}
 			<div className={styles.new_comment}>
 				<div className='profile-pic-style'>
@@ -254,7 +251,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 			</div>
 			{showEditModal ? (
 				<PostFormModal
-					closeModal={closeModal}
+					closeModal={closeEditModal}
 					setData={setPostData}
 					post={postData}
 				/>
