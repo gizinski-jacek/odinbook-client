@@ -14,10 +14,12 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 
 	const [userData, setUserData] = useState<User | null>(person);
 
-	const handleSendRequest = async (userId: string) => {
+	const handleCancelRequest = async (requestId: string) => {
 		try {
-			const resData = await axiosPut(`/api/users/friends/request`, { userId });
-			const data = resData.find((u: User) => u._id === userId);
+			const resData = await axiosPut(`/api/users/friends/cancel`, {
+				requestId,
+			});
+			const data = resData.find((u: User) => u._id === requestId);
 			setUserData(data);
 		} catch (error: any) {
 			console.error(error);
@@ -33,12 +35,10 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 		}
 	};
 
-	const handleCancelRequest = async (requestId: string) => {
+	const handleSendRequest = async (userId: string) => {
 		try {
-			const resData = await axiosPut(`/api/users/friends/cancel`, {
-				requestId,
-			});
-			const data = resData.find((u: User) => u._id === requestId);
+			const resData = await axiosPut(`/api/users/friends/request`, { userId });
+			const data = resData.find((u: User) => u._id === userId);
 			setUserData(data);
 		} catch (error: any) {
 			console.error(error);
