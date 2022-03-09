@@ -29,7 +29,7 @@ const ProfileFriends = () => {
 		e.preventDefault();
 		try {
 			setSearchData(
-				await axiosGet(`/api/users/${params.userid}/search?q=${query}`)
+				await axiosGet(`/api/search/${params.userid}/friends?q=${query}`)
 			);
 		} catch (error: any) {
 			console.error(error);
@@ -55,7 +55,7 @@ const ProfileFriends = () => {
 			<div className={styles.top}>
 				<h3>Friends</h3>
 				<form
-					className={styles.search_box}
+					className={styles.search_friends}
 					onSubmit={(e) => handleSearch(e, searchInput)}
 				>
 					<label>
@@ -106,12 +106,22 @@ const ProfileFriends = () => {
 				</form>
 			</div>
 			<div className={styles.body}>
-				{searchDisplay && searchDisplay?.length > 0 ? (
-					<ul>{searchDisplay}</ul>
-				) : friendsDisplay && friendsDisplay?.length > 0 ? (
+				{!searchDisplay ? null : searchDisplay && searchDisplay?.length > 0 ? (
+					<div className={styles.search_results_container}>
+						<h3>Search Results</h3>
+						<ul>{searchDisplay}</ul>
+					</div>
+				) : (
+					<div className={styles.empty_friends}>
+						<h3>No friends found</h3>
+					</div>
+				)}
+				{searchDisplay ? null : friendsDisplay && friendsDisplay?.length > 0 ? (
 					<ul>{friendsDisplay}</ul>
 				) : (
-					<h3 className={styles.no_friends}>No friends to show</h3>
+					<div className={styles.empty_friends}>
+						<h3>No friends to show</h3>
+					</div>
 				)}
 			</div>
 		</div>
