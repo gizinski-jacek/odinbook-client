@@ -22,7 +22,7 @@ const People = () => {
 	});
 
 	return (
-		<div className={styles.not_friend_list}>
+		<div className={styles.people_list}>
 			<h3>People you may want to know</h3>
 			{peopleDisplay ? <ul>{peopleDisplay}</ul> : null}
 		</div>
