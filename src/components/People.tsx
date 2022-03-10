@@ -5,9 +5,10 @@ import PersonWrapper from './utils/PersonWrapper';
 import styles from '../styles/People.module.scss';
 
 const People = () => {
-	const [peopleData, setPeopleData] = useState<User[]>();
+	const [peopleData, setPeopleData] = useState<User[]>([]);
 	const [searchInput, setSearchInput] = useState('');
-	const [searchData, setSearchData] = useState<User[] | null>();
+	const [searchData, setSearchData] = useState<User[]>([]);
+	const [showResults, setShowResults] = useState(false);
 
 	useEffect(() => {
 		(async () => {
@@ -26,6 +27,7 @@ const People = () => {
 		e.preventDefault();
 		try {
 			setSearchData(await axiosGet(`/api/search/users?q=${query}`));
+			setShowResults(true);
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -34,7 +36,8 @@ const People = () => {
 	const clearSearch = (e: React.MouseEvent<HTMLElement>) => {
 		e.stopPropagation();
 		setSearchInput('');
-		setSearchData(null);
+		setSearchData([]);
+		setShowResults(false);
 	};
 
 	const peopleDisplay = peopleData?.map((person) => {
@@ -90,7 +93,7 @@ const People = () => {
 						/>
 						<div
 							style={{
-								visibility: searchInput || searchData ? 'visible' : 'hidden',
+								visibility: searchInput || showResults ? 'visible' : 'hidden',
 							}}
 							className={styles.clear_btn}
 							onClick={(e) => clearSearch(e)}
@@ -101,17 +104,18 @@ const People = () => {
 				</form>
 			</div>
 			<div className={styles.body}>
-				{!searchDisplay ? null : searchDisplay && searchDisplay?.length > 0 ? (
-					<div className={styles.search_results_container}>
-						<h3>Search Results</h3>
-						<ul>{searchDisplay}</ul>
-					</div>
-				) : (
-					<div className={styles.empty_people}>
-						<h3>No people found</h3>
-					</div>
-				)}
-				{searchDisplay ? null : peopleDisplay && peopleDisplay?.length > 0 ? (
+				{showResults ? (
+					searchDisplay.length > 0 ? (
+						<div className={styles.search_results_container}>
+							<h3>Search Results</h3>
+							<ul>{searchDisplay}</ul>
+						</div>
+					) : (
+						<div className={styles.empty_people}>
+							<h3>No people found</h3>
+						</div>
+					)
+				) : peopleDisplay.length > 0 ? (
 					<ul>{peopleDisplay}</ul>
 				) : (
 					<div className={styles.empty_people}>
