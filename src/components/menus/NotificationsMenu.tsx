@@ -4,22 +4,30 @@ import { axiosGet } from '../utils/axiosFunctions';
 import RequestWrapper from '../utils/RequestWrapper';
 import styles from '../../styles/menus/NotificationsMenu.module.scss';
 
-const NotificationsMenu = () => {
+type Props = {
+	setNotificationAlert: Function;
+};
+
+const NotificationsMenu: React.FC<Props> = ({ setNotificationAlert }) => {
 	const allRef = useRef(null);
 	const unreadRef = useRef(null);
 
 	const [showAllNotifications, setShowAllNotifications] = useState(true);
-	const [notificationsData, setNotificationsData] = useState<User[]>();
+	const [notificationsRequestsData, setNotificationsRequestsData] = useState<
+		User[]
+	>([]);
 
 	useEffect(() => {
 		(async () => {
 			try {
-				setNotificationsData(await axiosGet('/api/users/requests'));
+				const data = await axiosGet('/api/users/requests');
+				setNotificationsRequestsData(data);
+				setNotificationAlert(data.length);
 			} catch (error: any) {
 				console.error(error);
 			}
 		})();
-	}, []);
+	}, [setNotificationAlert]);
 
 	const changeNotificationList = (e: any) => {
 		e.stopPropagation();
@@ -33,15 +41,22 @@ const NotificationsMenu = () => {
 		}
 	};
 
-	const notificationsRequestsDisplay = notificationsData?.map((request) => {
-		return (
-			<RequestWrapper
-				key={request._id}
-				request={request}
-				setData={setNotificationsData}
-			/>
-		);
-	});
+	const handleSetData = (data: User[]) => {
+		setNotificationsRequestsData(data);
+		setNotificationAlert(data.length);
+	};
+
+	const notificationsRequestsDisplay = notificationsRequestsData?.map(
+		(request) => {
+			return (
+				<RequestWrapper
+					key={request._id}
+					request={request}
+					setData={handleSetData}
+				/>
+			);
+		}
+	);
 
 	return (
 		<div className={styles.menu_notifications}>
