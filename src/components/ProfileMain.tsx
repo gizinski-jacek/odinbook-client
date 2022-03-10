@@ -94,6 +94,8 @@ const Profile = () => {
 		}
 	};
 
+	// conditionally display edit profile info data for logged user
+
 	return (
 		<div className={styles.profile_page}>
 			<div className={styles.profile_page_main}>
@@ -128,22 +130,6 @@ const Profile = () => {
 								className={({ isActive }) => (isActive ? styles.isActive : '')}
 							>
 								Friends
-							</NavLink>
-						</li>
-						<li>
-							<NavLink
-								to='photos'
-								className={({ isActive }) => (isActive ? styles.isActive : '')}
-							>
-								Photos
-							</NavLink>
-						</li>
-						<li>
-							<NavLink
-								to='videos'
-								className={({ isActive }) => (isActive ? styles.isActive : '')}
-							>
-								Videos
 							</NavLink>
 						</li>
 					</ul>
