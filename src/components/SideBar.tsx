@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
-import styles from '../styles/SideMenu.module.scss';
+import styles from '../styles/SideBar.module.scss';
 
-const SideMenu = () => {
+const SideBar = () => {
 	const { user } = useContext(UserContext);
 
 	return (
@@ -94,4 +94,4 @@ const SideMenu = () => {
 	);
 };
 
-export default SideMenu;
+export default SideBar;
