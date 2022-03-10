@@ -1,18 +1,38 @@
 import { Link } from 'react-router-dom';
 import type { User } from '../../myTypes';
 import styles from '../../styles/Request.module.scss';
+import { axiosPut } from './axiosFunctions';
 
 type Props = {
-	acceptRequest: Function;
-	cancelRequest: Function;
+	setData: Function;
 	request: User;
 };
 
-const RequestWrapper: React.FC<Props> = ({
-	request,
-	acceptRequest,
-	cancelRequest,
-}) => {
+const RequestWrapper: React.FC<Props> = ({ request, setData }) => {
+	const handleAcceptRequest = async (requestId: string) => {
+		try {
+			const resData = await axiosPut(`/api/users/friends/accept`, {
+				requestId,
+			});
+			const data = resData.find((u: User) => u._id === requestId);
+			setData(data.incoming_friend_requests);
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
+	const handleCancelRequest = async (requestId: string) => {
+		try {
+			const resData = await axiosPut(`/api/users/friends/decline`, {
+				requestId,
+			});
+			const data = resData.find((u: User) => u._id === requestId);
+			setData(data.incoming_friend_requests);
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
 	return (
 		<li className={styles.request}>
 			<div className='profile-pic-style'>
@@ -25,13 +45,13 @@ const RequestWrapper: React.FC<Props> = ({
 				<div className={styles.controls}>
 					<button
 						className='btn-default btn-confirm'
-						onClick={() => acceptRequest(request._id)}
+						onClick={() => handleAcceptRequest(request._id)}
 					>
 						Confirm
 					</button>
 					<button
 						className='btn-default btn-remove'
-						onClick={() => cancelRequest(request._id)}
+						onClick={() => handleCancelRequest(request._id)}
 					>
 						Remove
 					</button>
