@@ -1,0 +1,174 @@
+@use '../variables';
+
+.menu_main {
+	display: flex;
+	flex-direction: column;
+	background-color: variables.$white-a50;
+	border-radius: 8px;
+	max-height: calc(100vh - variables.$navbar-height - 16px);
+	font-weight: 600;
+
+	h3 {
+		margin: 8px 16px;
+	}
+
+	.both_sides {
+		display: flex;
+		flex-direction: row;
+		overflow-y: auto;
+		visibility: hidden;
+
+		hr {
+			margin: 8px 0px;
+		}
+	}
+
+	.left_side,
+	.right_side,
+	.both_sides:hover {
+		visibility: visible;
+	}
+
+	.left_side {
+		display: flex;
+		flex-direction: column;
+		background-color: variables.$white;
+		padding: 16px;
+		margin: 0 16px;
+		border-radius: 8px;
+		box-shadow: 0 1px 2px 0 variables.$black-a20;
+		max-width: 360px;
+		height: fit-content;
+
+		a {
+			display: flex;
+			flex-direction: row;
+			align-items: flex-start;
+		}
+
+		img {
+			margin-right: 12px;
+			width: 36px;
+			height: 36px;
+		}
+
+		h3 {
+			font-weight: 600;
+			margin: 8px 0;
+		}
+
+		h4 {
+			margin-bottom: 4px;
+		}
+
+		h5 {
+			color: variables.$black-a60;
+			line-height: 1rem;
+		}
+	}
+
+	.social,
+	.entertainment,
+	.shopping,
+	.personal {
+		margin-bottom: 8px;
+	}
+
+	.right_side {
+		position: sticky;
+		top: 0;
+		display: flex;
+		flex-direction: column;
+		height: fit-content;
+		background-color: variables.$white;
+		max-width: 200px;
+		padding: 8px;
+		margin-right: 2px;
+		border-radius: 8px;
+		box-shadow: 0 1px 2px 0 variables.$black-a20;
+
+		h3 {
+			font-weight: 600;
+			margin: 8px;
+			margin-bottom: 16px;
+		}
+	}
+
+	.icon {
+		padding: 8px;
+		margin-right: 12px;
+		background-color: variables.$black-a10;
+		border-radius: 50%;
+
+		span {
+			width: 20px;
+			height: 20px;
+			display: block;
+			background-size: auto;
+			background-repeat: no-repeat;
+		}
+	}
+
+	.post_link {
+		span {
+			background-image: url('../../../public/multi_icons/icons_6.png');
+			background-position: -84px -67px;
+		}
+	}
+
+	.story_link {
+		span {
+			background-image: url('../../../public/multi_icons/icons_7.png');
+			background-position: 0px -824px;
+		}
+	}
+
+	.life_event_link {
+		span {
+			background-image: url('../../../public/multi_icons/icons_7.png');
+			background-position: 0px -635px;
+		}
+	}
+
+	.group_link {
+		span {
+			background-image: url('../../../public/multi_icons/icons_8.png');
+			background-position: 0px -150px;
+		}
+	}
+
+	.page_link {
+		span {
+			background-image: url('../../../public/multi_icons/icons_8.png');
+			background-position: 0px -171px;
+		}
+	}
+
+	.ad_link {
+		span {
+			background-image: url('../../../public/multi_icons/icons_9.png');
+			background-position: 0px -384px;
+		}
+	}
+
+	.event_link {
+		span {
+			background-image: url('../../../public/multi_icons/icons_8.png');
+			background-position: 0px -213px;
+		}
+	}
+
+	.marketplace_link {
+		span {
+			background-image: url('../../../public/multi_icons/icons_8.png');
+			background-position: 0px -738px;
+		}
+	}
+
+	.fundraiser_link {
+		span {
+			background-image: url('../../../public/multi_icons/icons_7.png');
+			background-position: 0px -551px;
+		}
+	}
+}

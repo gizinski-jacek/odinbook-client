@@ -1,0 +1,99 @@
+@use '../variables';
+
+.menu_account {
+	display: flex;
+	flex-direction: column;
+	padding: 8px;
+
+	hr {
+		margin: 8px;
+	}
+
+	.icon {
+		padding: 8px;
+		margin-right: 12px;
+		background-color: variables.$black-a10;
+		border-radius: 50%;
+
+		span {
+			width: 20px;
+			height: 20px;
+			display: block;
+			background-size: auto;
+			background-repeat: no-repeat;
+		}
+	}
+
+	.feedback_link {
+		span {
+			background-image: url('../../../public/multi_icons/icons_1.png');
+			background-position: 0px -25px;
+		}
+	}
+
+	.settings_privacy_link {
+		span {
+			background-image: url('../../../public/multi_icons/icons_4.png');
+			background-position: 0px -314px;
+		}
+	}
+
+	.help_support_link {
+		span {
+			background-image: url('../../../public/multi_icons/icons_3.png');
+			background-position: 0px -189px;
+		}
+	}
+
+	.display_accesibility_link {
+		span {
+			background-image: url('../../../public/multi_icons/icons_2.png');
+			background-position: 0px -63px;
+		}
+	}
+
+	.log_out_btn {
+		span {
+			background-image: url('../../../public/multi_icons/icons_5.png');
+			background-position: 0px -46px;
+		}
+	}
+
+	span.arrows {
+		width: 24px;
+		height: 24px;
+		display: block;
+		background-size: auto;
+		background-repeat: no-repeat;
+		background-image: url('../../../public/multi_icons/icons_6.png');
+		background-position: -83px -13px;
+		margin-left: auto;
+	}
+
+	.me_link {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+
+		img {
+			width: 56px;
+			height: 56px;
+		}
+
+		span {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-evenly;
+
+			h3 {
+				margin: 4px 0;
+				font-weight: 600;
+			}
+
+			h5 {
+				margin: 4px 0;
+				color: variables.$black-a40;
+			}
+		}
+	}
+}
