@@ -24,31 +24,6 @@ const Contacts = () => {
 		})();
 	}, []);
 
-	const handleAcceptRequest = async (requestId: string) => {
-		try {
-			const resData = await axiosPut(`/api/users/friends/accept`, {
-				requestId,
-			});
-			const data = resData.find((u: User) => u._id === user._id);
-			setRequestsData(data.incoming_friend_requests);
-			setFriendsData(data.friend_list);
-		} catch (error: any) {
-			console.error(error);
-		}
-	};
-
-	const handleCancelRequest = async (requestId: string) => {
-		try {
-			const resData = await axiosPut(`/api/users/friends/accept`, {
-				requestId,
-			});
-			const data = resData.find((u: User) => u._id === user._id);
-			setRequestsData(data.incoming_friend_requests);
-		} catch (error: any) {
-			console.error(error);
-		}
-	};
-
 	const openChat = async () => {
 		try {
 			// fetch past messages and load chat window
@@ -62,8 +37,7 @@ const Contacts = () => {
 			<RequestWrapper
 				key={request._id}
 				request={request}
-				acceptRequest={handleAcceptRequest}
-				cancelRequest={handleCancelRequest}
+				setData={setRequestsData}
 			/>
 		);
 	});
