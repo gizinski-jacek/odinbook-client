@@ -60,11 +60,11 @@ const PostFormModal: React.FC<Props> = ({ setData, closeModal, post }) => {
 					</div>
 				</div>
 				<span className={styles.metadata}>
-					<div className='profile-pic-style'>
-						<Link to={`/profile/${user._id}`}>
+					<Link to={`/profile/${user._id}`}>
+						<div className='profile-pic-style'>
 							<img src='placeholder_profile_pic.png' alt='User profile pic' />
-						</Link>
-					</div>
+						</div>
+					</Link>
 					<h4>{user.full_name}</h4>
 				</span>
 				<div className={styles.post_form}>

@@ -26,11 +26,11 @@ const EditCommentForm: React.FC<Props> = ({
 
 	return (
 		<div className={styles.edit_comment}>
-			<div className='profile-pic-style'>
-				<Link to={`/profile/${comment.author._id}`}>
+			<Link to={`/profile/${comment.author._id}`}>
+				<div className='profile-pic-style'>
 					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
-				</Link>
-			</div>
+				</div>
+			</Link>
 			<form onSubmit={(e) => handleUpdate(e, formData)}>
 				<textarea
 					id='text'

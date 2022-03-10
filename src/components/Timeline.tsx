@@ -46,11 +46,11 @@ const Timeline = () => {
 	return (
 		<div className={styles.timeline}>
 			<div className={styles.create_new_post}>
-				<div className='profile-pic-style'>
-					<Link to={`/profile/${user._id}`}>
+				<Link to={`/profile/${user._id}`}>
+					<div className='profile-pic-style'>
 						<img src='/placeholder_profile_pic.png' alt='User profile pic' />
-					</Link>
-				</div>
+					</div>
+				</Link>
 				<span
 					className={formData.text ? styles.not_empty : ''}
 					onClick={(e) => openModal(e)}

@@ -10,11 +10,11 @@ type Props = {
 const FriendWrapper: React.FC<Props> = ({ friend, openChat }) => {
 	return (
 		<li className={styles.friend} onClick={() => openChat()}>
-			<div className='profile-pic-style'>
-				<Link to={`/profile/${friend._id}`}>
+			<Link to={`/profile/${friend._id}`}>
+				<div className='profile-pic-style'>
 					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
-				</Link>
-			</div>
+				</div>
+			</Link>
 			<div>
 				<div>{friend.full_name}</div>
 			</div>
