@@ -21,7 +21,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 
 	const params = useParams();
 
-	const [postData, setPostData] = useState<PostFull | null>(post);
+	const [postData, setPostData] = useState<PostFull>(post);
 	const [formData, setFormData] = useState({ text: '' });
 	const [showOptions, setShowOptions] = useState(false);
 	const [showEditModal, setShowEditModal] = useState(false);
@@ -59,6 +59,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 
 	const windowListener = (e: any) => {
 		e.stopPropagation();
+		console.log(showOptions);
 		if (optionsRef.current !== e.target) {
 			document.removeEventListener('click', windowListener);
 			setShowOptions(false);
@@ -121,18 +122,18 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		<div className={styles.post}>
 			<div className={styles.top}>
 				<div className={styles.left}>
-					<div className='profile-pic-style'>
-						<Link to={`/profile/${postData.author._id}`}>
+					<Link to={`/profile/${postData.author._id}`}>
+						<div className='profile-pic-style'>
 							<img src='/placeholder_profile_pic.png' alt='User profile pic' />
-						</Link>
-					</div>
-					<div className={styles.metadata}>
-						<Link to={`/profile/${postData.author._id}`}>
-							<h4>{postData.author.full_name}</h4>
-						</Link>
-						<Link to={`/posts/${postData._id}`}>
+						</div>
+					</Link>
+					<div>
+						<div className={styles.metadata}>
+							<Link to={`/profile/${postData.author._id}`}>
+								<h4>{postData.author.full_name}</h4>
+							</Link>
 							<h5>{timeSinceDate(postData.createdAt)}</h5>
-						</Link>
+						</div>
 					</div>
 				</div>
 				<div className={styles.right}>
@@ -172,24 +173,24 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 				<p>{postData.text}</p>
 			</div>
 			<div className={styles.bottom}>
-				{postData.comments.length > 0 ? (
-					<div className={styles.likes_and_count}>
-						{postData.likes.includes(user._id) ? (
-							<div
-								className={styles.liked}
-								onClick={(e) => handleLike(postData._id)}
-							>
-								<span></span>
-							</div>
-						) : null}
+				<div className={styles.likes_and_count}>
+					{postData.likes.includes(user._id) ? (
+						<div
+							className={styles.liked}
+							onClick={(e) => handleLike(postData._id)}
+						>
+							<span></span>
+						</div>
+					) : null}
+					{postData.comments.length > 0 ? (
 						<div
 							className={styles.comment_count}
 							onClick={(e) => toggleComments(e)}
 						>
 							<h5>{postData?.comments.length} comments</h5>
 						</div>
-					</div>
-				) : null}
+					) : null}
+				</div>
 				<span className={styles.controls}>
 					<div
 						className={`${styles.like_btn} ${
@@ -215,17 +216,17 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 					</div>
 				</span>
 			</div>
-			{showCommentsList && commentsDisplay && commentsDisplay.length > 0 ? (
+			{showCommentsList && commentsDisplay.length > 0 ? (
 				<div className={styles.comments_container}>
 					<ul>{commentsDisplay}</ul>
 				</div>
 			) : null}
 			<div className={styles.new_comment}>
-				<div className='profile-pic-style'>
-					<Link to={`/profile/${postData.author._id}`}>
+				<Link to={`/profile/${postData.author._id}`}>
+					<div className='profile-pic-style'>
 						<img src='/placeholder_profile_pic.png' alt='User profile pic' />
-					</Link>
-				</div>
+					</div>
+				</Link>
 				<form onSubmit={(e) => handleCommentSubmit(e, postData._id, formData)}>
 					<textarea
 						id='text'
