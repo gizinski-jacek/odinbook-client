@@ -157,16 +157,14 @@ const Navbar = () => {
 	const searchDisplay = searchData?.map((post) => {
 		return (
 			<li key={post._id} onClick={(e) => clearSearch(e)}>
-				<div className={styles.search_result}>
-					<div className='profile-pic-style'>
-						<Link to={`/profile/${post.author._id}`}>
+				<Link to={`/profile/${post.author._id}`}>
+					<div className={styles.search_result}>
+						<div className='profile-pic-style'>
 							<img src='/placeholder_profile_pic.png' alt='User profile pic' />
-						</Link>
-					</div>
-					<Link to={`/posts/${post._id}`}>
+						</div>
 						<span className={styles.text}>{post.text}</span>
-					</Link>
-				</div>
+					</div>
+				</Link>
 			</li>
 		);
 	});
