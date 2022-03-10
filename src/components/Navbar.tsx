@@ -1,41 +1,35 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+// @ts-nocheck
+
+import { useContext, useRef, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
-import type { PostFull, User } from '../myTypes';
+import type { PostFull } from '../myTypes';
 import { axiosGet } from './utils/axiosFunctions';
-import RequestWrapper from './utils/RequestWrapper';
 import styles from '../styles/Navbar.module.scss';
+import MainMenu from './menus/MainMenu';
+import MessengerMenu from './menus/MessengerMenu';
+import NotificationsMenu from './menus/NotificationsMenu';
+import AccountMenu from './menus/AccountMenu';
 
 const Navbar = () => {
 	const { user, setUser } = useContext(UserContext);
 
 	const navigate = useNavigate();
 
-	const allRef = useRef(null);
-	const unreadRef = useRef(null);
 	const searchRef = useRef(null);
+	const menuContainerRef = useRef(null);
+	const menuRef = useRef(null);
+	console.log(menuRef);
 
-	const [showNotifsReqData, setShowNotifsReqData] = useState<User[]>();
-	const [showMenuContainer, setShowMenuContainer] = useState(false);
+	const [showMenuContainer, setShowMenuContainer] = useState(true);
+	const [showAccountMenu, setShowAccountMenu] = useState(true);
+	const [showNotificationsMenu, setShowNotificationsMenu] = useState(false);
 	const [showMainMenu, setShowMainMenu] = useState(false);
 	const [showMessengerMenu, setShowMessengerMenu] = useState(false);
-	const [showNotificationsMenu, setShowNotificationsMenu] = useState(false);
-	const [showAccountMenu, setShowAccountMenu] = useState(false);
+
 	const [searchInput, setSearchInput] = useState('');
-	const [searchMessengerInput, setSearchMessengerInput] = useState('');
 	const [searchData, setSearchData] = useState<PostFull[] | null>();
 	const [showResults, setShowResults] = useState(false);
-	const [showAllNotifications, setShowAllNotifications] = useState(true);
-
-	useEffect(() => {
-		(async () => {
-			try {
-				setShowNotifsReqData(await axiosGet('/api/users/requests'));
-			} catch (error: any) {
-				console.error(error);
-			}
-		})();
-	}, []);
 
 	const handleLogOut = async () => {
 		try {
@@ -102,7 +96,7 @@ const Navbar = () => {
 
 	const closeMenuContainer = (e: any) => {
 		e.stopPropagation();
-		if (e.target.className && !e.target.className.includes('Navbar_menu')) {
+		if (menuContainerRef.current !== e.target) {
 			setShowMainMenu(false);
 			setShowMessengerMenu(false);
 			setShowNotificationsMenu(false);
@@ -111,28 +105,6 @@ const Navbar = () => {
 			document.removeEventListener('click', closeMenuContainer);
 		}
 	};
-
-	const changeNotificationList = (e: any) => {
-		e.stopPropagation();
-		if (e.target === allRef.current) {
-			// fetch all notifications
-			setShowAllNotifications(true);
-		}
-		if (e.target === unreadRef.current) {
-			// fetch unread notifications
-			setShowAllNotifications(false);
-		}
-	};
-
-	const notificationsRequestsDisplay = showNotifsReqData?.map((request) => {
-		return (
-			<RequestWrapper
-				key={request._id}
-				request={request}
-				setData={setShowNotifsReqData}
-			/>
-		);
-	});
 
 	const handleSearch = async (
 		e: React.FormEvent<HTMLFormElement>,
@@ -210,61 +182,60 @@ const Navbar = () => {
 						</svg>
 					</div>
 				</Link>
-				<form
-					className={styles.search_posts}
-					onSubmit={(e) => handleSearch(e, searchInput)}
-				>
-					<label>
-						<span>
-							<svg viewBox='0 0 16 16' width='16' height='16'>
-								<g transform='translate(-448 -544)'>
-									<g>
-										<path
-											d='M10.743 2.257a6 6 0 1 1-8.485 8.486 6 6 0 0 1 8.485-8.486zm-1.06 1.06a4.5 4.5 0 1 0-6.365 6.364 4.5 4.5 0 0 0 6.364-6.363z'
-											transform='translate(448 544)'
-										></path>
-										<path
-											d='M10.39 8.75a2.94 2.94 0 0 0-.199.432c-.155.417-.23.849-.172 1.284.055.415.232.794.54 1.103a.75.75 0 0 0 1.112-1.004l-.051-.057a.39.39 0 0 1-.114-.24c-.021-.155.014-.356.09-.563.031-.081.06-.145.08-.182l.012-.022a.75.75 0 1 0-1.299-.752z'
-											transform='translate(448 544)'
-										></path>
-										<path
-											d='M9.557 11.659c.038-.018.09-.04.15-.064.207-.077.408-.112.562-.092.08.01.143.034.198.077l.041.036a.75.75 0 0 0 1.06-1.06 1.881 1.881 0 0 0-1.103-.54c-.435-.058-.867.018-1.284.175-.189.07-.336.143-.433.2a.75.75 0 0 0 .624 1.356l.066-.027.12-.061z'
-											transform='translate(448 544)'
-										></path>
-										<path
-											d='m13.463 15.142-.04-.044-3.574-4.192c-.599-.703.355-1.656 1.058-1.057l4.191 3.574.044.04c.058.059.122.137.182.24.249.425.249.96-.154 1.41l-.057.057c-.45.403-.986.403-1.411.154a1.182 1.182 0 0 1-.24-.182zm.617-.616.444-.444a.31.31 0 0 0-.063-.052c-.093-.055-.263-.055-.35.024l.208.232.207-.206.006.007-.22.257-.026-.024.033-.034.025.027-.257.22-.007-.007zm-.027-.415c-.078.088-.078.257-.023.35a.31.31 0 0 0 .051.063l.205-.204-.233-.209z'
-											transform='translate(448 544)'
-										></path>
+				<div className={styles.search_posts}>
+					<form onSubmit={(e) => handleSearch(e, searchInput)}>
+						<label>
+							<span>
+								<svg viewBox='0 0 16 16' width='16' height='16'>
+									<g transform='translate(-448 -544)'>
+										<g>
+											<path
+												d='M10.743 2.257a6 6 0 1 1-8.485 8.486 6 6 0 0 1 8.485-8.486zm-1.06 1.06a4.5 4.5 0 1 0-6.365 6.364 4.5 4.5 0 0 0 6.364-6.363z'
+												transform='translate(448 544)'
+											></path>
+											<path
+												d='M10.39 8.75a2.94 2.94 0 0 0-.199.432c-.155.417-.23.849-.172 1.284.055.415.232.794.54 1.103a.75.75 0 0 0 1.112-1.004l-.051-.057a.39.39 0 0 1-.114-.24c-.021-.155.014-.356.09-.563.031-.081.06-.145.08-.182l.012-.022a.75.75 0 1 0-1.299-.752z'
+												transform='translate(448 544)'
+											></path>
+											<path
+												d='M9.557 11.659c.038-.018.09-.04.15-.064.207-.077.408-.112.562-.092.08.01.143.034.198.077l.041.036a.75.75 0 0 0 1.06-1.06 1.881 1.881 0 0 0-1.103-.54c-.435-.058-.867.018-1.284.175-.189.07-.336.143-.433.2a.75.75 0 0 0 .624 1.356l.066-.027.12-.061z'
+												transform='translate(448 544)'
+											></path>
+											<path
+												d='m13.463 15.142-.04-.044-3.574-4.192c-.599-.703.355-1.656 1.058-1.057l4.191 3.574.044.04c.058.059.122.137.182.24.249.425.249.96-.154 1.41l-.057.057c-.45.403-.986.403-1.411.154a1.182 1.182 0 0 1-.24-.182zm.617-.616.444-.444a.31.31 0 0 0-.063-.052c-.093-.055-.263-.055-.35.024l.208.232.207-.206.006.007-.22.257-.026-.024.033-.034.025.027-.257.22-.007-.007zm-.027-.415c-.078.088-.078.257-.023.35a.31.31 0 0 0 .051.063l.205-.204-.233-.209z'
+												transform='translate(448 544)'
+											></path>
+										</g>
 									</g>
-								</g>
-							</svg>
-						</span>
-						<input
-							type='text'
-							id='search_posts'
-							name='search_posts'
-							minLength={1}
-							maxLength={512}
-							value={searchInput}
-							onChange={(e) => setSearchInput(e.target.value)}
-							placeholder='Search Posts'
-						/>
-						<div
-							style={{
-								visibility: searchInput || searchData ? 'visible' : 'hidden',
-							}}
-							className={styles.clear_btn}
-							onClick={(e) => clearSearch(e)}
-						>
-							<span></span>
+								</svg>
+							</span>
+							<input
+								type='text'
+								id='search_posts'
+								name='search_posts'
+								minLength={1}
+								maxLength={512}
+								value={searchInput}
+								onChange={(e) => setSearchInput(e.target.value)}
+								placeholder='Search Posts'
+							/>
+							<div
+								style={{
+									visibility: searchInput || searchData ? 'visible' : 'hidden',
+								}}
+								className={styles.clear_btn}
+								onClick={(e) => clearSearch(e)}
+							>
+								<span></span>
+							</div>
+						</label>
+					</form>
+					{showResults && searchDisplay && searchDisplay.length > 0 ? (
+						<div ref={searchRef} className={styles.search_results_container}>
+							<ul>{searchDisplay}</ul>
 						</div>
-					</label>
-				</form>
-				{showResults && searchDisplay && searchDisplay.length > 0 ? (
-					<ul ref={searchRef} className={styles.search_results_container}>
-						{searchDisplay}
-					</ul>
-				) : null}
+					) : null}
+				</div>
 			</div>
 			<div className={styles.center}>
 				<ul className={styles.navigation}>
@@ -347,7 +318,7 @@ const Navbar = () => {
 			</div>
 			<div className={styles.right}>
 				<ul className={styles.user_controls}>
-					<li className='account' onClick={(e) => toggleMenu(e)}>
+					<li className={styles.account} onClick={(e) => toggleMenu(e)}>
 						<span
 							className={`${styles.icon} ${
 								showAccountMenu ? 'btn-active' : ''
@@ -358,7 +329,7 @@ const Navbar = () => {
 							</svg>
 						</span>
 					</li>
-					<li className='notifications' onClick={(e) => toggleMenu(e)}>
+					<li className={styles.notifications} onClick={(e) => toggleMenu(e)}>
 						<span
 							className={`${styles.icon} ${
 								showNotificationsMenu ? 'btn-active' : ''
@@ -368,14 +339,14 @@ const Navbar = () => {
 								<path d='M7.847 23.488C9.207 23.488 11.443 23.363 14.467 22.806 13.944 24.228 12.581 25.247 10.98 25.247 9.649 25.247 8.483 24.542 7.825 23.488L7.847 23.488ZM24.923 15.73C25.17 17.002 24.278 18.127 22.27 19.076 21.17 19.595 18.724 20.583 14.684 21.369 11.568 21.974 9.285 22.113 7.848 22.113 7.421 22.113 7.068 22.101 6.79 22.085 4.574 21.958 3.324 21.248 3.077 19.976 2.702 18.049 3.295 17.305 4.278 16.073L4.537 15.748C5.2 14.907 5.459 14.081 5.035 11.902 4.086 7.022 6.284 3.687 11.064 2.753 15.846 1.83 19.134 4.096 20.083 8.977 20.506 11.156 21.056 11.824 21.986 12.355L21.986 12.356 22.348 12.561C23.72 13.335 24.548 13.802 24.923 15.73Z'></path>
 							</svg>
 						</span>
-						{notificationsRequestsDisplay &&
+						{/* {notificationsRequestsDisplay &&
 						notificationsRequestsDisplay?.length > 0 ? (
 							<span className={styles.notification_count}>
 								<h5> {notificationsRequestsDisplay?.length} </h5>
 							</span>
-						) : null}
+						) : null} */}
 					</li>
-					<li className='messenger' onClick={(e) => toggleMenu(e)}>
+					<li className={styles.messenger} onClick={(e) => toggleMenu(e)}>
 						<span
 							className={`${styles.icon} ${
 								showMessengerMenu ? 'btn-active' : ''
@@ -386,7 +357,7 @@ const Navbar = () => {
 							</svg>
 						</span>
 					</li>
-					<li className='mainMenu' onClick={(e) => toggleMenu(e)}>
+					<li className={styles.main_menu} onClick={(e) => toggleMenu(e)}>
 						<span
 							className={`${styles.icon} ${showMainMenu ? 'btn-active' : ''}`}
 						>
@@ -432,421 +403,19 @@ const Navbar = () => {
 						</NavLink>
 					</li>
 				</ul>
+				{showMenuContainer ? (
+					<div ref={menuContainerRef} className={styles.menu_container}>
+						{showAccountMenu ? (
+							<AccountMenu logOut={handleLogOut} menuRef={menuRef} />
+						) : null}
+						{showNotificationsMenu ? (
+							<NotificationsMenu menuRef={menuRef} />
+						) : null}
+						{showMessengerMenu ? <MessengerMenu menuRef={menuRef} /> : null}
+						{showMainMenu ? <MainMenu menuRef={menuRef} /> : null}
+					</div>
+				) : null}
 			</div>
-			{showMenuContainer ? (
-				<div className={styles.menu_container}>
-					{showAccountMenu ? (
-						<div className={styles.menu_account}>
-							<Link to='/me' className={styles.me_link}>
-								<div className='profile-pic-style'>
-									<img
-										src='/placeholder_profile_pic.png'
-										alt='User profile pic'
-									/>
-								</div>
-								<span>
-									<h3>{user.full_name}</h3>
-									<h5>See your profile</h5>
-								</span>
-							</Link>
-							<hr />
-							<Link to='/' className={styles.feedback_link}>
-								<div className={styles.icon}>
-									<span></span>
-								</div>
-								<h4>Give feedback</h4>
-							</Link>
-							<hr />
-							<Link
-								to='settings-privacy'
-								className={styles.settings_privacy_link}
-							>
-								<div className={styles.icon}>
-									<span></span>
-								</div>
-								<h4>{'Settings & privacy'}</h4>
-								<span className={styles.arrows}></span>
-							</Link>
-							<Link to='help-support' className={styles.help_support_link}>
-								<div className={styles.icon}>
-									<span></span>
-								</div>
-								<h4>{'Help & support'}</h4>
-								<span className={styles.arrows}></span>
-							</Link>
-							<Link
-								to='display-accesibility'
-								className={styles.display_accesibility_link}
-							>
-								<div className={styles.icon}>
-									<span></span>
-								</div>
-								<h4>{'Display & accessibility'}</h4>
-								<span className={styles.arrows}></span>
-							</Link>
-							<Link
-								to='/'
-								onClick={() => handleLogOut()}
-								className={styles.log_out_btn}
-							>
-								<div className={styles.icon}>
-									<span></span>
-								</div>
-								<h4>Log Out</h4>
-							</Link>
-						</div>
-					) : null}
-					{showNotificationsMenu ? (
-						<div className={styles.menu_notifications}>
-							<div className={styles.top}>
-								<h3>Notifications</h3>
-								<span className={styles.options_toggle}>
-									<svg viewBox='0 0 20 20' width='20' height='20'>
-										<g transform='translate(-446 -350)'>
-											<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
-										</g>
-									</svg>
-								</span>
-							</div>
-							<div className={styles.controls}>
-								<div
-									ref={allRef}
-									className={`btn-default ${
-										showAllNotifications ? 'btn-active' : ''
-									}`}
-									onClick={(e) => changeNotificationList(e)}
-								>
-									All
-								</div>
-								<div
-									ref={unreadRef}
-									className={`btn-default ${
-										showAllNotifications ? '' : 'btn-active'
-									}`}
-									onClick={(e) => changeNotificationList(e)}
-								>
-									Unread
-								</div>
-							</div>
-							<div className={styles.notification_list}>
-								<ul>
-									{notificationsRequestsDisplay
-										? notificationsRequestsDisplay
-										: null}
-								</ul>
-							</div>
-						</div>
-					) : null}
-					{showMessengerMenu ? (
-						<div className={styles.menu_messenger}>
-							<div className={styles.top}>
-								<h3>Messenger</h3>
-								<span className={styles.options_toggle}>
-									<svg viewBox='0 0 20 20' width='20' height='20'>
-										<g transform='translate(-446 -350)'>
-											<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
-										</g>
-									</svg>
-								</span>
-							</div>
-							<div className={styles.search_messenger}>
-								<label>
-									<span>
-										<svg viewBox='0 0 16 16' width='16' height='16'>
-											<g transform='translate(-448 -544)'>
-												<g>
-													<path
-														d='M10.743 2.257a6 6 0 1 1-8.485 8.486 6 6 0 0 1 8.485-8.486zm-1.06 1.06a4.5 4.5 0 1 0-6.365 6.364 4.5 4.5 0 0 0 6.364-6.363z'
-														transform='translate(448 544)'
-													></path>
-													<path
-														d='M10.39 8.75a2.94 2.94 0 0 0-.199.432c-.155.417-.23.849-.172 1.284.055.415.232.794.54 1.103a.75.75 0 0 0 1.112-1.004l-.051-.057a.39.39 0 0 1-.114-.24c-.021-.155.014-.356.09-.563.031-.081.06-.145.08-.182l.012-.022a.75.75 0 1 0-1.299-.752z'
-														transform='translate(448 544)'
-													></path>
-													<path
-														d='M9.557 11.659c.038-.018.09-.04.15-.064.207-.077.408-.112.562-.092.08.01.143.034.198.077l.041.036a.75.75 0 0 0 1.06-1.06 1.881 1.881 0 0 0-1.103-.54c-.435-.058-.867.018-1.284.175-.189.07-.336.143-.433.2a.75.75 0 0 0 .624 1.356l.066-.027.12-.061z'
-														transform='translate(448 544)'
-													></path>
-													<path
-														d='m13.463 15.142-.04-.044-3.574-4.192c-.599-.703.355-1.656 1.058-1.057l4.191 3.574.044.04c.058.059.122.137.182.24.249.425.249.96-.154 1.41l-.057.057c-.45.403-.986.403-1.411.154a1.182 1.182 0 0 1-.24-.182zm.617-.616.444-.444a.31.31 0 0 0-.063-.052c-.093-.055-.263-.055-.35.024l.208.232.207-.206.006.007-.22.257-.026-.024.033-.034.025.027-.257.22-.007-.007zm-.027-.415c-.078.088-.078.257-.023.35a.31.31 0 0 0 .051.063l.205-.204-.233-.209z'
-														transform='translate(448 544)'
-													></path>
-												</g>
-											</g>
-										</svg>
-									</span>
-									<input
-										type='text'
-										id='search_messenger'
-										name='search_messenger'
-										minLength={1}
-										maxLength={512}
-										value={searchMessengerInput}
-										onChange={(e) => setSearchMessengerInput(e.target.value)}
-										placeholder='Search Messenger'
-									/>
-								</label>
-							</div>
-							<div className={styles.message_list}>
-								<ul>
-									<li>Messages 1</li>
-									<li>Messages 2</li>
-									<li>Messages 3</li>
-								</ul>
-							</div>
-							<hr />
-							<Link to='/'>See all in messenger</Link>
-						</div>
-					) : null}
-					{showMainMenu ? (
-						<div className={styles.menu_main}>
-							<h3>Menu</h3>
-							<div className={styles.both_sides}>
-								<div className={styles.left_side}>
-									<h3>Social</h3>
-									<div className={styles.social}>
-										<ul>
-											<li>
-												<Link to='/'>
-													<img
-														src='single_icons/friends_icon.png'
-														alt='Find friends'
-													/>
-													<span>
-														<h4>Find Friends</h4>
-														<h5>Search for friends or people you may know.</h5>
-													</span>
-												</Link>
-											</li>
-											<li>
-												<Link to='/'>
-													<img
-														src='single_icons/groups_icon.png'
-														alt='Groups'
-													/>
-													<span>
-														<h4>Groups</h4>
-														<h5>
-															Connect with people who share your interests.
-														</h5>
-													</span>
-												</Link>
-											</li>
-											<li>
-												<Link to='/'>
-													<img
-														src='single_icons/events_icon.png'
-														alt='Events'
-													/>
-													<span>
-														<h4>Events</h4>
-														<h5>
-															Organise or find events and other things to do
-															online and nearby.
-														</h5>
-													</span>
-												</Link>
-											</li>
-											<li>
-												<Link to='/'>
-													<img
-														src='single_icons/news_feed_icon.png'
-														alt='News Feed'
-													/>
-													<span>
-														<h4>News Feed</h4>
-														<h5>
-															See relevant posts from people and Pages that you
-															follow.
-														</h5>
-													</span>
-												</Link>
-											</li>
-											<li>
-												<Link to='/'>
-													<img src='single_icons/pages_icon.png' alt='Pages' />
-													<span>
-														<h4>Pages</h4>
-														<h5>
-															Discover and connect with businesses on Odinbook.
-														</h5>
-													</span>
-												</Link>
-											</li>
-										</ul>
-									</div>
-									<hr />
-									<div className={styles.entertainment}>
-										<h3>Entertainment</h3>
-										<ul>
-											<li>
-												<Link to='/'>
-													<img src='single_icons/watch_icon.png' alt='Watch' />
-													<span>
-														<h4>Watch</h4>
-														<h5>
-															A video destination personalised to your interests
-															and connections.
-														</h5>
-													</span>
-												</Link>
-											</li>
-											<li>
-												<Link to='/'>
-													<img
-														src='single_icons/gaming_video_icon.png'
-														alt='Gaming video'
-													/>
-													<span>
-														<h4>Gaming video</h4>
-														<h5>
-															Watch and connect with your favourite games and
-															streamers.
-														</h5>
-													</span>
-												</Link>
-											</li>
-											<li>
-												<Link to='/'>
-													<img
-														src='single_icons/play_games_icon.png'
-														alt='Play games'
-													/>
-													<span>
-														<h4>Play games</h4>
-														<h5>Play your favourite games.</h5>
-													</span>
-												</Link>
-											</li>
-										</ul>
-									</div>
-									<hr />
-									<div className={styles.shopping}>
-										<h3>Shopping</h3>
-										<ul>
-											<li>
-												<Link to='/'>
-													<img
-														src='single_icons/marketplace_icon.png'
-														alt='Watch'
-													/>
-													<span>
-														<h4>Marketplace</h4>
-														<h5>Buy and sell in your community.</h5>
-													</span>
-												</Link>
-											</li>
-										</ul>
-									</div>
-									<hr />
-									<div className={styles.personal}>
-										<h3>Personal</h3>
-										<ul>
-											<li>
-												<Link to='/'>
-													<img
-														src='single_icons/memories_icon.png'
-														alt='Watch'
-													/>
-													<span>
-														<h4>Memories</h4>
-														<h5>
-															Browse your old photos, videos and posts on
-															Odinbook.
-														</h5>
-													</span>
-												</Link>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<div className={styles.right_side}>
-									<div>
-										<h3>Create</h3>
-										<ul>
-											<li>
-												<Link to='/' className={styles.post_link}>
-													<div className={styles.icon}>
-														<span></span>
-													</div>
-													<h4>Post</h4>
-												</Link>
-											</li>
-											<li>
-												<Link to='/' className={styles.story_link}>
-													<div className={styles.icon}>
-														<span></span>
-													</div>
-													<h4>Story</h4>
-												</Link>
-											</li>
-											<li>
-												<Link to='/' className={styles.life_event_link}>
-													<div className={styles.icon}>
-														<span></span>
-													</div>
-													<h4>Life Event</h4>
-												</Link>
-											</li>
-										</ul>
-										<hr />
-										<ul>
-											<li>
-												<Link to='/' className={styles.group_link}>
-													<div className={styles.icon}>
-														<span></span>
-													</div>
-													<h4>Group</h4>
-												</Link>
-											</li>
-											<li>
-												<Link to='/' className={styles.page_link}>
-													<div className={styles.icon}>
-														<span></span>
-													</div>
-													<h4>Page</h4>
-												</Link>
-											</li>
-											<li>
-												<Link to='/' className={styles.ad_link}>
-													<div className={styles.icon}>
-														<span></span>
-													</div>
-													<h4>Ad</h4>
-												</Link>
-											</li>
-											<li>
-												<Link to='/' className={styles.event_link}>
-													<div className={styles.icon}>
-														<span></span>
-													</div>
-													<h4>Event</h4>
-												</Link>
-											</li>
-											<li>
-												<Link to='/' className={styles.marketplace_link}>
-													<div className={styles.icon}>
-														<span></span>
-													</div>
-													<h4>Marketplace Listing</h4>
-												</Link>
-											</li>
-											<li>
-												<Link to='/' className={styles.fundraiser_link}>
-													<div className={styles.icon}>
-														<span></span>
-													</div>
-													<h4>Fundraiser</h4>
-												</Link>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-					) : null}
-				</div>
-			) : null}
 		</nav>
 	);
 };
