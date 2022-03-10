@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
 import type { User } from '../myTypes';
@@ -9,6 +9,8 @@ const Profile = () => {
 	const { user } = useContext(UserContext);
 
 	const params = useParams();
+
+	const optionsRef = useRef(null);
 
 	const [userData, setUserData] = useState<User>();
 	const [showOptions, setShowOptions] = useState(false);
@@ -31,7 +33,7 @@ const Profile = () => {
 
 	const windowListener = (e: any) => {
 		e.stopPropagation();
-		if (!e.target.className.includes('options_menu')) {
+		if (optionsRef.current !== e.target) {
 			document.removeEventListener('click', windowListener);
 			setShowOptions(false);
 		}
@@ -180,7 +182,7 @@ const Profile = () => {
 							</svg>
 						</span>
 						{showOptions ? (
-							<div className={styles.options_menu}>
+							<div ref={optionsRef} className={styles.options_menu}>
 								{user._id &&
 								userData?.incoming_friend_requests.includes(user._id) ? (
 									<div
