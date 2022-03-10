@@ -5,6 +5,19 @@
 	flex-direction: column;
 	padding: 8px;
 
+	.log_out_btn {
+		padding: 8px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		border-radius: 8px;
+		cursor: pointer;
+	}
+
+	.log_out_btn:hover {
+		background-color: variables.$black-a05;
+	}
+
 	hr {
 		margin: 8px;
 	}
@@ -76,6 +89,7 @@
 		justify-content: flex-start;
 
 		img {
+			margin-right: 12px;
 			width: 56px;
 			height: 56px;
 		}
