@@ -1,17 +1,14 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { User } from '../myTypes';
-import { axiosGet, axiosPut } from './utils/axiosFunctions';
+import { axiosGet } from './utils/axiosFunctions';
 import RequestWrapper from './utils/RequestWrapper';
 import FriendWrapper from './utils/FriendWrapper';
 import styles from '../styles/Contacts.module.scss';
-import { UserContext } from './hooks/UserContext';
 
 const Contacts = () => {
-	const { user } = useContext(UserContext);
-
-	const [requestsData, setRequestsData] = useState<User[]>();
-	const [friendsData, setFriendsData] = useState<User[]>();
-	const [conversationsData, setConversationsData] = useState<User[]>();
+	const [requestsData, setRequestsData] = useState<User[]>([]);
+	const [friendsData, setFriendsData] = useState<User[]>([]);
+	const [conversationsData, setConversationsData] = useState<User[]>([]);
 
 	useEffect(() => {
 		(async () => {
@@ -48,7 +45,7 @@ const Contacts = () => {
 		);
 	});
 
-	const conversationsDisplay = conversationsData?.map((group) => {
+	const conversationsDisplay = friendsData?.map((group) => {
 		return (
 			<li key={group._id} className={styles.group} onClick={() => openChat()}>
 				<div className='profile-pic-style'>
@@ -69,7 +66,7 @@ const Contacts = () => {
 
 	return (
 		<div className={styles.contacts}>
-			{requestsData && requestsData.length > 0 ? (
+			{requestsDisplay.length > 0 ? (
 				<>
 					<div className={styles.friend_requests}>
 						<ul>
