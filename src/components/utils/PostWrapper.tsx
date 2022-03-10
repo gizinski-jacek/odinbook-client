@@ -90,12 +90,6 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		commentInputRef.current?.focus();
 	};
 
-	const showComments = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-		setShowCommentsList(true);
-		commentInputRef.current?.focus();
-	};
-
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
 		setFormData((prevState) => ({
@@ -208,7 +202,12 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 						</div>
 						Like
 					</div>
-					<div className={styles.comment_btn} onClick={(e) => showComments(e)}>
+					<div
+						className={`${styles.comment_btn} ${
+							showCommentsList ? styles.shown : ''
+						}`}
+						onClick={(e) => toggleComments(e)}
+					>
 						<div className={styles.icon}>
 							<span></span>
 						</div>
