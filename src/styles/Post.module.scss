@@ -184,7 +184,20 @@
 				background-size: auto;
 				background-repeat: no-repeat;
 				background-image: url('../../public/multi_icons/icons_10.png');
+			}
+		}
+
+		.like_btn {
+			span {
 				background-position: 0px -247px;
+			}
+		}
+
+		.comment_btn {
+			div {
+				span {
+					background-position: 0px -209px;
+				}
 			}
 		}
 
@@ -192,18 +205,12 @@
 			background-color: variables.$blue-a30;
 
 			span {
-				background-image: url('../../public/multi_icons/icons_10.png');
 				background-position: 0px -228px;
 			}
 		}
 
-		.comment_btn {
-			div {
-				span {
-					background-image: url('../../public/multi_icons/icons_10.png');
-					background-position: 0px -209px;
-				}
-			}
+		.shown {
+			background-color: variables.$white-a80;
 		}
 	}
 }
