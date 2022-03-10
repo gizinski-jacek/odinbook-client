@@ -8,7 +8,7 @@ import styles from '../styles/ProfilePosts.module.scss';
 const ProfilePosts = () => {
 	const params = useParams();
 
-	const [postsData, setPostsData] = useState<PostFull[]>();
+	const [postsData, setPostsData] = useState<PostFull[]>([]);
 
 	useEffect(() => {
 		(async () => {
@@ -38,7 +38,7 @@ const ProfilePosts = () => {
 				</div>
 			</div>
 			<div className={styles.profile_posts}>
-				{postsDisplay && postsDisplay.length > 0 ? (
+				{postsDisplay.length > 0 ? (
 					postsDisplay
 				) : (
 					<h3 className={styles.empty}>No posts available</h3>
