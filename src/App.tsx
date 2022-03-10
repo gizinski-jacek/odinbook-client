@@ -10,16 +10,14 @@ import LoadingIcon from './components/utils/LoadingIcon';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import FrontPage from './components/FrontPage';
-import SideMenu from './components/SideMenu';
+import SideBar from './components/SideBar';
 import Timeline from './components/Timeline';
 import Contacts from './components/Contacts';
 import People from './components/People';
 import ProfileMain from './components/ProfileMain';
+import ProfilePosts from './components/ProfilePosts';
 import ProfileAbout from './components/ProfileAbout';
 import ProfileFriends from './components/ProfileFriends';
-import ProfilePhotos from './components/ProfilePhotos';
-import ProfileVideos from './components/ProfileVideos';
-import ProfilePosts from './components/ProfilePosts';
 
 const App = () => {
 	const location = useLocation();
@@ -70,7 +68,7 @@ const App = () => {
 						path=''
 						element={
 							<div className='home-container'>
-								<SideMenu />
+								<SideBar />
 								<Timeline />
 								<Contacts />
 							</div>
@@ -88,8 +86,6 @@ const App = () => {
 						<Route path='' element={<ProfilePosts />}></Route>
 						<Route path='about' element={<ProfileAbout />}></Route>
 						<Route path='friends' element={<ProfileFriends />}></Route>
-						<Route path='photos' element={<ProfilePhotos />}></Route>
-						<Route path='videos' element={<ProfileVideos />}></Route>
 					</Route>
 					<Route path='friends' element={<People />}></Route>
 				</Route>
