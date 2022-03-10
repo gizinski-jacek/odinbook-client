@@ -13,6 +13,7 @@ const Navbar = () => {
 
 	const allRef = useRef(null);
 	const unreadRef = useRef(null);
+	const searchRef = useRef(null);
 
 	const [showNotificationsRequests, setShowNotificationsRequests] =
 		useState<User[]>();
@@ -24,6 +25,7 @@ const Navbar = () => {
 	const [searchInput, setSearchInput] = useState('');
 	const [searchMessengerInput, setSearchMessengerInput] = useState('');
 	const [searchData, setSearchData] = useState<PostFull[] | null>();
+	const [showResults, setShowResults] = useState(false);
 	const [showAllNotifications, setShowAllNotifications] = useState(true);
 
 	// useEffect(() => {
@@ -143,6 +145,8 @@ const Navbar = () => {
 		e.preventDefault();
 		try {
 			setSearchData(await axiosGet(`/api/search/posts?q=${query}`));
+			setShowResults(true);
+			document.addEventListener('click', windowListener);
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -152,18 +156,28 @@ const Navbar = () => {
 		e.stopPropagation();
 		setSearchInput('');
 		setSearchData(null);
+		setShowResults(false);
+	};
+
+	const windowListener = (e: any) => {
+		e.stopPropagation();
+		if (searchRef.current !== e.target) {
+			setShowResults(false);
+			document.removeEventListener('click', windowListener);
+		}
 	};
 
 	const searchDisplay = searchData?.map((post) => {
 		return (
 			<li key={post._id} onClick={(e) => clearSearch(e)}>
-				<Link to={`/profile/${post.author._id}`}>
-					<div className={styles.search_result}>
-						<div className='profile-pic-style'>
-							<img src='/placeholder_profile_pic.png' alt='User profile pic' />
-						</div>
-						<span className={styles.text}>{post.text}</span>
+				<Link
+					className={styles.search_result}
+					to={`/profile/${post.author._id}`}
+				>
+					<div className='profile-pic-style'>
+						<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 					</div>
+					<span className={styles.text}>{post.text}</span>
 				</Link>
 			</li>
 		);
@@ -249,12 +263,12 @@ const Navbar = () => {
 							<span></span>
 						</div>
 					</label>
-					{searchDisplay && searchDisplay.length > 0 ? (
-						<div className={styles.search_results_container}>
-							<ul>{searchDisplay}</ul>
-						</div>
-					) : null}
 				</form>
+				{showResults && searchDisplay && searchDisplay.length > 0 ? (
+					<ul ref={searchRef} className={styles.search_results_container}>
+						{searchDisplay}
+					</ul>
+				) : null}
 			</div>
 			<div className={styles.center}>
 				<ul className={styles.navigation}>
