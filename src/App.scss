@@ -52,12 +52,16 @@ hr {
 	background-color: variables.$black-a20;
 }
 
+:-moz-focusring {
+	outline: variables.$blue solid 2px;
+}
+
 .main {
 	width: 100%;
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
-	background-color: variables.$background;
+	background-color: variables.$white-a80;
 }
 
 .welcome-page-container {
@@ -170,7 +174,7 @@ hr {
 	cursor: pointer;
 	width: fit-content;
 	height: fit-content;
-	margin-right: 12px;
+	border-radius: 50%;
 
 	img {
 		border-radius: 50%;
