@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { User } from '../myTypes';
+import { axiosGet } from './utils/axiosFunctions';
 import PersonWrapper from './utils/PersonWrapper';
 import styles from '../styles/ProfileFriends.module.scss';
-import { axiosGet } from './utils/axiosFunctions';
-import { useParams } from 'react-router-dom';
 
 const ProfileFriends = () => {
 	const params = useParams();
 
-	const [friendsData, setFriendsData] = useState<User[]>();
-	const [searchData, setSearchData] = useState<User[] | null>();
+	const [friendsData, setFriendsData] = useState<User[]>([]);
+	const [searchData, setSearchData] = useState<User[]>([]);
 	const [searchInput, setSearchInput] = useState('');
+	const [showResults, setShowResults] = useState(false);
 
 	useEffect(() => {
 		(async () => {
@@ -31,6 +32,7 @@ const ProfileFriends = () => {
 			setSearchData(
 				await axiosGet(`/api/search/${params.userid}/friends?q=${query}`)
 			);
+			setShowResults(true);
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -39,7 +41,8 @@ const ProfileFriends = () => {
 	const clearSearch = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		setSearchInput('');
-		setSearchData(null);
+		setSearchData([]);
+		setShowResults(false);
 	};
 
 	const friendsDisplay = friendsData?.map((friend) => {
@@ -95,7 +98,7 @@ const ProfileFriends = () => {
 						/>
 						<div
 							style={{
-								visibility: searchInput || searchData ? 'visible' : 'hidden',
+								visibility: searchInput || showResults ? 'visible' : 'hidden',
 							}}
 							className={styles.clear_btn}
 							onClick={(e) => clearSearch(e)}
@@ -106,17 +109,18 @@ const ProfileFriends = () => {
 				</form>
 			</div>
 			<div className={styles.body}>
-				{!searchDisplay ? null : searchDisplay && searchDisplay?.length > 0 ? (
-					<div className={styles.search_results_container}>
-						<h3>Search Results</h3>
-						<ul>{searchDisplay}</ul>
-					</div>
-				) : (
-					<div className={styles.empty_friends}>
-						<h3>No friends found</h3>
-					</div>
-				)}
-				{searchDisplay ? null : friendsDisplay && friendsDisplay?.length > 0 ? (
+				{showResults ? (
+					searchDisplay.length > 0 ? (
+						<div className={styles.search_results_container}>
+							<h3>Search Results</h3>
+							<ul>{searchDisplay}</ul>
+						</div>
+					) : (
+						<div className={styles.empty_friends}>
+							<h3>No friends found</h3>
+						</div>
+					)
+				) : friendsDisplay.length > 0 ? (
 					<ul>{friendsDisplay}</ul>
 				) : (
 					<div className={styles.empty_friends}>
