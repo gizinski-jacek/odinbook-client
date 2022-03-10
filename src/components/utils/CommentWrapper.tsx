@@ -17,7 +17,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 
 	const params = useParams();
 
-	const optionsRef = useRef<HTMLSpanElement>(null);
+	const optionsRef = useRef(null);
 
 	const [commentData, setCommentData] = useState<CommentFull>(comment);
 	const [editComment, setEditComment] = useState(false);
@@ -124,11 +124,11 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 			/>
 		) : (
 			<li className={styles.comment}>
-				<div className='profile-pic-style'>
-					<Link to={`/profile/${commentData.author._id}`}>
+				<Link to={`/profile/${commentData.author._id}`}>
+					<div className='profile-pic-style'>
 						<img src='/placeholder_profile_pic.png' alt='User profile pic' />
-					</Link>
-				</div>
+					</div>
+				</Link>
 				<div className={styles.body}>
 					<div className={styles.upper}>
 						<div className={styles.contents}>
@@ -139,7 +139,12 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 								<p>{commentData.text}</p>
 							</span>
 							{commentData.likes.includes(user._id) ? (
-								<div className={styles.liked}>
+								<div
+									className={styles.liked}
+									onClick={() =>
+										handleLike(commentData.post_ref, commentData._id)
+									}
+								>
 									<span></span>
 								</div>
 							) : null}
@@ -148,7 +153,6 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 							{user._id === commentData.author._id ? (
 								<>
 									<span
-										ref={optionsRef}
 										className={styles.options_toggle}
 										onClick={(e) => toggleOptions(e)}
 									>
@@ -159,7 +163,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 										</svg>
 									</span>
 									{showOptions ? (
-										<div className={styles.options_menu}>
+										<div ref={optionsRef} className={styles.options_menu}>
 											<div
 												className={styles.edit_btn}
 												onClick={(e) => openEditForm(e)}
