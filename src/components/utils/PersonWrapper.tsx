@@ -35,6 +35,16 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 		}
 	};
 
+	const handleRemoveFriend = async (userId: string | undefined) => {
+		try {
+			const resData = await axiosPut(`/api/users/friends/remove`, { userId });
+			const data = resData.find((u: User) => u._id === userId);
+			setUserData(data);
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
 	const handleSendRequest = async (userId: string) => {
 		try {
 			const resData = await axiosPut(`/api/users/friends/request`, { userId });
@@ -51,8 +61,6 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 				<div className={styles.pic_link}>
 					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 				</div>
-			</Link>
-			<Link to={`/profile/${userData._id}`}>
 				<h4>{userData.full_name}</h4>
 			</Link>
 			<div className={styles.controls}>
@@ -72,6 +80,14 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 						onClick={() => handleAcceptRequest(userData._id)}
 					>
 						Accept Request
+					</button>
+				) : user._id && userData?.friend_list.includes(user._id) ? (
+					<button
+						type='button'
+						className='btn-default btn-confirm'
+						onClick={() => handleRemoveFriend(userData._id)}
+					>
+						Remove Friend
 					</button>
 				) : (
 					<button
