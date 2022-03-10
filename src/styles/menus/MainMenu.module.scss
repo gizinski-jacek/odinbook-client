@@ -8,6 +8,10 @@
 	max-height: calc(100vh - variables.$navbar-height - 16px);
 	font-weight: 600;
 
+	a:hover {
+		background-color: variables.$black-a05;
+	}
+
 	h3 {
 		margin: 8px 16px;
 	}
