@@ -9,7 +9,11 @@ type Props = {
 };
 
 const RequestWrapper: React.FC<Props> = ({ request, setData }) => {
-	const handleAcceptRequest = async (requestId: string) => {
+	const handleAcceptRequest = async (
+		e: React.MouseEvent<HTMLButtonElement>,
+		requestId: string
+	) => {
+		e.stopPropagation();
 		try {
 			const resData = await axiosPut(`/api/users/friends/accept`, {
 				requestId,
@@ -21,7 +25,11 @@ const RequestWrapper: React.FC<Props> = ({ request, setData }) => {
 		}
 	};
 
-	const handleCancelRequest = async (requestId: string) => {
+	const handleCancelRequest = async (
+		e: React.MouseEvent<HTMLButtonElement>,
+		requestId: string
+	) => {
+		e.stopPropagation();
 		try {
 			const resData = await axiosPut(`/api/users/friends/decline`, {
 				requestId,
@@ -35,23 +43,23 @@ const RequestWrapper: React.FC<Props> = ({ request, setData }) => {
 
 	return (
 		<li className={styles.request}>
-			<div className='profile-pic-style'>
-				<Link to={`/profile/${request._id}`}>
+			<Link to={`/profile/${request._id}`}>
+				<div className='profile-pic-style'>
 					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
-				</Link>
-			</div>
+				</div>
+			</Link>
 			<div className={styles.contents}>
 				<h4>{request.full_name}</h4>
 				<div className={styles.controls}>
 					<button
 						className='btn-default btn-confirm'
-						onClick={() => handleAcceptRequest(request._id)}
+						onClick={(e) => handleAcceptRequest(e, request._id)}
 					>
 						Confirm
 					</button>
 					<button
 						className='btn-default btn-remove'
-						onClick={() => handleCancelRequest(request._id)}
+						onClick={(e) => handleCancelRequest(e, request._id)}
 					>
 						Remove
 					</button>
