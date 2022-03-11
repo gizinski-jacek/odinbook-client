@@ -19,7 +19,7 @@
 	}
 }
 
-.cover_photo {
+.top {
 	height: 400px;
 	max-width: 1200px;
 	border-bottom-left-radius: 8px;
@@ -43,14 +43,14 @@
 	}
 }
 
-.controls {
+.bottom {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
 
-	.left {
+	.pages {
 		display: flex;
 		flex-direction: row;
 		margin: 0 16px;
@@ -88,7 +88,14 @@
 		}
 	}
 
-	.right {
+	.edit_controls {
+		margin: 0 16px;
+
+		.edit_btn {
+		}
+	}
+
+	.user_controls {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -100,26 +107,32 @@
 			margin: 4px;
 		}
 
-		.sent:hover span,
-		.friend:hover span {
+		.blocked:hover span,
+		.friend:hover span,
+		.sent:hover span {
 			display: none;
 		}
 
-		.sent:hover {
+		.blocked:hover {
 			background-color: variables.$black-a20 !important;
+			color: variables.$black-a40;
 		}
 
-		.sent:hover:after {
-			content: 'Cancel Request';
+		.blocked:hover:after {
+			content: 'Unblock User';
 		}
 
 		.friend:hover {
-			background-color: variables.$black-a20 !important;
-			color: variables.$black;
+			background-color: variables.$blue-a30 !important;
+			color: variables.$blue;
 		}
 
 		.friend:hover:after {
 			content: 'Remove Friend';
+		}
+
+		.sent:hover:after {
+			content: 'Cancel Request';
 		}
 	}
 
