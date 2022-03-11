@@ -38,7 +38,6 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 		})();
 	}, [comment, params, setCommentData]);
 
-	////////
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
 		setShowOptions((prevState) => !prevState);

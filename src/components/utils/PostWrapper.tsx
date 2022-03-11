@@ -40,7 +40,6 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		})();
 	}, [post, params]);
 
-	////////
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
 		setShowOptions((prevState) => !prevState);
