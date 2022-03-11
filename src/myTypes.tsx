@@ -68,6 +68,10 @@ export type User = {
 	blocked_by_other_list: string[];
 	incoming_friend_requests: string[];
 	outgoing_friend_requests: string[];
+	profile_picture?: string;
+	cover_photo?: string;
+	bio?: string;
+	hobbies?: string[];
 };
 
 export type LogInForm = {
