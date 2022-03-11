@@ -290,6 +290,7 @@
 
 .menu_container {
 	min-width: 360px;
+	max-width: 600px;
 	position: fixed;
 	top: variables.$navbar-height;
 	right: 16px;

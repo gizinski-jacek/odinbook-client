@@ -15,8 +15,6 @@
 			align-items: center;
 			padding: 8px;
 			border-radius: 8px;
-			background-color: variables.$white-a80;
-
 			cursor: pointer;
 
 			img {
@@ -26,8 +24,8 @@
 			}
 		}
 
-		li:hover {
-			filter: brightness(95%);
+		a:hover {
+			background-color: variables.$black-a05;
 		}
 	}
 }

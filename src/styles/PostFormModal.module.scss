@@ -27,8 +27,8 @@
 	border-radius: 8px;
 	background-color: variables.$white;
 	box-shadow: 0 4px 12px 4px variables.$black-a20;
-	min-width: 500px;
-	min-height: 400px;
+	width: 500px;
+	max-height: 500px;
 	z-index: 10;
 }
 

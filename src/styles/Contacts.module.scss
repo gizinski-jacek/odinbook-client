@@ -92,7 +92,6 @@
 	align-items: center;
 	border-radius: 8px;
 	padding: 8px;
-	background-color: variables.$white-a80;
 	cursor: pointer;
 
 	span {
@@ -120,5 +119,9 @@
 }
 
 .group:hover {
-	filter: brightness(95%);
+	background-color: variables.$black-a05;
+
+	span {
+		filter: brightness(95%);
+	}
 }
