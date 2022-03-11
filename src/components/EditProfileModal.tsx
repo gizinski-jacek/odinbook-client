@@ -1,7 +1,6 @@
-import { useContext, useState } from 'react';
-import { UserContext } from './hooks/UserContext';
-import { LogInForm, User } from '../myTypes';
-import { axiosPost } from './utils/axiosFunctions';
+import { useState } from 'react';
+import { User } from '../myTypes';
+import { axiosPut } from './utils/axiosFunctions';
 import styles from '../styles/EditProfileModal.module.scss';
 
 type Props = {
@@ -10,18 +9,9 @@ type Props = {
 	data: User;
 };
 
-type FormData = {
-	profile_picture: string;
-	cover_photo: string;
-	bio: string;
-	hobbies: string;
-};
-
 const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
-	const { setUser } = useContext(UserContext);
-
 	const [errors, setErrors] = useState<{ msg: string }[]>();
-	const [formData, setFormData] = useState<User | FormData>(data);
+	const [formData, setFormData] = useState(data);
 
 	const [pictureForm, setPictureForm] = useState(false);
 	const [photoForm, setPhotoForm] = useState(false);
@@ -37,23 +27,14 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 	};
 
 	const handleSubmit = async (
-		e: React.FormEvent<HTMLFormElement>,
-		data: LogInForm
+		e: React.MouseEvent<HTMLButtonElement>,
+		data: User
 	) => {
 		e.preventDefault();
 		try {
-			setUser(await axiosPost('/api/log-in', data));
+			setData(await axiosPut(`/api/users/${data._id}`, data));
 		} catch (error: any) {
-			if (!Array.isArray(error.response.data)) {
-				if (typeof error.response.data === 'object') {
-					setErrors([error.response.data]);
-				}
-				if (typeof error.response.data === 'string') {
-					setErrors([{ msg: error.response.data }]);
-				}
-			} else {
-				setErrors(error.response.data);
-			}
+			console.error(error);
 		}
 	};
 
@@ -134,9 +115,6 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 										placeholder='Describe yourself...'
 									/>
 								</label>
-								<button type='submit' className='btn-default btn-form-submit'>
-									Edit Your Profile Info
-								</button>
 							</form>
 						) : (
 							<p>{formData.bio}</p>
@@ -162,6 +140,13 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 						</option>
 					</div>
 				</div>
+				<button
+					type='button'
+					className='btn-default btn-form-submit'
+					onClick={(e) => handleSubmit(e, formData)}
+				>
+					Edit Your Profile Info
+				</button>
 			</div>
 		</div>
 	);
