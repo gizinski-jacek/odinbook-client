@@ -45,11 +45,6 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 		document.addEventListener('click', windowListener);
 	};
 
-	const closeOptions = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-		setShowOptions(false);
-	};
-
 	const windowListener = (e: any) => {
 		e.stopPropagation();
 		if (optionsRef.current !== e.target) {
@@ -61,7 +56,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 	const openEditForm = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		setEditComment(true);
-		closeOptions(e);
+		setShowOptions(false);
 	};
 
 	const closeEditForm = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -72,7 +67,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 	const openDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		setShowModal(true);
-		closeOptions(e);
+		setShowOptions(false);
 	};
 
 	const closeDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
