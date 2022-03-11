@@ -14,6 +14,26 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 
 	const [userData, setUserData] = useState<User | null>(person);
 
+	const handleBlockStatus = async (userId: string | undefined) => {
+		try {
+			const resData = await axiosPut(`/api/users/block`, { userId });
+			const data = resData.find((u: User) => u._id === userId);
+			setUserData(data);
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
+	const handleRemoveFriend = async (userId: string | undefined) => {
+		try {
+			const resData = await axiosPut(`/api/users/friends/remove`, { userId });
+			const data = resData.find((u: User) => u._id === userId);
+			setUserData(data);
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
 	const handleCancelRequest = async (requestId: string) => {
 		try {
 			const resData = await axiosPut(`/api/users/friends/cancel`, {
@@ -30,16 +50,6 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 		try {
 			await axiosPut(`/api/users/friends/accept`, { requestId });
 			setUserData(null);
-		} catch (error: any) {
-			console.error(error);
-		}
-	};
-
-	const handleRemoveFriend = async (userId: string | undefined) => {
-		try {
-			const resData = await axiosPut(`/api/users/friends/remove`, { userId });
-			const data = resData.find((u: User) => u._id === userId);
-			setUserData(data);
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -64,40 +74,46 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 				<h4>{userData.full_name}</h4>
 			</Link>
 			<div className={styles.controls}>
-				{user._id && userData?.incoming_friend_requests.includes(user._id) ? (
-					<button
-						type='button'
-						className={`btn-default btn-active ${styles.sent}`}
-						onClick={() => handleCancelRequest(userData._id)}
-					>
-						<span>Request Sent</span>
-					</button>
-				) : user._id &&
-				  userData?.outgoing_friend_requests.includes(user._id) ? (
-					<button
-						type='button'
-						className='btn-default btn-confirm'
-						onClick={() => handleAcceptRequest(userData._id)}
-					>
-						Accept Request
-					</button>
-				) : user._id && userData?.friend_list.includes(user._id) ? (
-					<button
-						type='button'
-						className='btn-default btn-confirm'
-						onClick={() => handleRemoveFriend(userData._id)}
-					>
-						Remove Friend
-					</button>
-				) : (
-					<button
-						type='button'
-						className='btn-default btn-confirm'
-						onClick={() => handleSendRequest(userData._id)}
-					>
-						Add Friend
-					</button>
-				)}
+				{user._id ? (
+					userData.blocked_by_other_list.includes(user._id) ? (
+						<div
+							className={`btn-default btn-disabled ${styles.blocked}`}
+							onClick={() => handleBlockStatus(userData._id)}
+						>
+							<span>Blocked User</span>
+						</div>
+					) : userData.blocked_user_list.includes(user._id) ? (
+						<div className='btn-default btn-disabled'>Blocked by User</div>
+					) : userData.friend_list.includes(user._id) ? (
+						<div
+							className={`btn-default btn-confirm ${styles.friend}`}
+							onClick={() => handleRemoveFriend(userData._id)}
+						>
+							<span>Friend</span>
+						</div>
+					) : userData.incoming_friend_requests.includes(user._id) ? (
+						<div
+							className={`btn-default btn-active ${styles.sent}`}
+							onClick={() => handleCancelRequest(userData._id)}
+						>
+							<span>Request Sent</span>
+						</div>
+					) : userData.outgoing_friend_requests.includes(user._id) ? (
+						<div
+							className='btn-default btn-confirm'
+							onClick={() => handleAcceptRequest(userData._id)}
+						>
+							Accept Request
+						</div>
+					) : (
+						<div
+							className='btn-default btn-confirm'
+							onClick={() => handleSendRequest(userData._id)}
+						>
+							Add Friend
+						</div>
+					)
+				) : null}
 			</div>
 		</li>
 	) : null;
