@@ -12,9 +12,9 @@ type Props = {
 const PersonWrapper: React.FC<Props> = ({ person }) => {
 	const { user } = useContext(UserContext);
 
-	const [userData, setUserData] = useState<User | null>(person);
+	const [userData, setUserData] = useState<User>(person);
 
-	const handleBlockStatus = async (userId: string | undefined) => {
+	const handleBlockStatus = async (userId: string) => {
 		try {
 			const resData = await axiosPut(`/api/users/block`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
@@ -24,7 +24,7 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 		}
 	};
 
-	const handleRemoveFriend = async (userId: string | undefined) => {
+	const handleRemoveFriend = async (userId: string) => {
 		try {
 			const resData = await axiosPut(`/api/users/friends/remove`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
@@ -34,22 +34,25 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 		}
 	};
 
-	const handleCancelRequest = async (requestId: string) => {
+	const handleCancelRequest = async (userId: string) => {
 		try {
 			const resData = await axiosPut(`/api/users/friends/cancel`, {
-				requestId,
+				userId,
 			});
-			const data = resData.find((u: User) => u._id === requestId);
+			const data = resData.find((u: User) => u._id === userId);
 			setUserData(data);
 		} catch (error: any) {
 			console.error(error);
 		}
 	};
 
-	const handleAcceptRequest = async (requestId: string | undefined) => {
+	const handleAcceptRequest = async (userId: string) => {
 		try {
-			await axiosPut(`/api/users/friends/accept`, { requestId });
-			setUserData(null);
+			const resData = await axiosPut(`/api/users/friends/accept`, {
+				userId,
+			});
+			const data = resData.find((u: User) => u._id === userId);
+			setUserData(data);
 		} catch (error: any) {
 			console.error(error);
 		}
