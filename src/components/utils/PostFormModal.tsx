@@ -11,7 +11,7 @@ type Props = {
 	post: PostFull | PostNew;
 };
 
-const PostFormModal: React.FC<Props> = ({ setData, closeModal, post }) => {
+const PostFormModal: React.FC<Props> = ({ closeModal, setData, post }) => {
 	const { user } = useContext(UserContext);
 
 	const [formData, setFormData] = useState<PostFull | PostNew>(post);
@@ -75,7 +75,7 @@ const PostFormModal: React.FC<Props> = ({ setData, closeModal, post }) => {
 							minLength={1}
 							maxLength={512}
 							rows={12}
-							onChange={(e) => handleChange(e)}
+							onChange={handleChange}
 							value={formData.text}
 							required
 							placeholder={`What's on your mind, ${user.first_name}?`}

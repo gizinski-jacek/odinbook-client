@@ -8,7 +8,7 @@ type Props = {
 	request: User;
 };
 
-const RequestWrapper: React.FC<Props> = ({ request, setData }) => {
+const RequestWrapper: React.FC<Props> = ({ setData, request }) => {
 	const handleAcceptRequest = async (
 		e: React.MouseEvent<HTMLButtonElement>,
 		requestId: string

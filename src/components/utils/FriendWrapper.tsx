@@ -7,7 +7,7 @@ type Props = {
 	friend: User;
 };
 
-const FriendWrapper: React.FC<Props> = ({ friend, openChat }) => {
+const FriendWrapper: React.FC<Props> = ({ openChat, friend }) => {
 	return (
 		<li className={styles.friend} onClick={() => openChat()}>
 			<Link to={`/profile/${friend._id}`}>

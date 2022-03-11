@@ -76,7 +76,7 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 							minLength={4}
 							maxLength={32}
 							value={formData.first_name}
-							onChange={(e) => handleChange(e)}
+							onChange={handleChange}
 							required
 							placeholder='First Name'
 						/>
@@ -88,7 +88,7 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 							minLength={4}
 							maxLength={32}
 							value={formData.last_name}
-							onChange={(e) => handleChange(e)}
+							onChange={handleChange}
 							required
 							placeholder='Last Name'
 						/>
@@ -101,7 +101,7 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 						minLength={4}
 						maxLength={32}
 						value={formData.email}
-						onChange={(e) => handleChange(e)}
+						onChange={handleChange}
 						required
 						placeholder='Email'
 					/>
@@ -113,7 +113,7 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 						minLength={8}
 						maxLength={64}
 						value={formData.password}
-						onChange={(e) => handleChange(e)}
+						onChange={handleChange}
 						required
 						placeholder='Password'
 					/>

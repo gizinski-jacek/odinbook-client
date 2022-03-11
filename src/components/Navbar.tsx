@@ -101,7 +101,7 @@ const Navbar = () => {
 
 	const searchDisplay = searchData?.map((post) => {
 		return (
-			<li key={post._id} onClick={(e) => clearSearch(e)}>
+			<li key={post._id} onClick={clearSearch}>
 				<Link
 					className={styles.search_result}
 					to={`/profile/${post.author._id}`}

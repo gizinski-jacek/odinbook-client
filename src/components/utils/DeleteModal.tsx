@@ -50,7 +50,7 @@ const DeleteModal: React.FC<Props> = ({
 					<button
 						type='button'
 						className='btn-default btn-confirm'
-						onClick={() => handleDelete()}
+						onClick={handleDelete}
 					>
 						Delete
 					</button>

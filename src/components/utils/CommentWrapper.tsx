@@ -38,6 +38,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 		})();
 	}, [comment, params, setCommentData]);
 
+	////////
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
 		setShowOptions((prevState) => !prevState);
@@ -119,7 +120,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 		editComment ? (
 			<EditCommentForm
 				handleUpdate={handleUpdate}
-				closeEdit={closeEditForm}
+				closeModal={closeEditForm}
 				comment={comment}
 			/>
 		) : (
@@ -154,7 +155,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 								<>
 									<span
 										className={styles.options_toggle}
-										onClick={(e) => toggleOptions(e)}
+										onClick={toggleOptions}
 									>
 										<svg viewBox='0 0 20 20' width='20' height='20'>
 											<g transform='translate(-446 -350)'>
@@ -164,15 +165,12 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 									</span>
 									{showOptions ? (
 										<div ref={optionsRef} className={styles.options_menu}>
-											<div
-												className={styles.edit_btn}
-												onClick={(e) => openEditForm(e)}
-											>
+											<div className={styles.edit_btn} onClick={openEditForm}>
 												Edit comment
 											</div>
 											<div
 												className={styles.delete_btn}
-												onClick={(e) => openDeleteModal(e)}
+												onClick={openDeleteModal}
 											>
 												Delete comment
 											</div>

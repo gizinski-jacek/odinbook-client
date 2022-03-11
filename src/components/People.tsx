@@ -96,7 +96,7 @@ const People = () => {
 								visibility: searchInput || showResults ? 'visible' : 'hidden',
 							}}
 							className={styles.clear_btn}
-							onClick={(e) => clearSearch(e)}
+							onClick={clearSearch}
 						>
 							<span></span>
 						</div>

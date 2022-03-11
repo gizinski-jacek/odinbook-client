@@ -51,6 +51,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		setShowEditModal(false);
 	};
 
+	////////
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
 		setShowOptions((prevState) => !prevState);
@@ -59,7 +60,6 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 
 	const windowListener = (e: any) => {
 		e.stopPropagation();
-		console.log(showOptions);
 		if (optionsRef.current !== e.target) {
 			document.removeEventListener('click', windowListener);
 			setShowOptions(false);
@@ -139,10 +139,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 				<div className={styles.right}>
 					{user._id === postData.author._id ? (
 						<>
-							<span
-								className={styles.options_toggle}
-								onClick={(e) => toggleOptions(e)}
-							>
+							<span className={styles.options_toggle} onClick={toggleOptions}>
 								<svg viewBox='0 0 20 20' width='20' height='20'>
 									<g transform='translate(-446 -350)'>
 										<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
@@ -151,16 +148,10 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 							</span>
 							{showOptions ? (
 								<span ref={optionsRef} className={styles.options_menu}>
-									<div
-										className={styles.edit_btn}
-										onClick={(e) => openEditModal(e)}
-									>
+									<div className={styles.edit_btn} onClick={openEditModal}>
 										Edit post
 									</div>
-									<div
-										className={styles.delete_btn}
-										onClick={(e) => openDeleteModal(e)}
-									>
+									<div className={styles.delete_btn} onClick={openDeleteModal}>
 										Delete post
 									</div>
 								</span>
@@ -229,7 +220,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 				</Link>
 				<form onSubmit={(e) => handleCommentSubmit(e, postData._id, formData)}>
 					<textarea
-						id='text'
+						id={`text_${post._id}`}
 						name='text'
 						ref={commentInputRef}
 						minLength={1}

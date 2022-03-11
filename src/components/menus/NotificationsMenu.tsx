@@ -74,14 +74,14 @@ const NotificationsMenu: React.FC<Props> = ({ setNotificationAlert }) => {
 				<div
 					ref={allRef}
 					className={`btn-default ${showAllNotifications ? 'btn-active' : ''}`}
-					onClick={(e) => changeNotificationList(e)}
+					onClick={changeNotificationList}
 				>
 					All
 				</div>
 				<div
 					ref={unreadRef}
 					className={`btn-default ${showAllNotifications ? '' : 'btn-active'}`}
-					onClick={(e) => changeNotificationList(e)}
+					onClick={changeNotificationList}
 				>
 					Unread
 				</div>
