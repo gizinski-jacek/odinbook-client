@@ -4,6 +4,7 @@ import { UserContext } from './hooks/UserContext';
 import type { User } from '../myTypes';
 import { axiosGet, axiosPut } from './utils/axiosFunctions';
 import styles from '../styles/ProfileMain.module.scss';
+import EditProfileModal from './EditProfileModal';
 
 const Profile = () => {
 	const { user } = useContext(UserContext);
@@ -14,6 +15,7 @@ const Profile = () => {
 
 	const [userData, setUserData] = useState<User>();
 	const [showOptions, setShowOptions] = useState(false);
+	const [showModal, setShowModal] = useState(false);
 
 	useEffect(() => {
 		(async () => {
@@ -24,6 +26,16 @@ const Profile = () => {
 			}
 		})();
 	}, [params.userid]);
+
+	const openModal = (e: React.MouseEvent<HTMLSpanElement>) => {
+		e.stopPropagation();
+		setShowModal(true);
+	};
+
+	const closeModal = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+		setShowModal(false);
+	};
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
@@ -39,53 +51,7 @@ const Profile = () => {
 		}
 	};
 
-	const handleAcceptRequest = async (requestId: string | undefined) => {
-		try {
-			const resData = await axiosPut(`/api/users/friends/accept`, {
-				requestId,
-			});
-			const data = resData.find((u: User) => u._id === requestId);
-			setUserData(data);
-		} catch (error: any) {
-			console.error(error);
-		}
-	};
-
-	const handleCancelRequest = async (requestId: string | undefined) => {
-		try {
-			const resData = await axiosPut(`/api/users/friends/cancel`, {
-				requestId,
-			});
-			const data = resData.find((u: User) => u._id === requestId);
-			setUserData(data);
-			setShowOptions(false);
-		} catch (error: any) {
-			console.error(error);
-		}
-	};
-
-	const handleRemoveFriend = async (userId: string | undefined) => {
-		try {
-			const resData = await axiosPut(`/api/users/friends/remove`, { userId });
-			const data = resData.find((u: User) => u._id === userId);
-			setUserData(data);
-			setShowOptions(false);
-		} catch (error: any) {
-			console.error(error);
-		}
-	};
-
-	const handleSendRequest = async (userId: string | undefined) => {
-		try {
-			const resData = await axiosPut(`/api/users/friends/request`, { userId });
-			const data = resData.find((u: User) => u._id === userId);
-			setUserData(data);
-		} catch (error: any) {
-			console.error(error);
-		}
-	};
-
-	const handleBlockStatus = async (userId: string | undefined) => {
+	const handleBlockStatus = async (userId: string) => {
 		try {
 			const resData = await axiosPut(`/api/users/block`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
@@ -96,20 +62,64 @@ const Profile = () => {
 		}
 	};
 
-	// conditionally display edit profile info data for logged user
+	const handleRemoveFriend = async (userId: string) => {
+		try {
+			const resData = await axiosPut(`/api/users/friends/remove`, { userId });
+			const data = resData.find((u: User) => u._id === userId);
+			setUserData(data);
+			setShowOptions(false);
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
+	const handleCancelRequest = async (userId: string) => {
+		try {
+			const resData = await axiosPut(`/api/users/friends/cancel`, {
+				userId,
+			});
+			const data = resData.find((u: User) => u._id === userId);
+			setUserData(data);
+			setShowOptions(false);
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
+	const handleAcceptRequest = async (userId: string) => {
+		try {
+			const resData = await axiosPut(`/api/users/friends/accept`, {
+				userId,
+			});
+			const data = resData.find((u: User) => u._id === userId);
+			setUserData(data);
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
+	const handleSendRequest = async (userId: string) => {
+		try {
+			const resData = await axiosPut(`/api/users/friends/request`, { userId });
+			const data = resData.find((u: User) => u._id === userId);
+			setUserData(data);
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
 
 	return (
 		<div className={styles.profile_page}>
 			<div className={styles.profile_page_main}>
-				<div className={styles.cover_photo}>
+				<div className={styles.top}>
 					<div className='profile-pic-style'>
 						<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 					</div>
 				</div>
 				<h2>{userData?.full_name}</h2>
 				<hr />
-				<div className={styles.controls}>
-					<ul className={styles.left}>
+				<div className={styles.bottom}>
+					<ul className={styles.pages}>
 						<li>
 							<NavLink
 								to='./'
@@ -135,101 +145,126 @@ const Profile = () => {
 							</NavLink>
 						</li>
 					</ul>
-					<div className={styles.right}>
-						{(user._id && userData?.blocked_user_list.includes(user._id)) ||
-						(user._id && userData?.blocked_by_other_list.includes(user._id)) ? (
-							<div className='btn-default btn-disabled btn-w180'>Blocked</div>
-						) : user._id &&
-						  userData?.incoming_friend_requests.includes(user._id) ? (
-							<div
-								className={`btn-default btn-active btn-w180 ${styles.sent}`}
-								onClick={() => handleCancelRequest(userData?._id)}
-							>
-								<span>Request Sent</span>
-							</div>
-						) : user._id &&
-						  userData?.outgoing_friend_requests.includes(user._id) ? (
-							<div
-								className='btn-default btn-confirm btn-w180'
-								onClick={() => handleAcceptRequest(userData?._id)}
-							>
-								Accept Request
-							</div>
-						) : user._id && userData?.friend_list.includes(user._id) ? (
-							<div
-								className={`btn-default btn-confirm btn-w180 ${styles.friend}`}
-								onClick={() => handleRemoveFriend(userData?._id)}
-							>
-								<span>Friend</span>
+					{userData ? (
+						userData._id === user._id ? (
+							<div className={styles.edit_controls}>
+								<div
+									className={` btn-default btn-confirm ${styles.edit_btn}`}
+									onClick={openModal}
+								>
+									Edit Profile
+								</div>
 							</div>
 						) : (
-							<div
-								className='btn-default btn-confirm btn-w180'
-								onClick={() => handleSendRequest(userData?._id)}
-							>
-								Add Friend
+							<div className={styles.user_controls}>
+								{user._id && userData ? (
+									userData.blocked_by_other_list.includes(user._id) ? (
+										<div
+											className={`btn-default btn-disabled btn-w180 ${styles.blocked}`}
+											onClick={() => handleBlockStatus(userData._id)}
+										>
+											<span>Blocked User</span>
+										</div>
+									) : userData.blocked_user_list.includes(user._id) ? (
+										<div className='btn-default btn-disabled btn-w180'>
+											Blocked by User
+										</div>
+									) : userData.friend_list.includes(user._id) ? (
+										<div
+											className={`btn-default btn-confirm btn-w180 ${styles.friend}`}
+											onClick={() => handleRemoveFriend(userData._id)}
+										>
+											<span>Friend</span>
+										</div>
+									) : userData.incoming_friend_requests.includes(user._id) ? (
+										<div
+											className={`btn-default btn-active btn-w180 ${styles.sent}`}
+											onClick={() => handleCancelRequest(userData._id)}
+										>
+											<span>Request Sent</span>
+										</div>
+									) : userData.outgoing_friend_requests.includes(user._id) ? (
+										<div
+											className='btn-default btn-confirm btn-w180'
+											onClick={() => handleAcceptRequest(userData._id)}
+										>
+											Accept Request
+										</div>
+									) : (
+										<div
+											className='btn-default btn-confirm btn-w180'
+											onClick={() => handleSendRequest(userData._id)}
+										>
+											Add Friend
+										</div>
+									)
+								) : null}
+								<div className='btn-default btn-remove'>Message</div>
+								<span
+									className={`btn-default btn-remove ${styles.options_toggle}`}
+									onClick={toggleOptions}
+								>
+									<svg viewBox='0 0 20 20' width='20' height='20'>
+										<g transform='translate(-446 -350)'>
+											<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
+										</g>
+									</svg>
+								</span>
+								{showOptions && user._id && userData ? (
+									<div ref={optionsRef} className={styles.options_menu}>
+										{userData.incoming_friend_requests.includes(user._id) ? (
+											<div
+												className={styles.cancel_btn}
+												onClick={() => handleCancelRequest(userData._id)}
+											>
+												Cancel request
+											</div>
+										) : null}
+										{userData.outgoing_friend_requests.includes(user._id) ? (
+											<div
+												className={styles.cancel_btn}
+												onClick={(e) => handleCancelRequest(userData._id)}
+											>
+												Decline request
+											</div>
+										) : null}
+										{userData.friend_list.includes(user._id) ? (
+											<div
+												className={styles.cancel_btn}
+												onClick={(e) => handleRemoveFriend(userData._id)}
+											>
+												Remove friend
+											</div>
+										) : null}
+										{userData.blocked_by_other_list.includes(user._id) ? (
+											<div
+												className={styles.block_btn}
+												onClick={(e) => handleBlockStatus(userData._id)}
+											>
+												Unblock user
+											</div>
+										) : (
+											<div
+												className={styles.block_btn}
+												onClick={(e) => handleBlockStatus(userData._id)}
+											>
+												Block user
+											</div>
+										)}
+									</div>
+								) : null}
 							</div>
-						)}
-						<div className='btn-default btn-remove'>Message</div>
-						<span
-							className={`btn-default btn-remove ${styles.options_toggle}`}
-							onClick={(e) => toggleOptions(e)}
-						>
-							<svg viewBox='0 0 20 20' width='20' height='20'>
-								<g transform='translate(-446 -350)'>
-									<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
-								</g>
-							</svg>
-						</span>
-						{showOptions ? (
-							<div ref={optionsRef} className={styles.options_menu}>
-								{user._id &&
-								userData?.incoming_friend_requests.includes(user._id) ? (
-									<div
-										className={styles.cancel_btn}
-										onClick={() => handleCancelRequest(userData?._id)}
-									>
-										Cancel request
-									</div>
-								) : null}
-								{user._id &&
-								userData?.outgoing_friend_requests.includes(user._id) ? (
-									<div
-										className={styles.cancel_btn}
-										onClick={(e) => handleCancelRequest(userData?._id)}
-									>
-										Decline request
-									</div>
-								) : null}
-								{user._id && userData?.friend_list.includes(user._id) ? (
-									<div
-										className={styles.cancel_btn}
-										onClick={(e) => handleRemoveFriend(userData?._id)}
-									>
-										Remove friend
-									</div>
-								) : null}
-								{user._id &&
-								userData?.blocked_by_other_list.includes(user._id) ? (
-									<div
-										className={styles.block_btn}
-										onClick={(e) => handleBlockStatus(userData?._id)}
-									>
-										Unblock user
-									</div>
-								) : (
-									<div
-										className={styles.block_btn}
-										onClick={(e) => handleBlockStatus(userData?._id)}
-									>
-										Block user
-									</div>
-								)}
-							</div>
-						) : null}
-					</div>
+						)
+					) : null}
 				</div>
 			</div>
+			{showModal && userData ? (
+				<EditProfileModal
+					closeModal={closeModal}
+					setData={setUserData}
+					data={userData}
+				/>
+			) : null}
 		</div>
 	);
 };
