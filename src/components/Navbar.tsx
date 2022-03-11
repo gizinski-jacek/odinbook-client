@@ -28,8 +28,8 @@ const Navbar = () => {
 	useEffect(() => {
 		(async () => {
 			try {
-				const resData = await axiosGet('/api/users/requests');
-				setNotificationAlert(resData.length);
+				const resData = await axiosGet('/api/users/contacts');
+				setNotificationAlert(resData.incoming_friend_requests.length);
 			} catch (error: any) {
 				console.error(error);
 			}
