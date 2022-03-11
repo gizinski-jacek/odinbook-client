@@ -17,7 +17,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 	const { user } = useContext(UserContext);
 
 	const commentInputRef = useRef<HTMLTextAreaElement>(null);
-	const optionsRef = useRef<HTMLSpanElement>(null);
+	const optionsRef = useRef(null);
 
 	const params = useParams();
 
@@ -40,17 +40,6 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		})();
 	}, [post, params]);
 
-	const openEditModal = (e: React.MouseEvent<HTMLSpanElement>) => {
-		e.stopPropagation();
-		setShowEditModal(true);
-		setShowOptions(false);
-	};
-
-	const closeEditModal = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-		setShowEditModal(false);
-	};
-
 	////////
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
@@ -64,6 +53,17 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 			document.removeEventListener('click', windowListener);
 			setShowOptions(false);
 		}
+	};
+
+	const openEditModal = (e: React.MouseEvent<HTMLSpanElement>) => {
+		e.stopPropagation();
+		setShowEditModal(true);
+		setShowOptions(false);
+	};
+
+	const closeEditModal = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+		setShowEditModal(false);
 	};
 
 	const openDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
