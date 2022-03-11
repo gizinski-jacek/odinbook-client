@@ -4,14 +4,14 @@ import type { CommentFull } from '../../myTypes';
 import styles from '../../styles/EditCommentForm.module.scss';
 
 type Props = {
+	closeModal: Function;
 	handleUpdate: Function;
-	closeEdit: Function;
 	comment: CommentFull;
 };
 
 const EditCommentForm: React.FC<Props> = ({
+	closeModal,
 	handleUpdate,
-	closeEdit,
 	comment,
 }) => {
 	const [formData, setFormData] = useState(comment);
@@ -33,12 +33,12 @@ const EditCommentForm: React.FC<Props> = ({
 			</Link>
 			<form onSubmit={(e) => handleUpdate(e, formData)}>
 				<textarea
-					id='text'
+					id={`text_${comment._id}`}
 					name='text'
 					minLength={1}
 					maxLength={512}
 					rows={2}
-					onChange={(e) => handleChange(e)}
+					onChange={handleChange}
 					value={formData.text}
 					required
 					placeholder='Write a comment...'
@@ -47,7 +47,7 @@ const EditCommentForm: React.FC<Props> = ({
 					<button
 						type='button'
 						className='btn-default btn-cancel'
-						onClick={(e) => closeEdit(e)}
+						onClick={(e) => closeModal(e)}
 					>
 						Cancel
 					</button>
