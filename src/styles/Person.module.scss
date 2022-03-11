@@ -36,24 +36,31 @@
 	.controls {
 		margin: 16px;
 
-		.sent:hover span,
-		.received:hover span {
+		.blocked:hover span,
+		.friend:hover span,
+		.sent:hover span {
 			display: none;
 		}
 
-		.sent:hover {
+		.blocked:hover {
 			background-color: variables.$black-a20 !important;
+			color: variables.$black-a40;
+		}
+
+		.blocked:hover:after {
+			content: 'Unblock User';
+		}
+
+		.friend:hover {
+			background-color: variables.$blue-a30 !important;
+			color: variables.$blue;
+		}
+
+		.friend:hover:after {
+			content: 'Remove Friend';
 		}
 
 		.sent:hover:after {
-			content: 'Cancel Request';
-		}
-
-		.received:hover {
-			background-color: variables.$black-a20 !important;
-		}
-
-		.received:hover:after {
 			content: 'Cancel Request';
 		}
 
@@ -61,8 +68,4 @@
 			width: 100%;
 		}
 	}
-}
-
-.person:hover {
-	filter: brightness(95%);
 }
