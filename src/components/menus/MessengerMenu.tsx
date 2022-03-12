@@ -9,13 +9,6 @@ const MessengerMenu = () => {
 		<div className={styles.menu_messenger}>
 			<div className={styles.top}>
 				<h3>Messenger</h3>
-				<span className={styles.options_toggle}>
-					<svg viewBox='0 0 20 20' width='20' height='20'>
-						<g transform='translate(-446 -350)'>
-							<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
-						</g>
-					</svg>
-				</span>
 			</div>
 			<div className={styles.search_messenger}>
 				<label>
