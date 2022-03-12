@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { User } from '../myTypes';
 import { axiosPut } from './utils/axiosFunctions';
 import styles from '../styles/EditProfileModal.module.scss';
@@ -13,8 +13,9 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 	const [errors, setErrors] = useState<{ msg: string }[]>();
 	const [formData, setFormData] = useState(data);
 
-	const [pictureForm, setPictureForm] = useState(false);
-	const [photoForm, setPhotoForm] = useState(false);
+	const profilePicRef = useRef<HTMLInputElement>(null);
+	const coverPhotoRef = useRef<HTMLInputElement>(null);
+
 	const [bioForm, setBioForm] = useState(false);
 	const [hobbiesForm, setHobbiesForm] = useState(false);
 
@@ -38,19 +39,23 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 		}
 	};
 
-	const togglePictureForm = () => {
-		setPictureForm(true);
+	const addPicture = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+		profilePicRef.current?.click();
 	};
 
-	const togglePhotoForm = () => {
-		setPhotoForm(true);
+	const addPhoto = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+		coverPhotoRef.current?.click();
 	};
 
-	const toggleBioForm = () => {
+	const toggleBioForm = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
 		setBioForm(true);
 	};
 
-	const toggleHobbiesForm = () => {
+	const toggleHobbiesForm = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
 		setHobbiesForm(true);
 	};
 
@@ -75,31 +80,59 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 					</div>
 				</div>
 				<hr />
+				{errorsDisplay ? <ul className='error-list'>{errorsDisplay}</ul> : null}
 				<div className={styles.body}>
-					<div className={styles.edit_picture_picture}>
-						<div className={styles.top}>
+					<div className={styles.edit_profile_picture}>
+						<div className={styles.section_name}>
 							<h3>Profile picture</h3>
-							<div className={styles.add_btn}>Add</div>
+							<div
+								className={`btn-default btn-active ${styles.add_btn}`}
+								onClick={addPicture}
+							>
+								Add
+							</div>
+							<input
+								style={{ display: 'none' }}
+								ref={profilePicRef}
+								type='file'
+								name='test1'
+								id='test'
+							/>
 						</div>
 						<div className='profile-pic-style'>
 							<img src='/placeholder_profile_pic.png' alt='User profile pic' />
-							Profile picture
 						</div>
 					</div>
 					<div className={styles.edit_cover_photo}>
-						<div className={styles.top}>
+						<div className={styles.section_name}>
 							<h3>Cover photo</h3>
-							<div className={styles.add_btn}>Add</div>
+							<div
+								className={`btn-default btn-active ${styles.add_btn}`}
+								onClick={addPhoto}
+							>
+								Add
+							</div>
+							<input
+								style={{ display: 'none' }}
+								ref={coverPhotoRef}
+								type='file'
+								name='test1'
+								id='test'
+							/>
 						</div>
 						<div className={styles.cover_photo}>
 							<img src='/placeholder_profile_pic.png' alt='User profile pic' />
-							Cover photo
 						</div>
 					</div>
 					<div className={styles.edit_bio}>
-						<div className={styles.top}>
+						<div className={styles.section_name}>
 							<h3>Bio</h3>
-							<div className={styles.add_btn}>Add</div>
+							<div
+								className={`btn-default btn-active ${styles.edit_btn}`}
+								onClick={toggleBioForm}
+							>
+								{bioForm ? 'Save' : 'Edit'}
+							</div>
 						</div>
 						{bioForm ? (
 							<form>
@@ -108,7 +141,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 										id='bio'
 										name='bio'
 										maxLength={512}
-										rows={2}
+										rows={3}
 										onChange={handleChange}
 										value={formData.bio}
 										required
@@ -120,24 +153,36 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 							<p>{formData.bio}</p>
 						)}
 					</div>
-					<div className={styles.edit_hobbies}></div>
-					<div className={styles.top}>
-						<h3>Hobbies</h3>
-						<div className={styles.add_btn}>Add</div>
-						<option>
-							<select id='sports' name='sports'>
-								Sports
-							</select>
-							<select id='music' name='music'>
-								Music
-							</select>
-							<select id='movies' name='movies'>
-								Movies
-							</select>
-							<select id='gaming' name='gaming'>
-								Gaming
-							</select>
-						</option>
+					<div className={styles.edit_hobbies}>
+						<div className={styles.section_name}>
+							<h3>Hobbies</h3>
+							<div
+								className={`btn-default btn-active ${styles.edit_btn}`}
+								onClick={toggleHobbiesForm}
+							>
+								{bioForm ? 'Save' : 'Edit'}
+							</div>
+						</div>
+						{hobbiesForm ? (
+							<form>
+								<label>
+									<input type='checkbox' id='sports' name='sports' />
+									Sports
+								</label>
+								<label>
+									<input type='checkbox' id='music' name='music' />
+									Music
+								</label>
+								<label>
+									<input type='checkbox' id='movies' name='movies' />
+									Movies
+								</label>
+								<label>
+									<input type='checkbox' id='gaming' name='gaming' />
+									Gaming
+								</label>
+							</form>
+						) : null}
 					</div>
 				</div>
 				<button
