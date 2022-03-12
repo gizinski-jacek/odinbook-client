@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { Link, NavLink, useParams } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
 import type { User } from '../myTypes';
 import { axiosGet, axiosPut } from './utils/axiosFunctions';
@@ -112,11 +112,35 @@ const Profile = () => {
 		<div className={styles.profile_page}>
 			<div className={styles.profile_page_main}>
 				<div className={styles.top}>
-					<div className='profile-pic-style'>
-						<img src='/placeholder_profile_pic.png' alt='User profile pic' />
+					<div className={styles.cover_photo}>
+						<span className={styles.shade}></span>
+					</div>
+					<div className={styles.pic_name_edit}>
+						<div className={styles.left}>
+							<Link to={`/profile/${userData?._id}`}>
+								<div className='profile-pic-style'>
+									<img
+										src='/placeholder_profile_pic.png'
+										alt='User profile pic'
+									/>
+								</div>
+							</Link>
+							<h2>{userData?.full_name}</h2>
+						</div>
+						{userData?._id === user._id ? (
+							<div className={styles.right}>
+								<div className={styles.edit_controls}>
+									<div
+										className={`btn-default btn-confirm ${styles.edit_btn}`}
+										onClick={openModal}
+									>
+										Edit Profile
+									</div>
+								</div>
+							</div>
+						) : null}
 					</div>
 				</div>
-				<h2>{userData?.full_name}</h2>
 				<hr />
 				<div className={styles.bottom}>
 					<ul className={styles.pages}>
@@ -146,16 +170,7 @@ const Profile = () => {
 						</li>
 					</ul>
 					{userData ? (
-						userData._id === user._id ? (
-							<div className={styles.edit_controls}>
-								<div
-									className={` btn-default btn-confirm ${styles.edit_btn}`}
-									onClick={openModal}
-								>
-									Edit Profile
-								</div>
-							</div>
-						) : (
+						userData._id === user._id ? null : (
 							<div className={styles.user_controls}>
 								{user._id && userData ? (
 									userData.blocked_by_other_list.includes(user._id) ? (
@@ -174,7 +189,7 @@ const Profile = () => {
 											className={`btn-default btn-confirm btn-w180 ${styles.friend}`}
 											onClick={() => handleRemoveFriend(userData._id)}
 										>
-											<span>Friend</span>
+											<span>Friends</span>
 										</div>
 									) : userData.incoming_friend_requests.includes(user._id) ? (
 										<div
@@ -235,7 +250,14 @@ const Profile = () => {
 											>
 												Remove friend
 											</div>
-										) : null}
+										) : (
+											<div
+												className={styles.cancel_btn}
+												onClick={(e) => handleRemoveFriend(userData._id)}
+											>
+												Add friend
+											</div>
+										)}
 										{userData.blocked_by_other_list.includes(user._id) ? (
 											<div
 												className={styles.block_btn}
