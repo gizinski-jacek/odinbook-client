@@ -17,6 +17,52 @@
 		width: 36px;
 		height: 36px;
 	}
+
+	.right {
+		margin-left: auto;
+		position: relative;
+	}
+
+	.options_toggle {
+		display: block;
+		height: fit-content;
+		padding: 4px;
+		border-radius: 50%;
+		cursor: pointer;
+
+		svg {
+			display: block;
+			width: 20px;
+			height: 20px;
+			fill: variables.$black-a60;
+		}
+	}
+
+	.options_toggle:hover {
+		background-color: variables.$black-a05;
+	}
+
+	.options_menu {
+		position: absolute;
+		top: 32px;
+		right: 0;
+		padding: 8px;
+		width: 200px;
+		border-radius: 8px;
+		background-color: variables.$white;
+		box-shadow: 0 4px 16px 0 variables.$black-a20;
+		z-index: 5;
+
+		.remove_btn {
+			padding: 8px;
+			border-radius: 8px;
+			cursor: pointer;
+		}
+
+		.remove_btn:hover {
+			background-color: variables.$black-a05;
+		}
+	}
 }
 
 .friend:hover {
