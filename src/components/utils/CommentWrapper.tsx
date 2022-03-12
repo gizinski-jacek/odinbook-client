@@ -115,7 +115,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 			<EditCommentForm
 				handleUpdate={handleUpdate}
 				closeModal={closeEditForm}
-				comment={comment}
+				comment={commentData}
 			/>
 		) : (
 			<li className={styles.comment}>
