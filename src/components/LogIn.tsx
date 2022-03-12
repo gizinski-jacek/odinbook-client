@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
 import { LogInForm } from '../myTypes';
 import { axiosPost } from './utils/axiosFunctions';
@@ -16,8 +15,6 @@ type FormData = {
 
 const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 	const { setUser } = useContext(UserContext);
-
-	const navigate = useNavigate();
 
 	const [errors, setErrors] = useState<{ msg: string }[]>();
 	const [formData, setFormData] = useState<FormData>({
@@ -40,7 +37,6 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 		e.preventDefault();
 		try {
 			setUser(await axiosPost('/api/log-in', data));
-			navigate('/');
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {
 				if (typeof error.response.data === 'object') {
