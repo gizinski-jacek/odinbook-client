@@ -19,8 +19,9 @@ import ProfileAbout from './components/ProfileAbout';
 import ProfileFriends from './components/ProfileFriends';
 
 const App = () => {
-	const [isLoading, setIsLoading] = useState(true);
 	const [user, setUser] = useState(null);
+
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		(async () => {
