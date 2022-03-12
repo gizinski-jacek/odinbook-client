@@ -8,12 +8,13 @@
 	max-height: calc(100vh - variables.$navbar-height - 16px);
 	font-weight: 600;
 
-	a:hover {
-		background-color: variables.$black-a05;
+	.top {
+		margin: 0 8px;
+		padding: 8px;
 	}
 
-	h3 {
-		margin: 8px 16px;
+	a:hover {
+		background-color: variables.$black-a05;
 	}
 
 	.both_sides {
