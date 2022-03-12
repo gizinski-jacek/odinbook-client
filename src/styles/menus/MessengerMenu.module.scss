@@ -9,34 +9,13 @@
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
+		margin: 0 8px;
 		padding: 8px;
-		margin: 8px;
 		font-weight: 600;
 	}
 
-	.options_toggle {
-		position: relative;
-		display: block;
-		height: fit-content;
-		padding: 4px;
-		border-radius: 50%;
-		cursor: pointer;
-
-		svg {
-			display: block;
-			width: 20px;
-			height: 20px;
-			fill: variables.$black-a60;
-		}
-	}
-
-	.options_toggle:hover {
-		background-color: variables.$black-a05;
-	}
-
 	.search_messenger {
-		margin: 0 16px;
-		margin-bottom: 8px;
+		margin: 8px 16px;
 
 		svg {
 			display: block;
@@ -108,7 +87,7 @@
 	}
 
 	a:hover {
-		background-color: unset;
+		background-color: unset !important;
 		text-decoration: underline;
 	}
 }
