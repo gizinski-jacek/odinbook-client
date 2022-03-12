@@ -92,7 +92,7 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 							className={`btn-default btn-confirm ${styles.friend}`}
 							onClick={() => handleRemoveFriend(userData._id)}
 						>
-							<span>Friend</span>
+							<span>Friends</span>
 						</div>
 					) : userData.incoming_friend_requests.includes(user._id) ? (
 						<div
@@ -108,7 +108,7 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 						>
 							Accept Request
 						</div>
-					) : (
+					) : userData._id === user._id ? null : (
 						<div
 							className='btn-default btn-confirm'
 							onClick={() => handleSendRequest(userData._id)}
