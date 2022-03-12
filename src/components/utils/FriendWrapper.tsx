@@ -49,7 +49,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, openChat, friend }) => {
 				{showOptions ? (
 					<span ref={optionsRef} className={styles.options_menu}>
 						<div
-							className={styles.edit_btn}
+							className={styles.remove_btn}
 							onClick={(e) => handleRemove(e, friend._id)}
 						>
 							Remove friend
