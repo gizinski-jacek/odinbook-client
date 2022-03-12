@@ -4,7 +4,9 @@ import styles from '../../styles/menus/MainMenu.module.scss';
 const MainMenu = () => {
 	return (
 		<div className={styles.menu_main}>
-			<h3>Menu</h3>
+			<div className={styles.top}>
+				<h3>Menu</h3>
+			</div>
 			<div className={styles.both_sides}>
 				<div className={styles.left_side}>
 					<h3>Social</h3>
