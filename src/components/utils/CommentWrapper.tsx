@@ -1,8 +1,8 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useContext, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { UserContext } from '../hooks/UserContext';
 import type { CommentFull } from '../../myTypes';
-import { axiosGet, axiosPut } from './axiosFunctions';
+import { axiosPut } from './axiosFunctions';
 import EditCommentForm from './EditCommentForm';
 import DeleteModal from './DeleteModal';
 import timeSinceDate from './_timeSinceDate';
@@ -15,28 +15,12 @@ type Props = {
 const CommentWrapper: React.FC<Props> = ({ comment }) => {
 	const { user } = useContext(UserContext);
 
-	const params = useParams();
-
 	const optionsRef = useRef(null);
 
 	const [commentData, setCommentData] = useState<CommentFull>(comment);
 	const [editComment, setEditComment] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
 	const [showModal, setShowModal] = useState(false);
-
-	useEffect(() => {
-		(async () => {
-			if (!comment) {
-				try {
-					setCommentData(
-						await axiosGet(`/api/posts/${params.commentId}/comments`)
-					);
-				} catch (error: any) {
-					console.error(error);
-				}
-			}
-		})();
-	}, [comment, params, setCommentData]);
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
