@@ -4,7 +4,6 @@ export type PostFull = {
 		_id: string;
 		first_name: string;
 		last_name: string;
-		full_name: string;
 	};
 	text: string;
 	comments: CommentFull[];
@@ -19,7 +18,6 @@ export type PostNew = {
 		_id: string;
 		first_name: string;
 		last_name: string;
-		full_name: string;
 	};
 	text: string;
 	comments?: string[];
@@ -34,7 +32,6 @@ export type CommentFull = {
 		_id: string;
 		first_name: string;
 		last_name: string;
-		full_name: string;
 	};
 	post_ref: string;
 	text: string;
@@ -49,7 +46,6 @@ export type CommentNew = {
 		_id: string;
 		first_name: string;
 		last_name: string;
-		full_name: string;
 	};
 	post_ref?: string;
 	text: string;
@@ -62,7 +58,6 @@ export type User = {
 	_id: string;
 	first_name: string;
 	last_name: string;
-	full_name: string;
 	friend_list: string[];
 	blocked_user_list: string[];
 	blocked_by_other_list: string[];
