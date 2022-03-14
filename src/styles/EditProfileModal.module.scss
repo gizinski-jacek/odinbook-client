@@ -8,8 +8,8 @@
 	bottom: 0;
 	display: flex;
 	justify-content: center;
-	align-items: center;
 	z-index: 10;
+	overflow: hidden;
 }
 
 .grayout_bg {
@@ -17,19 +17,28 @@
 	top: 0;
 	left: 0;
 	right: 0;
-	bottom: 0;
+	height: 100%;
 	background-color: variables.$white-a80;
+	overflow: hidden;
 }
 
 .edit_profile_container {
+	position: sticky;
+	margin-top: 80px;
 	display: flex;
 	flex-direction: column;
 	border-radius: 8px;
 	background-color: variables.$white;
 	box-shadow: 0 4px 12px 4px variables.$black-a20;
-	width: 500px;
-	max-height: 500px;
+	width: 600px;
 	z-index: 10;
+	height: fit-content;
+	overflow: scroll;
+	scrollbar-width: none;
+
+	button {
+		margin: 24px !important;
+	}
 }
 
 .top {
@@ -64,4 +73,36 @@
 
 .close_btn:hover {
 	background-color: variables.$black-a20;
+}
+
+.body {
+	display: flex;
+	flex-direction: column;
+
+	.edit_profile_picture,
+	.edit_cover_photo,
+	.edit_bio,
+	.edit_hobbies {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		.section_name {
+			padding: 24px;
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+		}
+	}
+
+	textarea {
+		width: 400px;
+		resize: none;
+		font-size: 1rem;
+		padding: 8px;
+		border: none;
+	}
 }
