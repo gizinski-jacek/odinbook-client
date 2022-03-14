@@ -36,7 +36,9 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, openChat, friend }) => {
 				</div>
 			</Link>
 			<div>
-				<div>{friend.full_name}</div>
+				<div>
+					{friend.first_name} {friend.last_name}
+				</div>
 			</div>
 			<div className={styles.right}>
 				<span className={styles.options_toggle} onClick={toggleOptions}>

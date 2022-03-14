@@ -14,7 +14,9 @@ const SideBar = () => {
 						<div className={`profile-pic-style ${styles.icon}`}>
 							<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 						</div>
-						<h4>{user.full_name}</h4>
+						<h4>
+							{user.first_name} {user.last_name}
+						</h4>
 					</Link>
 				</li>
 				<li>

@@ -21,7 +21,9 @@ const RequestWrapper: React.FC<Props> = ({
 				</div>
 			</Link>
 			<div className={styles.contents}>
-				<h4>{request.full_name}</h4>
+				<h4>
+					{request.first_name} {request.last_name}
+				</h4>
 				<div className={styles.controls}>
 					<button
 						className='btn-default btn-confirm'

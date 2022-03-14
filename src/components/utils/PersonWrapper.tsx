@@ -74,7 +74,9 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 				<div className={styles.pic_link}>
 					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 				</div>
-				<h4>{userData.full_name}</h4>
+				<h4>
+					{userData.first_name} {userData.last_name}
+				</h4>
 			</Link>
 			<div className={styles.controls}>
 				{user._id ? (

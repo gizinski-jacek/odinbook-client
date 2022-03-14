@@ -129,7 +129,9 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 					<div>
 						<div className={styles.metadata}>
 							<Link to={`/profile/${postData.author._id}`}>
-								<h4>{postData.author.full_name}</h4>
+								<h4>
+									{postData.author.first_name} {postData.author.last_name}
+								</h4>
 							</Link>
 							<h5>{timeSinceDate(postData.createdAt)}</h5>
 						</div>

@@ -112,7 +112,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 					<div className={styles.upper}>
 						<div className={styles.contents}>
 							<Link to={`/profile/${commentData.author._id}`}>
-								{commentData.author.full_name}
+								{commentData.author.first_name} {commentData.author.last_name}
 							</Link>
 							<span className={styles.comment_text}>
 								<p>{commentData.text}</p>

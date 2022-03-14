@@ -26,7 +26,9 @@ const AccountMenu = () => {
 					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 				</div>
 				<span>
-					<h3>{user.full_name}</h3>
+					<h3>
+						{user.first_name} {user.last_name}
+					</h3>
 					<h5>See your profile</h5>
 				</span>
 			</Link>

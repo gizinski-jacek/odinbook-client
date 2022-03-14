@@ -65,7 +65,9 @@ const PostFormModal: React.FC<Props> = ({ closeModal, setData, post }) => {
 							<img src='placeholder_profile_pic.png' alt='User profile pic' />
 						</div>
 					</Link>
-					<h4>{user.full_name}</h4>
+					<h4>
+						{user.first_name} {user.last_name}
+					</h4>
 				</span>
 				<div className={styles.post_form}>
 					<form onSubmit={(e) => handleSubmit(e, formData)}>
