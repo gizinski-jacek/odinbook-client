@@ -16,6 +16,9 @@ const Profile = () => {
 	const [userData, setUserData] = useState<User>();
 	const [showOptions, setShowOptions] = useState(false);
 	const [showModal, setShowModal] = useState(false);
+	const [errors, setErrors] = useState<{ msg: string }[]>();
+	const [changePassword, setChangePassword] = useState(false);
+	const [passwordData, setPasswordData] = useState({ password: '' });
 
 	useEffect(() => {
 		(async () => {
@@ -108,6 +111,52 @@ const Profile = () => {
 		}
 	};
 
+	const toggleInput = (e: any) => {
+		e.stopPropagation();
+		setChangePassword((prevState) => !prevState);
+		setPasswordData({ password: '' });
+		setErrors(undefined);
+	};
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		setPasswordData((prevState) => ({
+			...prevState,
+			[name]: value,
+		}));
+	};
+
+	const handlePasswordChange = async (
+		e: React.FormEvent<HTMLFormElement>,
+		data: { password: string }
+	) => {
+		e.preventDefault();
+		try {
+			await axiosPut('/api/users/password-change', data);
+			setChangePassword(false);
+		} catch (error: any) {
+			console.log(error);
+			if (!Array.isArray(error.response.data)) {
+				if (typeof error.response.data === 'object') {
+					setErrors([error.response.data]);
+				}
+				if (typeof error.response.data === 'string') {
+					setErrors([{ msg: error.response.data }]);
+				}
+			} else {
+				setErrors(error.response.data);
+			}
+		}
+	};
+
+	const errorsDisplay = errors?.map((error, index) => {
+		return (
+			<li key={index} className='error-msg'>
+				{error.msg}
+			</li>
+		);
+	});
+
 	return (
 		<div className={styles.profile_page}>
 			<div className={styles.profile_page_main}>
@@ -125,18 +174,56 @@ const Profile = () => {
 									/>
 								</div>
 							</Link>
-							<h2>{userData?.full_name}</h2>
+							<h2>
+								{userData?.first_name} {userData?.last_name}
+							</h2>
 						</div>
 						{userData?._id === user._id ? (
 							<div className={styles.right}>
-								<div className={styles.edit_controls}>
-									<div
-										className={`btn-default btn-confirm ${styles.edit_btn}`}
-										onClick={openModal}
+								{changePassword ? (
+									<form
+										className={styles.change_password_form}
+										onSubmit={(e) => handlePasswordChange(e, passwordData)}
 									>
-										Edit Profile
+										{errorsDisplay ? (
+											<ul className='error-list'>{errorsDisplay}</ul>
+										) : null}
+										<input
+											type='password'
+											id='password'
+											name='password'
+											minLength={8}
+											maxLength={64}
+											value={passwordData.password}
+											onChange={handleChange}
+											required
+											placeholder='New password'
+										/>
+
+										<button className='btn-default btn-confirm'>Save</button>
+										<button
+											className='btn-default btn-remove'
+											onClick={toggleInput}
+										>
+											Cancel
+										</button>
+									</form>
+								) : (
+									<div className={styles.profile_controls}>
+										<div
+											className={`btn-default btn-confirm ${styles.change_password_btn}`}
+											onClick={toggleInput}
+										>
+											Change Password
+										</div>
+										<div
+											className={`btn-default btn-confirm ${styles.edit_btn}`}
+											onClick={openModal}
+										>
+											Edit Profile
+										</div>
 									</div>
-								</div>
+								)}
 							</div>
 						) : null}
 					</div>
