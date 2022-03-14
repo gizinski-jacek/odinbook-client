@@ -36,7 +36,7 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 	) => {
 		e.preventDefault();
 		try {
-			setUser(await axiosPost('/api/log-in', data));
+			setUser(await axiosPost('/api/log-in/email', data));
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {
 				if (typeof error.response.data === 'object') {
@@ -102,9 +102,16 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 			</div>
 			<div className={styles.bottom}>
 				<h4>Or if you prefer</h4>
-				<button type='button' className='btn-default btn-confirm'>
+				<a
+					href={
+						process.env.NODE_ENV === 'development'
+							? 'http://localhost:4000/api/log-in/facebook'
+							: `${process.env.WEB_URL}/api/log-in/facebook`
+					}
+					className='btn-default btn-confirm'
+				>
 					Log In with Facebook
-				</button>
+				</a>
 				<hr />
 				<h4>Don't have an account?</h4>
 				<button
