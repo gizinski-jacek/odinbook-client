@@ -74,8 +74,43 @@
 			}
 		}
 
-		.edit_btn {
-			padding: 12px;
+		.right {
+			display: flex;
+			flex-direction: row;
+
+			.profile_controls {
+				display: flex;
+				flex-direction: row;
+
+				.change_password_btn,
+				.edit_btn {
+					margin-left: 8px;
+				}
+			}
+
+			.change_password_form {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+
+				input {
+					height: 100%;
+					border-radius: 8px;
+					border: 1px solid variables.$black-a20;
+					padding: 0 4px;
+					font-size: 0.9rem;
+					outline: none;
+				}
+
+				input:focus {
+					border: 1px solid variables.$blue;
+				}
+
+				> button {
+					margin-left: 12px;
+					padding: 6px 12px;
+				}
+			}
 		}
 	}
 }
@@ -122,13 +157,6 @@
 
 		a.isActive:hover {
 			background-color: unset;
-		}
-	}
-
-	.edit_controls {
-		margin: 0 16px;
-
-		.edit_btn {
 		}
 	}
 
