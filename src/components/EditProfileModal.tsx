@@ -28,7 +28,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 	};
 
 	const handleSubmit = async (
-		e: React.MouseEvent<HTMLButtonElement>,
+		e: React.FormEvent<HTMLFormElement>,
 		data: User
 	) => {
 		e.preventDefault();
@@ -44,19 +44,14 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 		profilePicRef.current?.click();
 	};
 
-	const addPhoto = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-		coverPhotoRef.current?.click();
-	};
-
 	const toggleBioForm = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		setBioForm(true);
+		setBioForm((prevState) => !prevState);
 	};
 
 	const toggleHobbiesForm = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		setHobbiesForm(true);
+		setHobbiesForm((prevState) => !prevState);
 	};
 
 	const errorsDisplay = errors?.map((error, index) => {
@@ -82,95 +77,96 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 				<hr />
 				{errorsDisplay ? <ul className='error-list'>{errorsDisplay}</ul> : null}
 				<div className={styles.body}>
-					<div className={styles.edit_profile_picture}>
-						<div className={styles.section_name}>
-							<h3>Profile picture</h3>
-							<div
-								className={`btn-default btn-active ${styles.add_btn}`}
-								onClick={addPicture}
-							>
-								Add
+					<form onSubmit={(e) => handleSubmit(e, formData)}>
+						<div className={styles.edit_profile_picture}>
+							<div className={styles.section_name}>
+								<h3>Profile picture</h3>
+								<div
+									className={`btn-default btn-active ${styles.add_btn}`}
+									onClick={addPicture}
+								>
+									Edit
+								</div>
+								<input
+									style={{ display: 'none' }}
+									ref={profilePicRef}
+									type='file'
+									name='test1'
+									id='test'
+								/>
 							</div>
-							<input
-								style={{ display: 'none' }}
-								ref={profilePicRef}
-								type='file'
-								name='test1'
-								id='test'
-							/>
-						</div>
-						<div className='profile-pic-style'>
-							<img src='/placeholder_profile_pic.png' alt='User profile pic' />
-						</div>
-					</div>
-					<div className={styles.edit_bio}>
-						<div className={styles.section_name}>
-							<h3>Bio</h3>
-							<div
-								className={`btn-default btn-active ${styles.edit_btn}`}
-								onClick={toggleBioForm}
-							>
-								{bioForm ? 'Save' : 'Edit'}
+							<div className='profile-pic-style' onClick={addPicture}>
+								<img
+									src='/placeholder_profile_pic.png'
+									alt='User profile pic'
+								/>
 							</div>
 						</div>
-						{bioForm ? (
-							<form>
-								<label>
-									<textarea
-										id='bio'
-										name='bio'
-										maxLength={512}
-										rows={3}
-										onChange={handleChange}
-										value={formData.bio}
-										required
-										placeholder='Describe yourself...'
-									/>
-								</label>
-							</form>
-						) : (
-							<p>{formData.bio}</p>
-						)}
-					</div>
-					<div className={styles.edit_hobbies}>
-						<div className={styles.section_name}>
-							<h3>Hobbies</h3>
-							<div
-								className={`btn-default btn-active ${styles.edit_btn}`}
-								onClick={toggleHobbiesForm}
-							>
-								{bioForm ? 'Save' : 'Edit'}
+						<div className={styles.edit_bio}>
+							<div className={styles.section_name}>
+								<h3>Bio</h3>
+								<div
+									className={`btn-default btn-active ${styles.edit_btn}`}
+									onClick={toggleBioForm}
+								>
+									{bioForm ? 'Save' : 'Edit'}
+								</div>
 							</div>
+							{bioForm ? (
+								<form>
+									<label>
+										<textarea
+											id='bio'
+											name='bio'
+											maxLength={512}
+											rows={3}
+											onChange={handleChange}
+											value={formData.bio}
+											required
+											placeholder='Describe yourself...'
+										/>
+									</label>
+								</form>
+							) : (
+								<p>{formData.bio}</p>
+							)}
 						</div>
-						{hobbiesForm ? (
-							<form>
-								<label>
-									<input type='checkbox' id='sports' name='sports' />
-									Sports
-								</label>
-								<label>
-									<input type='checkbox' id='music' name='music' />
-									Music
-								</label>
-								<label>
-									<input type='checkbox' id='movies' name='movies' />
-									Movies
-								</label>
-								<label>
-									<input type='checkbox' id='gaming' name='gaming' />
-									Gaming
-								</label>
-							</form>
-						) : null}
-					</div>
+						<div className={styles.edit_hobbies}>
+							<div className={styles.section_name}>
+								<h3>Hobbies</h3>
+								<div
+									className={`btn-default btn-active ${styles.edit_btn}`}
+									onClick={toggleHobbiesForm}
+								>
+									{bioForm ? 'Save' : 'Edit'}
+								</div>
+							</div>
+							{hobbiesForm ? (
+								<form>
+									<label>
+										<input type='checkbox' id='sports' name='sports' />
+										Sports
+									</label>
+									<label>
+										<input type='checkbox' id='music' name='music' />
+										Music
+									</label>
+									<label>
+										<input type='checkbox' id='movies' name='movies' />
+										Movies
+									</label>
+									<label>
+										<input type='checkbox' id='gaming' name='gaming' />
+										Gaming
+									</label>
+								</form>
+							) : null}
+						</div>
+						<button type='submit' className='btn-default btn-form-submit'>
+							Save Your Profile Info
+						</button>
+					</form>
 				</div>
-				<button
-					type='button'
-					className='btn-default btn-form-submit'
-					onClick={(e) => handleSubmit(e, formData)}
-				>
-					Edit Your Profile Info
-				</button>
 			</div>
 		</div>
 	);
