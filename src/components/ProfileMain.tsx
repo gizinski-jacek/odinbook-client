@@ -161,9 +161,7 @@ const Profile = () => {
 		<div className={styles.profile_page}>
 			<div className={styles.profile_page_main}>
 				<div className={styles.top}>
-					<div className={styles.cover_photo}>
-						<span className={styles.shade}></span>
-					</div>
+					<span className={styles.shade}></span>
 					<div className={styles.pic_name_edit}>
 						<div className={styles.left}>
 							<Link to={`/profile/${userData?._id}`}>
@@ -237,14 +235,6 @@ const Profile = () => {
 								className={({ isActive }) => (isActive ? styles.isActive : '')}
 							>
 								Posts
-							</NavLink>
-						</li>
-						<li>
-							<NavLink
-								to='about'
-								className={({ isActive }) => (isActive ? styles.isActive : '')}
-							>
-								About
 							</NavLink>
 						</li>
 						<li>
