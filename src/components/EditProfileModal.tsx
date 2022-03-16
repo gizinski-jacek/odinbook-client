@@ -14,7 +14,6 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 	const [formData, setFormData] = useState(data);
 
 	const profilePicRef = useRef<HTMLInputElement>(null);
-	const coverPhotoRef = useRef<HTMLInputElement>(null);
 
 	const [bioForm, setBioForm] = useState(false);
 	const [hobbiesForm, setHobbiesForm] = useState(false);
@@ -113,20 +112,18 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 								</div>
 							</div>
 							{bioForm ? (
-								<form>
-									<label>
-										<textarea
-											id='bio'
-											name='bio'
-											maxLength={512}
-											rows={3}
-											onChange={handleChange}
-											value={formData.bio}
-											required
-											placeholder='Describe yourself...'
-										/>
-									</label>
-								</form>
+								<label>
+									<textarea
+										id='bio'
+										name='bio'
+										maxLength={512}
+										rows={3}
+										onChange={handleChange}
+										value={formData.bio}
+										required
+										placeholder='Describe yourself...'
+									/>
+								</label>
 							) : (
 								<p>{formData.bio}</p>
 							)}
@@ -142,7 +139,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 								</div>
 							</div>
 							{hobbiesForm ? (
-								<form>
+								<>
 									<label>
 										<input type='checkbox' id='sports' name='sports' />
 										Sports
@@ -159,7 +156,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 										<input type='checkbox' id='gaming' name='gaming' />
 										Gaming
 									</label>
-								</form>
+								</>
 							) : null}
 						</div>
 						<button type='submit' className='btn-default btn-form-submit'>
