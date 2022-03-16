@@ -1,20 +1,18 @@
 import { createContext } from 'react';
+import { User } from '../../myTypes';
 
-type User = {
-	_id: string | null;
-	email: string | null;
-	first_name: string | null;
-	last_name: string | null;
-} | null;
-
-const defaultUser: User = {
-	_id: null,
-	email: null,
-	first_name: null,
-	last_name: null,
+const defaultUser: User | null = {
+	_id: '',
+	first_name: '',
+	last_name: '',
+	friend_list: [],
+	blocked_user_list: [],
+	blocked_by_other_list: [],
+	incoming_friend_requests: [],
+	outgoing_friend_requests: [],
 };
 
 export const UserContext = createContext({
 	user: defaultUser,
-	setUser: (user: User) => {},
+	setUser: (user: User | null) => {},
 });
