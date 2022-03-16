@@ -5,7 +5,7 @@ import type { CommentFull } from '../../myTypes';
 import { axiosPut } from './axiosFunctions';
 import EditCommentForm from './EditCommentForm';
 import DeleteModal from './DeleteModal';
-import timeSinceDate from './_timeSinceDate';
+import timeSinceDate from './timeSinceDate';
 import styles from '../../styles/Comment.module.scss';
 
 type Props = {
