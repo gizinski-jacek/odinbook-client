@@ -103,27 +103,6 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 							<img src='/placeholder_profile_pic.png' alt='User profile pic' />
 						</div>
 					</div>
-					<div className={styles.edit_cover_photo}>
-						<div className={styles.section_name}>
-							<h3>Cover photo</h3>
-							<div
-								className={`btn-default btn-active ${styles.add_btn}`}
-								onClick={addPhoto}
-							>
-								Add
-							</div>
-							<input
-								style={{ display: 'none' }}
-								ref={coverPhotoRef}
-								type='file'
-								name='test1'
-								id='test'
-							/>
-						</div>
-						<div className={styles.cover_photo}>
-							<img src='/placeholder_profile_pic.png' alt='User profile pic' />
-						</div>
-					</div>
 					<div className={styles.edit_bio}>
 						<div className={styles.section_name}>
 							<h3>Bio</h3>
