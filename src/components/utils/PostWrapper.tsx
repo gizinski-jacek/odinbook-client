@@ -6,7 +6,7 @@ import { axiosGet, axiosPost, axiosPut } from './axiosFunctions';
 import CommentWrapper from './CommentWrapper';
 import PostFormModal from './PostFormModal';
 import DeleteModal from './DeleteModal';
-import timeSinceDate from './_timeSinceDate';
+import timeSinceDate from './timeSinceDate';
 import styles from '../../styles/Post.module.scss';
 
 type Props = {
