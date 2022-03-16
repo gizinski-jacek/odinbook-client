@@ -15,7 +15,6 @@ import Contacts from './components/Contacts';
 import People from './components/People';
 import ProfileMain from './components/ProfileMain';
 import ProfilePosts from './components/ProfilePosts';
-import ProfileAbout from './components/ProfileAbout';
 import ProfileFriends from './components/ProfileFriends';
 
 const App = () => {
@@ -48,9 +47,7 @@ const App = () => {
 							) : user ? (
 								<>
 									<Navbar />
-									<div className='home-container'>
-										<Outlet />
-									</div>
+									<Outlet />
 									<Footer />
 								</>
 							) : (
@@ -82,7 +79,6 @@ const App = () => {
 						}
 					>
 						<Route path='' element={<ProfilePosts />}></Route>
-						<Route path='about' element={<ProfileAbout />}></Route>
 						<Route path='friends' element={<ProfileFriends />}></Route>
 					</Route>
 					<Route path='friends' element={<People />}></Route>
