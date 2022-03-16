@@ -26,22 +26,19 @@ const ProfilePosts = () => {
 
 	return (
 		<div className={styles.profile_page_posts}>
-			<div className={styles.profile_info}>
-				<div>
-					<h3>Intro</h3>
-				</div>
-				<div>
-					<h3>Photos</h3>
-				</div>
-				<div>
-					<h3>Friends</h3>
-				</div>
-			</div>
+			<ul className={styles.profile_info}>
+				<li>
+					<h3>Bio</h3>
+				</li>
+				<li>
+					<h3>Hobbies</h3>
+				</li>
+			</ul>
 			<div className={styles.profile_posts}>
 				{postsDisplay.length > 0 ? (
 					postsDisplay
 				) : (
-					<h3 className={styles.empty}>No posts available</h3>
+					<h3 className={styles.empty}>No posts to show</h3>
 				)}
 			</div>
 		</div>
