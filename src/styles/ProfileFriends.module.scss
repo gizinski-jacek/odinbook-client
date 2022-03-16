@@ -4,23 +4,26 @@
 	display: flex;
 	flex-direction: column;
 	align-self: center;
+	max-width: 1200px;
 	width: 100%;
-	padding: 0 40px;
+	padding: 16px;
 }
 
 .top {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	padding: 12px;
-	margin-top: 24px;
-	margin-bottom: 0;
 	background-color: variables.$white;
 	box-shadow: 0 1px 2px 0 variables.$black-a20;
 	border-radius: 8px;
 	font-weight: 600;
 
+	h3 {
+		margin: 12px;
+	}
+
 	.search_friends {
+		margin: 12px;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -38,7 +41,6 @@
 			padding: 0 12px;
 			background-color: variables.$white-a80;
 			border-radius: 24px;
-			margin: 0 24px;
 		}
 
 		input {
@@ -78,7 +80,6 @@
 .body {
 	display: flex;
 	flex-direction: row;
-	padding: 12px;
 	margin: 12px 0;
 	background-color: variables.$white;
 	box-shadow: 0 1px 2px 0 variables.$black-a20;
@@ -91,11 +92,12 @@
 		font-weight: 600;
 
 		h3 {
-			margin: 8px;
+			margin: 12px;
 		}
 	}
 
 	ul {
+		margin: 12px;
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
