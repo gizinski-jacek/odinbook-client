@@ -135,7 +135,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 									className={`btn-default btn-active ${styles.edit_btn}`}
 									onClick={toggleHobbiesForm}
 								>
-									{bioForm ? 'Save' : 'Edit'}
+									{hobbiesForm ? 'Save' : 'Edit'}
 								</div>
 							</div>
 							{hobbiesForm ? (
