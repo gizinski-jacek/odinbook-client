@@ -231,7 +231,8 @@ const Profile = () => {
 					<ul className={styles.pages}>
 						<li>
 							<NavLink
-								to='./'
+								to='.'
+								end
 								className={({ isActive }) => (isActive ? styles.isActive : '')}
 							>
 								Posts
