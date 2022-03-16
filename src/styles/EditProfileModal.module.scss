@@ -80,8 +80,10 @@
 }
 
 .body {
-	display: flex;
-	flex-direction: column;
+	form {
+		display: flex;
+		flex-direction: column;
+	}
 
 	.edit_profile_picture,
 	.edit_bio,
