@@ -12,7 +12,14 @@ const SideBar = () => {
 				<li>
 					<Link to={`/profile/${user._id}`}>
 						<div className={`profile-pic-style ${styles.icon}`}>
-							<img src='/placeholder_profile_pic.png' alt='User profile pic' />
+							<img
+								src={
+									user.profile_picture
+										? `http://localhost:4000/${user.profile_picture}`
+										: '/placeholder_profile_pic.png'
+								}
+								alt='User profile pic'
+							/>
 						</div>
 						<h4>
 							{user.first_name} {user.last_name}
