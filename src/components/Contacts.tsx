@@ -109,8 +109,22 @@ const Contacts = () => {
 			<li key={group._id} className={styles.group} onClick={() => openChat()}>
 				<div className='profile-pic-style'>
 					<span>
-						<img src='/placeholder_profile_pic.png' alt='User profile pic' />
-						<img src='/placeholder_profile_pic.png' alt='User profile pic' />
+						<img
+							src={
+								group.profile_picture
+									? `http://localhost:4000/${group.profile_picture}`
+									: '/placeholder_profile_pic.png'
+							}
+							alt='User profile pic'
+						/>
+						<img
+							src={
+								group.profile_picture
+									? `http://localhost:4000/${group.profile_picture}`
+									: '/placeholder_profile_pic.png'
+							}
+							alt='User profile pic'
+						/>
 					</span>
 				</div>
 				<div>
@@ -156,9 +170,9 @@ const Contacts = () => {
 				<ul>
 					{conversationsDisplay}
 					<li className={styles.new_group}>
-						<div className={styles.plus_btn}>
+						<button type='button' className={styles.plus_btn}>
 							<span></span>
-						</div>
+						</button>
 						<h4>Create New Group</h4>
 					</li>
 				</ul>
