@@ -42,12 +42,12 @@
 	}
 
 	input {
-		border-radius: 8px;
-		border: 1px solid variables.$black-a20;
-		padding: 12px;
 		width: 100%;
-		font-size: 1rem;
+		padding: 12px;
 		outline: none;
+		border: 1px solid variables.$black-a20;
+		border-radius: 8px;
+		font-size: 1rem;
 	}
 
 	input:focus {
