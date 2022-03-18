@@ -130,8 +130,8 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 				<h4>Already have an account?</h4>
 				<button
 					type='button'
-					onClick={() => setShowLogIn(true)}
 					className='btn-default btn-confirm'
+					onClick={() => setShowLogIn(true)}
 				>
 					Log in now!
 				</button>
