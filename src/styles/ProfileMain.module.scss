@@ -29,7 +29,7 @@
 		);
 	}
 
-	.pic_name_edit {
+	.user_panel {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
@@ -41,11 +41,11 @@
 			display: flex;
 			flex-direction: row;
 
-			a {
+			.pic_wrapper {
 				width: 160px;
 				margin-right: 24px;
 				position: relative;
-				bottom: -8px;
+				top: 8px;
 			}
 
 			img {
@@ -153,8 +153,8 @@
 		margin: 0 12px;
 		position: relative;
 
-		> div,
-		> span {
+		button,
+		span {
 			margin: 4px;
 		}
 
