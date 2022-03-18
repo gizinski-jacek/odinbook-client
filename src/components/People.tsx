@@ -91,7 +91,8 @@ const People = () => {
 							onChange={(e) => setSearchInput(e.target.value)}
 							placeholder='Search People'
 						/>
-						<div
+						<button
+							type='button'
 							style={{
 								visibility: searchInput || showResults ? 'visible' : 'hidden',
 							}}
@@ -99,7 +100,7 @@ const People = () => {
 							onClick={clearSearch}
 						>
 							<span></span>
-						</div>
+						</button>
 					</label>
 				</form>
 			</div>
