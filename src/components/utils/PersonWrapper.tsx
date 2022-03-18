@@ -72,7 +72,14 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 		<li className={styles.person}>
 			<Link to={`/profile/${userData._id}`}>
 				<div className={styles.pic_link}>
-					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
+					<img
+						src={
+							userData.profile_picture
+								? `http://localhost:4000/${userData.profile_picture}`
+								: '/placeholder_profile_pic.png'
+						}
+						alt='User profile pic'
+					/>
 				</div>
 				<h4>
 					{userData.first_name} {userData.last_name}
@@ -81,42 +88,49 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 			<div className={styles.controls}>
 				{user._id ? (
 					userData.blocked_by_other_list.includes(user._id) ? (
-						<div
+						<button
+							type='button'
 							className={`btn-default btn-disabled ${styles.blocked}`}
 							onClick={() => handleBlockStatus(userData._id)}
 						>
 							<span>Blocked User</span>
-						</div>
+						</button>
 					) : userData.blocked_user_list.includes(user._id) ? (
-						<div className='btn-default btn-disabled'>Blocked by User</div>
+						<button type='button' className='btn-default btn-disabled'>
+							Blocked by User
+						</button>
 					) : userData.friend_list.includes(user._id) ? (
-						<div
+						<button
+							type='button'
 							className={`btn-default btn-confirm ${styles.friend}`}
 							onClick={() => handleRemoveFriend(userData._id)}
 						>
 							<span>Friends</span>
-						</div>
+						</button>
 					) : userData.incoming_friend_requests.includes(user._id) ? (
-						<div
+						<button
+							type='button'
 							className={`btn-default btn-active ${styles.sent}`}
 							onClick={() => handleCancelRequest(userData._id)}
 						>
 							<span>Request Sent</span>
-						</div>
+						</button>
 					) : userData.outgoing_friend_requests.includes(user._id) ? (
-						<div
+						<button
+							type='button'
 							className='btn-default btn-confirm'
 							onClick={() => handleAcceptRequest(userData._id)}
 						>
 							Accept Request
-						</div>
+						</button>
 					) : userData._id === user._id ? null : (
-						<div
+						<button
+							type='button'
 							className='btn-default btn-confirm'
 							onClick={() => handleSendRequest(userData._id)}
 						>
 							Add Friend
-						</div>
+						</button>
 					)
 				) : null}
 			</div>
