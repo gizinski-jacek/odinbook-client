@@ -52,12 +52,13 @@ const PostFormModal: React.FC<Props> = ({ closeModal, setData, post }) => {
 					<div className={styles.title}>
 						<h3>{post._id ? 'Update post' : 'Create post'}</h3>
 					</div>
-					<div
+					<button
+						type='button'
 						className={styles.close_btn}
 						onClick={(e) => closeModal(e, formData)}
 					>
 						<span></span>
-					</div>
+					</button>
 				</div>
 				<span className={styles.metadata}>
 					<Link to={`/profile/${user._id}`}>
@@ -80,6 +81,7 @@ const PostFormModal: React.FC<Props> = ({ closeModal, setData, post }) => {
 							onChange={handleChange}
 							value={formData.text}
 							required
+							autoFocus
 							placeholder={`What's on your mind, ${user.first_name}?`}
 						/>
 						<button
