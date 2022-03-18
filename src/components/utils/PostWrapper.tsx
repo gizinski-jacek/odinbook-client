@@ -123,7 +123,14 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 				<div className={styles.left}>
 					<Link to={`/profile/${postData.author._id}`}>
 						<div className='profile-pic-style'>
-							<img src='/placeholder_profile_pic.png' alt='User profile pic' />
+							<img
+								src={
+									postData.author.profile_picture
+										? `http://localhost:4000/${postData.author.profile_picture}`
+										: '/placeholder_profile_pic.png'
+								}
+								alt='User profile pic'
+							/>
 						</div>
 					</Link>
 					<div>
@@ -216,7 +223,14 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 			<div className={styles.new_comment}>
 				<Link to={`/profile/${postData.author._id}`}>
 					<div className='profile-pic-style'>
-						<img src='/placeholder_profile_pic.png' alt='User profile pic' />
+						<img
+							src={
+								postData.author.profile_picture
+									? `http://localhost:4000/${postData.author.profile_picture}`
+									: '/placeholder_profile_pic.png'
+							}
+							alt='User profile pic'
+						/>
 					</div>
 				</Link>
 				<form onSubmit={(e) => handleCommentSubmit(e, postData._id, formData)}>
