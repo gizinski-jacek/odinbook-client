@@ -8,8 +8,8 @@
 	bottom: 0;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	z-index: 10;
-	overflow: hidden;
 
 	h3 {
 		font-weight: 600;
@@ -21,14 +21,13 @@
 	top: 0;
 	left: 0;
 	right: 0;
-	height: 100%;
+	bottom: 0;
 	background-color: variables.$white-a80;
 	overflow: hidden;
 }
 
 .edit_profile_container {
 	position: sticky;
-	margin-top: 80px;
 	display: flex;
 	flex-direction: column;
 	border-radius: 8px;
@@ -39,10 +38,6 @@
 	height: fit-content;
 	overflow: scroll;
 	scrollbar-width: none;
-
-	button {
-		margin: 24px !important;
-	}
 }
 
 .top {
@@ -83,31 +78,57 @@
 	form {
 		display: flex;
 		flex-direction: column;
+
+		button[type='submit'] {
+			margin: 12px;
+		}
 	}
 
 	.edit_profile_picture,
-	.edit_bio,
-	.edit_hobbies {
+	.edit_bio {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		margin: 0 12px;
 
-		.section_name {
-			padding: 24px;
-			width: 100%;
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-			align-items: center;
+		img {
+			width: 160px;
+			height: 160px;
 		}
 	}
 
-	textarea {
-		width: 400px;
-		resize: none;
-		font-size: 1rem;
-		padding: 8px;
-		border: none;
+	.section_name {
+		width: 100%;
+		margin: 12px 0;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+
+		button {
+			margin-left: 8px;
+		}
+	}
+
+	.edit_bio {
+		p {
+			width: 400px;
+			height: 115px;
+			font-size: 1rem;
+
+			overflow: auto;
+		}
+
+		textarea {
+			width: 400px;
+			height: 115px;
+			resize: none;
+			font-size: 1rem;
+			padding: 4px;
+			border: none;
+			outline: 1px solid variables.$blue;
+			margin: 0;
+		}
 	}
 }
