@@ -38,7 +38,7 @@ const ProfileFriends = () => {
 		}
 	};
 
-	const clearSearch = (e: React.MouseEvent<HTMLDivElement>) => {
+	const clearSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		setSearchInput('');
 		setSearchData([]);
@@ -96,7 +96,8 @@ const ProfileFriends = () => {
 							onChange={(e) => setSearchInput(e.target.value)}
 							placeholder='Search Friend List'
 						/>
-						<div
+						<button
+							typeof='button'
 							style={{
 								visibility: searchInput || showResults ? 'visible' : 'hidden',
 							}}
@@ -104,7 +105,7 @@ const ProfileFriends = () => {
 							onClick={clearSearch}
 						>
 							<span></span>
-						</div>
+						</button>
 					</label>
 				</form>
 			</div>
