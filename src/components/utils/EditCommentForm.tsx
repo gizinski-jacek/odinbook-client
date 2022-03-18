@@ -28,7 +28,14 @@ const EditCommentForm: React.FC<Props> = ({
 		<div className={styles.edit_comment}>
 			<Link to={`/profile/${comment.author._id}`}>
 				<div className='profile-pic-style'>
-					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
+					<img
+						src={
+							comment.author.profile_picture
+								? `http://localhost:4000/${comment.author.profile_picture}`
+								: '/placeholder_profile_pic.png'
+						}
+						alt='User profile pic'
+					/>
 				</div>
 			</Link>
 			<form onSubmit={(e) => handleUpdate(e, formData)}>
@@ -41,6 +48,7 @@ const EditCommentForm: React.FC<Props> = ({
 					onChange={handleChange}
 					value={formData.text}
 					required
+					autoFocus
 					placeholder='Write a comment...'
 				/>
 				<div className={styles.edit_controls}>
