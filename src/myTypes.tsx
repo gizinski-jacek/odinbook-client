@@ -1,10 +1,6 @@
 export type PostFull = {
 	_id: string;
-	author: {
-		_id: string;
-		first_name: string;
-		last_name: string;
-	};
+	author: User;
 	text: string;
 	comments: CommentFull[];
 	likes: any;
@@ -14,11 +10,7 @@ export type PostFull = {
 
 export type PostNew = {
 	_id?: string;
-	author?: {
-		_id: string;
-		first_name: string;
-		last_name: string;
-	};
+	author?: User;
 	text: string;
 	comments?: string[];
 	likes?: string[];
@@ -28,11 +20,7 @@ export type PostNew = {
 
 export type CommentFull = {
 	_id: string;
-	author: {
-		_id: string;
-		first_name: string;
-		last_name: string;
-	};
+	author: User;
 	post_ref: string;
 	text: string;
 	likes: any;
@@ -42,11 +30,7 @@ export type CommentFull = {
 
 export type CommentNew = {
 	_id?: string;
-	author?: {
-		_id: string;
-		first_name: string;
-		last_name: string;
-	};
+	author?: User;
 	post_ref?: string;
 	text: string;
 	likes?: any;
