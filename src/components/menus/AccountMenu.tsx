@@ -23,7 +23,14 @@ const AccountMenu = () => {
 		<div className={styles.menu_account}>
 			<Link to={`/profile/${user._id}`} className={styles.me_link}>
 				<div className='profile-pic-style'>
-					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
+					<img
+						src={
+							user.profile_picture
+								? `http://localhost:4000/${user.profile_picture}`
+								: '/placeholder_profile_pic.png'
+						}
+						alt='User profile pic'
+					/>
 				</div>
 				<span>
 					<h3>
