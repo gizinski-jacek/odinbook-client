@@ -162,16 +162,20 @@ const Profile = () => {
 			<div className={styles.profile_page_main}>
 				<div className={styles.top}>
 					<span className={styles.shade}></span>
-					<div className={styles.pic_name_edit}>
+					<div className={styles.user_panel}>
 						<div className={styles.left}>
-							<Link to={`/profile/${userData?._id}`}>
+							<div className={styles.pic_wrapper}>
 								<div className='profile-pic-style'>
 									<img
-										src='/placeholder_profile_pic.png'
+										src={
+											userData?.profile_picture
+												? `http://localhost:4000/${userData.profile_picture}`
+												: '/placeholder_profile_pic.png'
+										}
 										alt='User profile pic'
 									/>
 								</div>
-							</Link>
+							</div>
 							<h2>
 								{userData?.first_name} {userData?.last_name}
 							</h2>
@@ -252,47 +256,57 @@ const Profile = () => {
 							<div className={styles.user_controls}>
 								{user._id && userData ? (
 									userData.blocked_by_other_list.includes(user._id) ? (
-										<div
+										<button
+											type='button'
 											className={`btn-default btn-disabled btn-w180 ${styles.blocked}`}
 											onClick={() => handleBlockStatus(userData._id)}
 										>
 											<span>Blocked User</span>
-										</div>
+										</button>
 									) : userData.blocked_user_list.includes(user._id) ? (
-										<div className='btn-default btn-disabled btn-w180'>
+										<button
+											type='button'
+											className='btn-default btn-disabled btn-w180'
+										>
 											Blocked by User
-										</div>
+										</button>
 									) : userData.friend_list.includes(user._id) ? (
-										<div
+										<button
+											type='button'
 											className={`btn-default btn-confirm btn-w180 ${styles.friend}`}
 											onClick={() => handleRemoveFriend(userData._id)}
 										>
 											<span>Friends</span>
-										</div>
+										</button>
 									) : userData.incoming_friend_requests.includes(user._id) ? (
-										<div
+										<button
+											type='button'
 											className={`btn-default btn-active btn-w180 ${styles.sent}`}
 											onClick={() => handleCancelRequest(userData._id)}
 										>
 											<span>Request Sent</span>
-										</div>
+										</button>
 									) : userData.outgoing_friend_requests.includes(user._id) ? (
-										<div
+										<button
+											type='button'
 											className='btn-default btn-confirm btn-w180'
 											onClick={() => handleAcceptRequest(userData._id)}
 										>
 											Accept Request
-										</div>
+										</button>
 									) : (
-										<div
+										<button
+											type='button'
 											className='btn-default btn-confirm btn-w180'
 											onClick={() => handleSendRequest(userData._id)}
 										>
 											Add Friend
-										</div>
+										</button>
 									)
 								) : null}
-								<div className='btn-default btn-remove'>Message</div>
+								<button type='button' className='btn-default btn-remove'>
+									Message
+								</button>
 								<span
 									className={`btn-default btn-remove ${styles.options_toggle}`}
 									onClick={toggleOptions}
