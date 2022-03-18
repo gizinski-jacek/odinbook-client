@@ -52,6 +52,11 @@ hr {
 	background-color: variables.$black-a20;
 }
 
+button {
+	background-color: none;
+	border: none;
+}
+
 :-moz-focusring {
 	outline: variables.$blue solid 2px;
 }
@@ -62,6 +67,7 @@ hr {
 	display: flex;
 	flex-direction: column;
 	background-color: variables.$white-a80;
+	overflow-wrap: break-word;
 }
 
 .welcome-page-container {
@@ -108,6 +114,7 @@ hr {
 }
 
 .btn-default {
+	font: inherit;
 	border-radius: 8px;
 	border: none;
 	padding: 8px 12px;
@@ -115,6 +122,7 @@ hr {
 	user-select: none;
 	text-align: center;
 	cursor: pointer;
+	font-size: 1rem;
 }
 
 .btn-default:hover {
@@ -148,6 +156,10 @@ hr {
 
 .btn-active:hover {
 	filter: brightness(90%);
+}
+
+.btn-danger {
+	background-color: variables.$red;
 }
 
 .btn-form-submit {
