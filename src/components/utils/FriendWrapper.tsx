@@ -32,7 +32,14 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, openChat, friend }) => {
 		<li className={styles.friend} onClick={() => openChat()}>
 			<Link to={`/profile/${friend._id}`}>
 				<div className='profile-pic-style'>
-					<img src='/placeholder_profile_pic.png' alt='User profile pic' />
+					<img
+						src={
+							friend.profile_picture
+								? `http://localhost:4000/${friend.profile_picture}`
+								: '/placeholder_profile_pic.png'
+						}
+						alt='User profile pic'
+					/>
 				</div>
 			</Link>
 			<div>
