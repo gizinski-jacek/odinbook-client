@@ -107,7 +107,14 @@ const Navbar = () => {
 					to={`/profile/${post.author._id}`}
 				>
 					<div className='profile-pic-style'>
-						<img src='/placeholder_profile_pic.png' alt='User profile pic' />
+						<img
+							src={
+								post.author.profile_picture
+									? `http://localhost:4000/${user.profile_picture}`
+									: '/placeholder_profile_pic.png'
+							}
+							alt='User profile pic'
+						/>
 					</div>
 					<span className={styles.text}>{post.text}</span>
 				</Link>
