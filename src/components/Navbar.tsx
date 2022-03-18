@@ -183,7 +183,8 @@ const Navbar = () => {
 								onChange={(e) => setSearchInput(e.target.value)}
 								placeholder='Search Posts'
 							/>
-							<div
+							<button
+								type='button'
 								style={{
 									visibility: searchInput || showResults ? 'visible' : 'hidden',
 								}}
@@ -191,7 +192,7 @@ const Navbar = () => {
 								onClick={(e) => clearSearch(e)}
 							>
 								<span></span>
-							</div>
+							</button>
 						</label>
 					</form>
 					{showResults && searchDisplay.length > 0 ? (
@@ -358,7 +359,11 @@ const Navbar = () => {
 						>
 							<div className='profile-pic-style'>
 								<img
-									src='/placeholder_profile_pic.png'
+									src={
+										user.profile_picture
+											? `http://localhost:4000/${user.profile_picture}`
+											: '/placeholder_profile_pic.png'
+									}
 									alt='User profile pic'
 								/>
 							</div>
