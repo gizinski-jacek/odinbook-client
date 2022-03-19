@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
 import type { User } from '../myTypes';
-import { axiosGet, axiosPut } from './utils/axiosFunctions';
+import { axiosDelete, axiosGet, axiosPut } from './utils/axiosFunctions';
 import styles from '../styles/ProfileMain.module.scss';
 import EditProfileModal from './EditProfileModal';
 
@@ -149,6 +149,20 @@ const Profile = () => {
 		}
 	};
 
+	const handlePictureDelete = async (
+		e: React.MouseEvent<HTMLButtonElement>,
+		pictureId: string
+	) => {
+		e.preventDefault();
+		try {
+			console.log(pictureId);
+
+			setUserData(await axiosDelete(`/api/users/picture/${pictureId}`));
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
 	const errorsDisplay = errors?.map((error, index) => {
 		return (
 			<li key={index} className='error-msg'>
@@ -169,11 +183,22 @@ const Profile = () => {
 									<img
 										src={
 											userData?.profile_picture
-												? `http://localhost:4000/${userData.profile_picture}`
+												? `http://localhost:4000/photos/${userData.profile_picture}`
 												: '/placeholder_profile_pic.png'
 										}
 										alt='User profile pic'
 									/>
+									{userData?._id === user._id && userData.profile_picture ? (
+										<button
+											type='button'
+											className={styles.delete_btn}
+											onClick={(e) =>
+												handlePictureDelete(e, userData.profile_picture)
+											}
+										>
+											<span></span>
+										</button>
+									) : null}
 								</div>
 							</div>
 							<h2>
