@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Link, NavLink, useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
 import type { User } from '../myTypes';
 import { axiosGet, axiosPut } from './utils/axiosFunctions';
@@ -11,7 +11,7 @@ const Profile = () => {
 
 	const params = useParams();
 
-	const optionsRef = useRef(null);
+	const optionsRef = useRef<HTMLDivElement>(null);
 
 	const [userData, setUserData] = useState<User>();
 	const [showOptions, setShowOptions] = useState(false);
