@@ -17,7 +17,7 @@ const Timeline = () => {
 	useEffect(() => {
 		(async () => {
 			try {
-				setPostsData(await axiosGet('/api/posts/user-timeline-posts'));
+				setPostsData(await axiosGet('/api/posts/timeline'));
 			} catch (error: any) {
 				console.error(error);
 			}
@@ -51,7 +51,7 @@ const Timeline = () => {
 						<img
 							src={
 								user.profile_picture
-									? `http://localhost:4000/${user.profile_picture}`
+									? `http://localhost:4000/photos/${user.profile_picture}`
 									: '/placeholder_profile_pic.png'
 							}
 							alt='User profile pic'
