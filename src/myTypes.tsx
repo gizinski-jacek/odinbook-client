@@ -42,12 +42,12 @@ export type User = {
 	_id: string;
 	first_name: string;
 	last_name: string;
+	profile_picture: string;
 	friend_list: string[];
 	blocked_user_list: string[];
 	blocked_by_other_list: string[];
 	incoming_friend_requests: string[];
 	outgoing_friend_requests: string[];
-	profile_picture?: string;
 	bio?: string;
 	hobbies?: string[];
 };

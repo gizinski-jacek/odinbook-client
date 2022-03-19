@@ -5,6 +5,7 @@ const defaultUser: User | null = {
 	_id: '',
 	first_name: '',
 	last_name: '',
+	profile_picture: '',
 	friend_list: [],
 	blocked_user_list: [],
 	blocked_by_other_list: [],
