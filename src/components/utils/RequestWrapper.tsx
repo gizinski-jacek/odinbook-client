@@ -20,7 +20,7 @@ const RequestWrapper: React.FC<Props> = ({
 					<img
 						src={
 							request.profile_picture
-								? `http://localhost:4000/${request.profile_picture}`
+								? `http://localhost:4000/photos/${request.profile_picture}`
 								: '/placeholder_profile_pic.png'
 						}
 						alt='User profile pic'

@@ -75,7 +75,7 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 					<img
 						src={
 							userData.profile_picture
-								? `http://localhost:4000/${userData.profile_picture}`
+								? `http://localhost:4000/photos/${userData.profile_picture}`
 								: '/placeholder_profile_pic.png'
 						}
 						alt='User profile pic'

@@ -126,7 +126,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 							<img
 								src={
 									postData.author.profile_picture
-										? `http://localhost:4000/${postData.author.profile_picture}`
+										? `http://localhost:4000/photos/${postData.author.profile_picture}`
 										: '/placeholder_profile_pic.png'
 								}
 								alt='User profile pic'
@@ -226,7 +226,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 						<img
 							src={
 								postData.author.profile_picture
-									? `http://localhost:4000/${postData.author.profile_picture}`
+									? `http://localhost:4000/photos/${postData.author.profile_picture}`
 									: '/placeholder_profile_pic.png'
 							}
 							alt='User profile pic'

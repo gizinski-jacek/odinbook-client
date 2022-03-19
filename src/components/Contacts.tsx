@@ -112,7 +112,7 @@ const Contacts = () => {
 						<img
 							src={
 								group.profile_picture
-									? `http://localhost:4000/${group.profile_picture}`
+									? `http://localhost:4000/photos/${group.profile_picture}`
 									: '/placeholder_profile_pic.png'
 							}
 							alt='User profile pic'
@@ -120,7 +120,7 @@ const Contacts = () => {
 						<img
 							src={
 								group.profile_picture
-									? `http://localhost:4000/${group.profile_picture}`
+									? `http://localhost:4000/photos/${group.profile_picture}`
 									: '/placeholder_profile_pic.png'
 							}
 							alt='User profile pic'

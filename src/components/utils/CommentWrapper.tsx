@@ -108,7 +108,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 						<img
 							src={
 								commentData.author.profile_picture
-									? `http://localhost:4000/${commentData.author.profile_picture}`
+									? `http://localhost:4000/photos/${commentData.author.profile_picture}`
 									: '/placeholder_profile_pic.png'
 							}
 							alt='User profile pic'
