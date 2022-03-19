@@ -46,6 +46,31 @@
 				margin-right: 24px;
 				position: relative;
 				top: 8px;
+
+				.delete_btn {
+					position: absolute;
+					left: 20px;
+					bottom: 0;
+					padding: 8px;
+					background-color: variables.$red;
+					border-radius: 50%;
+					cursor: pointer;
+
+					span {
+						width: 8px;
+						height: 8px;
+						display: block;
+						background-size: auto;
+						background-repeat: no-repeat;
+						background-image: url('../../public/multi_icons/icons_6.png');
+						background-position: -111px -73px;
+					}
+				}
+
+				.delete_btn:hover {
+					filter: brightness(125%);
+					box-shadow: 0 0 4px 1px variables.$black;
+				}
 			}
 
 			img {
