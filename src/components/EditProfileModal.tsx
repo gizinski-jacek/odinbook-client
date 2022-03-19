@@ -12,6 +12,7 @@ type Props = {
 
 const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 	const { user } = useContext(UserContext);
+
 	const pictureRef = useRef<HTMLInputElement>(null);
 
 	const [errors, setErrors] = useState<{ msg: string }[]>();
