@@ -1,5 +1,4 @@
-import { useContext, useRef, useState } from 'react';
-import { UserContext } from './hooks/UserContext';
+import { useRef, useState } from 'react';
 import { User } from '../myTypes';
 import { axiosPut } from './utils/axiosFunctions';
 import styles from '../styles/EditProfileModal.module.scss';
@@ -11,8 +10,6 @@ type Props = {
 };
 
 const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
-	const { user } = useContext(UserContext);
-
 	const pictureRef = useRef<HTMLInputElement>(null);
 
 	const [errors, setErrors] = useState<{ msg: string }[]>();
@@ -53,6 +50,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
+		userId: string,
 		bio: string,
 		profile_picture: any
 	) => {
@@ -61,7 +59,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 			const newData = new FormData();
 			newData.append('bio', bio);
 			newData.append('profile_picture', profile_picture);
-			setData(await axiosPut(`/api/users/${user._id}`, newData));
+			setData(await axiosPut(`/api/users/${userId}`, newData));
 			closeModal(e);
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {
@@ -106,7 +104,9 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 				<div className={styles.body}>
 					<form
 						encType='multipart/form-data'
-						onSubmit={(e) => handleSubmit(e, bioInput, pictureData?.data)}
+						onSubmit={(e) =>
+							handleSubmit(e, data._id, bioInput, pictureData?.data)
+						}
 					>
 						<div className={styles.edit_profile_picture}>
 							<div className={styles.section_name}>
@@ -143,8 +143,8 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 									src={
 										pictureData?.preview
 											? pictureData.preview
-											: user.profile_picture
-											? `http://localhost:4000/${user.profile_picture}`
+											: data.profile_picture
+											? `http://localhost:4000/photos/${data.profile_picture}`
 											: '/placeholder_profile_pic.png'
 									}
 									alt='User profile pic'
