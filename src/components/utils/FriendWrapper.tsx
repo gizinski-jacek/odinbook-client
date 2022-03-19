@@ -10,7 +10,7 @@ type Props = {
 };
 
 const FriendWrapper: React.FC<Props> = ({ handleRemove, openChat, friend }) => {
-	const optionsRef = useRef(null);
+	const optionsRef = useRef<HTMLDivElement>(null);
 
 	const [showOptions, setShowOptions] = useState(false);
 

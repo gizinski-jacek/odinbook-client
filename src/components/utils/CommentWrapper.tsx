@@ -15,7 +15,7 @@ type Props = {
 const CommentWrapper: React.FC<Props> = ({ comment }) => {
 	const { user } = useContext(UserContext);
 
-	const optionsRef = useRef(null);
+	const optionsRef = useRef<HTMLDivElement>(null);
 
 	const [commentData, setCommentData] = useState<CommentFull>(comment);
 	const [editComment, setEditComment] = useState(false);

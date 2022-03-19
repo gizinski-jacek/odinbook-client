@@ -17,7 +17,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 	const { user } = useContext(UserContext);
 
 	const commentInputRef = useRef<HTMLTextAreaElement>(null);
-	const optionsRef = useRef(null);
+	const optionsRef = useRef<HTMLDivElement>(null);
 
 	const params = useParams();
 
