@@ -236,18 +236,20 @@ const Profile = () => {
 									</form>
 								) : (
 									<div className={styles.profile_controls}>
-										<div
+										<button
+											type='button'
 											className={`btn-default btn-confirm ${styles.change_password_btn}`}
 											onClick={toggleInput}
 										>
 											Change Password
-										</div>
-										<div
+										</button>
+										<button
+											type='button'
 											className={`btn-default btn-confirm ${styles.edit_btn}`}
 											onClick={openModal}
 										>
 											Edit Profile
-										</div>
+										</button>
 									</div>
 								)}
 							</div>
@@ -331,10 +333,7 @@ const Profile = () => {
 								<button type='button' className='btn-default btn-remove'>
 									Message
 								</button>
-								<span
-									className={`btn-default btn-remove ${styles.options_toggle}`}
-									onClick={toggleOptions}
-								>
+								<span className={styles.options_toggle} onClick={toggleOptions}>
 									<svg viewBox='0 0 20 20' width='20' height='20'>
 										<g transform='translate(-446 -350)'>
 											<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
