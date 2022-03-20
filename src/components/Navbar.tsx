@@ -37,6 +37,10 @@ const Navbar = () => {
 	}, []);
 
 	useEffect(() => {
+		setNotificationAlert(user.incoming_friend_requests.length);
+	}, [user]);
+
+	useEffect(() => {
 		setOpenMenuContainer(false);
 		setOpenMenuId(0);
 	}, [location]);
@@ -401,9 +405,7 @@ const Navbar = () => {
 				{!openMenuContainer ? null : (
 					<div ref={menuContainerRef} className={styles.menu_container}>
 						{openMenuId === 1 ? <AccountMenu /> : null}
-						{openMenuId === 2 ? (
-							<NotificationsMenu setNotificationAlert={setNotificationAlert} />
-						) : null}
+						{openMenuId === 2 ? <NotificationsMenu /> : null}
 						{openMenuId === 3 ? <MessengerMenu /> : null}
 						{openMenuId === 4 ? <MainMenu /> : null}
 					</div>
