@@ -5,12 +5,8 @@ import { axiosGet, axiosPut } from '../utils/axiosFunctions';
 import RequestWrapper from '../utils/RequestWrapper';
 import styles from '../../styles/menus/NotificationsMenu.module.scss';
 
-type Props = {
-	setNotificationAlert: Function;
-};
-
-const NotificationsMenu: React.FC<Props> = ({ setNotificationAlert }) => {
-	const { user } = useContext(UserContext);
+const NotificationsMenu = () => {
+	const { user, setUser } = useContext(UserContext);
 
 	const [requestsData, setRequestsData] = useState<User[]>([]);
 
@@ -19,12 +15,11 @@ const NotificationsMenu: React.FC<Props> = ({ setNotificationAlert }) => {
 			try {
 				const resData = await axiosGet('/api/users/contacts');
 				setRequestsData(resData.incoming_friend_requests);
-				setNotificationAlert(resData.incoming_friend_requests.length);
 			} catch (error: any) {
 				console.error(error);
 			}
 		})();
-	}, [setNotificationAlert]);
+	}, [user]);
 
 	const handleAcceptRequest = async (
 		e: React.MouseEvent<HTMLButtonElement>,
@@ -37,7 +32,7 @@ const NotificationsMenu: React.FC<Props> = ({ setNotificationAlert }) => {
 			});
 			const data = resData.find((u: User) => u._id === user._id);
 			setRequestsData(data.incoming_friend_requests);
-			setNotificationAlert(data.incoming_friend_requests.length);
+			setUser(data);
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -54,7 +49,7 @@ const NotificationsMenu: React.FC<Props> = ({ setNotificationAlert }) => {
 			});
 			const data = resData.find((u: User) => u._id === user._id);
 			setRequestsData(data.incoming_friend_requests);
-			setNotificationAlert(data.incoming_friend_requests.length);
+			setUser(data);
 		} catch (error: any) {
 			console.error(error);
 		}
