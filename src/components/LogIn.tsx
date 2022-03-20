@@ -108,7 +108,7 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 					href={
 						process.env.NODE_ENV === 'development'
 							? 'http://localhost:4000/api/log-in/facebook'
-							: `${process.env.WEB_URL}/api/log-in/facebook`
+							: `${process.env.REACT_APP_API_URL}/api/log-in/facebook`
 					}
 					className='btn-default btn-confirm'
 				>
