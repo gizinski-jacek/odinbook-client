@@ -92,6 +92,8 @@
 		align-items: center;
 
 		img {
+			box-sizing: content-box;
+			border: 4px solid variables.$white;
 			width: 160px;
 			height: 160px;
 		}
