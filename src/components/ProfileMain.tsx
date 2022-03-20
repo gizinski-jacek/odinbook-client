@@ -7,7 +7,7 @@ import styles from '../styles/ProfileMain.module.scss';
 import EditProfileModal from './EditProfileModal';
 
 const Profile = () => {
-	const { user } = useContext(UserContext);
+	const { user, setUser } = useContext(UserContext);
 
 	const params = useParams();
 
@@ -156,7 +156,9 @@ const Profile = () => {
 	) => {
 		e.preventDefault();
 		try {
-			setUserData(await axiosDelete(`/api/users/picture/${pictureId}`));
+			const resData = await axiosDelete(`/api/users/picture/${pictureId}`);
+			setUserData(resData);
+			setUser(resData);
 		} catch (error: any) {
 			console.error(error);
 		}

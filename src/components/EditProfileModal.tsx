@@ -1,7 +1,8 @@
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { User } from '../myTypes';
 import { axiosPut } from './utils/axiosFunctions';
 import styles from '../styles/EditProfileModal.module.scss';
+import { UserContext } from './hooks/UserContext';
 
 type Props = {
 	closeModal: Function;
@@ -10,6 +11,8 @@ type Props = {
 };
 
 const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
+	const { setUser } = useContext(UserContext);
+
 	const pictureRef = useRef<HTMLInputElement>(null);
 
 	const [errors, setErrors] = useState<{ msg: string }[]>([]);
@@ -68,7 +71,9 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 			const newData = new FormData();
 			newData.append('bio', bio);
 			newData.append('profile_picture', profile_picture);
-			setData(await axiosPut(`/api/users/${userId}`, newData));
+			const resData = await axiosPut(`/api/users/${userId}`, newData);
+			setData(resData);
+			setUser(resData);
 			closeModal(e);
 		} catch (error: any) {
 			if (

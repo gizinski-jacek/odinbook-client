@@ -7,7 +7,7 @@ import FriendWrapper from './utils/FriendWrapper';
 import styles from '../styles/Contacts.module.scss';
 
 const Contacts = () => {
-	const { user } = useContext(UserContext);
+	const { user, setUser } = useContext(UserContext);
 
 	const [requestsData, setRequestsData] = useState<User[]>([]);
 	const [friendsData, setFriendsData] = useState<User[]>([]);
@@ -37,6 +37,7 @@ const Contacts = () => {
 			const data = resData.find((u: User) => u._id === user._id);
 			setRequestsData(data.incoming_friend_requests);
 			setFriendsData(data.friend_list);
+			setUser(data);
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -54,6 +55,7 @@ const Contacts = () => {
 			const data = resData.find((u: User) => u._id === user._id);
 			setRequestsData(data.incoming_friend_requests);
 			setFriendsData(data.friend_list);
+			setUser(data);
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -69,6 +71,7 @@ const Contacts = () => {
 			const data = resData.find((u: User) => u._id === user._id);
 			setRequestsData(data.incoming_friend_requests);
 			setFriendsData(data.friend_list);
+			setUser(data);
 		} catch (error: any) {
 			console.error(error);
 		}
