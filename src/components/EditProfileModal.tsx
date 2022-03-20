@@ -12,7 +12,7 @@ type Props = {
 const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 	const pictureRef = useRef<HTMLInputElement>(null);
 
-	const [errors, setErrors] = useState<{ msg: string }[]>();
+	const [errors, setErrors] = useState<{ msg: string }[]>([]);
 	const [bioForm, setBioForm] = useState(false);
 	const [bioInput, setBioInput] = useState(data.bio ? data.bio : '');
 	const [pictureData, setPictureData] = useState<{
@@ -20,21 +20,30 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 		data: {};
 	} | null>(null);
 
-	const clickSelectFile = (e: React.MouseEvent<HTMLElement>) => {
-		e.stopPropagation();
-		pictureRef.current?.click();
-	};
-
 	const toggleBioForm = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		setBioForm((prevState) => !prevState);
 	};
 
-	const handleAddFile = (e: any) => {
+	const clickSelectFile = (e: React.MouseEvent<HTMLElement>) => {
 		e.stopPropagation();
+		pictureRef.current?.click();
+	};
+
+	const handleFileChange = (e: any) => {
+		e.stopPropagation();
+		setErrors([]);
 		const file = e.target.files[0];
 		if (file.size > 2000000) {
-			setErrors([{ msg: 'File too big. Max. size 2mb' }]);
+			setErrors([{ msg: 'File too large' }]);
+			return;
+		}
+		if (
+			file.type !== 'image/png' &&
+			file.type !== 'image/jpg' &&
+			file.type !== 'image/jpeg'
+		) {
+			setErrors([{ msg: 'Only images (png, jpg, jpeg) are allowed' }]);
 			return;
 		}
 		setPictureData({
@@ -62,12 +71,21 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 			setData(await axiosPut(`/api/users/${userId}`, newData));
 			closeModal(e);
 		} catch (error: any) {
+			if (
+				error.response.data.name &&
+				error.response.data.name.includes('MulterError')
+			) {
+				setErrors([{ msg: error.response.data.message }]);
+				return;
+			}
 			if (!Array.isArray(error.response.data)) {
 				if (typeof error.response.data === 'object') {
 					setErrors([error.response.data]);
+					return;
 				}
 				if (typeof error.response.data === 'string') {
 					setErrors([{ msg: error.response.data }]);
+					return;
 				}
 			} else {
 				setErrors(error.response.data);
@@ -100,7 +118,6 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 					</button>
 				</div>
 				<hr />
-				{errorsDisplay ? <ul className='error-list'>{errorsDisplay}</ul> : null}
 				<div className={styles.body}>
 					<form
 						encType='multipart/form-data'
@@ -134,7 +151,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 										type='file'
 										id='profile_picture'
 										name='profile_picture'
-										onChange={handleAddFile}
+										onChange={handleFileChange}
 									/>
 								</div>
 							</div>
@@ -181,7 +198,14 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 								<p>{bioInput}</p>
 							)}
 						</div>
-						<button type='submit' className='btn-default btn-form-submit'>
+						{errorsDisplay ? (
+							<ul className='error-list'>{errorsDisplay}</ul>
+						) : null}
+						<button
+							type='submit'
+							className='btn-default btn-form-submit'
+							disabled={errors?.length > 0 ? true : false}
+						>
 							Save Your Profile Info
 						</button>
 					</form>
