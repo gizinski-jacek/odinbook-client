@@ -37,6 +37,7 @@
 	z-index: 10;
 	height: fit-content;
 	scrollbar-width: none;
+	padding: 12px;
 }
 
 .top {
@@ -79,7 +80,7 @@
 		flex-direction: column;
 
 		button[type='submit'] {
-			margin: 12px;
+			margin-top: 12px;
 		}
 	}
 
@@ -89,7 +90,6 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		margin: 0 12px;
 
 		img {
 			width: 160px;
@@ -99,11 +99,11 @@
 
 	.section_name {
 		width: 100%;
-		margin: 12px 0;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
+		margin-bottom: 12px;
 
 		button {
 			margin-left: 8px;
