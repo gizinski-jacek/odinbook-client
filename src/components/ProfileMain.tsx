@@ -135,7 +135,6 @@ const Profile = () => {
 			await axiosPut('/api/users/password-change', data);
 			setChangePassword(false);
 		} catch (error: any) {
-			console.log(error);
 			if (!Array.isArray(error.response.data)) {
 				if (typeof error.response.data === 'object') {
 					setErrors([error.response.data]);
@@ -157,8 +156,6 @@ const Profile = () => {
 	) => {
 		e.preventDefault();
 		try {
-			console.log(pictureId);
-
 			setUserData(await axiosDelete(`/api/users/picture/${pictureId}`));
 		} catch (error: any) {
 			console.error(error);
