@@ -43,9 +43,11 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 			if (!Array.isArray(error.response.data)) {
 				if (typeof error.response.data === 'object') {
 					setErrors([error.response.data]);
+					return;
 				}
 				if (typeof error.response.data === 'string') {
 					setErrors([{ msg: error.response.data }]);
+					return;
 				}
 			} else {
 				setErrors(error.response.data);
