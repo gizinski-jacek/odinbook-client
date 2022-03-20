@@ -216,6 +216,10 @@
 		position: relative;
 		display: block;
 		height: fit-content;
+		padding: 8px;
+		border-radius: 50%;
+		background-color: variables.$black-a10;
+		cursor: pointer;
 
 		svg {
 			display: block;
@@ -223,6 +227,10 @@
 			height: 16px;
 			fill: variables.$black-a60;
 		}
+	}
+
+	.options_toggle:hover {
+		background-color: variables.$black-a20;
 	}
 
 	.options_menu {
