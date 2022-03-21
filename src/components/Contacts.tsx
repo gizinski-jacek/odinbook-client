@@ -77,14 +77,6 @@ const Contacts = () => {
 		}
 	};
 
-	const openChat = async () => {
-		try {
-			// fetch past messages and load chat window
-		} catch (error: any) {
-			console.error(error);
-		}
-	};
-
 	const requestsDisplay = requestsData?.map((request) => {
 		return (
 			<RequestWrapper
@@ -102,14 +94,13 @@ const Contacts = () => {
 				key={friend._id}
 				handleRemove={handleRemoveFriend}
 				friend={friend}
-				openChat={openChat}
 			/>
 		);
 	});
 
 	const conversationsDisplay = friendsData?.map((group) => {
 		return (
-			<li key={group._id} className={styles.group} onClick={() => openChat()}>
+			<li key={group._id} className={styles.group}>
 				<div className='profile-pic-style'>
 					<span>
 						<img
@@ -142,7 +133,7 @@ const Contacts = () => {
 
 	return (
 		<div className={styles.contacts}>
-			{requestsDisplay.length > 0 ? (
+			{requestsDisplay.length > 0 && (
 				<>
 					<div className={styles.friend_requests}>
 						<ul>
@@ -158,7 +149,7 @@ const Contacts = () => {
 					</div>
 					<hr />
 				</>
-			) : null}
+			)}
 			<div className={styles.friend_list}>
 				<div className={styles.top}>
 					<h3>Contacts</h3>
