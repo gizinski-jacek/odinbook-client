@@ -50,11 +50,11 @@ const Chat: React.FC<Props> = ({ closeChat, recipient }) => {
 		});
 		socket.on('load_chat', (data) => {
 			setChatData(data);
-			lastMsg.current.scrollIntoView({ behavior: 'smooth' });
+			lastMsg?.current?.scrollIntoView({ behavior: 'smooth' });
 		});
 		socket.on('receive_message', (data) => {
 			setChatData(data);
-			lastMsg.current.scrollIntoView({ behavior: 'smooth' });
+			lastMsg?.current?.scrollIntoView({ behavior: 'smooth' });
 		});
 		return () => socket.off();
 	}, [socket]);
