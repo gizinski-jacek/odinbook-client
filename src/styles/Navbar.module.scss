@@ -2,6 +2,7 @@
 
 .navbar {
 	height: variables.$navbar-height;
+	position: sticky;
 	top: 0;
 	left: 0;
 	right: 0;
@@ -86,7 +87,6 @@
 			background-color: variables.$white;
 			border-radius: 8px;
 			padding: 0 8px;
-			box-shadow: 0 1px 2px 0 variables.$black-a20;
 			box-shadow: 0 4px 16px 0 variables.$black-a20;
 			overflow-y: scroll;
 			scrollbar-width: none;

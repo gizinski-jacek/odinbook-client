@@ -53,11 +53,10 @@
 		width: 100%;
 		font-size: 1rem;
 		margin: 8px 0;
-		outline: none;
 	}
 
 	input:focus {
-		border: 1px solid variables.$blue;
+		outline: 1px solid variables.$blue;
 	}
 
 	input[name='first_name'] {

@@ -110,14 +110,13 @@
 					border: 1px solid variables.$black-a20;
 					padding: 0 4px;
 					font-size: 0.9rem;
-					outline: none;
 				}
 
 				input:focus {
-					border: 1px solid variables.$blue;
+					outline: 1px solid variables.$blue;
 				}
 
-				> button {
+				button {
 					margin-left: 12px;
 					padding: 6px 12px;
 				}
@@ -190,7 +189,7 @@
 		}
 
 		.blocked:hover {
-			background-color: variables.$black-a20 !important;
+			background-color: variables.$black-a20;
 			color: variables.$black-a40;
 		}
 
@@ -199,8 +198,8 @@
 		}
 
 		.friend:hover {
-			background-color: variables.$blue-a30 !important;
-			color: variables.$blue;
+			background-color: variables.$black-a60;
+			color: variables.$white;
 		}
 
 		.friend:hover:after {

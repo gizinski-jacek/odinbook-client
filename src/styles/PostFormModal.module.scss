@@ -91,7 +91,10 @@
 		resize: none;
 		font-size: 1rem;
 		border: none;
-		outline: none;
+	}
+
+	textarea:focus {
+		outline: 1px solid variables.$blue;
 	}
 
 	button {

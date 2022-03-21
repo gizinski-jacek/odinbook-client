@@ -44,14 +44,13 @@
 	input {
 		width: 100%;
 		padding: 12px;
-		outline: none;
 		border: 1px solid variables.$black-a20;
 		border-radius: 8px;
 		font-size: 1rem;
 	}
 
 	input:focus {
-		border: 1px solid variables.$blue;
+		outline: 1px solid variables.$blue;
 	}
 
 	.bottom {
