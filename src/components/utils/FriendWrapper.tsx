@@ -1,8 +1,7 @@
-import { useContext, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import type { User } from '../../myTypes';
 import styles from '../../styles/Friend.module.scss';
 import Chat from '../Chat';
-import { UserContext } from '../hooks/UserContext';
 
 type Props = {
 	handleRemove: Function;
@@ -10,8 +9,6 @@ type Props = {
 };
 
 const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
-	const { user } = useContext(UserContext);
-
 	const optionsRef = useRef<HTMLDivElement>(null);
 
 	const [showOptions, setShowOptions] = useState(false);
@@ -51,7 +48,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 								? `http://localhost:4000/photos/${friend.profile_picture}`
 								: '/placeholder_profile_pic.png'
 						}
-						alt='User profile pic'
+						alt={`${friend.first_name} ${friend.last_name}`}
 					/>
 				</div>
 				<div>
@@ -79,9 +76,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 					)}
 				</div>
 			</li>
-			{showChat && (
-				<Chat closeChat={closeChat} sender={user} recipient={friend} />
-			)}
+			{showChat && <Chat closeChat={closeChat} recipient={friend} />}
 		</>
 	);
 };
