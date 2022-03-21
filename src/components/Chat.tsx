@@ -1,7 +1,8 @@
 // @ts-nocheck
 
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from './hooks/UserContext';
 import { io } from 'socket.io-client';
 import { User } from '../myTypes';
 import styles from '../styles/Chat.module.scss';
