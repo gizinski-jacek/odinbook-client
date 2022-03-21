@@ -1,0 +1,121 @@
+@use './variables';
+
+.chat_window {
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	bottom: 40px;
+	right: 12px;
+	width: 300px;
+	height: 360px;
+	background-color: variables.$white;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px 0 variables.$black-a20;
+	padding: 8px;
+
+	// Fix stacking windows on each other
+
+	.top {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		position: relative;
+
+		.left {
+			max-width: 250px;
+
+			a {
+				color: variables.$blue;
+			}
+		}
+
+		button {
+			align-self: flex-start;
+		}
+	}
+
+	.close_btn {
+		padding: 8px;
+		background-color: variables.$black-a10;
+		border-radius: 50%;
+		cursor: pointer;
+
+		span {
+			width: 8px;
+			height: 8px;
+			display: block;
+			background-size: auto;
+			background-repeat: no-repeat;
+			background-image: url('../../public/multi_icons/icons_6.png');
+			background-position: -111px -73px;
+		}
+	}
+
+	.close_btn:hover {
+		background-color: variables.$black-a20;
+	}
+
+	.body {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.message_list {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		max-height: 260px;
+		overflow: scroll;
+		scrollbar-width: none;
+
+		.user_message,
+		.recipient_message {
+			width: fit-content;
+			max-width: 200px;
+			padding: 4px;
+			border-radius: 8px;
+			margin: 4px 0;
+		}
+
+		.user_message {
+			align-self: flex-end;
+			text-align: end;
+			background-color: variables.$blue-a30;
+		}
+
+		.recipient_message {
+			align-self: flex-start;
+			display: flex;
+			background-color: variables.$black-a10;
+			word-break: break-word;
+			overflow-wrap: anywhere;
+		}
+
+		img {
+			width: 28px;
+			height: 28px;
+			margin-right: 4px;
+			cursor: initial;
+		}
+	}
+
+	form {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		margin-top: 8px;
+	}
+
+	input {
+		border: none;
+		resize: none;
+		padding: 8px 12px;
+		height: 32px;
+		max-width: 200px;
+		margin-right: 12px;
+		border-radius: 24px;
+		background-color: variables.$white-a80;
+	}
+}
