@@ -119,9 +119,7 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 						required
 						placeholder='Password'
 					/>
-					{errorsDisplay ? (
-						<ul className='error-list'>{errorsDisplay}</ul>
-					) : null}
+					{errorsDisplay && <ul className='error-list'>{errorsDisplay}</ul>}
 					<button type='submit' className='btn-default btn-register'>
 						Register
 					</button>

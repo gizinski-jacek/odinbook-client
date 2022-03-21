@@ -71,7 +71,7 @@ const NotificationsMenu = () => {
 			<div className={styles.top}>
 				<h3>Notifications</h3>
 			</div>
-			{notificationsRequestsDisplay ? (
+			{notificationsRequestsDisplay && (
 				<div className={styles.notification_list}>
 					{notificationsRequestsDisplay &&
 					notificationsRequestsDisplay?.length > 0 ? (
@@ -82,7 +82,7 @@ const NotificationsMenu = () => {
 						</div>
 					)}
 				</div>
-			) : null}
+			)}
 		</div>
 	);
 };

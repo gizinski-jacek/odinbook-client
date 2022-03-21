@@ -94,9 +94,7 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 							placeholder='Password'
 						/>
 					</fieldset>
-					{errorsDisplay ? (
-						<ul className='error-list'>{errorsDisplay}</ul>
-					) : null}
+					{errorsDisplay && <ul className='error-list'>{errorsDisplay}</ul>}
 					<button type='submit' className='btn-default btn-confirm'>
 						Log In
 					</button>
@@ -108,7 +106,7 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 					href={
 						process.env.NODE_ENV === 'development'
 							? 'http://localhost:4000/api/log-in/facebook'
-							: `${process.env.REACT_APP_API_URL}/api/log-in/facebook`
+							: `${process.env.REACT_APP_API_URI}/api/log-in/facebook`
 					}
 					className='btn-default btn-confirm'
 				>

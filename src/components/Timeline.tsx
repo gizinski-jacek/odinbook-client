@@ -69,14 +69,14 @@ const Timeline = () => {
 					</h4>
 				</span>
 			</div>
-			{showModal ? (
+			{showModal && (
 				<PostFormModal
 					closeModal={closeModal}
 					setData={setPostsData}
 					post={formData}
 				/>
-			) : null}
-			{postsDisplay ? postsDisplay : null}
+			)}
+			{postsDisplay && postsDisplay}
 		</div>
 	);
 };

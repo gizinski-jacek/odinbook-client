@@ -145,7 +145,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 					</div>
 				</div>
 				<div className={styles.right}>
-					{user._id === postData.author._id ? (
+					{user._id === postData.author._id && (
 						<>
 							<span className={styles.options_toggle} onClick={toggleOptions}>
 								<svg viewBox='0 0 20 20' width='20' height='20'>
@@ -154,7 +154,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 									</g>
 								</svg>
 							</span>
-							{showOptions ? (
+							{showOptions && (
 								<span ref={optionsRef} className={styles.options_menu}>
 									<div className={styles.edit_btn} onClick={openEditModal}>
 										Edit post
@@ -163,9 +163,9 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 										Delete post
 									</div>
 								</span>
-							) : null}
+							)}
 						</>
-					) : null}
+					)}
 				</div>
 			</div>
 			<div className={styles.post_text}>
@@ -173,22 +173,22 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 			</div>
 			<div className={styles.bottom}>
 				<div className={styles.likes_and_count}>
-					{postData.likes.includes(user._id) ? (
+					{postData.likes.includes(user._id) && (
 						<div
 							className={styles.liked}
 							onClick={(e) => handleLike(postData._id)}
 						>
 							<span></span>
 						</div>
-					) : null}
-					{postData.comments.length > 0 ? (
+					)}
+					{postData.comments.length > 0 && (
 						<div
 							className={styles.comment_count}
 							onClick={(e) => toggleComments(e)}
 						>
 							<h5>{postData?.comments.length} comments</h5>
 						</div>
-					) : null}
+					)}
 				</div>
 				<span className={styles.controls}>
 					<div
@@ -215,11 +215,11 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 					</div>
 				</span>
 			</div>
-			{showCommentsList && commentsDisplay.length > 0 ? (
+			{showCommentsList && commentsDisplay.length > 0 && (
 				<div className={styles.comments_container}>
 					<ul>{commentsDisplay}</ul>
 				</div>
-			) : null}
+			)}
 			<div className={styles.new_comment}>
 				<Link to={`/profile/${postData.author._id}`}>
 					<div className='profile-pic-style'>
@@ -255,20 +255,20 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 					</button>
 				</form>
 			</div>
-			{showEditModal ? (
+			{showEditModal && (
 				<PostFormModal
 					closeModal={closeEditModal}
 					setData={setPostData}
 					post={postData}
 				/>
-			) : null}
-			{showDeleteModal ? (
+			)}
+			{showDeleteModal && (
 				<DeleteModal
 					closeModal={closeDeleteModal}
 					setData={setPostData}
 					post={postData}
 				/>
-			) : null}
+			)}
 		</div>
 	) : null;
 };

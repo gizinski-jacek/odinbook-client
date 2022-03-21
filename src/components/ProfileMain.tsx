@@ -189,7 +189,7 @@ const Profile = () => {
 										}
 										alt='User profile pic'
 									/>
-									{userData?._id === user._id && userData.profile_picture ? (
+									{userData?._id === user._id && userData.profile_picture && (
 										<button
 											type='button'
 											className={styles.delete_btn}
@@ -199,23 +199,23 @@ const Profile = () => {
 										>
 											<span></span>
 										</button>
-									) : null}
+									)}
 								</div>
 							</div>
 							<h2>
 								{userData?.first_name} {userData?.last_name}
 							</h2>
 						</div>
-						{userData?._id === user._id ? (
+						{userData?._id === user._id && (
 							<div className={styles.right}>
 								{changePassword ? (
 									<form
 										className={styles.change_password_form}
 										onSubmit={(e) => handlePasswordChange(e, passwordData)}
 									>
-										{errorsDisplay ? (
+										{errorsDisplay && (
 											<ul className='error-list'>{errorsDisplay}</ul>
-										) : null}
+										)}
 										<input
 											type='password'
 											id='password'
@@ -255,7 +255,7 @@ const Profile = () => {
 									</div>
 								)}
 							</div>
-						) : null}
+						)}
 					</div>
 				</div>
 				<hr />
@@ -279,11 +279,12 @@ const Profile = () => {
 							</NavLink>
 						</li>
 					</ul>
-					{userData ? (
-						userData._id === user._id ? null : (
+					{userData &&
+						(userData._id === user._id ? null : (
 							<div className={styles.user_controls}>
-								{user._id && userData ? (
-									userData.blocked_by_other_list.includes(user._id) ? (
+								{user._id &&
+									userData &&
+									(userData.blocked_by_other_list.includes(user._id) ? (
 										<button
 											type='button'
 											className={`btn-default btn-disabled btn-w180 ${styles.blocked}`}
@@ -330,8 +331,7 @@ const Profile = () => {
 										>
 											Add Friend
 										</button>
-									)
-								) : null}
+									))}
 								<button type='button' className='btn-default btn-remove'>
 									Message
 								</button>
@@ -342,24 +342,24 @@ const Profile = () => {
 										</g>
 									</svg>
 								</span>
-								{showOptions && user._id && userData ? (
+								{showOptions && user._id && userData && (
 									<div ref={optionsRef} className={styles.options_menu}>
-										{userData.incoming_friend_requests.includes(user._id) ? (
+										{userData.incoming_friend_requests.includes(user._id) && (
 											<div
 												className={styles.cancel_btn}
 												onClick={() => handleCancelRequest(userData._id)}
 											>
 												Cancel request
 											</div>
-										) : null}
-										{userData.outgoing_friend_requests.includes(user._id) ? (
+										)}
+										{userData.outgoing_friend_requests.includes(user._id) && (
 											<div
 												className={styles.cancel_btn}
 												onClick={(e) => handleCancelRequest(userData._id)}
 											>
 												Decline request
 											</div>
-										) : null}
+										)}
 										{userData.friend_list.includes(user._id) ? (
 											<div
 												className={styles.cancel_btn}
@@ -391,19 +391,18 @@ const Profile = () => {
 											</div>
 										)}
 									</div>
-								) : null}
+								)}
 							</div>
-						)
-					) : null}
+						))}
 				</div>
 			</div>
-			{showModal && userData ? (
+			{showModal && userData && (
 				<EditProfileModal
 					closeModal={closeModal}
 					setData={setUserData}
 					data={userData}
 				/>
-			) : null}
+			)}
 		</div>
 	);
 };

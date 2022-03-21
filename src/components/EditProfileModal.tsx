@@ -134,7 +134,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 							<div className={styles.section_name}>
 								<h3>Profile picture</h3>
 								<div className={styles.controls}>
-									{pictureData ? (
+									{pictureData && (
 										<button
 											type='button'
 											className={`btn-default btn-danger ${styles.remove_btn}`}
@@ -142,7 +142,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 										>
 											Remove
 										</button>
-									) : null}
+									)}
 									<button
 										type='button'
 										className={`btn-default btn-active ${styles.add_btn}`}
@@ -203,9 +203,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 								<p>{bioInput}</p>
 							)}
 						</div>
-						{errorsDisplay ? (
-							<ul className='error-list'>{errorsDisplay}</ul>
-						) : null}
+						{errorsDisplay && <ul className='error-list'>{errorsDisplay}</ul>}
 						<button
 							type='submit'
 							className='btn-default btn-form-submit'

@@ -86,8 +86,8 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 				</h4>
 			</Link>
 			<div className={styles.controls}>
-				{user._id ? (
-					userData.blocked_by_other_list.includes(user._id) ? (
+				{user._id &&
+					(userData.blocked_by_other_list.includes(user._id) ? (
 						<button
 							type='button'
 							className={`btn-default btn-disabled ${styles.blocked}`}
@@ -131,8 +131,7 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 						>
 							Add Friend
 						</button>
-					)
-				) : null}
+					))}
 			</div>
 		</li>
 	) : null;

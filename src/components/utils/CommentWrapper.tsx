@@ -124,7 +124,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 							<span className={styles.comment_text}>
 								<p>{commentData.text}</p>
 							</span>
-							{commentData.likes.includes(user._id) ? (
+							{commentData.likes.includes(user._id) && (
 								<div
 									className={styles.liked}
 									onClick={() =>
@@ -133,10 +133,10 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 								>
 									<span></span>
 								</div>
-							) : null}
+							)}
 						</div>
 						<div className={styles.right}>
-							{user._id === commentData.author._id ? (
+							{user._id === commentData.author._id && (
 								<>
 									<span
 										className={styles.options_toggle}
@@ -148,7 +148,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 											</g>
 										</svg>
 									</span>
-									{showOptions ? (
+									{showOptions && (
 										<div ref={optionsRef} className={styles.options_menu}>
 											<div className={styles.edit_btn} onClick={openEditForm}>
 												Edit comment
@@ -160,9 +160,9 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 												Delete comment
 											</div>
 										</div>
-									) : null}
+									)}
 								</>
-							) : null}
+							)}
 						</div>
 					</div>
 					<span className={styles.controls}>
@@ -185,13 +185,13 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 						</div>
 					</span>
 				</div>
-				{showModal ? (
+				{showModal && (
 					<DeleteModal
 						closeModal={closeDeleteModal}
 						setData={setCommentData}
 						comment={commentData}
 					/>
-				) : null}
+				)}
 			</li>
 		)
 	) : null;
