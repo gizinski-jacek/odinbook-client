@@ -3,9 +3,21 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
-import { io } from 'socket.io-client';
-import { User } from '../myTypes';
+import { io, Socket } from 'socket.io-client';
+import { Chatroom, MessageNew, User } from '../myTypes';
 import styles from '../styles/Chat.module.scss';
+import LoadingIcon from './utils/LoadingIcon';
+
+type ServerToClientEvents = {
+	oops: (error: any) => void;
+	load_chat: (data: Chatroom) => void;
+	receive_message: (data: Chatroom) => void;
+};
+
+type ClientToServerEvents = {
+	open_chat: (participants: string[]) => void;
+	send_message: (message: MessageNew) => void;
+};
 
 type Props = {
 	closeChat: Function;
@@ -15,21 +27,20 @@ type Props = {
 const Chat: React.FC<Props> = ({ closeChat, recipient }) => {
 	const { user } = useContext(UserContext);
 
-	const lastMsg = useRef(null);
+	const lastMsg = useRef<HTMLLIElement>(null);
 
-	const [socket, setSocket] = useState(null);
-	const [chatData, setChatData] = useState<{
-		_id: string;
-		participants: string[];
-		message_list: [{ chat_ref: string; author: string; text: string }];
-		last_message?: Number;
-	}>();
+	const [isLoading, setIsLoading] = useState(true);
+	const [socket, setSocket] = useState<Socket<
+		ServerToClientEvents,
+		ClientToServerEvents
+	> | null>(null);
+	const [chatData, setChatData] = useState<Chatroom>();
 	const [messageInput, setMessageInput] = useState('');
 
 	useEffect(() => {
-		const newSocket = io('http://localhost:4000');
+		const newSocket = io(`${process.env.REACT_APP_API_URL}`);
 		setSocket(newSocket);
-		return () => newSocket.close();
+		return () => newSocket.disconnect();
 	}, [setSocket]);
 
 	useEffect(() => {
@@ -38,6 +49,7 @@ const Chat: React.FC<Props> = ({ closeChat, recipient }) => {
 		}
 		const participants = [user._id, recipient._id].sort();
 		socket.emit('open_chat', participants);
+
 		return () => socket.off();
 	}, [socket, user, recipient]);
 
@@ -45,59 +57,64 @@ const Chat: React.FC<Props> = ({ closeChat, recipient }) => {
 		if (!socket) {
 			return;
 		}
-		socket.on('chat_error', (error) => {
+		socket.on('oops', (error) => {
 			console.error(error);
 		});
 		socket.on('load_chat', (data) => {
 			setChatData(data);
+			setIsLoading(false);
 			lastMsg?.current?.scrollIntoView({ behavior: 'smooth' });
 		});
 		socket.on('receive_message', (data) => {
 			setChatData(data);
 			lastMsg?.current?.scrollIntoView({ behavior: 'smooth' });
 		});
+
 		return () => socket.off();
 	}, [socket]);
 
 	const handleSubmit = (
 		e: React.FormEvent<HTMLFormElement>,
 		chatId: string,
-		senderId: string,
-		string: string,
-		recipientId: string
+		userId: string,
+		string: string
 	) => {
 		e.preventDefault();
-		socket.emit('send_message', { chatId, senderId, recipientId, string });
+		if (!socket) {
+			return;
+		}
+		socket.emit('send_message', { chatId, userId, string });
 		setMessageInput('');
 	};
 
-	const messageDisplay = chatData?.message_list.map((message, index, arr) => {
-		return (
-			<li
-				key={index}
-				className={
-					user._id === message.author._id
-						? styles.user_message
-						: styles.recipient_message
-				}
-				ref={index === arr.length - 1 ? lastMsg : null}
-			>
-				{recipient._id === message.author._id && (
-					<div className='profile-pic-style'>
-						<img
-							src={
-								recipient.profile_picture
-									? `http://localhost:4000/photos/${recipient.profile_picture}`
-									: '/placeholder_profile_pic.png'
-							}
-							alt={`${recipient.first_name} ${recipient.last_name}`}
-						/>
-					</div>
-				)}
-				<p>{message.text}</p>
-			</li>
-		);
-	});
+	const messageDisplay = chatData?.message_list
+		.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
+		.map((message, index, arr) => {
+			return (
+				<li
+					key={index}
+					className={
+						user._id === message.author._id
+							? styles.user_message
+							: styles.recipient_message
+					}
+				>
+					{recipient._id === message.author._id && (
+						<div className='profile-pic-style'>
+							<img
+								src={
+									recipient.profile_picture
+										? `http://localhost:4000/photos/${recipient.profile_picture}`
+										: '/placeholder_profile_pic.png'
+								}
+								alt={`${recipient.first_name} ${recipient.last_name}`}
+							/>
+						</div>
+					)}
+					<p>{message.text}</p>
+				</li>
+			);
+		});
 
 	return (
 		<div className={styles.chat_window}>
@@ -116,34 +133,45 @@ const Chat: React.FC<Props> = ({ closeChat, recipient }) => {
 					<span></span>
 				</button>
 			</div>
-			<hr />
-			<div className={styles.body}>
-				<ul className={styles.message_list}>
-					{messageDisplay && messageDisplay.length > 0 && messageDisplay}
-				</ul>
-				<form
-					onSubmit={(e) =>
-						handleSubmit(e, chatData._id, user._id, messageInput, recipient._id)
-					}
-				>
-					<label>
-						<input
-							type='text'
-							id='message'
-							name='message'
-							minLength={1}
-							maxLength={64}
-							value={messageInput}
-							onChange={(e) => setMessageInput(e.target.value)}
-							required
-							placeholder='Message'
-						/>
-					</label>
-					<button type='submit' className='btn-default btn-confirm'>
-						Send
-					</button>
-				</form>
-			</div>
+			{isLoading ? (
+				<LoadingIcon text={'Loading Messages'} />
+			) : (
+				<>
+					<hr />
+					<div className={styles.body}>
+						<ul className={styles.message_list}>
+							{messageDisplay && messageDisplay.length > 0 && messageDisplay}
+							<li ref={lastMsg}></li>
+						</ul>
+						<form
+							onSubmit={(e) =>
+								handleSubmit(e, chatData._id, user._id, messageInput)
+							}
+						>
+							<label>
+								<input
+									type='text'
+									id='message'
+									name='message'
+									minLength={1}
+									maxLength={64}
+									value={messageInput}
+									onChange={(e) => setMessageInput(e.target.value)}
+									required
+									placeholder='Message'
+								/>
+							</label>
+							<button
+								type='submit'
+								className='btn-default btn-confirm'
+								disabled={messageInput ? false : true}
+							>
+								Send
+							</button>
+						</form>
+					</div>
+				</>
+			)}
 		</div>
 	);
 };
