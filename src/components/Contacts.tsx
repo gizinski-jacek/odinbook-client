@@ -11,7 +11,7 @@ const Contacts = () => {
 
 	const [requestsData, setRequestsData] = useState<User[]>([]);
 	const [friendsData, setFriendsData] = useState<User[]>([]);
-	const [conversationsData, setConversationsData] = useState<User[]>([]);
+	// const [conversationsData, setConversationsData] = useState<User[]>([]);
 
 	useEffect(() => {
 		(async () => {
@@ -98,38 +98,38 @@ const Contacts = () => {
 		);
 	});
 
-	const conversationsDisplay = friendsData?.map((group) => {
-		return (
-			<li key={group._id} className={styles.group}>
-				<div className='profile-pic-style'>
-					<span>
-						<img
-							src={
-								group.profile_picture
-									? `http://localhost:4000/photos/${group.profile_picture}`
-									: '/placeholder_profile_pic.png'
-							}
-							alt='User profile pic'
-						/>
-						<img
-							src={
-								group.profile_picture
-									? `http://localhost:4000/photos/${group.profile_picture}`
-									: '/placeholder_profile_pic.png'
-							}
-							alt='User profile pic'
-						/>
-					</span>
-				</div>
-				<div>
-					<div>
-						{/* First names of user's in group convo */}
-						{group.first_name} {group.first_name}
-					</div>
-				</div>
-			</li>
-		);
-	});
+	// const conversationsDisplay = friendsData?.map((group) => {
+	// 	return (
+	// 		<li key={group._id} className={styles.group}>
+	// 			<div className='profile-pic-style'>
+	// 				<span>
+	// 					<img
+	// 						src={
+	// 							group.profile_picture
+	// 								? `http://localhost:4000/photos/${group.profile_picture}`
+	// 								: '/placeholder_profile_pic.png'
+	// 						}
+	// 						alt='User profile pic'
+	// 					/>
+	// 					<img
+	// 						src={
+	// 							group.profile_picture
+	// 								? `http://localhost:4000/photos/${group.profile_picture}`
+	// 								: '/placeholder_profile_pic.png'
+	// 						}
+	// 						alt='User profile pic'
+	// 					/>
+	// 				</span>
+	// 			</div>
+	// 			<div>
+	// 				<div>
+	// 					{/* First names of user's in group convo */}
+	// 					{group.first_name} {group.first_name}
+	// 				</div>
+	// 			</div>
+	// 		</li>
+	// 	);
+	// });
 
 	return (
 		<div className={styles.contacts}>
@@ -156,8 +156,8 @@ const Contacts = () => {
 				</div>
 				<ul>{friendsDisplay}</ul>
 			</div>
-			<hr />
-			<div className={styles.group_conversations}>
+			{/* <hr /> */}
+			{/* <div className={styles.group_conversations}>
 				<div className={styles.top}>
 					<h3>Group conversations</h3>
 				</div>
@@ -170,7 +170,7 @@ const Contacts = () => {
 						<h4>Create New Group</h4>
 					</li>
 				</ul>
-			</div>
+			</div> */}
 		</div>
 	);
 };
