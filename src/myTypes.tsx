@@ -3,7 +3,7 @@ export type PostFull = {
 	author: User;
 	text: string;
 	comments: CommentFull[];
-	likes: any;
+	likes: string[];
 	createdAt: string;
 	updatedAt: string;
 };
@@ -12,7 +12,7 @@ export type PostNew = {
 	_id?: string;
 	author?: User;
 	text: string;
-	comments?: string[];
+	comments?: CommentFull[];
 	likes?: string[];
 	createdAt?: string;
 	updatedAt?: string;
@@ -23,7 +23,7 @@ export type CommentFull = {
 	author: User;
 	post_ref: string;
 	text: string;
-	likes: any;
+	likes: string[];
 	createdAt: string;
 	updatedAt: string;
 };
@@ -33,7 +33,7 @@ export type CommentNew = {
 	author?: User;
 	post_ref?: string;
 	text: string;
-	likes?: any;
+	likes?: string[];
 	createdAt?: string;
 	updatedAt?: string;
 };
@@ -62,4 +62,30 @@ export type SignUpForm = {
 	last_name: string;
 	email: string;
 	password: string;
+};
+
+export type Chatroom = {
+	_id: string;
+	participants: string[];
+	message_list: Message[];
+	createdAt: string;
+	updatedAt: string;
+};
+
+export type Message = {
+	_id: string;
+	chat_ref: string;
+	author: User;
+	text: string;
+	createdAt: string;
+	updatedAt: string;
+};
+
+export type MessageNew = {
+	_id?: string;
+	chat_ref?: string;
+	author?: User;
+	text: string;
+	createdAt?: string;
+	updatedAt?: string;
 };
