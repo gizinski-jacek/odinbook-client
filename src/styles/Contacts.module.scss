@@ -57,73 +57,73 @@
 	}
 }
 
-.new_group {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	padding: 8px;
-	border-radius: 8px;
-	cursor: pointer;
+// .new_group {
+// 	display: flex;
+// 	flex-direction: row;
+// 	align-items: center;
+// 	padding: 8px;
+// 	border-radius: 8px;
+// 	cursor: pointer;
 
-	.plus_btn {
-		padding: 8px;
-		margin-right: 12px;
-		background-color: variables.$black-a05;
-		border-radius: 50%;
+// 	.plus_btn {
+// 		padding: 8px;
+// 		margin-right: 12px;
+// 		background-color: variables.$black-a05;
+// 		border-radius: 50%;
 
-		span {
-			width: 20px;
-			height: 20px;
-			display: block;
-			background-size: auto;
-			background-repeat: no-repeat;
-			background-image: url('../../public/multi_icons/icons_4.png');
-			background-position: -42px -272px;
-		}
-	}
-}
+// 		span {
+// 			width: 20px;
+// 			height: 20px;
+// 			display: block;
+// 			background-size: auto;
+// 			background-repeat: no-repeat;
+// 			background-image: url('../../public/multi_icons/icons_4.png');
+// 			background-position: -42px -272px;
+// 		}
+// 	}
+// }
 
-.new_group:hover {
-	background-color: variables.$black-a05;
-}
+// .new_group:hover {
+// 	background-color: variables.$black-a05;
+// }
 
-.group {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	border-radius: 8px;
-	padding: 8px;
-	cursor: pointer;
+// .group {
+// 	display: flex;
+// 	flex-direction: row;
+// 	align-items: center;
+// 	border-radius: 8px;
+// 	padding: 8px;
+// 	cursor: pointer;
 
-	span {
-		display: block;
-		position: relative;
-		height: 36px;
-		width: 36px;
-		margin-right: 12px;
+// 	span {
+// 		display: block;
+// 		position: relative;
+// 		height: 36px;
+// 		width: 36px;
+// 		margin-right: 12px;
 
-		img {
-			position: absolute;
-			width: 24px;
-			height: 24px;
-		}
+// 		img {
+// 			position: absolute;
+// 			width: 24px;
+// 			height: 24px;
+// 		}
 
-		img:first-child {
-			top: 0;
-			right: 0;
-		}
+// 		img:first-child {
+// 			top: 0;
+// 			right: 0;
+// 		}
 
-		img:nth-child(2) {
-			bottom: 0;
-			left: 0;
-		}
-	}
-}
+// 		img:nth-child(2) {
+// 			bottom: 0;
+// 			left: 0;
+// 		}
+// 	}
+// }
 
-.group:hover {
-	background-color: variables.$black-a05;
+// .group:hover {
+// 	background-color: variables.$black-a05;
 
-	span {
-		filter: brightness(95%);
-	}
-}
+// 	span {
+// 		filter: brightness(95%);
+// 	}
+// }
