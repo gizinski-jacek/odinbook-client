@@ -84,7 +84,7 @@ export type Message = {
 export type MessageNew = {
 	_id?: string;
 	chat_ref?: string;
-	author?: User;
+	author?: string;
 	text: string;
 	createdAt?: string;
 	updatedAt?: string;
