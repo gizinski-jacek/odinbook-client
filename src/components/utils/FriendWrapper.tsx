@@ -1,7 +1,22 @@
-import { useRef, useState } from 'react';
-import type { User } from '../../myTypes';
+// @ts-nocheck
+
+import { useContext, useEffect, useRef, useState } from 'react';
+import { io, Socket } from 'socket.io-client';
+import { UserContext } from '../hooks/UserContext';
+import type { Chatroom, User } from '../../myTypes';
 import styles from '../../styles/Friend.module.scss';
 import Chat from '../Chat';
+
+type ServerToClientEvents = {
+	oops: (error: any) => void;
+	load_chat: (data: Chatroom) => void;
+	receive_message: (data: Chatroom) => void;
+};
+
+type ClientToServerEvents = {
+	chat_subscribe: (participants: string[]) => void;
+	open_chat: (participants: string[]) => void;
+};
 
 type Props = {
 	handleRemove: Function;
@@ -9,10 +24,52 @@ type Props = {
 };
 
 const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
+	const { user } = useContext(UserContext);
+
 	const optionsRef = useRef<HTMLDivElement>(null);
 
 	const [showOptions, setShowOptions] = useState(false);
 	const [showChat, setShowChat] = useState(false);
+	const [socket, setSocket] = useState<Socket<
+		ServerToClientEvents,
+		ClientToServerEvents
+	> | null>(null);
+	const [chatData, setChatData] = useState<Chatroom | null>(null);
+
+	useEffect(() => {
+		const newSocket = io(`${process.env.REACT_APP_API_URL}`);
+		setSocket(newSocket);
+
+		return () => newSocket.disconnect();
+	}, [setSocket]);
+
+	useEffect(() => {
+		if (!socket) {
+			return;
+		}
+		const participants = [user._id, friend._id].sort();
+		socket.emit('chat_subscribe', participants);
+
+		return () => socket.off();
+	}, [socket, user, friend]);
+
+	useEffect(() => {
+		if (!socket) {
+			return;
+		}
+		socket.on('oops', (error) => {
+			console.error(error);
+		});
+		socket.on('load_chat', (data) => {
+			setChatData(data);
+		});
+		socket.on('receive_message', (data) => {
+			setChatData(data);
+			setShowChat(true);
+		});
+
+		return () => socket.off();
+	}, [socket]);
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
@@ -30,6 +87,11 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 
 	const openChat = (e: React.MouseEvent<HTMLLIElement>) => {
 		e.stopPropagation();
+		if (!socket) {
+			return;
+		}
+		const participants = [user._id, friend._id].sort();
+		socket.emit('open_chat', participants);
 		setShowChat(true);
 	};
 
@@ -76,7 +138,14 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 					)}
 				</div>
 			</li>
-			{showChat && <Chat closeChat={closeChat} recipient={friend} />}
+			{showChat && chatData && (
+				<Chat
+					data={chatData}
+					socket={socket}
+					closeChat={closeChat}
+					recipient={friend}
+				/>
+			)}
 		</>
 	);
 };
