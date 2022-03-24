@@ -3,6 +3,7 @@
 .menu_messenger {
 	display: flex;
 	flex-direction: column;
+	max-width: 360px;
 
 	.top {
 		display: flex;
@@ -64,10 +65,78 @@
 		background-color: variables.$black-a20;
 	}
 
-	.message_list {
-		li {
-			padding: 4px;
+	.message_list_container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		min-height: 60px;
+		margin: 0 8px;
+
+		.empty {
 			margin: 8px 0;
+			font-weight: 600;
+			color: variables.$black-a60;
+			text-align: center;
+		}
+
+		.message_list {
+			width: 100%;
+		}
+
+		.message {
+			display: flex;
+			flex-direction: row;
+			margin: 8px;
+			padding: 8px;
+			background-color: variables.$black-a05;
+			box-shadow: 0 1px 2px 0 variables.$black-a20;
+			border-radius: 8px;
+
+			img {
+				margin-right: 8px;
+				margin-bottom: 4px;
+				width: 32px;
+				height: 32px;
+				cursor: initial;
+			}
+
+			.timestamp {
+				color: variables.$blue;
+			}
+
+			.contents {
+				max-width: fit-content;
+				display: -webkit-box;
+				-webkit-line-clamp: 3;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				margin-right: 8px;
+			}
+
+			.dismiss_btn {
+				height: fit-content;
+				margin-left: auto;
+				padding: 8px;
+				background-color: variables.$black-a10;
+				border-radius: 50%;
+				cursor: pointer;
+
+				span {
+					width: 8px;
+					height: 8px;
+					display: block;
+					background-size: auto;
+					background-repeat: no-repeat;
+					background-image: url('../../../public/multi_icons/icons_6.png');
+					background-position: -111px -73px;
+				}
+			}
+
+			.dismiss_btn:hover {
+				background-color: variables.$black-a20;
+			}
 		}
 	}
 
@@ -83,6 +152,7 @@
 		color: variables.$blue;
 		text-align: center;
 		margin: 8px;
+		margin-bottom: 16px;
 	}
 
 	a:hover {
