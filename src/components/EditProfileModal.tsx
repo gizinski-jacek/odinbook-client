@@ -5,8 +5,10 @@ import styles from '../styles/EditProfileModal.module.scss';
 import { UserContext } from './hooks/UserContext';
 
 type Props = {
-	closeModal: Function;
-	setData: Function;
+	closeModal: (
+		e: React.MouseEvent<HTMLElement> | React.FormEvent<HTMLFormElement>
+	) => void;
+	setData: (data: User) => void;
 	data: User;
 };
 

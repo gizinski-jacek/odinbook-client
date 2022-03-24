@@ -21,7 +21,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 
 	const params = useParams();
 
-	const [postData, setPostData] = useState<PostFull>(post);
+	const [postData, setPostData] = useState<PostFull | null>(post);
 	const [formData, setFormData] = useState({ text: '' });
 	const [showOptions, setShowOptions] = useState(false);
 	const [showEditModal, setShowEditModal] = useState(false);
@@ -60,7 +60,9 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		setShowOptions(false);
 	};
 
-	const closeEditModal = (e: React.MouseEvent<HTMLDivElement>) => {
+	const closeEditModal = (
+		e: React.MouseEvent<HTMLElement> | React.FormEvent<HTMLFormElement>
+	) => {
 		e.stopPropagation();
 		setShowEditModal(false);
 	};
@@ -71,7 +73,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		setShowOptions(false);
 	};
 
-	const closeDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
+	const closeDeleteModal = (e: React.MouseEvent<HTMLElement>) => {
 		e.stopPropagation();
 		setShowDeleteModal(false);
 	};
@@ -215,7 +217,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 					</div>
 				</span>
 			</div>
-			{showCommentsList && commentsDisplay.length > 0 && (
+			{showCommentsList && commentsDisplay && commentsDisplay.length > 0 && (
 				<div className={styles.comments_container}>
 					<ul>{commentsDisplay}</ul>
 				</div>
@@ -258,7 +260,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 			{showEditModal && (
 				<PostFormModal
 					closeModal={closeEditModal}
-					setData={setPostData}
+					setPost={setPostData}
 					post={postData}
 				/>
 			)}

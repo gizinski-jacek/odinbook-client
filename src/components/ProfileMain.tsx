@@ -16,7 +16,7 @@ const Profile = () => {
 	const [userData, setUserData] = useState<User>();
 	const [showOptions, setShowOptions] = useState(false);
 	const [showModal, setShowModal] = useState(false);
-	const [errors, setErrors] = useState<{ msg: string }[]>();
+	const [errors, setErrors] = useState<{ msg: string }[]>([]);
 	const [changePassword, setChangePassword] = useState(false);
 	const [passwordData, setPasswordData] = useState({ password: '' });
 
@@ -35,7 +35,9 @@ const Profile = () => {
 		setShowModal(true);
 	};
 
-	const closeModal = (e: React.MouseEvent<HTMLDivElement>) => {
+	const closeModal = (
+		e: React.MouseEvent<HTMLElement> | React.FormEvent<HTMLFormElement>
+	) => {
 		e.stopPropagation();
 		setShowModal(false);
 	};
@@ -115,7 +117,7 @@ const Profile = () => {
 		e.stopPropagation();
 		setChangePassword((prevState) => !prevState);
 		setPasswordData({ password: '' });
-		setErrors(undefined);
+		setErrors([]);
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -213,7 +215,7 @@ const Profile = () => {
 										className={styles.change_password_form}
 										onSubmit={(e) => handlePasswordChange(e, passwordData)}
 									>
-										{errorsDisplay && (
+										{errorsDisplay.length > 0 && (
 											<ul className='error-list'>{errorsDisplay}</ul>
 										)}
 										<input

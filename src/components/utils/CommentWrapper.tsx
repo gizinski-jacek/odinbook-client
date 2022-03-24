@@ -17,7 +17,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 
 	const optionsRef = useRef<HTMLDivElement>(null);
 
-	const [commentData, setCommentData] = useState<CommentFull>(comment);
+	const [commentData, setCommentData] = useState<CommentFull | null>(comment);
 	const [editComment, setEditComment] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
 	const [showModal, setShowModal] = useState(false);
@@ -42,7 +42,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 		setShowOptions(false);
 	};
 
-	const closeEditForm = (e: React.MouseEvent<HTMLDivElement>) => {
+	const closeEditForm = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		setEditComment(false);
 	};
@@ -53,7 +53,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 		setShowOptions(false);
 	};
 
-	const closeDeleteModal = (e: React.MouseEvent<HTMLDivElement>) => {
+	const closeDeleteModal = (e: React.MouseEvent<HTMLElement>) => {
 		e.stopPropagation();
 		setShowModal(false);
 	};

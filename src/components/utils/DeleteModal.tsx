@@ -3,8 +3,8 @@ import { axiosDelete } from './axiosFunctions';
 import styles from '../../styles/DeleteModal.module.scss';
 
 type Props = {
-	closeModal: Function;
-	setData: Function;
+	closeModal: (e: React.MouseEvent<HTMLElement>) => void;
+	setData: (value: null) => void;
 	post?: PostFull | undefined;
 	comment?: CommentFull | undefined;
 };

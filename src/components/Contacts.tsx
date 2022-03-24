@@ -62,7 +62,7 @@ const Contacts = () => {
 	};
 
 	const handleRemoveFriend = async (
-		e: React.MouseEvent<HTMLButtonElement>,
+		e: React.MouseEvent<HTMLDivElement>,
 		userId: string
 	) => {
 		e.stopPropagation();

@@ -6,12 +6,21 @@ import { axiosPost, axiosPut } from './axiosFunctions';
 import styles from '../../styles/PostFormModal.module.scss';
 
 type Props = {
-	closeModal: Function;
-	setData: Function;
+	closeModal: (
+		e: React.MouseEvent<HTMLElement> | React.FormEvent<HTMLFormElement>,
+		data: PostFull | PostNew
+	) => void;
+	setTimeline?: (data: PostFull[]) => void;
+	setPost?: (data: PostFull) => void;
 	post: PostFull | PostNew;
 };
 
-const PostFormModal: React.FC<Props> = ({ closeModal, setData, post }) => {
+const PostFormModal: React.FC<Props> = ({
+	closeModal,
+	setTimeline,
+	setPost,
+	post,
+}) => {
 	const { user } = useContext(UserContext);
 
 	const [formData, setFormData] = useState<PostFull | PostNew>(post);
@@ -30,10 +39,10 @@ const PostFormModal: React.FC<Props> = ({ closeModal, setData, post }) => {
 	) => {
 		e.preventDefault();
 		try {
-			if (post._id) {
-				setData(await axiosPut(`/api/posts/${data._id}`, data));
-			} else {
-				setData(await axiosPost('/api/posts', data));
+			if (post._id && setPost) {
+				setPost(await axiosPut(`/api/posts/${data._id}`, data));
+			} else if (setTimeline) {
+				setTimeline(await axiosPost('/api/posts', data));
 			}
 			closeModal(e, { text: '' });
 		} catch (error: any) {

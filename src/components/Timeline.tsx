@@ -10,7 +10,7 @@ import styles from '../styles/Timeline.module.scss';
 const Timeline = () => {
 	const { user } = useContext(UserContext);
 
-	const [postsData, setPostsData] = useState<PostFull[]>();
+	const [postsData, setPostsData] = useState<PostFull[]>([]);
 	const [formData, setFormData] = useState<PostNew>({ text: '' });
 	const [showModal, setShowModal] = useState(false);
 
@@ -29,7 +29,10 @@ const Timeline = () => {
 		setShowModal(true);
 	};
 
-	const closeModal = (e: React.MouseEvent<HTMLDivElement>, data: PostNew) => {
+	const closeModal = (
+		e: React.MouseEvent<HTMLElement> | React.FormEvent<HTMLFormElement>,
+		data: PostFull | PostNew
+	) => {
 		e.stopPropagation();
 		if (data._id) {
 			setFormData({ text: '' });
@@ -72,11 +75,11 @@ const Timeline = () => {
 			{showModal && (
 				<PostFormModal
 					closeModal={closeModal}
-					setData={setPostsData}
+					setTimeline={setPostsData}
 					post={formData}
 				/>
 			)}
-			{postsDisplay && postsDisplay}
+			{postsDisplay.length > 0 && postsDisplay}
 		</div>
 	);
 };

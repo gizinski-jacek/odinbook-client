@@ -4,7 +4,7 @@ import { axiosPost } from './utils/axiosFunctions';
 import styles from '../styles/SignUp.module.scss';
 
 type Props = {
-	setShowLogIn: Function;
+	setShowLogIn: (value: boolean) => void;
 };
 
 type FormData = {

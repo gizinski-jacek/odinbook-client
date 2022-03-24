@@ -4,8 +4,11 @@ import type { CommentFull } from '../../myTypes';
 import styles from '../../styles/EditCommentForm.module.scss';
 
 type Props = {
-	closeModal: Function;
-	handleUpdate: Function;
+	closeModal: (e: React.MouseEvent<HTMLButtonElement>) => void;
+	handleUpdate: (
+		e: React.FormEvent<HTMLFormElement>,
+		data: CommentFull
+	) => void;
 	comment: CommentFull;
 };
 

@@ -5,7 +5,7 @@ import { axiosPost } from './utils/axiosFunctions';
 import styles from '../styles/LogIn.module.scss';
 
 type Props = {
-	setShowLogIn: Function;
+	setShowLogIn: (value: boolean) => void;
 };
 
 type FormData = {
@@ -16,7 +16,7 @@ type FormData = {
 const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 	const { setUser } = useContext(UserContext);
 
-	const [errors, setErrors] = useState<{ msg: string }[]>();
+	const [errors, setErrors] = useState<{ msg: string }[]>([]);
 	const [formData, setFormData] = useState<FormData>({
 		email: '',
 		password: '',
@@ -94,7 +94,9 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 							placeholder='Password'
 						/>
 					</fieldset>
-					{errorsDisplay && <ul className='error-list'>{errorsDisplay}</ul>}
+					{errorsDisplay.length > 0 && (
+						<ul className='error-list'>{errorsDisplay}</ul>
+					)}
 					<button type='submit' className='btn-default btn-confirm'>
 						Log In
 					</button>
