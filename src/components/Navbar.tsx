@@ -4,7 +4,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
 import { io } from 'socket.io-client';
-import type { Message, PostFull, SocketType } from '../myTypes';
+import type { PostFull, SocketType } from '../myTypes';
 import { axiosGet } from './utils/axiosFunctions';
 import AccountMenu from './menus/AccountMenu';
 import NotificationsMenu from './menus/NotificationsMenu';
