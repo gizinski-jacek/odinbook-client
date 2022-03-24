@@ -24,7 +24,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 	const [chatData, setChatData] = useState<Chatroom | null>(null);
 
 	useEffect(() => {
-		const newSocket = io(`${process.env.REACT_APP_API_URL}`);
+		const newSocket = io(`${process.env.REACT_APP_API_URI}`);
 		setSocket(newSocket);
 
 		return () => newSocket.disconnect();
@@ -98,7 +98,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 	return (
 		<>
 			<li className={styles.friend} onClick={openChat}>
-				<div className='profile-pic-style'>
+				<div className={`profile-pic-style ${styles.picture}`}>
 					<img
 						src={
 							friend.profile_picture
@@ -110,9 +110,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 					{newMessageAlert && <span className={styles.new_message}></span>}
 				</div>
 				<div>
-					<div>
-						{friend.first_name} {friend.last_name}
-					</div>
+					{friend.first_name} {friend.last_name}
 				</div>
 				<div className={styles.right}>
 					<span className={styles.options_toggle} onClick={toggleOptions}>

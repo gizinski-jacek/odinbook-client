@@ -170,7 +170,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 					)}
 				</div>
 			</div>
-			<div className={styles.post_text}>
+			<div className={styles.contents}>
 				<p>{postData.text}</p>
 			</div>
 			<div className={styles.bottom}>
