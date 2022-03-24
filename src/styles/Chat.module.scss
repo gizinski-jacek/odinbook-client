@@ -74,6 +74,9 @@
 
 		.user_message,
 		.recipient_message {
+			align-self: flex-start;
+			display: flex;
+			flex-direction: row;
 			width: fit-content;
 			max-width: 200px;
 			padding: 4px;
@@ -81,22 +84,33 @@
 			margin: 4px;
 		}
 
+		.timestamp {
+			color: variables.$blue;
+			direction: ltr;
+		}
+
 		.user_message {
 			align-self: flex-end;
-			text-align: end;
 			background-color: variables.$blue-a30;
+			direction: rtl;
+
+			img {
+				margin-left: 8px;
+			}
 		}
 
 		.recipient_message {
-			align-self: flex-start;
-			display: flex;
 			background-color: variables.$black-a10;
 			word-break: break-word;
 			overflow-wrap: anywhere;
+
+			img {
+				margin-right: 8px;
+			}
 		}
 
 		img {
-			margin-right: 8px;
+			margin-bottom: 4px;
 			width: 28px;
 			height: 28px;
 			cursor: initial;
