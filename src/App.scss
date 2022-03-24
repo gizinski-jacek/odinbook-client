@@ -187,7 +187,6 @@ button {
 }
 
 .profile-pic-style {
-	cursor: pointer;
 	width: fit-content;
 	height: fit-content;
 	border-radius: 50%;
@@ -195,6 +194,7 @@ button {
 	img {
 		border-radius: 50%;
 		box-shadow: 0 0 1px 0 variables.$black;
+		cursor: pointer;
 	}
 }
 
