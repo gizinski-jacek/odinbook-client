@@ -2,12 +2,13 @@
 
 .contacts {
 	flex: 1;
-	margin-top: 8px;
 	padding: 12px;
 	max-width: 360px;
 	display: flex;
 	flex-direction: column;
 	height: fit-content;
+	position: sticky;
+	top: calc(variables.$navbar-height + 8px);
 
 	hr {
 		width: 100%;
