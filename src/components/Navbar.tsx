@@ -1,7 +1,10 @@
+//@ts-nocheck
+
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
-import type { PostFull } from '../myTypes';
+import { io } from 'socket.io-client';
+import type { Message, PostFull, SocketType } from '../myTypes';
 import { axiosGet } from './utils/axiosFunctions';
 import AccountMenu from './menus/AccountMenu';
 import NotificationsMenu from './menus/NotificationsMenu';
@@ -23,7 +26,39 @@ const Navbar = () => {
 	const [searchInput, setSearchInput] = useState('');
 	const [searchData, setSearchData] = useState<PostFull[]>([]);
 	const [showResults, setShowResults] = useState(false);
+	const [messageAlert, setMessageAlert] = useState(false);
 	const [notificationAlert, setNotificationAlert] = useState(0);
+
+	const [socket, setSocket] = useState<SocketType | null>(null);
+
+	useEffect(() => {
+		const newSocket = io(`${process.env.REACT_APP_API_URL}`);
+		setSocket(newSocket);
+		return () => newSocket.disconnect();
+	}, [setSocket]);
+
+	useEffect(() => {
+		if (!socket) {
+			return;
+		}
+		socket.emit('subscribe_alerts', user._id);
+
+		return () => socket.off();
+	}, [socket, user]);
+
+	useEffect(() => {
+		if (!socket) {
+			return;
+		}
+		socket.on('oops', (error) => {
+			console.error(error);
+		});
+		socket.on('message_alert', () => {
+			setMessageAlert(true);
+		});
+
+		return () => socket.off();
+	}, [socket, messageAlert]);
 
 	useEffect(() => {
 		(async () => {
@@ -53,6 +88,12 @@ const Navbar = () => {
 		if (!openMenuContainer) {
 			setOpenMenuContainer(true);
 			setOpenMenuId(menuNumber);
+			if (menuNumber === 3) {
+				setMessageAlert(false);
+			}
+			if (menuNumber === 2) {
+				setNotificationAlert(false);
+			}
 			document.addEventListener('click', closeMenuContainer);
 			return;
 		}
@@ -406,7 +447,7 @@ const Navbar = () => {
 					<div ref={menuContainerRef} className={styles.menu_container}>
 						{openMenuId === 1 && <AccountMenu />}
 						{openMenuId === 2 && <NotificationsMenu />}
-						{openMenuId === 3 && <MessengerMenu />}
+						{openMenuId === 3 && <MessengerMenu socket={socket} />}
 						{openMenuId === 4 && <MainMenu />}
 					</div>
 				)}
