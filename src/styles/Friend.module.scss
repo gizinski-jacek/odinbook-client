@@ -8,6 +8,23 @@
 	padding: 8px;
 	cursor: pointer;
 
+	> div:first-child {
+		position: relative;
+	}
+
+	.new_message {
+		position: absolute;
+		top: 0;
+		right: 12px;
+		padding: 4px;
+		color: variables.$white;
+		background-color: variables.$red;
+		border-radius: 50%;
+		border: 1px solid variables.$black-a40;
+		font-weight: 600;
+		text-align: center;
+	}
+
 	img {
 		width: 36px;
 		height: 36px;
