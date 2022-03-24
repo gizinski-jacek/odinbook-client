@@ -22,7 +22,7 @@
 
 	a {
 		border-radius: 50%;
-		margin-right: 12px;
+		margin-right: 8px;
 	}
 
 	img {
@@ -45,12 +45,11 @@
 		cursor: pointer;
 
 		h4 {
-			overflow: hidden;
-			text-overflow: ellipsis;
 			display: -webkit-box;
 			-webkit-line-clamp: 2;
-			line-clamp: 2;
 			-webkit-box-orient: vertical;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 	}
 

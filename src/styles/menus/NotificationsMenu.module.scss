@@ -3,6 +3,7 @@
 .menu_notifications {
 	display: flex;
 	flex-direction: column;
+	max-width: 360px;
 
 	.top {
 		display: flex;

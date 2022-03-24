@@ -8,7 +8,7 @@
 	padding: 8px;
 	cursor: pointer;
 
-	> div:first-child {
+	.picture {
 		position: relative;
 	}
 
@@ -28,7 +28,7 @@
 	img {
 		width: 36px;
 		height: 36px;
-		margin-right: 12px;
+		margin-right: 8px;
 	}
 
 	.right {
