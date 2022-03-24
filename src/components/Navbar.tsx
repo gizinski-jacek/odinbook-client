@@ -32,7 +32,7 @@ const Navbar = () => {
 	const [socket, setSocket] = useState<SocketType | null>(null);
 
 	useEffect(() => {
-		const newSocket = io(`${process.env.REACT_APP_API_URL}`);
+		const newSocket = io(`${process.env.REACT_APP_API_URI}`);
 		setSocket(newSocket);
 		return () => newSocket.disconnect();
 	}, [setSocket]);
@@ -161,7 +161,7 @@ const Navbar = () => {
 							alt='User profile pic'
 						/>
 					</div>
-					<span className={styles.text}>{post.text}</span>
+					<span className={styles.contents}>{post.text}</span>
 				</Link>
 			</li>
 		);
