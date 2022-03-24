@@ -1,3 +1,5 @@
+import { Socket } from 'socket.io-client';
+
 export type PostFull = {
 	_id: string;
 	author: User;
@@ -88,4 +90,25 @@ export type MessageNew = {
 	text: string;
 	createdAt?: string;
 	updatedAt?: string;
+};
+
+export type SocketType = Socket<ServerToClientEvents, ClientToServerEvents>;
+
+type ServerToClientEvents = {
+	oops: (error: any) => void;
+	message_alert: () => void;
+	load_new_messages: (data: Message[]) => void;
+	new_notification: () => void;
+	load_chat: (data: Chatroom) => void;
+	receive_message: (data: Chatroom) => void;
+	new_message: () => void;
+};
+
+type ClientToServerEvents = {
+	subscribe_alerts: (userId: string) => void;
+	open_messages_menu: (userId: string) => void;
+	dismiss_message: (userId: string, messageId: string) => void;
+	subscribe_chat: (participants: string[]) => void;
+	open_chat: (participants: string[]) => void;
+	send_message: (message: MessageNew, recipient: string) => void;
 };
