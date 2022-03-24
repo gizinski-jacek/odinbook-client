@@ -1,44 +1,44 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
-import { Socket } from 'socket.io-client';
-import { Chatroom, MessageNew, User } from '../myTypes';
+import { Chatroom, SocketType, User } from '../myTypes';
 import styles from '../styles/Chat.module.scss';
 
-type ClientToServerEvents = {
-	send_message: (message: MessageNew) => void;
-};
-
 type Props = {
-	closeChat: Function;
+	closeChat: (e: React.MouseEvent<HTMLButtonElement>) => void;
 	recipient: User;
-	socket: Socket<ClientToServerEvents>;
+	socket: SocketType | null;
 	data: Chatroom;
 };
 
 const Chat: React.FC<Props> = ({ closeChat, recipient, socket, data }) => {
 	const { user } = useContext(UserContext);
 
-	const lastMsg = useRef<HTMLLIElement>(null);
+	const lastMessage = useRef<HTMLLIElement>(null);
 
 	const [messageInput, setMessageInput] = useState('');
 
 	useEffect(() => {
-		lastMsg?.current?.scrollIntoView({ behavior: 'smooth' });
+		lastMessage.current?.scrollIntoView({ behavior: 'smooth' });
 	}, [data]);
 
 	const handleSubmit = (
 		e: React.FormEvent<HTMLFormElement>,
 		chatId: string,
 		userId: string,
-		input: string
+		input: string,
+		recipient: string
 	) => {
 		e.preventDefault();
 		if (!socket) {
 			return;
 		}
-		const message = { chat_ref: chatId, author: userId, text: input };
-		socket.emit('send_message', message);
+		const message = {
+			chat_ref: chatId,
+			author: userId,
+			text: input,
+		};
+		socket.emit('send_message', message, recipient);
 		setMessageInput('');
 	};
 
@@ -92,10 +92,12 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, socket, data }) => {
 			<div className={styles.body}>
 				<ul className={styles.message_list}>
 					{messageDisplay && messageDisplay.length > 0 && messageDisplay}
-					<li ref={lastMsg}></li>
+					<li ref={lastMessage}></li>
 				</ul>
 				<form
-					onSubmit={(e) => handleSubmit(e, data._id, user._id, messageInput)}
+					onSubmit={(e) =>
+						handleSubmit(e, data._id, user._id, messageInput, recipient._id)
+					}
 				>
 					<label>
 						<input
