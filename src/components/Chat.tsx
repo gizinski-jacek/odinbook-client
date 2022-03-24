@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
 import { Chatroom, SocketType, User } from '../myTypes';
+import timeSinceDate from './utils/timeSinceDate';
 import styles from '../styles/Chat.module.scss';
 
 type Props = {
@@ -44,7 +45,7 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, socket, data }) => {
 
 	const messageDisplay = data?.message_list
 		.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
-		.map((message, index, arr) => {
+		.map((message, index) => {
 			return (
 				<li
 					key={index}
@@ -54,18 +55,19 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, socket, data }) => {
 							: styles.recipient_message
 					}
 				>
-					{recipient._id === message.author._id && (
-						<div className='profile-pic-style'>
-							<img
-								src={
-									recipient.profile_picture
-										? `http://localhost:4000/photos/${recipient.profile_picture}`
-										: '/placeholder_profile_pic.png'
-								}
-								alt={`${recipient.first_name} ${recipient.last_name}`}
-							/>
-						</div>
-					)}
+					<div className='profile-pic-style'>
+						<img
+							src={
+								message.author.profile_picture
+									? `http://localhost:4000/photos/${message.author.profile_picture}`
+									: '/placeholder_profile_pic.png'
+							}
+							alt={`${message.author.first_name} ${message.author.last_name}`}
+						/>
+						<h6 className={styles.timestamp}>
+							{timeSinceDate(message.createdAt, true)}
+						</h6>
+					</div>
 					<p>{message.text}</p>
 				</li>
 			);
