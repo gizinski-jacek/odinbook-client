@@ -55,7 +55,7 @@ const NotificationsMenu = () => {
 		}
 	};
 
-	const notificationsRequestsDisplay = requestsData?.map((request) => {
+	const requestsDisplay = requestsData?.map((request) => {
 		return (
 			<RequestWrapper
 				key={request._id}
@@ -71,18 +71,15 @@ const NotificationsMenu = () => {
 			<div className={styles.top}>
 				<h3>Notifications</h3>
 			</div>
-			{notificationsRequestsDisplay && (
-				<div className={styles.notification_list}>
-					{notificationsRequestsDisplay &&
-					notificationsRequestsDisplay?.length > 0 ? (
-						<ul>{notificationsRequestsDisplay}</ul>
-					) : (
-						<div className={styles.empty}>
-							<h4>No notifications to show</h4>
-						</div>
-					)}
-				</div>
-			)}
+			<div className={styles.notification_list}>
+				{requestsDisplay.length > 0 ? (
+					<ul>{requestsDisplay}</ul>
+				) : (
+					<div className={styles.empty}>
+						<h4>No new notifications</h4>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 };
