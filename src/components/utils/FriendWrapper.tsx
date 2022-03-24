@@ -1,25 +1,14 @@
 // @ts-nocheck
 
 import { useContext, useEffect, useRef, useState } from 'react';
-import { io, Socket } from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { UserContext } from '../hooks/UserContext';
-import type { Chatroom, User } from '../../myTypes';
+import type { Chatroom, SocketType, User } from '../../myTypes';
 import styles from '../../styles/Friend.module.scss';
 import Chat from '../Chat';
 
-type ServerToClientEvents = {
-	oops: (error: any) => void;
-	load_chat: (data: Chatroom) => void;
-	receive_message: (data: Chatroom) => void;
-};
-
-type ClientToServerEvents = {
-	chat_subscribe: (participants: string[]) => void;
-	open_chat: (participants: string[]) => void;
-};
-
 type Props = {
-	handleRemove: Function;
+	handleRemove: (e: React.MouseEvent<HTMLDivElement>, id: string) => void;
 	friend: User;
 };
 
@@ -30,10 +19,8 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 
 	const [showOptions, setShowOptions] = useState(false);
 	const [showChat, setShowChat] = useState(false);
-	const [socket, setSocket] = useState<Socket<
-		ServerToClientEvents,
-		ClientToServerEvents
-	> | null>(null);
+	const [socket, setSocket] = useState<SocketType | null>(null);
+	const [newMessageAlert, setNewMessageAlert] = useState(false);
 	const [chatData, setChatData] = useState<Chatroom | null>(null);
 
 	useEffect(() => {
@@ -48,7 +35,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 			return;
 		}
 		const participants = [user._id, friend._id].sort();
-		socket.emit('chat_subscribe', participants);
+		socket.emit('subscribe_chat', participants);
 
 		return () => socket.off();
 	}, [socket, user, friend]);
@@ -60,16 +47,23 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 		socket.on('oops', (error) => {
 			console.error(error);
 		});
+		socket.on('new_message', () => {
+			if (!showChat) {
+				setNewMessageAlert(true);
+			}
+		});
 		socket.on('load_chat', (data) => {
 			setChatData(data);
 		});
 		socket.on('receive_message', (data) => {
 			setChatData(data);
-			setShowChat(true);
+			if (!showChat) {
+				setNewMessageAlert(true);
+			}
 		});
 
 		return () => socket.off();
-	}, [socket]);
+	}, [socket, showChat]);
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
@@ -93,6 +87,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 		const participants = [user._id, friend._id].sort();
 		socket.emit('open_chat', participants);
 		setShowChat(true);
+		setNewMessageAlert(false);
 	};
 
 	const closeChat = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -112,6 +107,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 						}
 						alt={`${friend.first_name} ${friend.last_name}`}
 					/>
+					{newMessageAlert && <span className={styles.new_message}></span>}
 				</div>
 				<div>
 					<div>
@@ -140,8 +136,8 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 			</li>
 			{showChat && chatData && (
 				<Chat
-					data={chatData}
 					socket={socket}
+					data={chatData}
 					closeChat={closeChat}
 					recipient={friend}
 				/>
