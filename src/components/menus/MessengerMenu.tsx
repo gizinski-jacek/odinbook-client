@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Message, SocketType } from '../../myTypes';
-import styles from '../../styles/menus/MessengerMenu.module.scss';
 import { UserContext } from '../hooks/UserContext';
+import { Message, SocketType } from '../../myTypes';
+import timeSinceDate from '../utils/timeSinceDate';
+import styles from '../../styles/menus/MessengerMenu.module.scss';
 
 type Props = {
 	socket: SocketType | null;
@@ -36,14 +37,29 @@ const MessengerMenu: React.FC<Props> = ({ socket }) => {
 
 	const messageListDisplay = newMessagesData.map((message, index) => {
 		return (
-			<li key={index}>
-				{message.text}
+			<li key={index} className={styles.message}>
+				<div className='profile-pic-style'>
+					<img
+						src={
+							message.author.profile_picture
+								? `http://localhost:4000/photos/${message.author.profile_picture}`
+								: '/placeholder_profile_pic.png'
+						}
+						alt={`${message.author.first_name} ${message.author.last_name}`}
+					/>
+					<h6 className={styles.timestamp}>
+						{timeSinceDate(message.createdAt, true)}
+					</h6>
+				</div>
+				<div className={styles.contents}>
+					<p>{message.text}</p>
+				</div>
 				<button
 					type='button'
-					className='btn-default btn-cancel'
+					className={styles.dismiss_btn}
 					onClick={(e) => dismissMessage(e, message._id)}
 				>
-					Dismiss
+					<span></span>
 				</button>
 			</li>
 		);
@@ -92,9 +108,9 @@ const MessengerMenu: React.FC<Props> = ({ socket }) => {
 					/>
 				</label>
 			</div>
-			<div className={styles.message_list}>
+			<div className={styles.message_list_container}>
 				{messageListDisplay.length > 0 ? (
-					<ul>{messageListDisplay}</ul>
+					<ul className={styles.message_list}>{messageListDisplay}</ul>
 				) : (
 					<div className={styles.empty}>
 						<h4>No new messages</h4>
