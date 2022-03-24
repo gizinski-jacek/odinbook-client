@@ -1,9 +1,53 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Message, SocketType } from '../../myTypes';
 import styles from '../../styles/menus/MessengerMenu.module.scss';
+import { UserContext } from '../hooks/UserContext';
 
-const MessengerMenu = () => {
+type Props = {
+	socket: SocketType | null;
+};
+
+const MessengerMenu: React.FC<Props> = ({ socket }) => {
+	const { user } = useContext(UserContext);
+
 	const [searchInput, setSearchInput] = useState('');
+
+	const [newMessagesData, setNewMessagesData] = useState<Message[]>([]);
+
+	useEffect(() => {
+		socket?.emit('open_messages_menu', user._id);
+	}, [socket, user]);
+
+	useEffect(() => {
+		socket?.on('load_new_messages', (data) => {
+			setNewMessagesData(data);
+		});
+	}, [socket, user]);
+
+	const dismissMessage = (
+		e: React.MouseEvent<HTMLButtonElement>,
+		messageId: string
+	) => {
+		socket?.emit('dismiss_message', user._id, messageId);
+		const newState = newMessagesData.filter((m) => m._id !== messageId);
+		setNewMessagesData(newState);
+	};
+
+	const messageListDisplay = newMessagesData.map((message, index) => {
+		return (
+			<li key={index}>
+				{message.text}
+				<button
+					type='button'
+					className='btn-default btn-cancel'
+					onClick={(e) => dismissMessage(e, message._id)}
+				>
+					Dismiss
+				</button>
+			</li>
+		);
+	});
 
 	return (
 		<div className={styles.menu_messenger}>
@@ -49,11 +93,13 @@ const MessengerMenu = () => {
 				</label>
 			</div>
 			<div className={styles.message_list}>
-				<ul>
-					<li>Messages 1</li>
-					<li>Messages 2</li>
-					<li>Messages 3</li>
-				</ul>
+				{messageListDisplay.length > 0 ? (
+					<ul>{messageListDisplay}</ul>
+				) : (
+					<div className={styles.empty}>
+						<h4>No new messages</h4>
+					</div>
+				)}
 			</div>
 			<hr />
 			<Link to='/'>See all in Messenger</Link>
