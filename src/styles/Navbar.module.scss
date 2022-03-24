@@ -8,6 +8,7 @@
 	right: 0;
 	background-color: variables.$white;
 	z-index: 20;
+	margin-bottom: 8px;
 
 	.search_posts {
 		svg {
@@ -230,6 +231,19 @@
 				.icon:hover {
 					background-color: variables.$black-a20;
 				}
+			}
+
+			.messenger_alert {
+				position: absolute;
+				top: 2px;
+				right: 0;
+				padding: 4px;
+				color: variables.$white;
+				background-color: variables.$red;
+				border-radius: 50%;
+				border: 1px solid variables.$black-a40;
+				font-weight: 600;
+				text-align: center;
 			}
 
 			.notification_alert {
