@@ -98,10 +98,9 @@ type ServerToClientEvents = {
 	oops: (error: any) => void;
 	message_alert: () => void;
 	load_new_messages: (data: Message[]) => void;
-	new_notification: () => void;
+	notification_alert: () => void;
 	load_chat: (data: Chatroom) => void;
 	receive_message: (data: Chatroom) => void;
-	new_message: () => void;
 };
 
 type ClientToServerEvents = {
