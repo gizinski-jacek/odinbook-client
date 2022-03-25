@@ -32,7 +32,9 @@ const Navbar = () => {
 	const [socket, setSocket] = useState<SocketType | null>(null);
 
 	useEffect(() => {
-		const newSocket = io(`${process.env.REACT_APP_API_URI}`);
+		const newSocket = io(`${process.env.REACT_APP_API_URI}`, {
+			withCredentials: true,
+		});
 		setSocket(newSocket);
 		return () => newSocket.disconnect();
 	}, [setSocket]);
