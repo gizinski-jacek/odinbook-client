@@ -19,6 +19,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 
 	const [showOptions, setShowOptions] = useState(false);
 	const [showChat, setShowChat] = useState(false);
+	const [chatClosedByUser, setChatClosedByUser] = useState(false);
 	const [socket, setSocket] = useState<SocketType | null>(null);
 	const [newMessageAlert, setNewMessageAlert] = useState(false);
 	const [chatData, setChatData] = useState<Chatroom | null>(null);
@@ -54,7 +55,9 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 		});
 
 		socket.on('message_alert', () => {
-			if (!showChat) {
+			if (!chatClosedByUser) {
+				setShowChat(true);
+			} else if (!showChat) {
 				setNewMessageAlert(true);
 			}
 		});
@@ -96,6 +99,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 
 	const closeChat = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
+		setChatClosedByUser(true);
 		setShowChat(false);
 	};
 
