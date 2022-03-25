@@ -44,17 +44,21 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 		if (!socket) {
 			return;
 		}
+
 		socket.on('oops', (error) => {
 			console.error(error);
 		});
-		socket.on('new_message', () => {
+
+		socket.on('load_chat', (data) => {
+			setChatData(data);
+		});
+
+		socket.on('message_alert', () => {
 			if (!showChat) {
 				setNewMessageAlert(true);
 			}
 		});
-		socket.on('load_chat', (data) => {
-			setChatData(data);
-		});
+
 		socket.on('receive_message', (data) => {
 			setChatData(data);
 			if (!showChat) {
@@ -109,7 +113,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 					/>
 					{newMessageAlert && <span className={styles.new_message}></span>}
 				</div>
-				<div>
+				<div className={styles.contents}>
 					{friend.first_name} {friend.last_name}
 				</div>
 				<div className={styles.right}>
