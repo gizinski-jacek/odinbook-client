@@ -12,10 +12,14 @@
 		position: relative;
 	}
 
+	.contents {
+		margin: 0 8px;
+	}
+
 	.new_message {
 		position: absolute;
 		top: 0;
-		right: 12px;
+		right: 0;
 		padding: 4px;
 		color: variables.$white;
 		background-color: variables.$red;
@@ -28,7 +32,6 @@
 	img {
 		width: 36px;
 		height: 36px;
-		margin-right: 8px;
 	}
 
 	.right {
