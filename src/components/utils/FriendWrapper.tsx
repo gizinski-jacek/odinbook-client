@@ -70,7 +70,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 		});
 
 		return () => socket.off();
-	}, [socket, showChat]);
+	}, [socket, showChat, chatClosedByUser]);
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
