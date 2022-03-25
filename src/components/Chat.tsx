@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
 import { Chatroom, SocketType, User } from '../myTypes';
+import { axiosPost } from './utils/axiosFunctions';
 import timeSinceDate from './utils/timeSinceDate';
 import styles from '../styles/Chat.module.scss';
 
@@ -23,23 +24,26 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, socket, data }) => {
 		lastMessage.current?.scrollIntoView({ behavior: 'smooth' });
 	}, [data]);
 
-	const handleSubmit = (
+	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
 		chatId: string,
-		userId: string,
 		input: string,
-		recipient: string
+		recipientId: string
 	) => {
 		e.preventDefault();
 		if (!socket) {
 			return;
 		}
-		const message = {
-			chat_ref: chatId,
-			author: userId,
-			text: input,
-		};
-		socket.emit('send_message', message, recipient);
+		try {
+			const message = {
+				chat_ref: chatId,
+				text: input,
+				recipient: recipientId,
+			};
+			await axiosPost('/api/chat/message', message);
+		} catch (error: any) {
+			console.error(error);
+		}
 		setMessageInput('');
 	};
 
@@ -98,7 +102,7 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, socket, data }) => {
 				</ul>
 				<form
 					onSubmit={(e) =>
-						handleSubmit(e, data._id, user._id, messageInput, recipient._id)
+						handleSubmit(e, data._id, messageInput, recipient._id)
 					}
 				>
 					<label>
