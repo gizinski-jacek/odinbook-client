@@ -30,6 +30,7 @@ const MessengerMenu: React.FC<Props> = ({ socket }) => {
 		e: React.MouseEvent<HTMLButtonElement>,
 		messageId: string
 	) => {
+		e.stopPropagation();
 		socket?.emit('dismiss_message', user._id, messageId);
 		const newState = newMessagesData.filter((m) => m._id !== messageId);
 		setNewMessagesData(newState);
