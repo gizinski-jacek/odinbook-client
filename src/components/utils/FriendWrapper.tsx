@@ -4,6 +4,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
 import { UserContext } from '../hooks/UserContext';
 import type { Chatroom, SocketType, User } from '../../myTypes';
+import { axiosGet } from './axiosFunctions';
 import styles from '../../styles/Friend.module.scss';
 import Chat from '../Chat';
 
@@ -25,13 +26,13 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 	const [chatData, setChatData] = useState<Chatroom | null>(null);
 
 	useEffect(() => {
-		const newSocket = io(`${process.env.REACT_APP_API_URI}`, {
+		const newSocket = io(`${process.env.REACT_APP_API_URI}/messages`, {
 			withCredentials: true,
 		});
 		setSocket(newSocket);
 
 		return () => newSocket.disconnect();
-	}, [setSocket]);
+	}, []);
 
 	useEffect(() => {
 		if (!socket) {
@@ -57,16 +58,16 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 		});
 
 		socket.on('message_alert', () => {
-			if (!chatClosedByUser) {
-				setShowChat(true);
-			} else if (!showChat) {
+			if (!showChat) {
 				setNewMessageAlert(true);
 			}
 		});
 
 		socket.on('receive_message', (data) => {
 			setChatData(data);
-			if (!showChat) {
+			if (!chatClosedByUser) {
+				setShowChat(true);
+			} else if (!showChat) {
 				setNewMessageAlert(true);
 			}
 		});
@@ -88,13 +89,19 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 		}
 	};
 
-	const openChat = (e: React.MouseEvent<HTMLLIElement>) => {
+	const openChat = async (
+		e: React.MouseEvent<HTMLLIElement>,
+		userId: string,
+		friendId: string
+	) => {
 		e.stopPropagation();
-		if (!socket) {
-			return;
-		}
-		const participants = [user._id, friend._id].sort();
-		socket.emit('open_chat', participants);
+		const participants = [userId, friendId].sort();
+		setChatData(
+			await axiosGet('/api/chats/messages', {
+				withCredentials: true,
+				params: { participants: participants },
+			})
+		);
 		setShowChat(true);
 		setNewMessageAlert(false);
 	};
@@ -107,7 +114,10 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 
 	return (
 		<>
-			<li className={styles.friend} onClick={openChat}>
+			<li
+				className={styles.friend}
+				onClick={(e) => openChat(e, user._id, friend._id)}
+			>
 				<div className={`profile-pic-style ${styles.picture}`}>
 					<img
 						src={
