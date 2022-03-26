@@ -26,6 +26,7 @@ const Navbar = () => {
 	const [searchInput, setSearchInput] = useState('');
 	const [searchData, setSearchData] = useState<PostFull[]>([]);
 	const [showResults, setShowResults] = useState(false);
+
 	const [messageAlert, setMessageAlert] = useState(false);
 	const [notificationAlert, setNotificationAlert] = useState(false);
 
@@ -140,7 +141,7 @@ const Navbar = () => {
 
 	const searchDisplay = searchData?.map((post) => {
 		return (
-			<li key={post._id} onClick={clearSearch}>
+			<li key={post._id}>
 				<Link
 					className={styles.search_result}
 					to={`/profile/${post.author._id}`}
@@ -235,7 +236,7 @@ const Navbar = () => {
 									visibility: searchInput || showResults ? 'visible' : 'hidden',
 								}}
 								className={styles.clear_btn}
-								onClick={(e) => clearSearch(e)}
+								onClick={clearSearch}
 							>
 								<span></span>
 							</button>
