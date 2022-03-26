@@ -32,12 +32,12 @@ const Navbar = () => {
 	const [socket, setSocket] = useState<SocketType | null>(null);
 
 	useEffect(() => {
-		const newSocket = io(`${process.env.REACT_APP_API_URI}`, {
+		const newSocket = io(`${process.env.REACT_APP_API_URI}/notifications`, {
 			withCredentials: true,
 		});
 		setSocket(newSocket);
 		return () => newSocket.disconnect();
-	}, [setSocket]);
+	}, []);
 
 	useEffect(() => {
 		if (!socket) {
@@ -59,7 +59,6 @@ const Navbar = () => {
 		});
 
 		socket.on('notification_alert', () => {
-			console.log(123);
 			setNotificationAlert(true);
 		});
 
@@ -68,7 +67,7 @@ const Navbar = () => {
 		});
 
 		return () => socket.off();
-	}, [socket, messageAlert]);
+	}, [socket]);
 
 	useEffect(() => {
 		setOpenMenuContainer(false);
@@ -443,7 +442,7 @@ const Navbar = () => {
 					<div ref={menuContainerRef} className={styles.menu_container}>
 						{openMenuId === 1 && <AccountMenu />}
 						{openMenuId === 2 && <NotificationsMenu />}
-						{openMenuId === 3 && <MessengerMenu socket={socket} />}
+						{openMenuId === 3 && <MessengerMenu />}
 						{openMenuId === 4 && <MainMenu />}
 					</div>
 				)}
