@@ -71,9 +71,9 @@ const NotificationsMenu = () => {
 			<div className={styles.top}>
 				<h3>Notifications</h3>
 			</div>
-			<div className={styles.notification_list}>
+			<div className={styles.notification_list_container}>
 				{requestsDisplay.length > 0 ? (
-					<ul>{requestsDisplay}</ul>
+					<ul className={styles.notification_list}>{requestsDisplay}</ul>
 				) : (
 					<div className={styles.empty}>
 						<h4>No new notifications</h4>
