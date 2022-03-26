@@ -42,27 +42,27 @@
 			color: variables.$black-a60;
 			font-size: 0.9rem;
 		}
-	}
 
-	.clear_btn {
-		padding: 8px;
-		background-color: variables.$black-a10;
-		border-radius: 50%;
-		cursor: pointer;
+		.clear_btn {
+			padding: 8px;
+			background-color: variables.$black-a10;
+			border-radius: 50%;
+			cursor: pointer;
 
-		span {
-			width: 12px;
-			height: 12px;
-			display: block;
-			background-size: auto;
-			background-repeat: no-repeat;
-			background-image: url('../../../public/multi_icons/icons_6.png');
-			background-position: -109px -71px;
+			span {
+				width: 12px;
+				height: 12px;
+				display: block;
+				background-size: auto;
+				background-repeat: no-repeat;
+				background-image: url('../../../public/multi_icons/icons_6.png');
+				background-position: -109px -71px;
+			}
 		}
-	}
 
-	.clear_btn:hover {
-		background-color: variables.$black-a20;
+		.clear_btn:hover {
+			background-color: variables.$black-a20;
+		}
 	}
 
 	.message_list_container {
@@ -119,7 +119,8 @@
 				margin-right: 8px;
 			}
 
-			.dismiss_btn {
+			.dismiss_btn,
+			.remove_btn {
 				height: fit-content;
 				margin-left: auto;
 				padding: 8px;
@@ -138,7 +139,8 @@
 				}
 			}
 
-			.dismiss_btn:hover {
+			.dismiss_btn:hover,
+			.remove_btn:hover {
 				background-color: variables.$black-a20;
 			}
 		}
