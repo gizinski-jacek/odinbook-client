@@ -1,39 +1,37 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../hooks/UserContext';
 import { Message, SocketType } from '../../myTypes';
 import timeSinceDate from '../utils/timeSinceDate';
 import styles from '../../styles/menus/MessengerMenu.module.scss';
+import { axiosGet, axiosPut } from '../utils/axiosFunctions';
 
 type Props = {
 	socket: SocketType | null;
 };
 
 const MessengerMenu: React.FC<Props> = ({ socket }) => {
-	const { user } = useContext(UserContext);
-
 	const [searchInput, setSearchInput] = useState('');
 
 	const [newMessagesData, setNewMessagesData] = useState<Message[]>([]);
 
 	useEffect(() => {
-		socket?.emit('open_messages_menu', user._id);
-	}, [socket, user]);
+		(async () => {
+			try {
+				setNewMessagesData(await axiosGet('/api/chats/messages/new'));
+			} catch (error: any) {
+				console.error(error);
+			}
+		})();
+	}, []);
 
-	useEffect(() => {
-		socket?.on('load_new_messages', (data) => {
-			setNewMessagesData(data);
-		});
-	}, [socket, user]);
-
-	const dismissMessage = (
+	const dismissMessage = async (
 		e: React.MouseEvent<HTMLButtonElement>,
 		messageId: string
 	) => {
 		e.stopPropagation();
-		socket?.emit('dismiss_message', user._id, messageId);
-		const newState = newMessagesData.filter((m) => m._id !== messageId);
-		setNewMessagesData(newState);
+		setNewMessagesData(
+			await axiosPut('/api/chats/messages/dismiss', { messageId })
+		);
 	};
 
 	const messageListDisplay = newMessagesData.map((message, index) => {
