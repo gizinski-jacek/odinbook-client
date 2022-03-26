@@ -40,7 +40,7 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, socket, data }) => {
 				text: input,
 				recipient: recipientId,
 			};
-			await axiosPost('/api/chat/message', message);
+			await axiosPost('/api/chats/messages', message);
 		} catch (error: any) {
 			console.error(error);
 		}
