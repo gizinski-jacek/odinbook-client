@@ -20,7 +20,7 @@ const ProfilePosts = () => {
 				console.error(error);
 			}
 		})();
-	}, [params.userid]);
+	}, [params]);
 
 	const postsDisplay = postsData?.map((post) => {
 		return <PostWrapper key={post._id} post={post} />;
