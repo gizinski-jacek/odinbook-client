@@ -28,7 +28,7 @@ const Profile = () => {
 				console.error(error);
 			}
 		})();
-	}, [params.userid]);
+	}, [params]);
 
 	const openModal = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
@@ -232,7 +232,7 @@ const Profile = () => {
 
 										<button className='btn-default btn-confirm'>Save</button>
 										<button
-											className='btn-default btn-remove'
+											className='btn-default btn-decline'
 											onClick={toggleInput}
 										>
 											Cancel
@@ -334,7 +334,7 @@ const Profile = () => {
 											Add Friend
 										</button>
 									))}
-								<button type='button' className='btn-default btn-remove'>
+								<button type='button' className='btn-default btn-decline'>
 									Message
 								</button>
 								<span className={styles.options_toggle} onClick={toggleOptions}>
