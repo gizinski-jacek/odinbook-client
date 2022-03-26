@@ -73,7 +73,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 			const newData = new FormData();
 			newData.append('bio', bio);
 			newData.append('profile_picture', profile_picture);
-			const resData = await axiosPut(`/api/users/${userId}`, newData);
+			const resData = await axiosPut(`/api/users`, newData);
 			setData(resData);
 			setUser(resData);
 			closeModal(e);
