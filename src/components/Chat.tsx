@@ -86,11 +86,7 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, socket, data }) => {
 						<Link to={`/profile/${recipient._id}`}>{recipient.first_name}</Link>
 					</h3>
 				</div>
-				<button
-					type='button'
-					className={styles.close_btn}
-					onClick={(e) => closeChat(e)}
-				>
+				<button type='button' className={styles.close_btn} onClick={closeChat}>
 					<span></span>
 				</button>
 			</div>

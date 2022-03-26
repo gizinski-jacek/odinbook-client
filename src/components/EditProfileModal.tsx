@@ -119,7 +119,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 					<button
 						type='button'
 						className={styles.close_btn}
-						onClick={(e) => closeModal(e)}
+						onClick={closeModal}
 					>
 						<span></span>
 					</button>

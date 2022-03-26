@@ -58,7 +58,7 @@ const EditCommentForm: React.FC<Props> = ({
 					<button
 						type='button'
 						className='btn-default btn-cancel'
-						onClick={(e) => closeModal(e)}
+						onClick={closeModal}
 					>
 						Cancel
 					</button>

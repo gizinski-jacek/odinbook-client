@@ -33,7 +33,7 @@ const DeleteModal: React.FC<Props> = ({
 
 	return (
 		<div className={styles.modal_container}>
-			<span className={styles.grayout_bg} onClick={(e) => closeModal(e)}></span>
+			<span className={styles.grayout_bg} onClick={closeModal}></span>
 			<div className={styles.confirm_delete}>
 				<h3>Delete {post ? 'post' : 'comment'}?</h3>
 				<span>
@@ -43,7 +43,7 @@ const DeleteModal: React.FC<Props> = ({
 					<button
 						type='button'
 						className='btn-default btn-cancel'
-						onClick={(e) => closeModal(e)}
+						onClick={closeModal}
 					>
 						Cancel
 					</button>
