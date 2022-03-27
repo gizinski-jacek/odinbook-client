@@ -97,7 +97,7 @@ const ProfileFriends = () => {
 							placeholder='Search Friend List'
 						/>
 						<button
-							typeof='button'
+							type='button'
 							style={{
 								visibility: searchInput || showResults ? 'visible' : 'hidden',
 							}}
