@@ -6,8 +6,8 @@ import styles from '../styles/People.module.scss';
 
 const People = () => {
 	const [peopleData, setPeopleData] = useState<User[]>([]);
-	const [searchInput, setSearchInput] = useState('');
 	const [searchData, setSearchData] = useState<User[]>([]);
+	const [searchInput, setSearchInput] = useState('');
 	const [showResults, setShowResults] = useState(false);
 
 	useEffect(() => {
