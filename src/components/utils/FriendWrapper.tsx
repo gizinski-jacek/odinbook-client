@@ -38,11 +38,10 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 		if (!socket) {
 			return;
 		}
-		const participants = [user._id, friend._id].sort();
-		socket.emit('subscribe_chat', participants);
+		socket.emit('subscribe_chat', friend._id);
 
 		return () => socket.off();
-	}, [socket, user, friend]);
+	}, [socket, friend]);
 
 	useEffect(() => {
 		if (!socket) {
