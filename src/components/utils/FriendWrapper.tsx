@@ -26,7 +26,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 	const [chatData, setChatData] = useState<Chatroom | null>(null);
 
 	useEffect(() => {
-		const newSocket = io(`${process.env.REACT_APP_API_URI}/messages`, {
+		const newSocket = io(`${process.env.REACT_APP_API_URI}/chats`, {
 			withCredentials: true,
 		});
 		setSocket(newSocket);
