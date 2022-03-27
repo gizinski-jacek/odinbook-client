@@ -96,18 +96,12 @@ export type SocketType = Socket<ServerToClientEvents, ClientToServerEvents>;
 
 type ServerToClientEvents = {
 	oops: (error: any) => void;
-	message_alert: () => void;
-	load_new_messages: (data: Message[]) => void;
 	notification_alert: () => void;
-	load_chat: (data: Chatroom) => void;
+	message_alert: () => void;
 	receive_message: (data: Chatroom) => void;
 };
 
 type ClientToServerEvents = {
-	subscribe_alerts: (userId: string) => void;
-	open_messages_menu: (userId: string) => void;
-	dismiss_message: (userId: string, messageId: string) => void;
-	subscribe_chat: (participants: string[]) => void;
-	open_chat: (participants: string[]) => void;
-	send_message: (message: MessageNew, recipient: string) => void;
+	subscribe_alerts: () => void;
+	subscribe_chat: (recipientId: string) => void;
 };
