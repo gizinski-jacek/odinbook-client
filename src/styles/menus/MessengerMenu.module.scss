@@ -5,6 +5,10 @@
 	flex-direction: column;
 	max-width: 360px;
 
+	hr {
+		width: 100%;
+	}
+
 	.top {
 		display: flex;
 		flex-direction: row;
@@ -13,6 +17,15 @@
 		margin: 0 8px;
 		padding: 8px;
 		font-weight: 600;
+
+		.mark_all {
+			color: variables.$blue;
+			cursor: pointer;
+		}
+
+		.mark_all:hover {
+			text-decoration: underline;
+		}
 	}
 
 	.search_messenger {
@@ -112,14 +125,18 @@
 			.contents {
 				max-width: fit-content;
 				display: -webkit-box;
-				-webkit-line-clamp: 3;
+				-webkit-line-clamp: 2;
 				-webkit-box-orient: vertical;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				margin-right: 8px;
+
+				a {
+					margin: 0;
+				}
 			}
 
-			.dismiss_btn,
+			.mark_btn,
 			.remove_btn {
 				height: fit-content;
 				margin-left: auto;
@@ -139,24 +156,17 @@
 				}
 			}
 
-			.dismiss_btn:hover,
+			.mark_btn:hover,
 			.remove_btn:hover {
 				background-color: variables.$black-a20;
 			}
 		}
 	}
 
-	hr {
-		width: 100%;
-	}
-
 	a {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		align-self: center;
 		font-weight: 600;
 		color: variables.$blue;
-		text-align: center;
 		margin: 8px;
 		margin-bottom: 16px;
 	}
