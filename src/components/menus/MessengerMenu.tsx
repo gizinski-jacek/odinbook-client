@@ -43,6 +43,9 @@ const MessengerMenu: React.FC<Props> = ({ socket }) => {
 		query: string
 	) => {
 		e.preventDefault();
+		if (!query) {
+			return;
+		}
 		try {
 			setSearchData(await axiosGet(`/api/search/messages?q=${query}`));
 			setShowResults(true);

@@ -28,6 +28,9 @@ const ProfileFriends = () => {
 		query: string
 	) => {
 		e.preventDefault();
+		if (!query) {
+			return;
+		}
 		try {
 			setSearchData(
 				await axiosGet(`/api/search/${params.userid}/friends?q=${query}`)

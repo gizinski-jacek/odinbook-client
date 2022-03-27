@@ -25,6 +25,9 @@ const People = () => {
 		query: string
 	) => {
 		e.preventDefault();
+		if (!query) {
+			return;
+		}
 		try {
 			setSearchData(await axiosGet(`/api/search/users?q=${query}`));
 			setShowResults(true);

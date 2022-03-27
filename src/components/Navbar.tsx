@@ -115,6 +115,9 @@ const Navbar = () => {
 		query: string
 	) => {
 		e.preventDefault();
+		if (!query) {
+			return;
+		}
 		try {
 			setSearchData(await axiosGet(`/api/search/posts?q=${query}`));
 			setShowResults(true);
