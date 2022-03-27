@@ -48,6 +48,11 @@ img {
 	text-align: center;
 }
 
+input:focus {
+	// border-radius: 8px;
+	outline: 2px solid variables.$blue;
+}
+
 hr {
 	height: 1px;
 	border: none;
