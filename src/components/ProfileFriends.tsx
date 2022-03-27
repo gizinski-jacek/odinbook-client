@@ -17,7 +17,7 @@ const ProfileFriends = () => {
 		(async () => {
 			try {
 				setFriendsData(await axiosGet(`/api/users/${params.userid}/friends`));
-			} catch (error) {
+			} catch (error: any) {
 				console.error(error);
 			}
 		})();
