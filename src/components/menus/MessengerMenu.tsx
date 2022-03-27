@@ -28,14 +28,29 @@ const MessengerMenu: React.FC<Props> = ({ socket }) => {
 		})();
 	}, []);
 
-	const dismissMessage = async (
+	const markMessageAsRead = async (
 		e: React.MouseEvent<HTMLButtonElement>,
 		messageId: string
 	) => {
 		e.stopPropagation();
 		setNewMessagesData(
-			await axiosPut('/api/chats/messages/dismiss', { messageId })
+			await axiosPut('/api/chats/messages/mark', { messageId })
 		);
+	};
+
+	const markAllMessagesAsRead = async (
+		e: React.MouseEvent<HTMLSpanElement>
+	) => {
+		e.stopPropagation();
+		try {
+			const messageListToMark = newMessagesData.map((message) => message._id);
+			await axiosPut('/api/chats/messages/mark-many', {
+				messageListToMark: messageListToMark,
+			});
+			setNewMessagesData([]);
+		} catch (error: any) {
+			console.error(error);
+		}
 	};
 
 	const handleSearch = async (
@@ -97,12 +112,15 @@ const MessengerMenu: React.FC<Props> = ({ socket }) => {
 					</h6>
 				</div>
 				<div className={styles.contents}>
+					<Link to={`/profile/${message.author._id}`}>
+						{message.author.first_name} {message.author.last_name}
+					</Link>
 					<p>{message.text}</p>
 				</div>
 				<button
 					type='button'
-					className={styles.dismiss_btn}
-					onClick={(e) => dismissMessage(e, message._id)}
+					className={styles.mark_btn}
+					onClick={(e) => markMessageAsRead(e, message._id)}
 				>
 					<span></span>
 				</button>
@@ -127,6 +145,9 @@ const MessengerMenu: React.FC<Props> = ({ socket }) => {
 					</h6>
 				</div>
 				<div className={styles.contents}>
+					<Link to={`/profile/${message.author._id}`}>
+						{message.author.first_name} {message.author.last_name}
+					</Link>
 					<p>{message.text}</p>
 				</div>
 				<button
@@ -144,6 +165,9 @@ const MessengerMenu: React.FC<Props> = ({ socket }) => {
 		<div className={styles.menu_messenger}>
 			<div className={styles.top}>
 				<h3>Messenger</h3>
+				<span className={styles.mark_all} onClick={markAllMessagesAsRead}>
+					<h5>Mark all as read</h5>
+				</span>
 			</div>
 			<div className={styles.search_messenger}>
 				<form onSubmit={(e) => handleSearch(e, searchInput)}>
