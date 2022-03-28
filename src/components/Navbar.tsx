@@ -45,18 +45,12 @@ const Navbar = () => {
 			return;
 		}
 
-		socket.emit('subscribe_alerts');
-
-		return () => socket.off();
-	}, [socket, user]);
-
-	useEffect(() => {
-		if (!socket) {
-			return;
-		}
-
 		socket.on('oops', (error) => {
 			console.error(error);
+		});
+
+		socket.on('connect', () => {
+			socket.emit('subscribe_alerts');
 		});
 
 		socket.on('notification_alert', () => {
