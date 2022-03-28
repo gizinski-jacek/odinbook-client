@@ -71,6 +71,32 @@ const Navbar = () => {
 	}, [socket]);
 
 	useEffect(() => {
+		(async () => {
+			try {
+				const resData = await axiosGet('/api/users/contacts');
+				if (resData.incoming_friend_requests.length > 0) {
+					setNotificationAlert(true);
+				}
+			} catch (error: any) {
+				console.error(error);
+			}
+		})();
+	}, [user]);
+
+	useEffect(() => {
+		(async () => {
+			try {
+				const newMessages = await axiosGet('/api/chats/messages/new');
+				if (newMessages.length > 0) {
+					setMessageAlert(true);
+				}
+			} catch (error: any) {
+				console.error(error);
+			}
+		})();
+	}, []);
+
+	useEffect(() => {
 		setOpenMenuContainer(false);
 		setOpenMenuId(0);
 	}, [location]);
