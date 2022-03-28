@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Message, SocketType } from '../../myTypes';
+import { axiosGet, axiosPut } from '../utils/axiosFunctions';
 import timeSinceDate from '../utils/timeSinceDate';
 import styles from '../../styles/menus/MessengerMenu.module.scss';
-import { axiosGet, axiosPut } from '../utils/axiosFunctions';
 
 type Props = {
 	socket: SocketType | null;
