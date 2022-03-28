@@ -45,7 +45,7 @@ const Navbar = () => {
 			return;
 		}
 
-		socket.emit('subscribe_alerts', user._id);
+		socket.emit('subscribe_alerts');
 
 		return () => socket.off();
 	}, [socket, user]);

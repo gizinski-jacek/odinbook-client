@@ -52,10 +52,6 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 			console.error(error);
 		});
 
-		socket.on('load_chat', (data) => {
-			setChatData(data);
-		});
-
 		socket.on('message_alert', () => {
 			if (!showChat) {
 				setNewMessageAlert(true);
