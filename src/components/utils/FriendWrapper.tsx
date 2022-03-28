@@ -1,8 +1,7 @@
 // @ts-nocheck
 
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
-import { UserContext } from '../hooks/UserContext';
 import type { Chatroom, SocketType, User } from '../../myTypes';
 import { axiosGet } from './axiosFunctions';
 import styles from '../../styles/Friend.module.scss';
@@ -14,8 +13,6 @@ type Props = {
 };
 
 const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
-	const { user } = useContext(UserContext);
-
 	const optionsRef = useRef<HTMLDivElement>(null);
 
 	const [showOptions, setShowOptions] = useState(false);
@@ -38,18 +35,13 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 		if (!socket) {
 			return;
 		}
-		socket.emit('subscribe_chat', friend._id);
-
-		return () => socket.off();
-	}, [socket, friend]);
-
-	useEffect(() => {
-		if (!socket) {
-			return;
-		}
 
 		socket.on('oops', (error) => {
 			console.error(error);
+		});
+
+		socket.on('connect', () => {
+			socket.emit('subscribe_chat', friend._id);
 		});
 
 		socket.on('message_alert', () => {
@@ -68,7 +60,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 		});
 
 		return () => socket.off();
-	}, [socket, showChat, chatClosedByUser]);
+	}, [socket, showChat, chatClosedByUser, friend]);
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
@@ -86,15 +78,13 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 
 	const openChat = async (
 		e: React.MouseEvent<HTMLLIElement>,
-		userId: string,
 		friendId: string
 	) => {
 		e.stopPropagation();
-		const participants = [userId, friendId].sort();
 		setChatData(
-			await axiosGet('/api/chats/messages', {
+			await axiosGet('/api/chats', {
 				withCredentials: true,
-				params: { participants: participants },
+				params: { recipientId: friendId },
 			})
 		);
 		setShowChat(true);
@@ -109,10 +99,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend }) => {
 
 	return (
 		<>
-			<li
-				className={styles.friend}
-				onClick={(e) => openChat(e, user._id, friend._id)}
-			>
+			<li className={styles.friend} onClick={(e) => openChat(e, friend._id)}>
 				<div className={`profile-pic-style ${styles.picture}`}>
 					<img
 						src={
