@@ -79,7 +79,7 @@ export type Message = {
 	chat_ref: string;
 	author: User;
 	text: string;
-	read: boolean;
+	readBy: string[];
 	createdAt: string;
 	updatedAt: string;
 };
@@ -89,7 +89,7 @@ export type MessageNew = {
 	chat_ref?: string;
 	author?: string;
 	text: string;
-	read: boolean;
+	readBy: string[];
 	createdAt?: string;
 	updatedAt?: string;
 };
