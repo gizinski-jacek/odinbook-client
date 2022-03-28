@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
 import { Chatroom, SocketType, User } from '../myTypes';
-import { axiosPost } from './utils/axiosFunctions';
+import { axiosPost, axiosPut } from './utils/axiosFunctions';
 import timeSinceDate from './utils/timeSinceDate';
 import styles from '../styles/Chat.module.scss';
 
@@ -23,6 +23,26 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, socket, data }) => {
 	useEffect(() => {
 		lastMessage.current?.scrollIntoView({ behavior: 'smooth' });
 	}, [data]);
+
+	useEffect(() => {
+		(async () => {
+			try {
+				const unReadMessageData = data.message_list.filter(
+					(message) => !message.read && message.author._id !== user._id
+				);
+				if (unReadMessageData.length > 0) {
+					const unReadMessageListIDs = unReadMessageData.map(
+						(message) => message._id
+					);
+					await axiosPut('/api/chats/messages/mark-many', {
+						messageList: unReadMessageListIDs,
+					});
+				}
+			} catch (error: any) {
+				console.error(error);
+			}
+		})();
+	}, [data, user]);
 
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
