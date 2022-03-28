@@ -43,9 +43,11 @@ const MessengerMenu: React.FC<Props> = ({ socket }) => {
 	) => {
 		e.stopPropagation();
 		try {
-			const messageListToMark = newMessagesData.map((message) => message._id);
+			const unReadMessageListIDs = newMessagesData.map(
+				(message) => message._id
+			);
 			await axiosPut('/api/chats/messages/mark-many', {
-				messageListToMark: messageListToMark,
+				messageList: unReadMessageListIDs,
 			});
 			setNewMessagesData([]);
 		} catch (error: any) {
