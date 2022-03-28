@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Message, SocketType } from '../../myTypes';
 import timeSinceDate from '../utils/timeSinceDate';
@@ -10,8 +10,6 @@ type Props = {
 };
 
 const MessengerMenu: React.FC<Props> = ({ socket }) => {
-	const searchRef = useRef<HTMLInputElement>(null);
-
 	const [newMessagesData, setNewMessagesData] = useState<Message[]>([]);
 
 	const [searchInput, setSearchInput] = useState('');
@@ -78,14 +76,6 @@ const MessengerMenu: React.FC<Props> = ({ socket }) => {
 		setSearchData([]);
 		setShowResults(false);
 	};
-
-	// const windowListener = (e: any) => {
-	// 	e.stopPropagation();
-	// 	if (searchRef.current !== e.target) {
-	// 		setShowResults(false);
-	// 		document.removeEventListener('click', windowListener);
-	// 	}
-	// };
 
 	const removeFromSearchResults = (
 		e: React.MouseEvent<HTMLButtonElement>,
@@ -224,10 +214,7 @@ const MessengerMenu: React.FC<Props> = ({ socket }) => {
 			<div className={styles.message_list_container}>
 				{showResults ? (
 					searchDisplay.length > 0 ? (
-						<div
-							// ref={searchRef}
-							className={styles.message_list}
-						>
+						<div className={styles.message_list}>
 							<ul>{searchDisplay}</ul>
 						</div>
 					) : (
