@@ -28,7 +28,9 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, socket, data }) => {
 		(async () => {
 			try {
 				const unReadMessageData = data.message_list.filter(
-					(message) => !message.read && message.author._id !== user._id
+					(message) =>
+						!message.readBy.includes(user._id) &&
+						message.author._id !== user._id
 				);
 				if (unReadMessageData.length > 0) {
 					const unReadMessageListIDs = unReadMessageData.map(
