@@ -1,0 +1,131 @@
+@use '../styles/variables';
+
+.right {
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 30;
+	direction: rtl;
+
+	.user_controls {
+		height: variables.$navbar-height;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		margin-right: 8px;
+
+		li {
+			margin-right: 8px;
+			border: none;
+			position: relative;
+			direction: ltr;
+			border-radius: 50%;
+			cursor: pointer;
+
+			.icon {
+				display: block;
+				padding: 10px;
+				background-color: variables.$black-a10;
+				border-radius: 50%;
+
+				svg {
+					display: block;
+					margin: auto;
+				}
+			}
+
+			.icon:hover {
+				background-color: variables.$black-a20;
+			}
+		}
+
+		.messenger_alert {
+			position: absolute;
+			top: 2px;
+			right: 0;
+			padding: 4px;
+			color: variables.$white;
+			background-color: variables.$red;
+			border-radius: 50%;
+			border: 1px solid variables.$black-a40;
+			font-weight: 600;
+			text-align: center;
+		}
+
+		.notification_alert {
+			position: absolute;
+			top: 2px;
+			right: 0;
+			padding: 4px;
+			color: variables.$white;
+			background-color: variables.$red;
+			border-radius: 50%;
+			border: 1px solid variables.$black-a40;
+			font-weight: 600;
+			text-align: center;
+		}
+
+		.me_link {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			padding: 6px 8px;
+			border-radius: 24px;
+			background-color: variables.$white;
+			font-weight: 600;
+			margin: 0 8px;
+
+			img {
+				width: 28px;
+				height: 28px;
+			}
+
+			h4 {
+				margin: 0 12px;
+			}
+		}
+
+		.me_link:hover {
+			filter: brightness(95%);
+		}
+
+		.friends_link {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			font-weight: 600;
+			padding: 12px 16px;
+			border-radius: 24px;
+			background-color: variables.$black-a10;
+		}
+
+		.friends_link:hover {
+			background-color: variables.$black-a20;
+		}
+	}
+
+	.menu_container {
+		min-width: 360px;
+		max-width: 600px;
+		position: fixed;
+		top: variables.$navbar-height;
+		right: 16px;
+		background-color: variables.$white;
+		box-shadow: 0 4px 16px 0 variables.$black-a20;
+		border-radius: 8px;
+		direction: ltr;
+		z-index: 30;
+
+		a {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			border-radius: 8px;
+		}
+
+		a:hover {
+			background-color: variables.$black-a05;
+		}
+	}
+}
