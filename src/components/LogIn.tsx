@@ -1,7 +1,8 @@
 import { useContext, useState } from 'react';
 import { UserContext } from './hooks/UserContext';
-import { LogInForm } from '../myTypes';
+import type { FormError, LogInForm } from '../myTypes';
 import { axiosPost } from './utils/axiosFunctions';
+import FormErrorWrapper from './utils/FormErrorWrapper';
 import styles from '../styles/LogIn.module.scss';
 
 type Props = {
@@ -16,7 +17,7 @@ type FormData = {
 const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 	const { setUser } = useContext(UserContext);
 
-	const [errors, setErrors] = useState<{ msg: string }[]>([]);
+	const [errors, setErrors] = useState<FormError[]>([]);
 	const [formData, setFormData] = useState<FormData>({
 		email: '',
 		password: '',
@@ -53,12 +54,8 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 		}
 	};
 
-	const errorsDisplay = errors?.map((error, index) => {
-		return (
-			<li key={index} className='error-msg'>
-				{error.msg}
-			</li>
-		);
+	const errorsDisplay = errors.map((error, index) => {
+		return <FormErrorWrapper key={index} error={error} />;
 	});
 
 	return (

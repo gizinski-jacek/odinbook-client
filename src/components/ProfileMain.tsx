@@ -1,10 +1,11 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
-import type { User } from '../myTypes';
+import type { FormError, User } from '../myTypes';
 import { axiosDelete, axiosGet, axiosPut } from './utils/axiosFunctions';
 import styles from '../styles/ProfileMain.module.scss';
 import EditProfileModal from './EditProfileModal';
+import FormErrorWrapper from './utils/FormErrorWrapper';
 
 const Profile = () => {
 	const { user, setUser } = useContext(UserContext);
@@ -16,7 +17,7 @@ const Profile = () => {
 	const [userData, setUserData] = useState<User>();
 	const [showOptions, setShowOptions] = useState(false);
 	const [showModal, setShowModal] = useState(false);
-	const [errors, setErrors] = useState<{ msg: string }[]>([]);
+	const [errors, setErrors] = useState<FormError[]>([]);
 	const [changePassword, setChangePassword] = useState(false);
 	const [passwordData, setPasswordData] = useState({ password: '' });
 
@@ -166,12 +167,8 @@ const Profile = () => {
 		}
 	};
 
-	const errorsDisplay = errors?.map((error, index) => {
-		return (
-			<li key={index} className='error-msg'>
-				{error.msg}
-			</li>
-		);
+	const errorsDisplay = errors.map((error, index) => {
+		return <FormErrorWrapper key={index} error={error} />;
 	});
 
 	return (

@@ -1,8 +1,9 @@
 import { useContext, useRef, useState } from 'react';
-import { User } from '../myTypes';
-import { axiosPut } from './utils/axiosFunctions';
-import styles from '../styles/EditProfileModal.module.scss';
 import { UserContext } from './hooks/UserContext';
+import type { FormError, User } from '../myTypes';
+import { axiosPut } from './utils/axiosFunctions';
+import FormErrorWrapper from './utils/FormErrorWrapper';
+import styles from '../styles/EditProfileModal.module.scss';
 
 type Props = {
 	closeModal: (
@@ -17,7 +18,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 
 	const pictureRef = useRef<HTMLInputElement>(null);
 
-	const [errors, setErrors] = useState<{ msg: string }[]>([]);
+	const [errors, setErrors] = useState<FormError[]>([]);
 	const [bioForm, setBioForm] = useState(false);
 	const [bioInput, setBioInput] = useState(data.bio ? data.bio : '');
 	const [pictureData, setPictureData] = useState<{
@@ -100,12 +101,8 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 		}
 	};
 
-	const errorsDisplay = errors?.map((error, index) => {
-		return (
-			<li key={index} className='error-msg'>
-				{error.msg}
-			</li>
-		);
+	const errorsDisplay = errors.map((error, index) => {
+		return <FormErrorWrapper key={index} error={error} />;
 	});
 
 	return (

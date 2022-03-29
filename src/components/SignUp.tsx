@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { SignUpForm } from '../myTypes';
+import type { FormError, SignUpForm } from '../myTypes';
 import { axiosPost } from './utils/axiosFunctions';
+import FormErrorWrapper from './utils/FormErrorWrapper';
 import styles from '../styles/SignUp.module.scss';
 
 type Props = {
@@ -15,7 +16,7 @@ type FormData = {
 };
 
 const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
-	const [errors, setErrors] = useState<{ msg: string }[]>();
+	const [errors, setErrors] = useState<FormError[]>([]);
 	const [formData, setFormData] = useState<FormData>({
 		first_name: '',
 		last_name: '',
@@ -55,12 +56,8 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 		}
 	};
 
-	const errorsDisplay = errors?.map((error, index) => {
-		return (
-			<li key={index} className='error-msg'>
-				{error.msg}
-			</li>
-		);
+	const errorsDisplay = errors.map((error, index) => {
+		return <FormErrorWrapper key={index} error={error} />;
 	});
 
 	return (
