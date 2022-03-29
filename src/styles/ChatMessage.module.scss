@@ -16,31 +16,31 @@
 		direction: ltr;
 	}
 
-	.user_message {
-		align-self: flex-end;
-		background-color: variables.$blue-a30;
-		direction: rtl;
-		text-align: end;
-
-		img {
-			margin-left: 8px;
-		}
-	}
-
-	.recipient_message {
-		background-color: variables.$black-a10;
-		word-break: break-word;
-		overflow-wrap: anywhere;
-
-		img {
-			margin-right: 8px;
-		}
-	}
-
 	img {
 		margin-bottom: 4px;
 		width: 28px;
 		height: 28px;
 		cursor: initial;
+	}
+}
+
+.user_message {
+	align-self: flex-end;
+	background-color: variables.$blue-a30;
+	direction: rtl;
+	text-align: end;
+
+	img {
+		margin-left: 8px;
+	}
+}
+
+.recipient_message {
+	background-color: variables.$black-a10;
+	word-break: break-word;
+	overflow-wrap: anywhere;
+
+	img {
+		margin-right: 8px;
 	}
 }
