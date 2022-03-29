@@ -13,47 +13,36 @@
 	hr {
 		width: 100%;
 	}
-}
 
-.friend_requests {
-	padding: 16px;
-	background-color: variables.$white;
-	border-radius: 8px;
-	box-shadow: 0 1px 2px 0 variables.$black-a20;
-	margin-bottom: 8px;
-
-	.top {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
+	.friend_requests {
+		padding: 16px;
+		background-color: variables.$white;
+		border-radius: 8px;
+		box-shadow: 0 1px 2px 0 variables.$black-a20;
 		margin-bottom: 8px;
 
-		img {
-			width: 20px;
-			height: 20px;
-			margin-right: 8px;
+		.top {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			margin-bottom: 8px;
+
+			img {
+				width: 20px;
+				height: 20px;
+				margin-right: 8px;
+			}
 		}
 	}
-}
 
-.friend_list {
-	border-radius: 8px;
-	margin-bottom: 8px;
-
-	.top {
-		color: variables.$black-a60;
-		font-weight: 600;
+	.friend_list {
+		border-radius: 8px;
 		margin-bottom: 8px;
-	}
-}
 
-.group_conversations {
-	border-radius: 8px;
-	margin: 8px 0;
-
-	.top {
-		color: variables.$black-a60;
-		font-weight: 600;
-		margin-bottom: 8px;
+		.top {
+			color: variables.$black-a60;
+			font-weight: 600;
+			margin-bottom: 8px;
+		}
 	}
 }

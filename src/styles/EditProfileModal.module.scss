@@ -14,126 +14,126 @@
 	h3 {
 		font-weight: 600;
 	}
-}
 
-.grayout_bg {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: variables.$white-a80;
-	overflow: hidden;
-}
-
-.edit_profile_container {
-	position: sticky;
-	display: flex;
-	flex-direction: column;
-	border-radius: 8px;
-	background-color: variables.$white;
-	box-shadow: 0 4px 12px 4px variables.$black-a20;
-	width: 600px;
-	z-index: 10;
-	height: fit-content;
-	scrollbar-width: none;
-	padding: 12px;
-}
-
-.top {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: relative;
-	width: 100%;
-	height: 60px;
-	font-weight: 600;
-}
-
-hr {
-	width: 100%;
-	margin-bottom: 16px;
-}
-
-.close_btn {
-	position: absolute;
-	right: 12px;
-	padding: 8px;
-	background-color: variables.$black-a10;
-	border-radius: 50%;
-	cursor: pointer;
-
-	span {
-		width: 20px;
-		height: 20px;
-		display: block;
-		background-size: auto;
-		background-repeat: no-repeat;
-		background-image: url('../../public/multi_icons/icons_6.png');
-		background-position: -105px -67px;
-	}
-}
-
-.close_btn:hover {
-	background-color: variables.$black-a20;
-}
-
-.body {
-	form {
-		display: flex;
-		flex-direction: column;
-
-		button[type='submit'] {
-			margin-top: 12px;
-		}
+	.grayout_bg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: variables.$white-a80;
+		overflow: hidden;
 	}
 
-	.edit_profile_picture,
-	.edit_bio {
+	.edit_profile_container {
+		position: sticky;
 		display: flex;
 		flex-direction: column;
+		border-radius: 8px;
+		background-color: variables.$white;
+		box-shadow: 0 4px 12px 4px variables.$black-a20;
+		width: 600px;
+		z-index: 10;
+		height: fit-content;
+		scrollbar-width: none;
+		padding: 12px;
+	}
+
+	.top {
+		display: flex;
 		justify-content: center;
 		align-items: center;
-
-		img {
-			box-sizing: content-box;
-			border: 4px solid variables.$white;
-			width: 160px;
-			height: 160px;
-		}
-	}
-
-	.section_name {
+		position: relative;
 		width: 100%;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 12px;
+		height: 60px;
+		font-weight: 600;
+	}
 
-		button {
-			margin-left: 8px;
+	hr {
+		width: 100%;
+		margin-bottom: 16px;
+	}
+
+	.close_btn {
+		position: absolute;
+		right: 12px;
+		padding: 8px;
+		background-color: variables.$black-a10;
+		border-radius: 50%;
+		cursor: pointer;
+
+		span {
+			width: 20px;
+			height: 20px;
+			display: block;
+			background-size: auto;
+			background-repeat: no-repeat;
+			background-image: url('../../public/multi_icons/icons_6.png');
+			background-position: -105px -67px;
 		}
 	}
 
-	.edit_bio {
-		p {
-			width: 400px;
-			height: 115px;
-			font-size: 1rem;
+	.close_btn:hover {
+		background-color: variables.$black-a20;
+	}
 
-			overflow: auto;
+	.body {
+		form {
+			display: flex;
+			flex-direction: column;
+
+			button[type='submit'] {
+				margin-top: 12px;
+			}
 		}
 
-		textarea {
-			width: 400px;
-			height: 115px;
-			resize: none;
-			font-size: 1rem;
-			padding: 4px;
-			border: none;
-			outline: 1px solid variables.$blue;
-			margin: 0;
+		.edit_profile_picture,
+		.edit_bio {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+			img {
+				box-sizing: content-box;
+				border: 4px solid variables.$white;
+				width: 160px;
+				height: 160px;
+			}
+		}
+
+		.section_name {
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 12px;
+
+			button {
+				margin-left: 8px;
+			}
+		}
+
+		.edit_bio {
+			p {
+				width: 400px;
+				height: 115px;
+				font-size: 1rem;
+
+				overflow: auto;
+			}
+
+			textarea {
+				width: 400px;
+				height: 115px;
+				resize: none;
+				font-size: 1rem;
+				padding: 4px;
+				border: none;
+				outline: 1px solid variables.$blue;
+				margin: 0;
+			}
 		}
 	}
 }

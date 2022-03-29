@@ -15,138 +15,138 @@
 		width: 32px;
 		height: 32px;
 	}
-}
 
-.comment:hover .options_toggle {
-	visibility: visible;
-}
+	.body {
+		display: flex;
+		flex-direction: column;
 
-.body {
-	display: flex;
-	flex-direction: column;
-
-	a {
-		border-radius: 0;
-	}
-}
-
-.upper {
-	display: flex;
-	flex-direction: row;
-}
-
-.contents {
-	display: flex;
-	flex-direction: column;
-	width: fit-content;
-	background-color: variables.$white-a80;
-	padding: 8px 12px;
-	border-radius: 16px;
-	position: relative;
-	max-width: 660px;
-
-	a {
-		font-weight: 600;
-		font-size: 0.8rem;
+		a {
+			border-radius: 0;
+		}
 	}
 
-	.comment_text {
-		margin-top: 2px;
-		line-height: 1.1rem;
-		font-size: 0.8rem;
+	.upper {
+		display: flex;
+		flex-direction: row;
 	}
 
-	.liked {
-		position: absolute;
-		bottom: 0;
-		right: -8px;
+	.contents {
+		display: flex;
+		flex-direction: column;
+		width: fit-content;
+		background-color: variables.$white-a80;
+		padding: 8px 12px;
+		border-radius: 16px;
+		position: relative;
+		max-width: 660px;
+
+		a {
+			font-weight: 600;
+			font-size: 0.8rem;
+		}
+
+		.comment_text {
+			margin-top: 2px;
+			line-height: 1.1rem;
+			font-size: 0.8rem;
+		}
+
+		.liked {
+			position: absolute;
+			bottom: 0;
+			right: -8px;
+			cursor: pointer;
+
+			span {
+				width: 16px;
+				height: 16px;
+				display: block;
+				background-size: auto;
+				background-repeat: no-repeat;
+				background-image: url('../../public/single_icons/like_icon.png');
+			}
+		}
+	}
+
+	.controls {
+		width: fit-content;
+		margin: 2px 8px;
+		display: flex;
+		flex-direction: row;
+		font-size: 0.7rem;
+		color: variables.$black-a60;
+
+		.like_btn,
+		.reply_btn {
+			font-weight: 600;
+			margin-right: 12px;
+			cursor: pointer;
+		}
+
+		.like_btn:hover,
+		.reply_btn:hover {
+			text-decoration: underline;
+		}
+
+		.time {
+			color: variables.$black-a60;
+		}
+
+		.liked {
+			color: variables.$blue;
+		}
+	}
+
+	.right {
+		position: relative;
+		margin: auto 4px;
+	}
+
+	.options_toggle {
+		visibility: hidden;
+		display: block;
+		height: fit-content;
+		padding: 4px;
+		border-radius: 50%;
 		cursor: pointer;
 
-		span {
-			width: 16px;
-			height: 16px;
+		svg {
 			display: block;
-			background-size: auto;
-			background-repeat: no-repeat;
-			background-image: url('../../public/single_icons/like_icon.png');
+			width: 20px;
+			height: 20px;
+			fill: variables.$black-a60;
+		}
+	}
+
+	.options_toggle:hover {
+		background-color: variables.$black-a05;
+	}
+
+	.options_menu {
+		position: absolute;
+		top: 32px;
+		right: -100px;
+		padding: 8px;
+		width: 220px;
+		border-radius: 8px;
+		background-color: variables.$white;
+		box-shadow: 0 4px 16px 0 variables.$black-a20;
+		z-index: 5;
+
+		.edit_btn,
+		.delete_btn {
+			padding: 8px;
+			border-radius: 8px;
+			cursor: pointer;
+		}
+
+		.edit_btn:hover,
+		.delete_btn:hover {
+			background-color: variables.$black-a05;
 		}
 	}
 }
 
-.controls {
-	width: fit-content;
-	margin: 2px 8px;
-	display: flex;
-	flex-direction: row;
-	font-size: 0.7rem;
-	color: variables.$black-a60;
-
-	.like_btn,
-	.reply_btn {
-		font-weight: 600;
-		margin-right: 12px;
-		cursor: pointer;
-	}
-
-	.like_btn:hover,
-	.reply_btn:hover {
-		text-decoration: underline;
-	}
-
-	.time {
-		color: variables.$black-a60;
-	}
-
-	.liked {
-		color: variables.$blue;
-	}
-}
-
-.right {
-	position: relative;
-	margin: auto 4px;
-}
-
-.options_toggle {
-	visibility: hidden;
-	display: block;
-	height: fit-content;
-	padding: 4px;
-	border-radius: 50%;
-	cursor: pointer;
-
-	svg {
-		display: block;
-		width: 20px;
-		height: 20px;
-		fill: variables.$black-a60;
-	}
-}
-
-.options_toggle:hover {
-	background-color: variables.$black-a05;
-}
-
-.options_menu {
-	position: absolute;
-	top: 32px;
-	right: -100px;
-	padding: 8px;
-	width: 220px;
-	border-radius: 8px;
-	background-color: variables.$white;
-	box-shadow: 0 4px 16px 0 variables.$black-a20;
-	z-index: 5;
-
-	.edit_btn,
-	.delete_btn {
-		padding: 8px;
-		border-radius: 8px;
-		cursor: pointer;
-	}
-
-	.edit_btn:hover,
-	.delete_btn:hover {
-		background-color: variables.$black-a05;
-	}
+.comment:hover .options_toggle {
+	visibility: visible;
 }

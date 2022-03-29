@@ -10,44 +10,44 @@
 	justify-content: center;
 	align-items: center;
 	z-index: 10;
-}
 
-.grayout_bg {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: variables.$white-a80;
-}
-
-.confirm_delete {
-	display: flex;
-	flex-direction: column;
-	padding: 24px;
-	border-radius: 8px;
-	background-color: variables.$white;
-	box-shadow: 0 4px 12px 4px variables.$black-a20;
-	width: 600px;
-	height: 200px;
-	z-index: 10;
-
-	h3 {
-		border-bottom: 1px solid variables.$black-a20;
-		padding-bottom: 12px;
-		margin-bottom: 12px;
-		font-weight: 600;
+	.grayout_bg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: variables.$white-a80;
 	}
 
-	span {
-		flex: 1;
-	}
+	.confirm_delete {
+		display: flex;
+		flex-direction: column;
+		padding: 24px;
+		border-radius: 8px;
+		background-color: variables.$white;
+		box-shadow: 0 4px 12px 4px variables.$black-a20;
+		width: 600px;
+		height: 200px;
+		z-index: 10;
 
-	.delete_controls {
-		align-self: flex-end;
+		h3 {
+			border-bottom: 1px solid variables.$black-a20;
+			padding-bottom: 12px;
+			margin-bottom: 12px;
+			font-weight: 600;
+		}
 
-		button {
-			margin-left: 8px;
+		span {
+			flex: 1;
+		}
+
+		.delete_controls {
+			align-self: flex-end;
+
+			button {
+				margin-left: 8px;
+			}
 		}
 	}
 }
