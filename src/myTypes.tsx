@@ -94,6 +94,10 @@ export type MessageNew = {
 	updatedAt?: string;
 };
 
+export type FormError = {
+	msg: string;
+};
+
 export type SocketType = Socket<ServerToClientEvents, ClientToServerEvents>;
 
 type ServerToClientEvents = {
