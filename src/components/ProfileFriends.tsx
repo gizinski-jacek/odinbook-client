@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { User } from '../myTypes';
+import type { User } from '../myTypes';
 import { axiosGet } from './utils/axiosFunctions';
 import PersonWrapper from './utils/PersonWrapper';
 import styles from '../styles/ProfileFriends.module.scss';
