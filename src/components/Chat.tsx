@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from './hooks/UserContext';
-import type { Chatroom, SocketType, User } from '../myTypes';
+import type { Chatroom, User } from '../myTypes';
 import { axiosPost, axiosPut } from './utils/axiosFunctions';
 import styles from '../styles/Chat.module.scss';
 import ChatMessageWrapper from './utils/ChatMessageWrapper';
@@ -9,11 +9,10 @@ import ChatMessageWrapper from './utils/ChatMessageWrapper';
 type Props = {
 	closeChat: (e: React.MouseEvent<HTMLButtonElement>) => void;
 	recipient: User;
-	socket: SocketType | null;
 	data: Chatroom;
 };
 
-const Chat: React.FC<Props> = ({ closeChat, recipient, socket, data }) => {
+const Chat: React.FC<Props> = ({ closeChat, recipient, data }) => {
 	const { user } = useContext(UserContext);
 
 	const lastMessage = useRef<HTMLLIElement>(null);
@@ -53,9 +52,6 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, socket, data }) => {
 		recipientId: string
 	) => {
 		e.preventDefault();
-		if (!socket) {
-			return;
-		}
 		try {
 			const message = {
 				chat_ref: chatId,
