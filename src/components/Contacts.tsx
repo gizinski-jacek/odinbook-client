@@ -1,6 +1,9 @@
+// @ts-nocheck
+
 import { useContext, useEffect, useState } from 'react';
+import { io } from 'socket.io-client';
 import { UserContext } from './hooks/UserContext';
-import type { User } from '../myTypes';
+import type { SocketType, User } from '../myTypes';
 import { axiosGet, axiosPut } from './utils/axiosFunctions';
 import RequestWrapper from './utils/RequestWrapper';
 import FriendWrapper from './utils/FriendWrapper';
@@ -11,6 +14,29 @@ const Contacts = () => {
 
 	const [requestsData, setRequestsData] = useState<User[]>([]);
 	const [friendsData, setFriendsData] = useState<User[]>([]);
+
+	const [socket, setSocket] = useState<SocketType | null>(null);
+
+	useEffect(() => {
+		const newSocket = io(`${process.env.REACT_APP_API_URI}/chats`, {
+			withCredentials: true,
+		});
+		setSocket(newSocket);
+
+		return () => newSocket.disconnect();
+	}, []);
+
+	useEffect(() => {
+		if (!socket) {
+			return;
+		}
+
+		socket.on('oops', (error) => {
+			console.error(error);
+		});
+
+		return () => socket.off();
+	}, [socket]);
 
 	useEffect(() => {
 		(async () => {
@@ -93,6 +119,7 @@ const Contacts = () => {
 				key={friend._id}
 				handleRemove={handleRemoveFriend}
 				friend={friend}
+				socket={socket}
 			/>
 		);
 	});
