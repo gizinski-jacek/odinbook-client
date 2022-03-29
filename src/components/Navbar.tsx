@@ -11,6 +11,7 @@ import NotificationsMenu from './menus/NotificationsMenu';
 import MessengerMenu from './menus/MessengerMenu';
 import MainMenu from './menus/MainMenu';
 import styles from '../styles/Navbar.module.scss';
+import SearchPostResultWrapper from './utils/SearchPostResultWrapper';
 
 const Navbar = () => {
 	const { user } = useContext(UserContext);
@@ -163,26 +164,7 @@ const Navbar = () => {
 	};
 
 	const searchDisplay = searchData?.map((post) => {
-		return (
-			<li key={post._id}>
-				<Link
-					className={styles.search_result}
-					to={`/profile/${post.author._id}`}
-				>
-					<div className='profile-pic-style'>
-						<img
-							src={
-								post.author.profile_picture
-									? `http://localhost:4000/photos/${user.profile_picture}`
-									: '/placeholder_profile_pic.png'
-							}
-							alt='User profile pic'
-						/>
-					</div>
-					<span className={styles.contents}>{post.text}</span>
-				</Link>
-			</li>
-		);
+		return <SearchPostResultWrapper key={post._id} post={post} />;
 	});
 
 	return (
