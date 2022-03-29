@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Message } from '../../myTypes';
 import { axiosGet, axiosPut } from '../utils/axiosFunctions';
-import timeSinceDate from '../utils/timeSinceDate';
+import MessengerMessageWrapper from '../utils/MessengerMessageWrapper';
 import styles from '../../styles/menus/MessengerMenu.module.scss';
 
 const MessengerMenu = () => {
@@ -60,7 +60,6 @@ const MessengerMenu = () => {
 		try {
 			setSearchData(await axiosGet(`/api/search/messages?q=${query}`));
 			setShowResults(true);
-			// document.addEventListener('click', windowListener);
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -83,69 +82,23 @@ const MessengerMenu = () => {
 		);
 	};
 
-	const messageListDisplay = newMessagesData.map((message, index) => {
+	const messageListDisplay = newMessagesData.map((message) => {
 		return (
-			<li key={index} className={styles.message}>
-				<div className='profile-pic-style'>
-					<img
-						src={
-							message.author.profile_picture
-								? `http://localhost:4000/photos/${message.author.profile_picture}`
-								: '/placeholder_profile_pic.png'
-						}
-						alt={`${message.author.first_name} ${message.author.last_name}`}
-					/>
-					<h6 className={styles.timestamp}>
-						{timeSinceDate(message.createdAt, true)}
-					</h6>
-				</div>
-				<div className={styles.contents}>
-					<Link to={`/profile/${message.author._id}`}>
-						{message.author.first_name} {message.author.last_name}
-					</Link>
-					<p>{message.text}</p>
-				</div>
-				<button
-					type='button'
-					className={styles.mark_btn}
-					onClick={(e) => markMessageAsRead(e, message._id)}
-				>
-					<span></span>
-				</button>
-			</li>
+			<MessengerMessageWrapper
+				key={message._id}
+				dismissMessage={markMessageAsRead}
+				message={message}
+			/>
 		);
 	});
 
-	const searchDisplay = searchData?.map((message, index) => {
+	const searchDisplay = searchData?.map((message) => {
 		return (
-			<li key={index} className={styles.message}>
-				<div className='profile-pic-style'>
-					<img
-						src={
-							message.author.profile_picture
-								? `http://localhost:4000/photos/${message.author.profile_picture}`
-								: '/placeholder_profile_pic.png'
-						}
-						alt={`${message.author.first_name} ${message.author.last_name}`}
-					/>
-					<h6 className={styles.timestamp}>
-						{timeSinceDate(message.createdAt, true)}
-					</h6>
-				</div>
-				<div className={styles.contents}>
-					<Link to={`/profile/${message.author._id}`}>
-						{message.author.first_name} {message.author.last_name}
-					</Link>
-					<p>{message.text}</p>
-				</div>
-				<button
-					type='button'
-					className={styles.remove_btn}
-					onClick={(e) => removeFromSearchResults(e, message._id)}
-				>
-					<span></span>
-				</button>
-			</li>
+			<MessengerMessageWrapper
+				key={message._id}
+				dismissMessage={removeFromSearchResults}
+				message={message}
+			/>
 		);
 	});
 

@@ -1,0 +1,62 @@
+@use './variables';
+
+.message {
+	display: flex;
+	flex-direction: row;
+	margin: 8px;
+	padding: 8px;
+	background-color: variables.$black-a05;
+	box-shadow: 0 1px 2px 0 variables.$black-a20;
+	border-radius: 8px;
+
+	img {
+		margin-right: 8px;
+		margin-bottom: 4px;
+		width: 32px;
+		height: 32px;
+		cursor: initial;
+	}
+
+	.timestamp {
+		color: variables.$blue;
+	}
+
+	.contents {
+		max-width: fit-content;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		margin-right: 8px;
+
+		a {
+			margin: 0;
+		}
+	}
+
+	.mark_btn,
+	.remove_btn {
+		height: fit-content;
+		margin-left: auto;
+		padding: 8px;
+		background-color: variables.$black-a10;
+		border-radius: 50%;
+		cursor: pointer;
+
+		span {
+			width: 8px;
+			height: 8px;
+			display: block;
+			background-size: auto;
+			background-repeat: no-repeat;
+			background-image: url('../../public/multi_icons/icons_6.png');
+			background-position: -111px -73px;
+		}
+	}
+
+	.mark_btn:hover,
+	.remove_btn:hover {
+		background-color: variables.$black-a20;
+	}
+}
