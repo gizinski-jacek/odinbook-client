@@ -9,7 +9,8 @@ const AccountMenu = () => {
 
 	const navigate = useNavigate();
 
-	const handleLogOut = async () => {
+	const handleLogOut = async (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
 		try {
 			await axiosGet('/api/log-out');
 			setUser(null);
@@ -68,7 +69,7 @@ const AccountMenu = () => {
 				<h4>{'Display & accessibility'}</h4>
 				<span className={styles.arrows}></span>
 			</Link>
-			<div onClick={() => handleLogOut()} className={styles.log_out_btn}>
+			<div onClick={(e) => handleLogOut(e)} className={styles.log_out_btn}>
 				<div className={styles.icon}>
 					<span></span>
 				</div>
