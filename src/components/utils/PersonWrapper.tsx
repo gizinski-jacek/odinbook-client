@@ -14,7 +14,11 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 
 	const [userData, setUserData] = useState<User>(person);
 
-	const handleBlockStatus = async (userId: string) => {
+	const handleBlockStatus = async (
+		e: React.MouseEvent<HTMLButtonElement>,
+		userId: string
+	) => {
+		e.stopPropagation();
 		try {
 			const resData = await axiosPut(`/api/users/block`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
@@ -24,7 +28,11 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 		}
 	};
 
-	const handleRemoveFriend = async (userId: string) => {
+	const handleRemoveFriend = async (
+		e: React.MouseEvent<HTMLButtonElement>,
+		userId: string
+	) => {
+		e.stopPropagation();
 		try {
 			const resData = await axiosPut(`/api/users/friends/remove`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
@@ -34,7 +42,11 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 		}
 	};
 
-	const handleCancelRequest = async (userId: string) => {
+	const handleCancelRequest = async (
+		e: React.MouseEvent<HTMLButtonElement>,
+		userId: string
+	) => {
+		e.stopPropagation();
 		try {
 			const resData = await axiosPut(`/api/users/friends/cancel`, {
 				userId,
@@ -46,7 +58,11 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 		}
 	};
 
-	const handleAcceptRequest = async (userId: string) => {
+	const handleAcceptRequest = async (
+		e: React.MouseEvent<HTMLButtonElement>,
+		userId: string
+	) => {
+		e.stopPropagation();
 		try {
 			const resData = await axiosPut(`/api/users/friends/accept`, {
 				userId,
@@ -58,7 +74,11 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 		}
 	};
 
-	const handleSendRequest = async (userId: string) => {
+	const handleSendRequest = async (
+		e: React.MouseEvent<HTMLButtonElement>,
+		userId: string
+	) => {
+		e.stopPropagation();
 		try {
 			const resData = await axiosPut(`/api/users/friends/request`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
@@ -91,46 +111,37 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 						<button
 							type='button'
 							className={`btn-default btn-disabled ${styles.blocked}`}
-							onClick={() => handleBlockStatus(userData._id)}
-						>
-							<span>Blocked User</span>
-						</button>
+							onClick={(e) => handleBlockStatus(e, userData._id)}
+						></button>
 					) : userData.blocked_user_list.includes(user._id) ? (
-						<button type='button' className='btn-default btn-disabled'>
-							Blocked by User
-						</button>
+						<button
+							type='button'
+							className={`btn-default btn-disabled ${styles.blocked_by}`}
+						></button>
 					) : userData.friend_list.includes(user._id) ? (
 						<button
 							type='button'
 							className={`btn-default btn-confirm ${styles.friend}`}
-							onClick={() => handleRemoveFriend(userData._id)}
-						>
-							<span>Friends</span>
-						</button>
+							onClick={(e) => handleRemoveFriend(e, userData._id)}
+						></button>
 					) : userData.incoming_friend_requests.includes(user._id) ? (
 						<button
 							type='button'
 							className={`btn-default btn-active ${styles.sent}`}
-							onClick={() => handleCancelRequest(userData._id)}
-						>
-							<span>Request Sent</span>
-						</button>
+							onClick={(e) => handleCancelRequest(e, userData._id)}
+						></button>
 					) : userData.outgoing_friend_requests.includes(user._id) ? (
 						<button
 							type='button'
 							className='btn-default btn-confirm'
-							onClick={() => handleAcceptRequest(userData._id)}
-						>
-							Accept Request
-						</button>
+							onClick={(e) => handleAcceptRequest(e, userData._id)}
+						></button>
 					) : userData._id === user._id ? null : (
 						<button
 							type='button'
 							className='btn-default btn-confirm'
-							onClick={() => handleSendRequest(userData._id)}
-						>
-							Add Friend
-						</button>
+							onClick={(e) => handleSendRequest(e, userData._id)}
+						></button>
 					))}
 			</div>
 		</li>
