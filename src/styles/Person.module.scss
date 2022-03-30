@@ -37,10 +37,8 @@
 	.controls {
 		margin: 16px;
 
-		.blocked:hover span,
-		.friend:hover span,
-		.sent:hover span {
-			display: none;
+		.blocked:after {
+			content: 'Blocked User';
 		}
 
 		.blocked:hover {
@@ -52,6 +50,14 @@
 			content: 'Unblock User';
 		}
 
+		.blocked_by:after {
+			content: 'Blocked by User';
+		}
+
+		.friend:after {
+			content: 'Friend';
+		}
+
 		.friend:hover {
 			background-color: variables.$blue-a30 !important;
 			color: variables.$blue;
@@ -61,12 +67,58 @@
 			content: 'Remove Friend';
 		}
 
+		.sent:after {
+			content: 'Request Sent';
+		}
+
 		.sent:hover:after {
 			content: 'Cancel Request';
 		}
 
 		button {
 			width: 100%;
+		}
+	}
+}
+
+@media only screen and (max-width: 1000px) {
+	.person {
+		width: 150px;
+		height: 280px;
+
+		.pic_link {
+			width: 150px;
+			height: 150px;
+		}
+
+		.controls {
+			.blocked:after {
+				content: 'Blocked';
+			}
+
+			.blocked:hover:after {
+				content: 'Unblock';
+			}
+
+			.blocked_by:after {
+				content: 'Blocked';
+			}
+
+			.friend:after {
+				content: 'Friend';
+			}
+
+			.friend:hover:after {
+				content: 'Remove';
+			}
+
+			.sent:after {
+				content: 'Sent';
+			}
+
+			.sent:hover:after {
+				content: 'Cancel';
+			}
 		}
 	}
 }
