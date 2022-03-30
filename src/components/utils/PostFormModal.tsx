@@ -82,7 +82,6 @@ const PostFormModal: React.FC<Props> = ({
 				<div className={styles.post_form}>
 					<form onSubmit={(e) => handleSubmit(e, formData)}>
 						<textarea
-							id='text'
 							name='text'
 							minLength={1}
 							maxLength={512}
