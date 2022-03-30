@@ -103,6 +103,13 @@
 		.friends_link:hover {
 			background-color: variables.$black-a20;
 		}
+
+		@media only screen and (max-width: 1400px) {
+			.me_link,
+			.friends_link {
+				display: none;
+			}
+		}
 	}
 
 	.menu_container {
