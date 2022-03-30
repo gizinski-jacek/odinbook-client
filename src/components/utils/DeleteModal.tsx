@@ -15,7 +15,8 @@ const DeleteModal: React.FC<Props> = ({
 	post,
 	comment,
 }) => {
-	const handleDelete = async () => {
+	const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.stopPropagation();
 		try {
 			if (post) {
 				await axiosDelete(`/api/posts/${post._id}`);
@@ -33,7 +34,7 @@ const DeleteModal: React.FC<Props> = ({
 
 	return (
 		<div className={styles.modal_container}>
-			<span className={styles.grayout_bg} onClick={closeModal}></span>
+			<span className={styles.grayout_bg} onClick={(e) => closeModal(e)}></span>
 			<div className={styles.confirm_delete}>
 				<h3>Delete {post ? 'post' : 'comment'}?</h3>
 				<span>
@@ -43,14 +44,14 @@ const DeleteModal: React.FC<Props> = ({
 					<button
 						type='button'
 						className='btn-default btn-cancel'
-						onClick={closeModal}
+						onClick={(e) => closeModal(e)}
 					>
 						Cancel
 					</button>
 					<button
 						type='button'
 						className='btn-default btn-confirm'
-						onClick={handleDelete}
+						onClick={(e) => handleDelete(e)}
 					>
 						Delete
 					</button>
