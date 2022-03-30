@@ -70,13 +70,13 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
 		setShowOptions((prevState) => !prevState);
-		document.addEventListener('click', windowListener);
+		document.addEventListener('click', windowOptionsListener);
 	};
 
-	const windowListener = (e: any) => {
+	const windowOptionsListener = (e: any) => {
 		e.stopPropagation();
 		if (optionsRef.current !== e.target) {
-			document.removeEventListener('click', windowListener);
+			document.removeEventListener('click', windowOptionsListener);
 			setShowOptions(false);
 		}
 	};
@@ -120,7 +120,10 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 					{friend.first_name} {friend.last_name}
 				</div>
 				<div className={styles.right}>
-					<span className={styles.options_toggle} onClick={toggleOptions}>
+					<span
+						className={styles.options_toggle}
+						onClick={(e) => toggleOptions(e)}
+					>
 						<svg viewBox='0 0 20 20' width='20' height='20'>
 							<g transform='translate(-446 -350)'>
 								<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
