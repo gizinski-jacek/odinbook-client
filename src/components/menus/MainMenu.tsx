@@ -13,7 +13,7 @@ const MainMenu = () => {
 					<div className={styles.social}>
 						<ul>
 							<li>
-								<Link to='/'>
+								<Link to='/friends'>
 									<img src='single_icons/friends_icon.png' alt='Find friends' />
 									<span>
 										<h4>Find Friends</h4>
