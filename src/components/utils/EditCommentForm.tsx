@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { CommentFull } from '../../myTypes';
-import styles from '../../styles/EditCommentForm.module.scss';
+import styles from '../../styles/CommentForm.module.scss';
 
 type Props = {
 	closeModal: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -28,7 +28,7 @@ const EditCommentForm: React.FC<Props> = ({
 	};
 
 	return (
-		<div className={styles.edit_comment}>
+		<div className={styles.comment_form_container}>
 			<Link to={`/profile/${comment.author._id}`}>
 				<div className='profile-pic-style'>
 					<img
@@ -43,12 +43,11 @@ const EditCommentForm: React.FC<Props> = ({
 			</Link>
 			<form onSubmit={(e) => handleUpdate(e, formData)}>
 				<textarea
-					id={`text_${comment._id}`}
 					name='text'
 					minLength={1}
 					maxLength={512}
 					rows={2}
-					onChange={handleChange}
+					onChange={(e) => handleChange(e)}
 					value={formData.text}
 					required
 					autoFocus
@@ -58,7 +57,7 @@ const EditCommentForm: React.FC<Props> = ({
 					<button
 						type='button'
 						className='btn-default btn-cancel'
-						onClick={closeModal}
+						onClick={(e) => closeModal(e)}
 					>
 						Cancel
 					</button>
