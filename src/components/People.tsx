@@ -86,7 +86,6 @@ const People = () => {
 						</span>
 						<input
 							type='text'
-							id='search_people'
 							name='search_people'
 							minLength={1}
 							maxLength={64}
@@ -100,7 +99,7 @@ const People = () => {
 								visibility: searchInput || showResults ? 'visible' : 'hidden',
 							}}
 							className={styles.clear_btn}
-							onClick={clearSearch}
+							onClick={(e) => clearSearch(e)}
 						>
 							<span></span>
 						</button>
