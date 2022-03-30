@@ -1,6 +1,6 @@
 @use './variables';
 
-.edit_comment {
+.comment_form_container {
 	display: flex;
 	flex-direction: row;
 	margin-bottom: 8px;
@@ -33,10 +33,10 @@
 		button:first-child {
 			background-color: variables.$white-a80;
 		}
+	}
 
-		button {
-			margin-left: 12px;
-		}
+	button {
+		margin-left: 12px;
 	}
 
 	img {
