@@ -5,17 +5,24 @@ import SignUp from './SignUp';
 const FrontPage = () => {
 	const [showLogIn, setShowLogIn] = useState(true);
 
+	const toggleForm = (
+		e: React.MouseEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>
+	) => {
+		e.stopPropagation();
+		setShowLogIn((prevState) => !prevState);
+	};
+
 	return (
-		<div className='welcome-page-container'>
+		<div className='front-page-container'>
 			<div className='left'>
 				<h1>Odinbook</h1>
-				<h2>Helps you connect and share with the people in your life</h2>
+				<h3>Helps you connect and share with the people in your life</h3>
 			</div>
 			<div className='right'>
 				{showLogIn ? (
-					<LogIn setShowLogIn={setShowLogIn} />
+					<LogIn toggleForm={toggleForm} />
 				) : (
-					<SignUp setShowLogIn={setShowLogIn} />
+					<SignUp toggleForm={toggleForm} />
 				)}
 			</div>
 		</div>
