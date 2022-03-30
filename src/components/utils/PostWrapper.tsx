@@ -7,7 +7,8 @@ import CommentWrapper from './CommentWrapper';
 import PostFormModal from './PostFormModal';
 import DeleteModal from './DeleteModal';
 import timeSinceDate from './timeSinceDate';
-import styles from '../../styles/Post.module.scss';
+import stylesPost from '../../styles/Post.module.scss';
+import stylesCommentForm from '../../styles/CommentForm.module.scss';
 
 type Props = {
 	post: PostFull;
@@ -22,7 +23,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 	const params = useParams();
 
 	const [postData, setPostData] = useState<PostFull | null>(post);
-	const [formData, setFormData] = useState({ text: '' });
+	const [formData, setFormData] = useState<CommentNew>({ text: '' });
 	const [showOptions, setShowOptions] = useState(false);
 	const [showEditModal, setShowEditModal] = useState(false);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -43,13 +44,13 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
 		setShowOptions((prevState) => !prevState);
-		document.addEventListener('click', windowListener);
+		document.addEventListener('click', windowOptionsListener);
 	};
 
-	const windowListener = (e: any) => {
+	const windowOptionsListener = (e: any) => {
 		e.stopPropagation();
 		if (optionsRef.current !== e.target) {
-			document.removeEventListener('click', windowListener);
+			document.removeEventListener('click', windowOptionsListener);
 			setShowOptions(false);
 		}
 	};
@@ -78,7 +79,10 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		setShowDeleteModal(false);
 	};
 
-	const handleLike = async (postId: string) => {
+	const handleLike = async (
+		e: React.MouseEvent<HTMLDivElement>,
+		postId: string
+	) => {
 		try {
 			setPostData(await axiosPut(`/api/posts/${postId}/like`, { postId }));
 		} catch (error: any) {
@@ -100,7 +104,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		}));
 	};
 
-	const handleCommentSubmit = async (
+	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
 		postId: string,
 		data: CommentNew
@@ -120,9 +124,9 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 	});
 
 	return postData ? (
-		<div className={styles.post}>
-			<div className={styles.top}>
-				<div className={styles.left}>
+		<div className={stylesPost.post}>
+			<div className={stylesPost.top}>
+				<div className={stylesPost.left}>
 					<Link to={`/profile/${postData.author._id}`}>
 						<div className='profile-pic-style'>
 							<img
@@ -136,7 +140,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 						</div>
 					</Link>
 					<div>
-						<div className={styles.metadata}>
+						<div className={stylesPost.metadata}>
 							<Link to={`/profile/${postData.author._id}`}>
 								<h4>
 									{postData.author.first_name} {postData.author.last_name}
@@ -146,10 +150,13 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 						</div>
 					</div>
 				</div>
-				<div className={styles.right}>
+				<div className={stylesPost.right}>
 					{user._id === postData.author._id && (
 						<>
-							<span className={styles.options_toggle} onClick={toggleOptions}>
+							<span
+								className={stylesPost.options_toggle}
+								onClick={(e) => toggleOptions(e)}
+							>
 								<svg viewBox='0 0 20 20' width='20' height='20'>
 									<g transform='translate(-446 -350)'>
 										<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
@@ -157,11 +164,17 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 								</svg>
 							</span>
 							{showOptions && (
-								<span ref={optionsRef} className={styles.options_menu}>
-									<div className={styles.edit_btn} onClick={openEditModal}>
+								<span ref={optionsRef} className={stylesPost.options_menu}>
+									<div
+										className={stylesPost.edit_btn}
+										onClick={(e) => openEditModal(e)}
+									>
 										Edit post
 									</div>
-									<div className={styles.delete_btn} onClick={openDeleteModal}>
+									<div
+										className={stylesPost.delete_btn}
+										onClick={(e) => openDeleteModal(e)}
+									>
 										Delete post
 									</div>
 								</span>
@@ -170,47 +183,47 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 					)}
 				</div>
 			</div>
-			<div className={styles.contents}>
+			<div className={stylesPost.contents}>
 				<p>{postData.text}</p>
 			</div>
-			<div className={styles.bottom}>
-				<div className={styles.likes_and_count}>
+			<div className={stylesPost.bottom}>
+				<div className={stylesPost.likes_and_count}>
 					{postData.likes.includes(user._id) && (
 						<div
-							className={styles.liked}
-							onClick={(e) => handleLike(postData._id)}
+							className={stylesPost.liked}
+							onClick={(e) => handleLike(e, postData._id)}
 						>
 							<span></span>
 						</div>
 					)}
 					{postData.comments.length > 0 && (
 						<div
-							className={styles.comment_count}
+							className={stylesPost.comment_count}
 							onClick={(e) => toggleComments(e)}
 						>
 							<h5>{postData?.comments.length} comments</h5>
 						</div>
 					)}
 				</div>
-				<span className={styles.controls}>
+				<span className={stylesPost.controls}>
 					<div
-						className={`${styles.like_btn} ${
-							postData.likes.includes(user._id) ? styles.liked : ''
+						className={`${stylesPost.like_btn} ${
+							postData.likes.includes(user._id) ? stylesPost.liked : ''
 						}`}
-						onClick={() => handleLike(postData._id)}
+						onClick={(e) => handleLike(e, postData._id)}
 					>
-						<div className={styles.icon}>
+						<div className={stylesPost.icon}>
 							<span></span>
 						</div>
 						Like
 					</div>
 					<div
-						className={`${styles.comment_btn} ${
-							showCommentsList ? styles.shown : ''
+						className={`${stylesPost.comment_btn} ${
+							showCommentsList ? stylesPost.shown : ''
 						}`}
 						onClick={(e) => toggleComments(e)}
 					>
-						<div className={styles.icon}>
+						<div className={stylesPost.icon}>
 							<span></span>
 						</div>
 						Comment
@@ -218,11 +231,11 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 				</span>
 			</div>
 			{showCommentsList && commentsDisplay && commentsDisplay.length > 0 && (
-				<div className={styles.comments_container}>
+				<div className={stylesPost.comments_container}>
 					<ul>{commentsDisplay}</ul>
 				</div>
 			)}
-			<div className={styles.new_comment}>
+			<div className={stylesCommentForm.comment_form_container}>
 				<Link to={`/profile/${postData.author._id}`}>
 					<div className='profile-pic-style'>
 						<img
@@ -235,9 +248,8 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 						/>
 					</div>
 				</Link>
-				<form onSubmit={(e) => handleCommentSubmit(e, postData._id, formData)}>
+				<form onSubmit={(e) => handleSubmit(e, postData._id, formData)}>
 					<textarea
-						id={`text_${post._id}`}
 						name='text'
 						ref={commentInputRef}
 						minLength={1}
