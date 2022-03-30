@@ -6,11 +6,13 @@ import SearchPostResultWrapper from './utils/SearchPostResultWrapper';
 import styles from '../styles/NavbarLeft.module.scss';
 
 const NavbarLeft = () => {
+	const resultsRef = useRef<HTMLInputElement>(null);
 	const searchRef = useRef<HTMLInputElement>(null);
 
 	const [searchInput, setSearchInput] = useState('');
 	const [searchData, setSearchData] = useState<PostFull[]>([]);
 	const [showResults, setShowResults] = useState(false);
+	const [focused, setFocused] = useState(false);
 
 	const handleSearch = async (
 		e: React.FormEvent<HTMLFormElement>,
@@ -23,7 +25,7 @@ const NavbarLeft = () => {
 		try {
 			setSearchData(await axiosGet(`/api/search/posts?q=${query}`));
 			setShowResults(true);
-			document.addEventListener('click', windowListener);
+			document.addEventListener('click', windowSearchContainerListener);
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -36,11 +38,25 @@ const NavbarLeft = () => {
 		setShowResults(false);
 	};
 
-	const windowListener = (e: any) => {
+	const windowSearchContainerListener = (e: any) => {
 		e.stopPropagation();
-		if (searchRef.current !== e.target) {
+		if (resultsRef.current !== e.target) {
 			setShowResults(false);
-			document.removeEventListener('click', windowListener);
+			document.removeEventListener('click', windowSearchContainerListener);
+		}
+	};
+
+	const inputFocus = (e: React.MouseEvent<HTMLElement>) => {
+		e.stopPropagation();
+		setFocused(true);
+		document.addEventListener('click', windowInputFocusListener);
+	};
+
+	const windowInputFocusListener = (e: any) => {
+		e.stopPropagation();
+		if (searchRef.current !== e.target && resultsRef.current !== e.target) {
+			setFocused(false);
+			document.removeEventListener('click', windowInputFocusListener);
 		}
 	};
 
@@ -75,7 +91,7 @@ const NavbarLeft = () => {
 			</Link>
 			<div className={styles.search_posts}>
 				<form onSubmit={(e) => handleSearch(e, searchInput)}>
-					<label>
+					<label onClick={(e) => inputFocus(e)}>
 						<span>
 							<svg viewBox='0 0 16 16' width='16' height='16'>
 								<g transform='translate(-448 -544)'>
@@ -101,8 +117,9 @@ const NavbarLeft = () => {
 							</svg>
 						</span>
 						<input
+							ref={searchRef}
+							className={focused ? styles.isFocused : ''}
 							type='text'
-							id='search_posts'
 							name='search_posts'
 							minLength={1}
 							maxLength={512}
@@ -115,15 +132,17 @@ const NavbarLeft = () => {
 							style={{
 								visibility: searchInput || showResults ? 'visible' : 'hidden',
 							}}
-							className={styles.clear_btn}
-							onClick={clearSearch}
+							className={`${styles.clear_btn} ${
+								focused ? styles.isFocused : ''
+							}`}
+							onClick={(e) => clearSearch(e)}
 						>
 							<span></span>
 						</button>
 					</label>
 				</form>
 				{showResults && searchDisplay.length > 0 && (
-					<div ref={searchRef} className={styles.search_results_container}>
+					<div ref={resultsRef} className={styles.search_results_container}>
 						<ul>{searchDisplay}</ul>
 					</div>
 				)}
