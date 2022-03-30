@@ -80,7 +80,11 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, data }) => {
 						<Link to={`/profile/${recipient._id}`}>{recipient.first_name}</Link>
 					</h3>
 				</div>
-				<button type='button' className={styles.close_btn} onClick={closeChat}>
+				<button
+					type='button'
+					className={styles.close_btn}
+					onClick={(e) => closeChat(e)}
+				>
 					<span></span>
 				</button>
 			</div>
@@ -98,7 +102,6 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, data }) => {
 					<label>
 						<input
 							type='text'
-							id='message'
 							name='message'
 							minLength={1}
 							maxLength={64}

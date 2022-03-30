@@ -63,7 +63,7 @@ const Timeline = () => {
 				</Link>
 				<span
 					className={formData.text ? styles.not_empty : ''}
-					onClick={openModal}
+					onClick={(e) => openModal(e)}
 				>
 					<h4>
 						{formData.text

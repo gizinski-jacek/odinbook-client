@@ -106,7 +106,10 @@ const MessengerMenu = () => {
 		<div className={styles.menu_messenger}>
 			<div className={styles.top}>
 				<h3>Messenger</h3>
-				<span className={styles.mark_all} onClick={markAllMessagesAsRead}>
+				<span
+					className={styles.mark_all}
+					onClick={(e) => markAllMessagesAsRead(e)}
+				>
 					<h5>Mark all as read</h5>
 				</span>
 			</div>
@@ -139,7 +142,6 @@ const MessengerMenu = () => {
 						</span>
 						<input
 							type='text'
-							id='search_messenger'
 							name='search_messenger'
 							minLength={1}
 							maxLength={512}
@@ -153,7 +155,7 @@ const MessengerMenu = () => {
 								visibility: searchInput || showResults ? 'visible' : 'hidden',
 							}}
 							className={styles.clear_btn}
-							onClick={clearSearch}
+							onClick={(e) => clearSearch(e)}
 						>
 							<span></span>
 						</button>

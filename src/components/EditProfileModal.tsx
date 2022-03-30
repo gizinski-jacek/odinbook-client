@@ -116,7 +116,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 					<button
 						type='button'
 						className={styles.close_btn}
-						onClick={closeModal}
+						onClick={(e) => closeModal(e)}
 					>
 						<span></span>
 					</button>
@@ -137,7 +137,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 										<button
 											type='button'
 											className={`btn-default btn-danger ${styles.remove_btn}`}
-											onClick={handleRemoveFile}
+											onClick={(e) => handleRemoveFile(e)}
 										>
 											Remove
 										</button>
@@ -145,7 +145,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 									<button
 										type='button'
 										className={`btn-default btn-active ${styles.add_btn}`}
-										onClick={clickSelectFile}
+										onClick={(e) => clickSelectFile(e)}
 									>
 										Edit
 									</button>
@@ -153,13 +153,15 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 										style={{ display: 'none' }}
 										ref={pictureRef}
 										type='file'
-										id='profile_picture'
 										name='profile_picture'
 										onChange={handleFileChange}
 									/>
 								</div>
 							</div>
-							<div className='profile-pic-style' onClick={clickSelectFile}>
+							<div
+								className='profile-pic-style'
+								onClick={(e) => clickSelectFile(e)}
+							>
 								<img
 									src={
 										pictureData?.preview
@@ -179,7 +181,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 									<button
 										type='button'
 										className={`btn-default btn-active ${styles.edit_btn}`}
-										onClick={toggleBioForm}
+										onClick={(e) => toggleBioForm(e)}
 									>
 										{bioForm ? 'Save' : 'Edit'}
 									</button>
@@ -188,7 +190,6 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 							{bioForm ? (
 								<label>
 									<textarea
-										id='bio'
 										name='bio'
 										maxLength={512}
 										rows={5}
