@@ -70,21 +70,19 @@
 
 	.controls {
 		width: fit-content;
-		margin: 2px 8px;
+		margin: 4px 8px;
 		display: flex;
 		flex-direction: row;
 		font-size: 0.7rem;
 		color: variables.$black-a60;
 
-		.like_btn,
-		.reply_btn {
+		.like_btn {
 			font-weight: 600;
 			margin-right: 12px;
 			cursor: pointer;
 		}
 
-		.like_btn:hover,
-		.reply_btn:hover {
+		.like_btn:hover {
 			text-decoration: underline;
 		}
 
