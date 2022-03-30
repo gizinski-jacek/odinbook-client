@@ -91,7 +91,6 @@ const ProfileFriends = () => {
 						</span>
 						<input
 							type='text'
-							id='search_friends'
 							name='search_friends'
 							minLength={1}
 							maxLength={64}
@@ -105,7 +104,7 @@ const ProfileFriends = () => {
 								visibility: searchInput || showResults ? 'visible' : 'hidden',
 							}}
 							className={styles.clear_btn}
-							onClick={clearSearch}
+							onClick={(e) => clearSearch(e)}
 						>
 							<span></span>
 						</button>
