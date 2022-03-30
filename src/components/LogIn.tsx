@@ -6,7 +6,7 @@ import FormErrorWrapper from './utils/FormErrorWrapper';
 import styles from '../styles/LogIn.module.scss';
 
 type Props = {
-	setShowLogIn: (value: boolean) => void;
+	toggleForm: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 type FormData = {
@@ -14,7 +14,7 @@ type FormData = {
 	password: string;
 };
 
-const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
+const LogIn: React.FC<Props> = ({ toggleForm }) => {
 	const { setUser } = useContext(UserContext);
 
 	const [errors, setErrors] = useState<FormError[]>([]);
@@ -67,7 +67,6 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 						<label htmlFor='email'>Email</label>
 						<input
 							type='email'
-							id='email'
 							name='email'
 							minLength={4}
 							maxLength={32}
@@ -81,7 +80,6 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 						<label htmlFor='password'>Password</label>
 						<input
 							type='password'
-							id='password'
 							name='password'
 							minLength={8}
 							maxLength={64}
@@ -115,7 +113,7 @@ const LogIn: React.FC<Props> = ({ setShowLogIn }) => {
 				<h4>Don't have an account?</h4>
 				<button
 					type='button'
-					onClick={() => setShowLogIn(false)}
+					onClick={(e) => toggleForm(e)}
 					className='btn-default btn-register'
 				>
 					Create one now!

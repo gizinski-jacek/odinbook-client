@@ -5,7 +5,9 @@ import FormErrorWrapper from './utils/FormErrorWrapper';
 import styles from '../styles/SignUp.module.scss';
 
 type Props = {
-	setShowLogIn: (value: boolean) => void;
+	toggleForm: (
+		e: React.MouseEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>
+	) => void;
 };
 
 type FormData = {
@@ -15,7 +17,7 @@ type FormData = {
 	password: string;
 };
 
-const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
+const SignUp: React.FC<Props> = ({ toggleForm }) => {
 	const [errors, setErrors] = useState<FormError[]>([]);
 	const [formData, setFormData] = useState<FormData>({
 		first_name: '',
@@ -39,7 +41,7 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 		e.preventDefault();
 		try {
 			await axiosPost('/api/sign-up', data);
-			setShowLogIn(true);
+			toggleForm(e);
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {
 				if (typeof error.response.data === 'object') {
@@ -70,7 +72,6 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 						<label htmlFor='first_name'>First Name</label>
 						<input
 							type='text'
-							id='first_name'
 							name='first_name'
 							minLength={4}
 							maxLength={32}
@@ -82,7 +83,6 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 						<label htmlFor='last_name'>Last Name</label>
 						<input
 							type='text'
-							id='last_name'
 							name='last_name'
 							minLength={4}
 							maxLength={32}
@@ -95,7 +95,6 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 					<label htmlFor='email'>Email</label>
 					<input
 						type='email'
-						id='email'
 						name='email'
 						minLength={4}
 						maxLength={32}
@@ -107,7 +106,6 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 					<label htmlFor='password'>Password</label>
 					<input
 						type='password'
-						id='password'
 						name='password'
 						minLength={8}
 						maxLength={64}
@@ -128,7 +126,7 @@ const SignUp: React.FC<Props> = ({ setShowLogIn }) => {
 				<button
 					type='button'
 					className='btn-default btn-confirm'
-					onClick={() => setShowLogIn(true)}
+					onClick={(e) => toggleForm(e)}
 				>
 					Log in now!
 				</button>
