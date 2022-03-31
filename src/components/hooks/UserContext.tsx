@@ -1,19 +1,19 @@
-import { createContext } from 'react';
-import { User } from '../../myTypes';
+import { createContext, useState } from 'react';
+import { ContextProps, User } from '../../myTypes';
 
-const defaultUser: User | null = {
-	_id: '',
-	first_name: '',
-	last_name: '',
-	profile_picture: '',
-	friend_list: [],
-	blocked_user_list: [],
-	blocked_by_other_list: [],
-	incoming_friend_requests: [],
-	outgoing_friend_requests: [],
+const UserContext = createContext<ContextProps>({
+	user: null,
+	setUser: () => null,
+});
+
+const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
+	const [user, setUser] = useState<User | null>(null);
+
+	return (
+		<UserContext.Provider value={{ user, setUser }}>
+			{children}
+		</UserContext.Provider>
+	);
 };
 
-export const UserContext = createContext({
-	user: defaultUser,
-	setUser: (user: User | null) => {},
-});
+export { UserContext, UserProvider };
