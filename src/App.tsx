@@ -1,8 +1,6 @@
-// @ts-nocheck
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
-import { UserContext } from './components/hooks/UserContext';
+import { UserContext } from './components/hooks/UserProvider';
 import { axiosGet } from './components/utils/axiosFunctions';
 import './App.scss';
 import LoadingIcon from './components/utils/LoadingIcon';
@@ -18,7 +16,7 @@ import ProfilePosts from './components/ProfilePosts';
 import ProfileFriends from './components/ProfileFriends';
 
 const App = () => {
-	const [user, setUser] = useState(null);
+	const { user, setUser } = useContext(UserContext);
 
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -33,58 +31,56 @@ const App = () => {
 				console.error(error);
 			}
 		})();
-	}, []);
+	}, [setUser]);
 
 	return (
-		<UserContext.Provider value={{ user, setUser }}>
-			<Routes>
+		<Routes>
+			<Route
+				path='/'
+				element={
+					<main className='main'>
+						{isLoading ? (
+							<LoadingIcon />
+						) : user ? (
+							<>
+								<Navbar />
+								<Outlet />
+								<Footer />
+							</>
+						) : (
+							<>
+								<FrontPage />
+								<Footer />
+							</>
+						)}
+					</main>
+				}
+			>
 				<Route
-					path='/'
+					path=''
 					element={
-						<main className='main'>
-							{isLoading ? (
-								<LoadingIcon />
-							) : user ? (
-								<>
-									<Navbar />
-									<Outlet />
-									<Footer />
-								</>
-							) : (
-								<>
-									<FrontPage />
-									<Footer />
-								</>
-							)}
-						</main>
+						<div className='home-container'>
+							<SideBar />
+							<Timeline />
+							<Contacts />
+						</div>
+					}
+				></Route>
+				<Route
+					path='profile/:userid'
+					element={
+						<div className='profile-container'>
+							<ProfileMain />
+							<Outlet />
+						</div>
 					}
 				>
-					<Route
-						path=''
-						element={
-							<div className='home-container'>
-								<SideBar />
-								<Timeline />
-								<Contacts />
-							</div>
-						}
-					></Route>
-					<Route
-						path='profile/:userid'
-						element={
-							<div className='profile-container'>
-								<ProfileMain />
-								<Outlet />
-							</div>
-						}
-					>
-						<Route path='' element={<ProfilePosts />}></Route>
-						<Route path='friends' element={<ProfileFriends />}></Route>
-					</Route>
-					<Route path='friends' element={<People />}></Route>
+					<Route path='' element={<ProfilePosts />}></Route>
+					<Route path='friends' element={<ProfileFriends />}></Route>
 				</Route>
-			</Routes>
-		</UserContext.Provider>
+				<Route path='friends' element={<People />}></Route>
+			</Route>
+		</Routes>
 	);
 };
 
