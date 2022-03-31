@@ -1,8 +1,6 @@
-// @ts-nocheck
-
 import { useContext, useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
-import { UserContext } from './hooks/UserContext';
+import { UserContext } from './hooks/UserProvider';
 import type { SocketType, User } from '../myTypes';
 import { axiosGet, axiosPut } from './utils/axiosFunctions';
 import RequestWrapper from './utils/RequestWrapper';
@@ -23,7 +21,9 @@ const Contacts = () => {
 		});
 		setSocket(newSocket);
 
-		return () => newSocket.disconnect();
+		return () => {
+			newSocket.disconnect();
+		};
 	}, []);
 
 	useEffect(() => {
@@ -35,7 +35,9 @@ const Contacts = () => {
 			console.error(error);
 		});
 
-		return () => socket.off();
+		return () => {
+			socket.off();
+		};
 	}, [socket]);
 
 	useEffect(() => {
@@ -55,6 +57,9 @@ const Contacts = () => {
 		userId: string
 	) => {
 		e.stopPropagation();
+		if (!user) {
+			return;
+		}
 		try {
 			const resData = await axiosPut(`/api/users/friends/accept`, {
 				userId,
@@ -73,6 +78,9 @@ const Contacts = () => {
 		userId: string
 	) => {
 		e.stopPropagation();
+		if (!user) {
+			return;
+		}
 		try {
 			const resData = await axiosPut(`/api/users/friends/cancel`, {
 				userId,
@@ -91,6 +99,9 @@ const Contacts = () => {
 		userId: string
 	) => {
 		e.stopPropagation();
+		if (!user) {
+			return;
+		}
 		try {
 			const resData = await axiosPut(`/api/users/friends/remove`, { userId });
 			const data = resData.find((u: User) => u._id === user._id);

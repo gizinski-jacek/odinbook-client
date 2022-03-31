@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../hooks/UserContext';
+import { UserContext } from '../hooks/UserProvider';
 import type { User } from '../../myTypes';
 import { axiosPut } from './axiosFunctions';
 import styles from '../../styles/Person.module.scss';
@@ -88,7 +88,7 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 		}
 	};
 
-	return userData ? (
+	return user && userData ? (
 		<li className={styles.person}>
 			<Link to={`/profile/${userData._id}`}>
 				<div className={styles.pic_link}>

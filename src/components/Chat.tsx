@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from './hooks/UserContext';
+import { UserContext } from './hooks/UserProvider';
 import type { Chatroom, User } from '../myTypes';
 import { axiosPost, axiosPut } from './utils/axiosFunctions';
 import styles from '../styles/Chat.module.scss';
@@ -24,6 +24,9 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, data }) => {
 	}, [data]);
 
 	useEffect(() => {
+		if (!user) {
+			return;
+		}
 		(async () => {
 			try {
 				const unReadMessageData = data.message_list.filter(

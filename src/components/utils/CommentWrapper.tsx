@@ -1,6 +1,6 @@
 import { useContext, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../hooks/UserContext';
+import { UserContext } from '../hooks/UserProvider';
 import type { CommentFull } from '../../myTypes';
 import { axiosPut } from './axiosFunctions';
 import EditCommentForm from './EditCommentForm';
@@ -91,7 +91,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 		}
 	};
 
-	return commentData ? (
+	return user && commentData ? (
 		editComment ? (
 			<EditCommentForm
 				handleUpdate={handleUpdate}

@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from 'react';
-import { UserContext } from './hooks/UserContext';
+import { UserContext } from './hooks/UserProvider';
 import type { FormError, User } from '../myTypes';
 import { axiosPut } from './utils/axiosFunctions';
 import FormErrorWrapper from './utils/FormErrorWrapper';

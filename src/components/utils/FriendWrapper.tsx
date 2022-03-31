@@ -1,7 +1,5 @@
-// @ts-nocheck
-
 import { useContext, useEffect, useRef, useState } from 'react';
-import { UserContext } from '../hooks/UserContext';
+import { UserContext } from '../hooks/UserProvider';
 import type { Chatroom, SocketType, User } from '../../myTypes';
 import { axiosGet } from './axiosFunctions';
 import styles from '../../styles/Friend.module.scss';
@@ -25,6 +23,9 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 	const [chatData, setChatData] = useState<Chatroom | null>(null);
 
 	useEffect(() => {
+		if (!user) {
+			return;
+		}
 		(async () => {
 			const resData: Chatroom = await axiosGet('/api/chats', {
 				withCredentials: true,
@@ -64,7 +65,9 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 			}
 		});
 
-		return () => socket.off();
+		return () => {
+			socket.off();
+		};
 	}, [socket, showChat, chatClosedByUser, friend, user]);
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {

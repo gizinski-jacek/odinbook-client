@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../hooks/UserContext';
+import { UserContext } from '../hooks/UserProvider';
 import { User } from '../../myTypes';
 import { axiosGet, axiosPut } from '../utils/axiosFunctions';
 import RequestWrapper from '../utils/RequestWrapper';
@@ -26,6 +26,9 @@ const NotificationsMenu = () => {
 		userId: string
 	) => {
 		e.stopPropagation();
+		if (!user) {
+			return;
+		}
 		try {
 			const resData = await axiosPut(`/api/users/friends/accept`, {
 				userId,
@@ -43,6 +46,9 @@ const NotificationsMenu = () => {
 		userId: string
 	) => {
 		e.stopPropagation();
+		if (!user) {
+			return;
+		}
 		try {
 			const resData = await axiosPut(`/api/users/friends/cancel`, {
 				userId,

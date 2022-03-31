@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { UserContext } from '../hooks/UserContext';
+import { UserContext } from '../hooks/UserProvider';
 import { CommentNew, PostFull } from '../../myTypes';
 import { axiosGet, axiosPost, axiosPut } from './axiosFunctions';
 import CommentWrapper from './CommentWrapper';
@@ -123,7 +123,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		return <CommentWrapper key={comment._id} comment={comment} />;
 	});
 
-	return postData ? (
+	return user && postData ? (
 		<div className={stylesPost.post}>
 			<div className={stylesPost.top}>
 				<div className={stylesPost.left}>
