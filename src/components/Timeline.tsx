@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from './hooks/UserContext';
+import { UserContext } from './hooks/UserProvider';
 import type { PostFull, PostNew } from '../myTypes';
 import { axiosGet } from './utils/axiosFunctions';
 import PostFormModal from './utils/PostFormModal';
@@ -47,40 +47,42 @@ const Timeline = () => {
 	});
 
 	return (
-		<div className={styles.timeline}>
-			<div className={styles.create_new_post}>
-				<Link to={`/profile/${user._id}`}>
-					<div className='profile-pic-style'>
-						<img
-							src={
-								user.profile_picture
-									? `http://localhost:4000/photos/${user.profile_picture}`
-									: '/placeholder_profile_pic.png'
-							}
-							alt='User profile pic'
-						/>
-					</div>
-				</Link>
-				<span
-					className={formData.text ? styles.not_empty : ''}
-					onClick={(e) => openModal(e)}
-				>
-					<h4>
-						{formData.text
-							? formData.text
-							: `What's on your mind, ${user.first_name}?`}
-					</h4>
-				</span>
+		user && (
+			<div className={styles.timeline}>
+				<div className={styles.create_new_post}>
+					<Link to={`/profile/${user._id}`}>
+						<div className='profile-pic-style'>
+							<img
+								src={
+									user.profile_picture
+										? `http://localhost:4000/photos/${user.profile_picture}`
+										: '/placeholder_profile_pic.png'
+								}
+								alt='User profile pic'
+							/>
+						</div>
+					</Link>
+					<span
+						className={formData.text ? styles.not_empty : ''}
+						onClick={(e) => openModal(e)}
+					>
+						<h4>
+							{formData.text
+								? formData.text
+								: `What's on your mind, ${user.first_name}?`}
+						</h4>
+					</span>
+				</div>
+				{showModal && (
+					<PostFormModal
+						closeModal={closeModal}
+						setTimeline={setPostsData}
+						post={formData}
+					/>
+				)}
+				{postsDisplay.length > 0 && postsDisplay}
 			</div>
-			{showModal && (
-				<PostFormModal
-					closeModal={closeModal}
-					setTimeline={setPostsData}
-					post={formData}
-				/>
-			)}
-			{postsDisplay.length > 0 && postsDisplay}
-		</div>
+		)
 	);
 };
 
