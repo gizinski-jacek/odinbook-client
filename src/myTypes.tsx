@@ -1,5 +1,10 @@
 import { Socket } from 'socket.io-client';
 
+export type ContextProps = {
+	user: User | null;
+	setUser: (userData: User | null) => void;
+};
+
 export type PostFull = {
 	_id: string;
 	author: User;
