@@ -10,14 +10,18 @@ import styles from '../styles/Timeline.module.scss';
 const Timeline = () => {
 	const { user } = useContext(UserContext);
 
-	const [postsData, setPostsData] = useState<PostFull[]>([]);
-	const [formData, setFormData] = useState<PostNew>({ text: '' });
+	const [timelinePostsData, setTimelinePostsData] = useState<PostFull[]>([]);
+	const [newPostData, setFormData] = useState<PostNew>({ text: '' });
+	const [newPostPictureData, setPictureData] = useState<{
+		preview: string;
+		data: {};
+	} | null>(null);
 	const [showModal, setShowModal] = useState(false);
 
 	useEffect(() => {
 		(async () => {
 			try {
-				setPostsData(await axiosGet('/api/posts/timeline'));
+				setTimelinePostsData(await axiosGet('/api/posts/timeline'));
 			} catch (error: any) {
 				console.error(error);
 			}
@@ -29,20 +33,32 @@ const Timeline = () => {
 		setShowModal(true);
 	};
 
-	const closeModal = (
-		e: React.MouseEvent<HTMLElement> | React.FormEvent<HTMLFormElement>,
-		data: PostFull | PostNew
+	const updateTimeline = (
+		e: React.FormEvent<HTMLFormElement>,
+		data: PostFull[]
 	) => {
 		e.stopPropagation();
-		if (data._id) {
+		setTimelinePostsData(data);
+	};
+
+	const closeModal = (
+		e: React.MouseEvent<HTMLSpanElement> | React.FormEvent<HTMLFormElement>,
+		data: PostFull | PostNew,
+		pictureData?: any
+	) => {
+		e.stopPropagation();
+		const element = e.target as HTMLElement;
+		if (data._id && element.tagName === 'FORM') {
 			setFormData({ text: '' });
+			setPictureData(null);
 		} else {
 			setFormData(data);
+			setPictureData(pictureData);
 		}
 		setShowModal(false);
 	};
 
-	const postsDisplay = postsData?.map((post) => {
+	const postsDisplay = timelinePostsData?.map((post) => {
 		return <PostWrapper key={post._id} post={post} />;
 	});
 
@@ -63,12 +79,12 @@ const Timeline = () => {
 						</div>
 					</Link>
 					<span
-						className={formData.text ? styles.not_empty : ''}
+						className={newPostData.text ? styles.not_empty : ''}
 						onClick={(e) => openModal(e)}
 					>
 						<h4>
-							{formData.text
-								? formData.text
+							{newPostData.text
+								? newPostData.text
 								: `What's on your mind, ${user.first_name}?`}
 						</h4>
 					</span>
@@ -76,8 +92,9 @@ const Timeline = () => {
 				{showModal && (
 					<PostFormModal
 						closeModal={closeModal}
-						setTimeline={setPostsData}
-						post={formData}
+						updateTimeline={updateTimeline}
+						postData={newPostData}
+						postPictureData={newPostPictureData}
 					/>
 				)}
 				{postsDisplay.length > 0 && postsDisplay}
