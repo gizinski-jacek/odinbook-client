@@ -115,7 +115,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 								? `http://localhost:4000/photos/${friend.profile_picture}`
 								: '/placeholder_profile_pic.png'
 						}
-						alt={`${friend.first_name} ${friend.last_name}`}
+						alt='User profile pic'
 					/>
 					{newMessageAlert && <span className={styles.new_message}></span>}
 				</div>
