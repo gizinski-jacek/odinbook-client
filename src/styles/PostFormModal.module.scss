@@ -27,7 +27,7 @@
 		background-color: variables.$white;
 		box-shadow: 0 4px 12px 4px variables.$black-a20;
 		width: 500px;
-		max-height: 500px;
+		height: 640px;
 		z-index: 10;
 	}
 
@@ -69,7 +69,7 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		padding: 12px;
+		margin: 12px;
 
 		a {
 			border-radius: 50%;
@@ -83,6 +83,8 @@
 	}
 
 	.post_form {
+		display: flex;
+		flex-direction: column;
 		padding: 12px;
 
 		textarea {
@@ -90,11 +92,23 @@
 			resize: none;
 			font-size: 1rem;
 			border: none;
+			scrollbar-color: variables.$black-a20 transparent;
+		}
+
+		.post_picture {
+			align-self: center;
+			margin-top: 12px;
+			max-width: 240px;
+			height: 160px;
+
+			img {
+				max-width: 100%;
+				max-height: 100%;
+			}
 		}
 
 		button {
 			margin-top: 12px;
-			width: 100%;
 		}
 	}
 }
