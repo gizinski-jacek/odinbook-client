@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { UserContext } from '../hooks/UserProvider';
-import { CommentNew, PostFull } from '../../myTypes';
+import { CommentNew, FormError, PostFull } from '../../myTypes';
 import { axiosGet, axiosPost, axiosPut } from './axiosFunctions';
 import CommentWrapper from './CommentWrapper';
 import PostFormModal from './PostFormModal';
@@ -9,6 +9,7 @@ import DeleteModal from './DeleteModal';
 import timeSinceDate from './timeSinceDate';
 import stylesPost from '../../styles/Post.module.scss';
 import stylesCommentForm from '../../styles/CommentForm.module.scss';
+import FormErrorWrapper from './FormErrorWrapper';
 
 type Props = {
 	post: PostFull;
@@ -22,6 +23,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 
 	const params = useParams();
 
+	const [errors, setErrors] = useState<FormError[]>([]);
 	const [postData, setPostData] = useState<PostFull | null>(post);
 	const [formData, setFormData] = useState<CommentNew>({ text: '' });
 	const [showOptions, setShowOptions] = useState(false);
@@ -120,7 +122,18 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 			setShowCommentsList(true);
 			setFormData({ text: '' });
 		} catch (error: any) {
-			console.error(error);
+			if (!Array.isArray(error.response.data)) {
+				if (typeof error.response.data === 'object') {
+					setErrors([error.response.data]);
+					return;
+				}
+				if (typeof error.response.data === 'string') {
+					setErrors([{ msg: error.response.data }]);
+					return;
+				}
+			} else {
+				setErrors(error.response.data);
+			}
 		}
 	};
 
@@ -131,6 +144,10 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 
 	const commentsDisplay = postData?.comments.map((comment) => {
 		return <CommentWrapper key={comment._id} comment={comment} />;
+	});
+
+	const errorsDisplay = errors.map((error, index) => {
+		return <FormErrorWrapper key={index} error={error} />;
 	});
 
 	return user && postData ? (
@@ -283,6 +300,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 						required
 						placeholder='Write a comment...'
 					/>
+					{errorsDisplay && <ul className='error-list'>{errorsDisplay}</ul>}
 					<button
 						className='btn-default btn-form-submit'
 						type='submit'
