@@ -93,7 +93,7 @@ const SignUp: React.FC<Props> = ({ toggleForm }) => {
 					</fieldset>
 					<label htmlFor='email'>Email</label>
 					<input
-						type='text'
+						type='email'
 						name='email'
 						minLength={4}
 						maxLength={32}
