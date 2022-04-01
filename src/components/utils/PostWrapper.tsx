@@ -119,6 +119,11 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		}
 	};
 
+	const updatePost = (e: React.FormEvent<HTMLFormElement>, data: PostFull) => {
+		e.stopPropagation();
+		setPostData(data);
+	};
+
 	const commentsDisplay = postData?.comments.map((comment) => {
 		return <CommentWrapper key={comment._id} comment={comment} />;
 	});
@@ -272,8 +277,8 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 			{showEditModal && (
 				<PostFormModal
 					closeModal={closeEditModal}
-					setPost={setPostData}
-					post={postData}
+					updatePost={updatePost}
+					postData={postData}
 				/>
 			)}
 			{showDeleteModal && (
