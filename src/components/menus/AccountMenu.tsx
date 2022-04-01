@@ -28,7 +28,7 @@ const AccountMenu = () => {
 						<img
 							src={
 								user.profile_picture
-									? `http://localhost:4000/photos/${user.profile_picture}`
+									? `http://localhost:4000/photos/users/${user.profile_picture}`
 									: '/placeholder_profile_pic.png'
 							}
 							alt='User profile pic'

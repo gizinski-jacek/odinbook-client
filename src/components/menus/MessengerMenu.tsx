@@ -65,7 +65,7 @@ const MessengerMenu = () => {
 		}
 	};
 
-	const clearSearch = (e: React.MouseEvent<HTMLElement>) => {
+	const clearSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		setSearchInput('');
 		setSearchData([]);

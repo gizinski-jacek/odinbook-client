@@ -42,7 +42,9 @@ const Timeline = () => {
 	};
 
 	const closeModal = (
-		e: React.MouseEvent<HTMLSpanElement> | React.FormEvent<HTMLFormElement>,
+		e:
+			| React.MouseEvent<HTMLSpanElement | HTMLButtonElement>
+			| React.FormEvent<HTMLFormElement>,
 		data: PostFull | PostNew,
 		pictureData?: any
 	) => {
@@ -71,7 +73,7 @@ const Timeline = () => {
 							<img
 								src={
 									user.profile_picture
-										? `http://localhost:4000/photos/${user.profile_picture}`
+										? `http://localhost:4000/photos/users/${user.profile_picture}`
 										: '/placeholder_profile_pic.png'
 								}
 								alt='User profile pic'

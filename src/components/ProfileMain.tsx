@@ -37,7 +37,9 @@ const Profile = () => {
 	};
 
 	const closeModal = (
-		e: React.MouseEvent<HTMLElement> | React.FormEvent<HTMLFormElement>
+		e:
+			| React.MouseEvent<HTMLSpanElement | HTMLButtonElement>
+			| React.FormEvent<HTMLFormElement>
 	) => {
 		e.stopPropagation();
 		setShowModal(false);
@@ -203,7 +205,7 @@ const Profile = () => {
 										<img
 											src={
 												userData?.profile_picture
-													? `http://localhost:4000/photos/${userData.profile_picture}`
+													? `http://localhost:4000/photos/users/${userData.profile_picture}`
 													: '/placeholder_profile_pic.png'
 											}
 											alt='User profile pic'

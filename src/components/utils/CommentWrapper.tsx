@@ -53,7 +53,9 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 		setShowOptions(false);
 	};
 
-	const closeDeleteModal = (e: React.MouseEvent<HTMLElement>) => {
+	const closeDeleteModal = (
+		e: React.MouseEvent<HTMLSpanElement | HTMLButtonElement>
+	) => {
 		e.stopPropagation();
 		setShowModal(false);
 	};
@@ -105,7 +107,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 						<img
 							src={
 								commentData.author.profile_picture
-									? `http://localhost:4000/photos/${commentData.author.profile_picture}`
+									? `http://localhost:4000/photos/users/${commentData.author.profile_picture}`
 									: '/placeholder_profile_pic.png'
 							}
 							alt='User profile pic'
@@ -181,7 +183,6 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 						</div>
 					</span>
 				</div>
-
 				{showModal && (
 					<DeleteModal
 						closeModal={closeDeleteModal}

@@ -31,7 +31,7 @@ const NavbarLeft = () => {
 		}
 	};
 
-	const clearSearch = (e: React.MouseEvent<HTMLElement>) => {
+	const clearSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		setSearchInput('');
 		setSearchData([]);
@@ -46,7 +46,7 @@ const NavbarLeft = () => {
 		}
 	};
 
-	const inputFocus = (e: React.MouseEvent<HTMLElement>) => {
+	const inputFocus = (e: React.MouseEvent<HTMLLabelElement>) => {
 		e.stopPropagation();
 		setFocused(true);
 		document.addEventListener('click', windowInputFocusListener);
