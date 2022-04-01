@@ -20,7 +20,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 
 	const [errors, setErrors] = useState<FormError[]>([]);
 	const [bioForm, setBioForm] = useState(false);
-	const [bioInput, setBioInput] = useState(data.bio ? data.bio : '');
+	const [bioInput, setBioInput] = useState(data.bio || '');
 	const [pictureData, setPictureData] = useState<{
 		preview: string;
 		data: {};
@@ -65,16 +65,15 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
-		userId: string,
 		bio: string,
 		profile_picture: any
 	) => {
 		e.preventDefault();
 		try {
-			const newData = new FormData();
-			newData.append('bio', bio);
-			newData.append('profile_picture', profile_picture);
-			const resData = await axiosPut(`/api/users`, newData);
+			const profileData: any = new FormData();
+			profileData.append('bio', bio);
+			profileData.append('profile_picture', profile_picture);
+			const resData = await axiosPut(`/api/users`, profileData);
 			setData(resData);
 			setUser(resData);
 			closeModal(e);
@@ -125,9 +124,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 				<div className={styles.body}>
 					<form
 						encType='multipart/form-data'
-						onSubmit={(e) =>
-							handleSubmit(e, data._id, bioInput, pictureData?.data)
-						}
+						onSubmit={(e) => handleSubmit(e, bioInput, pictureData?.data)}
 					>
 						<div className={styles.edit_profile_picture}>
 							<div className={styles.section_name}>
@@ -136,19 +133,12 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 									{pictureData && (
 										<button
 											type='button'
-											className={`btn-default btn-danger ${styles.remove_btn}`}
+											className='btn-default btn-danger'
 											onClick={(e) => handleRemoveFile(e)}
 										>
 											Remove
 										</button>
 									)}
-									<button
-										type='button'
-										className={`btn-default btn-active ${styles.add_btn}`}
-										onClick={(e) => clickSelectFile(e)}
-									>
-										Edit
-									</button>
 									<input
 										style={{ display: 'none' }}
 										ref={pictureRef}
@@ -156,6 +146,13 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 										name='profile_picture'
 										onChange={handleFileChange}
 									/>
+									<button
+										type='button'
+										className='btn-default btn-active'
+										onClick={(e) => clickSelectFile(e)}
+									>
+										Edit
+									</button>
 								</div>
 							</div>
 							<div
