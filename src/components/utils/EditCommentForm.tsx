@@ -34,7 +34,7 @@ const EditCommentForm: React.FC<Props> = ({
 					<img
 						src={
 							comment.author.profile_picture
-								? `http://localhost:4000/photos/${comment.author.profile_picture}`
+								? `http://localhost:4000/photos/users/${comment.author.profile_picture}`
 								: '/placeholder_profile_pic.png'
 						}
 						alt='User profile pic'

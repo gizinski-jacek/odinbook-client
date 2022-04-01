@@ -112,7 +112,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 					<img
 						src={
 							friend.profile_picture
-								? `http://localhost:4000/photos/${friend.profile_picture}`
+								? `http://localhost:4000/photos/users/${friend.profile_picture}`
 								: '/placeholder_profile_pic.png'
 						}
 						alt='User profile pic'

@@ -14,7 +14,7 @@ const SearchPostResultWrapper: React.FC<Props> = ({ post }) => {
 					<img
 						src={
 							post.author.profile_picture
-								? `http://localhost:4000/photos/${post.author.profile_picture}`
+								? `http://localhost:4000/photos/users/${post.author.profile_picture}`
 								: '/placeholder_profile_pic.png'
 						}
 						alt='User profile pic'

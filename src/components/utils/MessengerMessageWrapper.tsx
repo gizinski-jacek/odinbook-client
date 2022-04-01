@@ -21,7 +21,7 @@ const MessengerMessageWrapper: React.FC<Props> = ({
 				<img
 					src={
 						message.author.profile_picture
-							? `http://localhost:4000/photos/${message.author.profile_picture}`
+							? `http://localhost:4000/photos/users/${message.author.profile_picture}`
 							: '/placeholder_profile_pic.png'
 					}
 					alt='User profile pic'
