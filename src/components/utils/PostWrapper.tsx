@@ -62,7 +62,9 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 	};
 
 	const closeEditModal = (
-		e: React.MouseEvent<HTMLElement> | React.FormEvent<HTMLFormElement>
+		e:
+			| React.MouseEvent<HTMLSpanElement | HTMLButtonElement>
+			| React.FormEvent<HTMLFormElement>
 	) => {
 		e.stopPropagation();
 		setShowEditModal(false);
@@ -74,7 +76,9 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		setShowOptions(false);
 	};
 
-	const closeDeleteModal = (e: React.MouseEvent<HTMLElement>) => {
+	const closeDeleteModal = (
+		e: React.MouseEvent<HTMLSpanElement | HTMLButtonElement>
+	) => {
 		e.stopPropagation();
 		setShowDeleteModal(false);
 	};
@@ -83,6 +87,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		e: React.MouseEvent<HTMLDivElement>,
 		postId: string
 	) => {
+		e.stopPropagation();
 		try {
 			setPostData(await axiosPut(`/api/posts/${postId}/like`, { postId }));
 		} catch (error: any) {
@@ -137,7 +142,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 							<img
 								src={
 									postData.author.profile_picture
-										? `http://localhost:4000/photos/${postData.author.profile_picture}`
+										? `http://localhost:4000/photos/users/${postData.author.profile_picture}`
 										: '/placeholder_profile_pic.png'
 								}
 								alt='User profile pic'
@@ -189,16 +194,29 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 				</div>
 			</div>
 			<div className={stylesPost.contents}>
+				{postData.picture && (
+					<div className={stylesPost.post_picture}>
+						<img
+							src={`http://localhost:4000/photos/posts/${postData.picture}`}
+							alt='Post pic'
+						/>
+					</div>
+				)}
 				<p>{postData.text}</p>
 			</div>
 			<div className={stylesPost.bottom}>
 				<div className={stylesPost.likes_and_count}>
-					{postData.likes.includes(user._id) && (
+					{postData.likes.length > 0 && (
 						<div
 							className={stylesPost.liked}
 							onClick={(e) => handleLike(e, postData._id)}
 						>
 							<span></span>
+							{postData.likes.length > 0 && postData.likes.length === 1 ? (
+								<h5>{`${postData.likes.length} person likes this post`}</h5>
+							) : (
+								<h5>{`${postData.likes.length} people like this post`}</h5>
+							)}
 						</div>
 					)}
 					{postData.comments.length > 0 && (
@@ -246,7 +264,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 						<img
 							src={
 								postData.author.profile_picture
-									? `http://localhost:4000/photos/${postData.author.profile_picture}`
+									? `http://localhost:4000/photos/users/${postData.author.profile_picture}`
 									: '/placeholder_profile_pic.png'
 							}
 							alt='User profile pic'
@@ -279,6 +297,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 					closeModal={closeEditModal}
 					updatePost={updatePost}
 					postData={postData}
+					postPictureData={postData.picture}
 				/>
 			)}
 			{showDeleteModal && (
