@@ -24,7 +24,7 @@ const MessengerMessageWrapper: React.FC<Props> = ({
 							? `http://localhost:4000/photos/${message.author.profile_picture}`
 							: '/placeholder_profile_pic.png'
 					}
-					alt={`${message.author.first_name} ${message.author.last_name}`}
+					alt='User profile pic'
 				/>
 				<h6 className={styles.timestamp}>
 					{timeSinceDate(message.createdAt, true)}
