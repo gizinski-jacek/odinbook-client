@@ -63,10 +63,9 @@ const SignUp: React.FC<Props> = ({ toggleForm }) => {
 	});
 
 	return (
-		<div className={styles.sign_up}>
-			<h2>Sign Up</h2>
-			<hr />
+		<div className={styles.sign_up_container}>
 			<div className={styles.body}>
+				<h2>Sign Up</h2>
 				<form onSubmit={(e) => handleSubmit(e, formData)}>
 					<fieldset>
 						<label htmlFor='first_name'>First Name</label>
@@ -94,7 +93,7 @@ const SignUp: React.FC<Props> = ({ toggleForm }) => {
 					</fieldset>
 					<label htmlFor='email'>Email</label>
 					<input
-						type='email'
+						type='text'
 						name='email'
 						minLength={4}
 						maxLength={32}
@@ -121,7 +120,7 @@ const SignUp: React.FC<Props> = ({ toggleForm }) => {
 				</form>
 			</div>
 			<hr />
-			<div className={styles.bottom}>
+			<div className={styles.controls}>
 				<h4>Already have an account?</h4>
 				<button
 					type='button'

@@ -59,7 +59,7 @@ const LogIn: React.FC<Props> = ({ toggleForm }) => {
 	});
 
 	return (
-		<div className={styles.log_in}>
+		<div className={styles.log_in_container}>
 			<div className={styles.body}>
 				<h2>Log In</h2>
 				<form onSubmit={(e) => handleSubmit(e, formData)}>
@@ -97,7 +97,7 @@ const LogIn: React.FC<Props> = ({ toggleForm }) => {
 					</button>
 				</form>
 			</div>
-			<div className={styles.bottom}>
+			<div className={styles.controls}>
 				<h4>Or if you prefer</h4>
 				<a
 					href={

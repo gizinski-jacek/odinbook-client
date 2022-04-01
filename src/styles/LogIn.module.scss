@@ -1,36 +1,35 @@
 @use './variables';
 
-.log_in {
+.log_in_container {
 	display: flex;
 	flex-direction: column;
 	width: 500px;
-	height: 440px;
+	min-height: 440px;
 	background-color: variables.$white;
 	border-radius: 8px;
 	padding: 16px;
 	box-shadow: 0 4px 16px 0 variables.$black-a20;
 	color: variables.$blue;
 
-	hr {
-		width: 100%;
-		margin: 16px 0;
-	}
-
-	button {
-		font-size: 1.1rem;
-		margin-top: 16px;
-	}
-
 	.body {
-		padding: 8px;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		padding: 0 8px;
 		text-align: center;
 		font-weight: 600;
+
+		button {
+			font-size: 1.1rem;
+			margin-top: 16px;
+		}
 	}
 
 	form {
-		margin-top: 16px;
 		display: flex;
 		flex-direction: column;
+		margin-top: 8px;
 	}
 
 	fieldset {
@@ -49,11 +48,16 @@
 		font-size: 1rem;
 	}
 
-	.bottom {
+	hr {
+		width: 100%;
+		margin: 16px 0;
+	}
+
+	.controls {
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
+		justify-content: space-evenly;
 		align-items: center;
 		padding: 8px;
 
