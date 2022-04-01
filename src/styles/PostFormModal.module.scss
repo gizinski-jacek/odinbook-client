@@ -27,7 +27,7 @@
 		background-color: variables.$white;
 		box-shadow: 0 4px 12px 4px variables.$black-a20;
 		width: 500px;
-		height: 640px;
+		max-height: 640px;
 		z-index: 10;
 	}
 
