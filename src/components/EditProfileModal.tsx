@@ -7,7 +7,9 @@ import styles from '../styles/EditProfileModal.module.scss';
 
 type Props = {
 	closeModal: (
-		e: React.MouseEvent<HTMLElement> | React.FormEvent<HTMLFormElement>
+		e:
+			| React.MouseEvent<HTMLSpanElement | HTMLButtonElement>
+			| React.FormEvent<HTMLFormElement>
 	) => void;
 	setData: (data: User) => void;
 	data: User;
@@ -31,7 +33,9 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 		setBioForm((prevState) => !prevState);
 	};
 
-	const clickSelectFile = (e: React.MouseEvent<HTMLElement>) => {
+	const clickSelectFile = (
+		e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>
+	) => {
 		e.stopPropagation();
 		pictureRef.current?.click();
 	};
@@ -164,7 +168,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 										pictureData?.preview
 											? pictureData.preview
 											: data.profile_picture
-											? `http://localhost:4000/photos/${data.profile_picture}`
+											? `http://localhost:4000/photos/users/${data.profile_picture}`
 											: '/placeholder_profile_pic.png'
 									}
 									alt='User profile pic'
