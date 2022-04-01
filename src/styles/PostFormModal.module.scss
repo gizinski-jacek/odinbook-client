@@ -82,10 +82,13 @@
 		}
 	}
 
-	.post_form {
-		display: flex;
-		flex-direction: column;
+	.body {
 		padding: 12px;
+
+		form {
+			display: flex;
+			flex-direction: column;
+		}
 
 		textarea {
 			width: 100%;
