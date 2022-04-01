@@ -9,6 +9,7 @@ export type PostFull = {
 	_id: string;
 	author: User;
 	text: string;
+	picture: string;
 	comments: CommentFull[];
 	likes: string[];
 	createdAt: string;
@@ -19,6 +20,7 @@ export type PostNew = {
 	_id?: string;
 	author?: User;
 	text: string;
+	picture?: string;
 	comments?: CommentFull[];
 	likes?: string[];
 	createdAt?: string;
