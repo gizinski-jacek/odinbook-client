@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { UserContext } from './hooks/UserProvider';
 import type { FormError, LogInForm } from '../myTypes';
-import { axiosPost } from './utils/axiosFunctions';
+import { axiosGet, axiosPost } from './utils/axiosFunctions';
 import FormErrorWrapper from './utils/FormErrorWrapper';
 import styles from '../styles/LogIn.module.scss';
 
@@ -54,6 +54,15 @@ const LogIn: React.FC<Props> = ({ toggleForm }) => {
 		}
 	};
 
+	const getTestAccount = async (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		try {
+			setUser(await axiosGet('/api/test-user'));
+		} catch (error: any) {
+			console.error(error);
+		}
+	};
+
 	const errorsDisplay = errors.map((error, index) => {
 		return <FormErrorWrapper key={index} error={error} />;
 	});
@@ -98,7 +107,7 @@ const LogIn: React.FC<Props> = ({ toggleForm }) => {
 				</form>
 			</div>
 			<div className={styles.controls}>
-				<h4>Or if you prefer</h4>
+				<h4>Or If You Prefer</h4>
 				<a
 					href={
 						process.env.NODE_ENV === 'development'
@@ -107,16 +116,24 @@ const LogIn: React.FC<Props> = ({ toggleForm }) => {
 					}
 					className='btn-default btn-confirm'
 				>
-					Log In with Facebook
+					Log In With Facebook
 				</a>
+				<h4>Want To Only Test Site?</h4>
+				<button
+					type='button'
+					className='btn-default btn-confirm'
+					onClick={(e) => getTestAccount(e)}
+				>
+					Log In With Test User
+				</button>
 				<hr />
-				<h4>Don't have an account?</h4>
+				<h4>Don't Have An Account?</h4>
 				<button
 					type='button'
 					onClick={(e) => toggleForm(e)}
 					className='btn-default btn-register'
 				>
-					Create one now!
+					Create One Now!
 				</button>
 			</div>
 		</div>
