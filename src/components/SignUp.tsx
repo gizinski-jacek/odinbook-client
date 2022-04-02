@@ -72,7 +72,7 @@ const SignUp: React.FC<Props> = ({ toggleForm }) => {
 						<input
 							type='text'
 							name='first_name'
-							minLength={4}
+							minLength={2}
 							maxLength={32}
 							value={formData.first_name}
 							onChange={handleChange}
@@ -83,7 +83,7 @@ const SignUp: React.FC<Props> = ({ toggleForm }) => {
 						<input
 							type='text'
 							name='last_name'
-							minLength={4}
+							minLength={2}
 							maxLength={32}
 							value={formData.last_name}
 							onChange={handleChange}
