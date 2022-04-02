@@ -133,13 +133,13 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 					) : userData.outgoing_friend_requests.includes(user._id) ? (
 						<button
 							type='button'
-							className='btn-default btn-confirm'
+							className={`btn-default btn-active ${styles.request}`}
 							onClick={(e) => handleAcceptRequest(e, userData._id)}
 						></button>
 					) : userData._id === user._id ? null : (
 						<button
 							type='button'
-							className='btn-default btn-confirm'
+							className={`btn-default btn-confirm ${styles.not_friend}`}
 							onClick={(e) => handleSendRequest(e, userData._id)}
 						></button>
 					))}

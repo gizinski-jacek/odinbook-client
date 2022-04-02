@@ -75,6 +75,14 @@
 			content: 'Cancel Request';
 		}
 
+		.request:after {
+			content: 'Accept Request';
+		}
+
+		.not_friend:after {
+			content: 'Add Friend';
+		}
+
 		button {
 			width: 100%;
 		}
@@ -118,6 +126,14 @@
 
 			.sent:hover:after {
 				content: 'Cancel';
+			}
+
+			.request:after {
+				content: 'Accept';
+			}
+
+			.not_friend:after {
+				content: 'Add';
 			}
 		}
 	}
