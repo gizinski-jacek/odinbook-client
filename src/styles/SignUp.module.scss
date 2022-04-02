@@ -4,7 +4,7 @@
 	display: flex;
 	flex-direction: column;
 	width: 500px;
-	min-height: 440px;
+	min-height: 500px;
 	background-color: variables.$white;
 	border-radius: 8px;
 	padding: 16px 0;
@@ -18,7 +18,7 @@
 	}
 
 	.body {
-		flex: 1;
+		flex: 2;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-evenly;
@@ -69,11 +69,11 @@
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-evenly;
+		justify-content: center;
 		align-items: center;
 
 		button {
-			margin-top: 4px;
+			margin-top: 8px;
 		}
 	}
 }
