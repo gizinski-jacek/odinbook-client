@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { UserContext } from './components/hooks/UserProvider';
 import { axiosGet } from './components/utils/axiosFunctions';
 import './App.scss';
@@ -18,12 +18,17 @@ import ProfileFriends from './components/ProfileFriends';
 const App = () => {
 	const { user, setUser } = useContext(UserContext);
 
+	const location = useLocation();
+
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
+		const controller = new AbortController();
 		(async () => {
 			try {
-				setUser(await axiosGet('/api/verify-token'));
+				setUser(
+					await axiosGet('/api/verify-token', { signal: controller.signal })
+				);
 				setIsLoading(false);
 			} catch (error: any) {
 				setUser(null);
@@ -31,7 +36,11 @@ const App = () => {
 				console.error(error);
 			}
 		})();
-	}, [setUser]);
+
+		return () => {
+			controller.abort();
+		};
+	}, [location, setUser]);
 
 	return (
 		<Routes>
