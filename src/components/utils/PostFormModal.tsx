@@ -12,7 +12,10 @@ type Props = {
 			| React.MouseEvent<HTMLSpanElement | HTMLButtonElement>
 			| React.FormEvent<HTMLFormElement>,
 		data: PostNew | PostFull,
-		pictureData?: any
+		pictureData: {
+			preview: string;
+			data: File;
+		} | null
 	) => void;
 	updateTimeline?: (
 		e: React.FormEvent<HTMLFormElement>,
@@ -20,7 +23,10 @@ type Props = {
 	) => void;
 	updatePost?: (e: React.FormEvent<HTMLFormElement>, data: PostFull) => void;
 	postData: PostNew | PostFull;
-	postPictureData?: any;
+	postPictureData: {
+		preview: string;
+		data: File;
+	} | null;
 };
 
 const PostFormModal: React.FC<Props> = ({
@@ -38,7 +44,7 @@ const PostFormModal: React.FC<Props> = ({
 	const [formData, setFormData] = useState<PostFull | PostNew>(postData);
 	const [pictureData, setPictureData] = useState<{
 		preview: string;
-		data: {};
+		data: File;
 	} | null>(postPictureData || null);
 
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -56,10 +62,11 @@ const PostFormModal: React.FC<Props> = ({
 		pictureRef.current?.click();
 	};
 
-	const handleFileChange = (e: any) => {
+	const handleFileChange = (e: React.ChangeEvent) => {
 		e.stopPropagation();
 		setErrors([]);
-		const file = e.target.files[0];
+		const target = e.target as HTMLInputElement;
+		const file = (target.files as FileList)[0];
 		if (file.size > 2000000) {
 			setErrors([{ msg: 'File too large' }]);
 			return;
@@ -86,7 +93,7 @@ const PostFormModal: React.FC<Props> = ({
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
 		data: PostFull | PostNew,
-		pictureData?: any
+		pictureData?: File
 	) => {
 		e.preventDefault();
 		try {
@@ -94,13 +101,15 @@ const PostFormModal: React.FC<Props> = ({
 			for (const [key, value] of Object.entries(data)) {
 				postData.append(key, value);
 			}
-			postData.append('post_picture', pictureData);
+			if (pictureData) {
+				postData.append('post_picture', pictureData);
+			}
 			if (data._id && updatePost) {
 				updatePost(e, await axiosPut(`/api/posts/${data._id}`, postData));
 			} else if (updateTimeline) {
 				updateTimeline(e, await axiosPost('/api/posts', postData));
 			}
-			closeModal(e, { text: '' });
+			closeModal(e, { text: '' }, null);
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {
 				if (typeof error.response.data === 'object') {
@@ -167,16 +176,13 @@ const PostFormModal: React.FC<Props> = ({
 								autoFocus
 								placeholder={`What's on your mind, ${user.first_name}?`}
 							/>
-							{pictureData && (
+							{(pictureData || formData.picture_url) && (
 								<div
 									className={styles.post_picture}
 									onClick={(e) => clickSelectFile(e)}
 								>
 									<img
-										src={
-											pictureData.preview ||
-											`http://localhost:4000/photos/posts/${formData.picture}`
-										}
+										src={pictureData?.preview || formData.picture_url}
 										alt='Post pic'
 									/>
 								</div>
@@ -195,7 +201,7 @@ const PostFormModal: React.FC<Props> = ({
 									className='btn-default btn-danger'
 									onClick={(e) => handleRemoveFile(e)}
 								>
-									Remove Picture
+									Remove Selected Picture
 								</button>
 							) : (
 								<button
