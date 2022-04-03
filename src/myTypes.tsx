@@ -10,6 +10,7 @@ export type PostFull = {
 	author: User;
 	text: string;
 	picture: string;
+	picture_url: string;
 	comments: CommentFull[];
 	likes: string[];
 	createdAt: string;
@@ -21,6 +22,7 @@ export type PostNew = {
 	author?: User;
 	text: string;
 	picture?: string;
+	picture_url?: string;
 	comments?: CommentFull[];
 	likes?: string[];
 	createdAt?: string;
@@ -52,6 +54,7 @@ export type User = {
 	first_name: string;
 	last_name: string;
 	profile_picture: string;
+	profile_picture_url: string;
 	friend_list: string[];
 	blocked_user_list: string[];
 	blocked_by_other_list: string[];
