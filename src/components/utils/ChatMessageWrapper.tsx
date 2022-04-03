@@ -23,9 +23,8 @@ const ChatMessageWrapper: React.FC<Props> = ({ message }) => {
 				<div className='profile-pic-style'>
 					<img
 						src={
-							message.author.profile_picture
-								? `http://localhost:4000/photos/users/${message.author.profile_picture}`
-								: '/placeholder_profile_pic.png'
+							message.author.profile_picture_url ||
+							'/placeholder_profile_pic.png'
 						}
 						alt={`${message.author.first_name} ${message.author.last_name}`}
 					/>

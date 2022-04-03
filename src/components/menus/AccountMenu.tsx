@@ -16,6 +16,8 @@ const AccountMenu = () => {
 			setUser(null);
 			navigate('/');
 		} catch (error: any) {
+			setUser(null);
+			navigate('/');
 			console.error(error);
 		}
 	};
@@ -26,11 +28,7 @@ const AccountMenu = () => {
 				<Link to={`/profile/${user._id}`} className={styles.me_link}>
 					<div className='profile-pic-style'>
 						<img
-							src={
-								user.profile_picture
-									? `http://localhost:4000/photos/users/${user.profile_picture}`
-									: '/placeholder_profile_pic.png'
-							}
+							src={user.profile_picture_url || '/placeholder_profile_pic.png'}
 							alt='User profile pic'
 						/>
 					</div>

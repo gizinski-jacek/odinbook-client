@@ -15,9 +15,7 @@ const SideBar = () => {
 							<div className={`profile-pic-style ${styles.icon}`}>
 								<img
 									src={
-										user.profile_picture
-											? `http://localhost:4000/photos/users/${user.profile_picture}`
-											: '/placeholder_profile_pic.png'
+										user.profile_picture_url || '/placeholder_profile_pic.png'
 									}
 									alt='User profile pic'
 								/>
