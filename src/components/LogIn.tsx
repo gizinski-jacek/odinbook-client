@@ -3,6 +3,7 @@ import { UserContext } from './hooks/UserProvider';
 import type { FormError, LogInForm } from '../myTypes';
 import { axiosGet, axiosPost } from './utils/axiosFunctions';
 import FormErrorWrapper from './utils/FormErrorWrapper';
+import LoadingIcon from './utils/LoadingIcon';
 import styles from '../styles/LogIn.module.scss';
 
 type Props = {
@@ -17,6 +18,7 @@ type FormData = {
 const LogIn: React.FC<Props> = ({ toggleForm }) => {
 	const { setUser } = useContext(UserContext);
 
+	const [isLoading, setIsLoading] = useState(false);
 	const [errors, setErrors] = useState<FormError[]>([]);
 	const [formData, setFormData] = useState<FormData>({
 		email: '',
@@ -57,8 +59,11 @@ const LogIn: React.FC<Props> = ({ toggleForm }) => {
 	const getTestAccount = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		try {
+			setIsLoading(true);
 			setUser(await axiosGet('/api/test-user'));
+			setIsLoading(false);
 		} catch (error: any) {
+			setIsLoading(false);
 			console.error(error);
 		}
 	};
@@ -69,73 +74,75 @@ const LogIn: React.FC<Props> = ({ toggleForm }) => {
 
 	return (
 		<div className={styles.log_in_container}>
-			<div className={styles.body}>
-				<h2>Log In</h2>
-				<form onSubmit={(e) => handleSubmit(e, formData)}>
-					<fieldset>
-						<label htmlFor='email'>Email</label>
-						<input
-							type='email'
-							name='email'
-							minLength={4}
-							maxLength={32}
-							value={formData.email}
-							onChange={handleChange}
-							required
-							placeholder='Email'
-						/>
-					</fieldset>
-					<fieldset>
-						<label htmlFor='password'>Password</label>
-						<input
-							type='password'
-							name='password'
-							minLength={8}
-							maxLength={64}
-							value={formData.password}
-							onChange={handleChange}
-							required
-							placeholder='Password'
-						/>
-					</fieldset>
-					{errorsDisplay.length > 0 && (
-						<ul className='error-list'>{errorsDisplay}</ul>
-					)}
-					<button type='submit' className='btn-default btn-confirm'>
-						Log In
-					</button>
-				</form>
-			</div>
-			<div className={styles.controls}>
-				<h4>Or If You Prefer</h4>
-				<a
-					href={
-						process.env.NODE_ENV === 'development'
-							? 'http://localhost:4000/api/log-in/facebook'
-							: `${process.env.REACT_APP_API_URI}/api/log-in/facebook`
-					}
-					className='btn-default btn-confirm'
-				>
-					Log In With Facebook
-				</a>
-				<h4>Want To Only Test Site?</h4>
-				<button
-					type='button'
-					className='btn-default btn-confirm'
-					onClick={(e) => getTestAccount(e)}
-				>
-					Log In With Test User
-				</button>
-				<hr />
-				<h4>Don't Have An Account?</h4>
-				<button
-					type='button'
-					onClick={(e) => toggleForm(e)}
-					className='btn-default btn-register'
-				>
-					Create One Now!
-				</button>
-			</div>
+			{isLoading ? (
+				<LoadingIcon />
+			) : (
+				<>
+					<div className={styles.body}>
+						<h2>Log In</h2>
+						<form onSubmit={(e) => handleSubmit(e, formData)}>
+							<fieldset>
+								<label htmlFor='email'>Email</label>
+								<input
+									type='email'
+									name='email'
+									minLength={4}
+									maxLength={32}
+									value={formData.email}
+									onChange={handleChange}
+									required
+									placeholder='Email'
+								/>
+							</fieldset>
+							<fieldset>
+								<label htmlFor='password'>Password</label>
+								<input
+									type='password'
+									name='password'
+									minLength={8}
+									maxLength={64}
+									value={formData.password}
+									onChange={handleChange}
+									required
+									placeholder='Password'
+								/>
+							</fieldset>
+							{errorsDisplay.length > 0 && (
+								<ul className='error-list'>{errorsDisplay}</ul>
+							)}
+							<button type='submit' className='btn-default btn-confirm'>
+								Log In
+							</button>
+						</form>
+					</div>
+					<div className={styles.controls}>
+						<h4>Or If You Prefer</h4>
+						<a
+							href={`${process.env.REACT_APP_API_URI}/api/log-in/facebook`}
+							className='btn-default btn-confirm'
+						>
+							Log In With Facebook
+						</a>
+						<h4>Want To Only Test Site?</h4>
+						<button
+							type='button'
+							className='btn-default btn-confirm'
+							onClick={(e) => getTestAccount(e)}
+						>
+							Log In With Test User
+						</button>
+						<hr />
+						<h4>Don't Have An Account?</h4>
+						<button
+							type='button'
+							onClick={(e) => toggleForm(e)}
+							className='btn-default btn-register'
+						>
+							Create One Now!
+						</button>
+					</div>
+				</>
+			)}
 		</div>
 	);
 };
