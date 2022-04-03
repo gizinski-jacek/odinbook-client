@@ -25,7 +25,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 	const [bioInput, setBioInput] = useState(data.bio || '');
 	const [pictureData, setPictureData] = useState<{
 		preview: string;
-		data: {};
+		data: File;
 	} | null>(null);
 
 	const toggleBioForm = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -40,10 +40,11 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 		pictureRef.current?.click();
 	};
 
-	const handleFileChange = (e: any) => {
+	const handleFileChange = (e: React.ChangeEvent) => {
 		e.stopPropagation();
 		setErrors([]);
-		const file = e.target.files[0];
+		const target = e.target as HTMLInputElement;
+		const file = (target.files as FileList)[0];
 		if (file.size > 2000000) {
 			setErrors([{ msg: 'File too large' }]);
 			return;
@@ -70,13 +71,15 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
 		bio: string,
-		profile_picture: any
+		profile_picture?: File
 	) => {
 		e.preventDefault();
 		try {
-			const profileData: any = new FormData();
+			const profileData = new FormData();
 			profileData.append('bio', bio);
-			profileData.append('profile_picture', profile_picture);
+			if (profile_picture) {
+				profileData.append('profile_picture', profile_picture);
+			}
 			const resData = await axiosPut(`/api/users`, profileData);
 			setData(resData);
 			setUser(resData);
@@ -165,11 +168,9 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 							>
 								<img
 									src={
-										pictureData?.preview
-											? pictureData.preview
-											: data.profile_picture
-											? `http://localhost:4000/photos/users/${data.profile_picture}`
-											: '/placeholder_profile_pic.png'
+										pictureData?.preview ||
+										data.profile_picture_url ||
+										'/placeholder_profile_pic.png'
 									}
 									alt='User profile pic'
 								/>
