@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from './hooks/UserProvider';
 import type { PostFull, PostNew } from '../myTypes';
 import { axiosGet } from './utils/axiosFunctions';
@@ -10,23 +10,35 @@ import styles from '../styles/Timeline.module.scss';
 const Timeline = () => {
 	const { user } = useContext(UserContext);
 
+	const navigate = useNavigate();
+
 	const [timelinePostsData, setTimelinePostsData] = useState<PostFull[]>([]);
 	const [newPostData, setFormData] = useState<PostNew>({ text: '' });
 	const [newPostPictureData, setPictureData] = useState<{
 		preview: string;
-		data: {};
+		data: File;
 	} | null>(null);
 	const [showModal, setShowModal] = useState(false);
 
 	useEffect(() => {
+		const controller = new AbortController();
 		(async () => {
 			try {
-				setTimelinePostsData(await axiosGet('/api/posts/timeline'));
+				setTimelinePostsData(
+					await axiosGet('/api/posts/timeline', { signal: controller.signal })
+				);
 			} catch (error: any) {
+				if (error.response && error.response.status === 401) {
+					navigate('/');
+				}
 				console.error(error);
 			}
 		})();
-	}, []);
+
+		return () => {
+			controller.abort();
+		};
+	}, [navigate]);
 
 	const openModal = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
@@ -46,7 +58,10 @@ const Timeline = () => {
 			| React.MouseEvent<HTMLSpanElement | HTMLButtonElement>
 			| React.FormEvent<HTMLFormElement>,
 		data: PostFull | PostNew,
-		pictureData?: any
+		pictureData: {
+			preview: string;
+			data: File;
+		} | null
 	) => {
 		e.stopPropagation();
 		const element = e.target as HTMLElement;
@@ -71,11 +86,7 @@ const Timeline = () => {
 					<Link to={`/profile/${user._id}`}>
 						<div className='profile-pic-style'>
 							<img
-								src={
-									user.profile_picture
-										? `http://localhost:4000/photos/users/${user.profile_picture}`
-										: '/placeholder_profile_pic.png'
-								}
+								src={user.profile_picture_url || '/placeholder_profile_pic.png'}
 								alt='User profile pic'
 							/>
 						</div>

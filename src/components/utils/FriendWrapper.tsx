@@ -1,9 +1,10 @@
 import { useContext, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../hooks/UserProvider';
 import type { Chatroom, SocketType, User } from '../../myTypes';
 import { axiosGet } from './axiosFunctions';
-import styles from '../../styles/Friend.module.scss';
 import Chat from '../Chat';
+import styles from '../../styles/Friend.module.scss';
 
 type Props = {
 	handleRemove: (e: React.MouseEvent<HTMLDivElement>, id: string) => void;
@@ -14,6 +15,8 @@ type Props = {
 const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 	const { user } = useContext(UserContext);
 
+	const navigate = useNavigate();
+
 	const optionsRef = useRef<HTMLDivElement>(null);
 
 	const [showOptions, setShowOptions] = useState(false);
@@ -23,26 +26,32 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 	const [chatData, setChatData] = useState<Chatroom | null>(null);
 
 	useEffect(() => {
-		if (!user) {
+		if (!user || !friend) {
 			return;
 		}
 		(async () => {
-			const resData: Chatroom = await axiosGet('/api/chats', {
-				withCredentials: true,
-				params: { recipientId: friend._id },
-			});
-			if (
-				resData.message_list.some(
-					(message) =>
-						!message.readBy.includes(user._id) &&
-						message.author._id !== user._id
-				)
-			) {
-				setNewMessageAlert(true);
+			try {
+				const resData: Chatroom = await axiosGet('/api/chats', {
+					params: { recipientId: friend._id },
+				});
+				if (
+					resData.message_list.some(
+						(message) =>
+							!message.readBy.includes(user._id) &&
+							message.author._id !== user._id
+					)
+				) {
+					setNewMessageAlert(true);
+				}
+				setChatData(resData);
+			} catch (error: any) {
+				if (error.response && error.response.status === 401) {
+					navigate('/');
+				}
+				console.error(error);
 			}
-			setChatData(resData);
 		})();
-	}, [user, friend]);
+	}, [user, friend, navigate]);
 
 	useEffect(() => {
 		if (!socket) {
@@ -73,13 +82,13 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
 		setShowOptions((prevState) => !prevState);
-		document.addEventListener('click', windowOptionsListener);
+		document.addEventListener('click', closeOptionsListener);
 	};
 
-	const windowOptionsListener = (e: any) => {
+	const closeOptionsListener = (e: any) => {
 		e.stopPropagation();
 		if (optionsRef.current !== e.target) {
-			document.removeEventListener('click', windowOptionsListener);
+			document.removeEventListener('click', closeOptionsListener);
 			setShowOptions(false);
 		}
 	};
@@ -110,11 +119,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 			<li className={styles.friend} onClick={(e) => openChat(e, friend._id)}>
 				<div className={`profile-pic-style ${styles.picture}`}>
 					<img
-						src={
-							friend.profile_picture
-								? `http://localhost:4000/photos/users/${friend.profile_picture}`
-								: '/placeholder_profile_pic.png'
-						}
+						src={friend.profile_picture_url || '/placeholder_profile_pic.png'}
 						alt='User profile pic'
 					/>
 					{newMessageAlert && <span className={styles.new_message}></span>}

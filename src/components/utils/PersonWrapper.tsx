@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../hooks/UserProvider';
 import type { User } from '../../myTypes';
 import { axiosPut } from './axiosFunctions';
@@ -12,7 +12,9 @@ type Props = {
 const PersonWrapper: React.FC<Props> = ({ person }) => {
 	const { user } = useContext(UserContext);
 
-	const [userData, setUserData] = useState<User>(person);
+	const navigate = useNavigate();
+
+	const [personData, setPersonData] = useState<User>(person);
 
 	const handleBlockStatus = async (
 		e: React.MouseEvent<HTMLButtonElement>,
@@ -22,8 +24,11 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 		try {
 			const resData = await axiosPut(`/api/users/block`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
-			setUserData(data);
+			setPersonData(data);
 		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
@@ -36,8 +41,11 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 		try {
 			const resData = await axiosPut(`/api/users/friends/remove`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
-			setUserData(data);
+			setPersonData(data);
 		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
@@ -52,8 +60,11 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 				userId,
 			});
 			const data = resData.find((u: User) => u._id === userId);
-			setUserData(data);
+			setPersonData(data);
 		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
@@ -68,8 +79,11 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 				userId,
 			});
 			const data = resData.find((u: User) => u._id === userId);
-			setUserData(data);
+			setPersonData(data);
 		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
@@ -82,65 +96,66 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 		try {
 			const resData = await axiosPut(`/api/users/friends/request`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
-			setUserData(data);
+			setPersonData(data);
 		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
 
-	return user && userData ? (
+	return user && personData ? (
 		<li className={styles.person}>
-			<Link to={`/profile/${userData._id}`}>
+			<Link to={`/profile/${personData._id}`}>
 				<div className={styles.pic_link}>
 					<img
 						src={
-							userData.profile_picture
-								? `http://localhost:4000/photos/users/${userData.profile_picture}`
-								: '/placeholder_profile_pic.png'
+							personData.profile_picture_url || '/placeholder_profile_pic.png'
 						}
 						alt='User profile pic'
 					/>
 				</div>
 				<h4>
-					{userData.first_name} {userData.last_name}
+					{personData.first_name} {personData.last_name}
 				</h4>
 			</Link>
 			<div className={styles.controls}>
 				{user._id &&
-					(userData.blocked_by_other_list.includes(user._id) ? (
+					(personData.blocked_by_other_list.includes(user._id) ? (
 						<button
 							type='button'
 							className={`btn-default btn-disabled ${styles.blocked}`}
-							onClick={(e) => handleBlockStatus(e, userData._id)}
+							onClick={(e) => handleBlockStatus(e, personData._id)}
 						></button>
-					) : userData.blocked_user_list.includes(user._id) ? (
+					) : personData.blocked_user_list.includes(user._id) ? (
 						<button
 							type='button'
 							className={`btn-default btn-disabled ${styles.blocked_by}`}
 						></button>
-					) : userData.friend_list.includes(user._id) ? (
+					) : personData.friend_list.includes(user._id) ? (
 						<button
 							type='button'
 							className={`btn-default btn-confirm ${styles.friend}`}
-							onClick={(e) => handleRemoveFriend(e, userData._id)}
+							onClick={(e) => handleRemoveFriend(e, personData._id)}
 						></button>
-					) : userData.incoming_friend_requests.includes(user._id) ? (
+					) : personData.incoming_friend_requests.includes(user._id) ? (
 						<button
 							type='button'
 							className={`btn-default btn-active ${styles.sent}`}
-							onClick={(e) => handleCancelRequest(e, userData._id)}
+							onClick={(e) => handleCancelRequest(e, personData._id)}
 						></button>
-					) : userData.outgoing_friend_requests.includes(user._id) ? (
+					) : personData.outgoing_friend_requests.includes(user._id) ? (
 						<button
 							type='button'
 							className={`btn-default btn-active ${styles.request}`}
-							onClick={(e) => handleAcceptRequest(e, userData._id)}
+							onClick={(e) => handleAcceptRequest(e, personData._id)}
 						></button>
-					) : userData._id === user._id ? null : (
+					) : personData._id === user._id ? null : (
 						<button
 							type='button'
 							className={`btn-default btn-confirm ${styles.not_friend}`}
-							onClick={(e) => handleSendRequest(e, userData._id)}
+							onClick={(e) => handleSendRequest(e, personData._id)}
 						></button>
 					))}
 			</div>

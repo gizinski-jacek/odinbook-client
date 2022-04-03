@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from './hooks/UserProvider';
 import { io } from 'socket.io-client';
 import type { SocketType } from '../myTypes';
@@ -14,6 +14,8 @@ const NavbarRight = () => {
 	const { user } = useContext(UserContext);
 
 	const location = useLocation();
+
+	const navigate = useNavigate();
 
 	const menuContainerRef = useRef<HTMLDivElement>(null);
 
@@ -41,6 +43,9 @@ const NavbarRight = () => {
 		}
 
 		socket.on('oops', (error) => {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		});
 
@@ -57,7 +62,7 @@ const NavbarRight = () => {
 		return () => {
 			socket.off();
 		};
-	}, [socket]);
+	}, [socket, navigate]);
 
 	useEffect(() => {
 		if (!user) {
@@ -69,17 +74,27 @@ const NavbarRight = () => {
 	}, [user]);
 
 	useEffect(() => {
+		const controller = new AbortController();
 		(async () => {
 			try {
-				const newMessages = await axiosGet('/api/chats/messages/new');
+				const newMessages = await axiosGet('/api/chats/messages/new', {
+					signal: controller.signal,
+				});
 				if (newMessages.length > 0) {
 					setMessageAlert(true);
 				}
 			} catch (error: any) {
+				if (error.response && error.response.status === 401) {
+					navigate('/');
+				}
 				console.error(error);
 			}
 		})();
-	}, []);
+
+		return () => {
+			controller.abort();
+		};
+	}, [navigate]);
 
 	useEffect(() => {
 		setOpenMenuContainer(false);
@@ -100,24 +115,24 @@ const NavbarRight = () => {
 			if (menuNumber === 2) {
 				setNotificationAlert(false);
 			}
-			document.addEventListener('click', closeMenuContainer);
+			document.addEventListener('click', closeMenuContainerListener);
 			return;
 		}
 		if (openMenuContainer && openMenuId === menuNumber) {
 			setOpenMenuContainer(false);
 			setOpenMenuId(0);
-			document.removeEventListener('click', closeMenuContainer);
+			document.removeEventListener('click', closeMenuContainerListener);
 			return;
 		}
 		setOpenMenuId(menuNumber);
 	};
 
-	const closeMenuContainer = (e: any) => {
+	const closeMenuContainerListener = (e: any) => {
 		e.stopPropagation();
 		if (!menuContainerRef.current?.contains(e.target)) {
 			setOpenMenuContainer(false);
 			setOpenMenuId(0);
-			document.removeEventListener('click', closeMenuContainer);
+			document.removeEventListener('click', closeMenuContainerListener);
 		}
 	};
 
@@ -211,9 +226,7 @@ const NavbarRight = () => {
 							<div className='profile-pic-style'>
 								<img
 									src={
-										user.profile_picture
-											? `http://localhost:4000/photos/users/${user.profile_picture}`
-											: '/placeholder_profile_pic.png'
+										user.profile_picture_url || '/placeholder_profile_pic.png'
 									}
 									alt='User profile pic'
 								/>

@@ -1,11 +1,13 @@
 import { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import type { PostFull } from '../myTypes';
 import { axiosGet } from './utils/axiosFunctions';
 import SearchPostResultWrapper from './utils/SearchPostResultWrapper';
 import styles from '../styles/NavbarLeft.module.scss';
 
 const NavbarLeft = () => {
+	const navigate = useNavigate();
+
 	const resultsRef = useRef<HTMLInputElement>(null);
 	const searchRef = useRef<HTMLInputElement>(null);
 
@@ -25,8 +27,11 @@ const NavbarLeft = () => {
 		try {
 			setSearchData(await axiosGet(`/api/search/posts?q=${query}`));
 			setShowResults(true);
-			document.addEventListener('click', windowSearchContainerListener);
+			document.addEventListener('click', closeSearchContainerListener);
 		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
@@ -38,25 +43,25 @@ const NavbarLeft = () => {
 		setShowResults(false);
 	};
 
-	const windowSearchContainerListener = (e: any) => {
+	const closeSearchContainerListener = (e: any) => {
 		e.stopPropagation();
 		if (resultsRef.current !== e.target) {
 			setShowResults(false);
-			document.removeEventListener('click', windowSearchContainerListener);
+			document.removeEventListener('click', closeSearchContainerListener);
 		}
 	};
 
 	const inputFocus = (e: React.MouseEvent<HTMLLabelElement>) => {
 		e.stopPropagation();
 		setFocused(true);
-		document.addEventListener('click', windowInputFocusListener);
+		document.addEventListener('click', inputFocusListener);
 	};
 
-	const windowInputFocusListener = (e: any) => {
+	const inputFocusListener = (e: any) => {
 		e.stopPropagation();
 		if (searchRef.current !== e.target && resultsRef.current !== e.target) {
 			setFocused(false);
-			document.removeEventListener('click', windowInputFocusListener);
+			document.removeEventListener('click', inputFocusListener);
 		}
 	};
 

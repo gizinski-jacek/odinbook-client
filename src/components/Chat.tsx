@@ -1,10 +1,10 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from './hooks/UserProvider';
 import type { Chatroom, User } from '../myTypes';
 import { axiosPost, axiosPut } from './utils/axiosFunctions';
-import styles from '../styles/Chat.module.scss';
 import ChatMessageWrapper from './utils/ChatMessageWrapper';
+import styles from '../styles/Chat.module.scss';
 
 type Props = {
 	closeChat: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -14,6 +14,8 @@ type Props = {
 
 const Chat: React.FC<Props> = ({ closeChat, recipient, data }) => {
 	const { user } = useContext(UserContext);
+
+	const navigate = useNavigate();
 
 	const lastMessage = useRef<HTMLLIElement>(null);
 
@@ -27,6 +29,7 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, data }) => {
 		if (!user) {
 			return;
 		}
+		const controller = new AbortController();
 		(async () => {
 			try {
 				const unReadMessageData = data.message_list.filter(
@@ -38,15 +41,26 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, data }) => {
 					const unReadMessageListIDs = unReadMessageData.map(
 						(message) => message._id
 					);
-					await axiosPut('/api/chats/messages/mark-many', {
-						messageList: unReadMessageListIDs,
-					});
+					await axiosPut(
+						'/api/chats/messages/mark-many',
+						{
+							messageList: unReadMessageListIDs,
+						},
+						{ signal: controller.signal }
+					);
 				}
 			} catch (error: any) {
+				if (error.response && error.response.status === 401) {
+					navigate('/');
+				}
 				console.error(error);
 			}
 		})();
-	}, [data, user]);
+
+		return () => {
+			controller.abort();
+		};
+	}, [data, user, navigate]);
 
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
@@ -62,10 +76,13 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, data }) => {
 				recipient: recipientId,
 			};
 			await axiosPost('/api/chats/messages', message);
+			setMessageInput('');
 		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
-		setMessageInput('');
 	};
 
 	const messageDisplay = data?.message_list

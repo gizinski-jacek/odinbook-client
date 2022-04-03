@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Message } from '../../myTypes';
 import { axiosGet, axiosPut } from '../utils/axiosFunctions';
 import MessengerMessageWrapper from '../utils/MessengerMessageWrapper';
@@ -8,19 +8,33 @@ import styles from '../../styles/menus/MessengerMenu.module.scss';
 const MessengerMenu = () => {
 	const [newMessagesData, setNewMessagesData] = useState<Message[]>([]);
 
+	const navigate = useNavigate();
+
 	const [searchInput, setSearchInput] = useState('');
 	const [searchData, setSearchData] = useState<Message[]>([]);
 	const [showResults, setShowResults] = useState(false);
 
 	useEffect(() => {
+		const controller = new AbortController();
 		(async () => {
 			try {
-				setNewMessagesData(await axiosGet('/api/chats/messages/new'));
+				setNewMessagesData(
+					await axiosGet('/api/chats/messages/new', {
+						signal: controller.signal,
+					})
+				);
 			} catch (error: any) {
+				if (error.response && error.response.status === 401) {
+					navigate('/');
+				}
 				console.error(error);
 			}
 		})();
-	}, []);
+
+		return () => {
+			controller.abort();
+		};
+	}, [navigate]);
 
 	const markMessageAsRead = async (
 		e: React.MouseEvent<HTMLButtonElement>,
@@ -45,6 +59,9 @@ const MessengerMenu = () => {
 			});
 			setNewMessagesData([]);
 		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
@@ -61,6 +78,9 @@ const MessengerMenu = () => {
 			setSearchData(await axiosGet(`/api/search/messages?q=${query}`));
 			setShowResults(true);
 		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};

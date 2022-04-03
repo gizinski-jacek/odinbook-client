@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { UserContext } from '../hooks/UserProvider';
 import { CommentNew, FormError, PostFull } from '../../myTypes';
-import { axiosGet, axiosPost, axiosPut } from './axiosFunctions';
+import { axiosDelete, axiosGet, axiosPost, axiosPut } from './axiosFunctions';
 import CommentWrapper from './CommentWrapper';
 import PostFormModal from './PostFormModal';
 import DeleteModal from './DeleteModal';
@@ -18,10 +18,12 @@ type Props = {
 const PostWrapper: React.FC<Props> = ({ post }) => {
 	const { user } = useContext(UserContext);
 
+	const params = useParams();
+
+	const navigate = useNavigate();
+
 	const commentInputRef = useRef<HTMLTextAreaElement>(null);
 	const optionsRef = useRef<HTMLDivElement>(null);
-
-	const params = useParams();
 
 	const [errors, setErrors] = useState<FormError[]>([]);
 	const [postData, setPostData] = useState<PostFull | null>(post);
@@ -32,27 +34,39 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 	const [showCommentsList, setShowCommentsList] = useState(false);
 
 	useEffect(() => {
+		const controller = new AbortController();
 		(async () => {
 			if (!post) {
 				try {
-					setPostData(await axiosGet(`/api/posts/${params.postId}/comments`));
+					setPostData(
+						await axiosGet(`/api/posts/${params.postId}/comments`, {
+							signal: controller.signal,
+						})
+					);
 				} catch (error: any) {
+					if (error.response && error.response.status === 401) {
+						navigate('/');
+					}
 					console.error(error);
 				}
 			}
 		})();
-	}, [post, params]);
+
+		return () => {
+			controller.abort();
+		};
+	}, [post, params, navigate]);
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
 		setShowOptions((prevState) => !prevState);
-		document.addEventListener('click', windowOptionsListener);
+		document.addEventListener('click', closeOptionsListener);
 	};
 
-	const windowOptionsListener = (e: any) => {
+	const closeOptionsListener = (e: any) => {
 		e.stopPropagation();
 		if (optionsRef.current !== e.target) {
-			document.removeEventListener('click', windowOptionsListener);
+			document.removeEventListener('click', closeOptionsListener);
 			setShowOptions(false);
 		}
 	};
@@ -93,6 +107,9 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		try {
 			setPostData(await axiosPut(`/api/posts/${postId}/like`, { postId }));
 		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
@@ -137,6 +154,31 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		}
 	};
 
+	const handlePictureDelete = async (
+		e: React.MouseEvent<HTMLDivElement>,
+		postId: string,
+		pictureId: string
+	) => {
+		e.preventDefault();
+		const controller = new AbortController();
+		try {
+			setPostData(
+				await axiosDelete(`/api/posts/${postId}/picture/${pictureId}`, {
+					signal: controller.signal,
+				})
+			);
+		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
+			console.error(error);
+		}
+
+		return () => {
+			controller.abort();
+		};
+	};
+
 	const updatePost = (e: React.FormEvent<HTMLFormElement>, data: PostFull) => {
 		e.stopPropagation();
 		setPostData(data);
@@ -158,9 +200,8 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 						<div className='profile-pic-style'>
 							<img
 								src={
-									postData.author.profile_picture
-										? `http://localhost:4000/photos/users/${postData.author.profile_picture}`
-										: '/placeholder_profile_pic.png'
+									postData.author.profile_picture_url ||
+									'/placeholder_profile_pic.png'
 								}
 								alt='User profile pic'
 							/>
@@ -204,6 +245,16 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 									>
 										Delete post
 									</div>
+									{postData.picture_url && (
+										<div
+											className={stylesPost.delete_btn}
+											onClick={(e) =>
+												handlePictureDelete(e, postData._id, postData.picture)
+											}
+										>
+											Delete picture
+										</div>
+									)}
 								</span>
 							)}
 						</>
@@ -211,12 +262,9 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 				</div>
 			</div>
 			<div className={stylesPost.contents}>
-				{postData.picture && (
+				{postData.picture_url && (
 					<div className={stylesPost.post_picture}>
-						<img
-							src={`http://localhost:4000/photos/posts/${postData.picture}`}
-							alt='Post pic'
-						/>
+						<img src={postData.picture_url} alt='Post pic' />
 					</div>
 				)}
 				<p>{postData.text}</p>
@@ -279,11 +327,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 				<Link to={`/profile/${postData.author._id}`}>
 					<div className='profile-pic-style'>
 						<img
-							src={
-								postData.author.profile_picture
-									? `http://localhost:4000/photos/users/${postData.author.profile_picture}`
-									: '/placeholder_profile_pic.png'
-							}
+							src={user.profile_picture_url || '/placeholder_profile_pic.png'}
 							alt='User profile pic'
 						/>
 					</div>
@@ -315,7 +359,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 					closeModal={closeEditModal}
 					updatePost={updatePost}
 					postData={postData}
-					postPictureData={postData.picture}
+					postPictureData={null}
 				/>
 			)}
 			{showDeleteModal && (

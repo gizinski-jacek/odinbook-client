@@ -1,24 +1,37 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { User } from '../myTypes';
 import { axiosGet } from './utils/axiosFunctions';
 import PersonWrapper from './utils/PersonWrapper';
 import styles from '../styles/People.module.scss';
 
 const People = () => {
+	const navigate = useNavigate();
+
 	const [peopleData, setPeopleData] = useState<User[]>([]);
 	const [searchData, setSearchData] = useState<User[]>([]);
 	const [searchInput, setSearchInput] = useState('');
 	const [showResults, setShowResults] = useState(false);
 
 	useEffect(() => {
+		const controller = new AbortController();
 		(async () => {
 			try {
-				setPeopleData(await axiosGet('/api/users/people'));
+				setPeopleData(
+					await axiosGet('/api/users/people', { signal: controller.signal })
+				);
 			} catch (error: any) {
+				if (error.response && error.response.status === 401) {
+					navigate('/');
+				}
 				console.error(error);
 			}
 		})();
-	}, []);
+
+		return () => {
+			controller.abort();
+		};
+	}, [navigate]);
 
 	const handleSearch = async (
 		e: React.FormEvent<HTMLFormElement>,
@@ -32,6 +45,9 @@ const People = () => {
 			setSearchData(await axiosGet(`/api/search/users?q=${query}`));
 			setShowResults(true);
 		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};

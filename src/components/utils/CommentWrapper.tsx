@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../hooks/UserProvider';
 import type { CommentFull } from '../../myTypes';
 import { axiosPut } from './axiosFunctions';
@@ -15,6 +15,8 @@ type Props = {
 const CommentWrapper: React.FC<Props> = ({ comment }) => {
 	const { user } = useContext(UserContext);
 
+	const navigate = useNavigate();
+
 	const optionsRef = useRef<HTMLDivElement>(null);
 
 	const [commentData, setCommentData] = useState<CommentFull | null>(comment);
@@ -25,13 +27,13 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
 		setShowOptions((prevState) => !prevState);
-		document.addEventListener('click', windowOptionsListener);
+		document.addEventListener('click', closeOptionsListener);
 	};
 
-	const windowOptionsListener = (e: any) => {
+	const closeOptionsListener = (e: any) => {
 		e.stopPropagation();
 		if (optionsRef.current !== e.target) {
-			document.removeEventListener('click', windowOptionsListener);
+			document.removeEventListener('click', closeOptionsListener);
 			setShowOptions(false);
 		}
 	};
@@ -74,21 +76,29 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 				)
 			);
 		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
 
 	const handleUpdate = async (
 		e: React.FormEvent<HTMLFormElement>,
+		postId: string,
+		commentId: string,
 		data: CommentFull
 	) => {
 		e.preventDefault();
 		try {
 			setCommentData(
-				await axiosPut(`/api/posts/${data.post_ref}/comments/${data._id}`, data)
+				await axiosPut(`/api/posts/${postId}/comments/${commentId}`, data)
 			);
 			setEditComment(false);
 		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
@@ -106,9 +116,8 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 					<div className='profile-pic-style'>
 						<img
 							src={
-								commentData.author.profile_picture
-									? `http://localhost:4000/photos/users/${commentData.author.profile_picture}`
-									: '/placeholder_profile_pic.png'
+								commentData.author.profile_picture_url ||
+								'/placeholder_profile_pic.png'
 							}
 							alt='User profile pic'
 						/>
@@ -123,7 +132,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 							<span className={styles.comment_text}>
 								<p>{commentData.text}</p>
 							</span>
-							{commentData.likes.includes(user._id) && (
+							{commentData.likes.length > 0 && (
 								<div
 									className={styles.liked}
 									onClick={(e) =>

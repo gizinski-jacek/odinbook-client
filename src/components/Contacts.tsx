@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { UserContext } from './hooks/UserProvider';
 import type { SocketType, User } from '../myTypes';
@@ -9,6 +10,8 @@ import styles from '../styles/Contacts.module.scss';
 
 const Contacts = () => {
 	const { user, setUser } = useContext(UserContext);
+
+	const navigate = useNavigate();
 
 	const [requestsData, setRequestsData] = useState<User[]>([]);
 	const [friendsData, setFriendsData] = useState<User[]>([]);
@@ -30,27 +33,39 @@ const Contacts = () => {
 		if (!socket) {
 			return;
 		}
-
 		socket.on('oops', (error) => {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		});
 
 		return () => {
 			socket.off();
 		};
-	}, [socket]);
+	}, [socket, navigate]);
 
 	useEffect(() => {
+		const controller = new AbortController();
 		(async () => {
 			try {
-				const resData = await axiosGet('/api/users/contacts');
+				const resData = await axiosGet('/api/users/contacts', {
+					signal: controller.signal,
+				});
 				setRequestsData(resData.incoming_friend_requests);
 				setFriendsData(resData.friend_list);
 			} catch (error: any) {
+				if (error.response && error.response.status === 401) {
+					navigate('/');
+				}
 				console.error(error);
 			}
 		})();
-	}, [user]);
+
+		return () => {
+			controller.abort();
+		};
+	}, [user, navigate]);
 
 	const handleAcceptRequest = async (
 		e: React.MouseEvent<HTMLButtonElement>,
@@ -69,6 +84,9 @@ const Contacts = () => {
 			setFriendsData(data.friend_list);
 			setUser(data);
 		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
@@ -90,6 +108,9 @@ const Contacts = () => {
 			setFriendsData(data.friend_list);
 			setUser(data);
 		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
@@ -109,6 +130,9 @@ const Contacts = () => {
 			setFriendsData(data.friend_list);
 			setUser(data);
 		} catch (error: any) {
+			if (error.response && error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
