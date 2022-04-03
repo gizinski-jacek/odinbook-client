@@ -1,20 +1,22 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { UserContext } from './hooks/UserProvider';
 import type { FormError, User } from '../myTypes';
 import { axiosDelete, axiosGet, axiosPut } from './utils/axiosFunctions';
-import styles from '../styles/ProfileMain.module.scss';
 import EditProfileModal from './EditProfileModal';
 import FormErrorWrapper from './utils/FormErrorWrapper';
+import styles from '../styles/ProfileMain.module.scss';
 
 const Profile = () => {
 	const { user, setUser } = useContext(UserContext);
 
 	const params = useParams();
 
+	const navigate = useNavigate();
+
 	const optionsRef = useRef<HTMLDivElement>(null);
 
-	const [userData, setUserData] = useState<User>();
+	const [profileData, setProfileData] = useState<User>();
 	const [showOptions, setShowOptions] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 	const [errors, setErrors] = useState<FormError[]>([]);
@@ -22,14 +24,26 @@ const Profile = () => {
 	const [passwordData, setPasswordData] = useState({ password: '' });
 
 	useEffect(() => {
+		const controller = new AbortController();
 		(async () => {
 			try {
-				setUserData(await axiosGet(`/api/users/${params.userid}`));
+				setProfileData(
+					await axiosGet(`/api/users/${params.userid}`, {
+						signal: controller.signal,
+					})
+				);
 			} catch (error: any) {
+				if (error.response.status === 401) {
+					navigate('/');
+				}
 				console.error(error);
 			}
 		})();
-	}, [params]);
+
+		return () => {
+			controller.abort();
+		};
+	}, [params, navigate]);
 
 	const openModal = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
@@ -48,13 +62,13 @@ const Profile = () => {
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
 		setShowOptions((prevState) => !prevState);
-		document.addEventListener('click', windowOptionsListener);
+		document.addEventListener('click', closeOptionsListener);
 	};
 
-	const windowOptionsListener = (e: any) => {
+	const closeOptionsListener = (e: any) => {
 		e.stopPropagation();
 		if (optionsRef.current !== e.target) {
-			document.removeEventListener('click', windowOptionsListener);
+			document.removeEventListener('click', closeOptionsListener);
 			setShowOptions(false);
 		}
 	};
@@ -66,9 +80,12 @@ const Profile = () => {
 		try {
 			const resData = await axiosPut(`/api/users/block`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
-			setUserData(data);
+			setProfileData(data);
 			setShowOptions(false);
 		} catch (error: any) {
+			if (error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
@@ -81,9 +98,12 @@ const Profile = () => {
 		try {
 			const resData = await axiosPut(`/api/users/friends/remove`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
-			setUserData(data);
+			setProfileData(data);
 			setShowOptions(false);
 		} catch (error: any) {
+			if (error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
@@ -98,9 +118,12 @@ const Profile = () => {
 				userId,
 			});
 			const data = resData.find((u: User) => u._id === userId);
-			setUserData(data);
+			setProfileData(data);
 			setShowOptions(false);
 		} catch (error: any) {
+			if (error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
@@ -115,8 +138,11 @@ const Profile = () => {
 				userId,
 			});
 			const data = resData.find((u: User) => u._id === userId);
-			setUserData(data);
+			setProfileData(data);
 		} catch (error: any) {
+			if (error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
@@ -129,13 +155,16 @@ const Profile = () => {
 		try {
 			const resData = await axiosPut(`/api/users/friends/request`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
-			setUserData(data);
+			setProfileData(data);
 		} catch (error: any) {
+			if (error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
 
-	const toggleInput = (e: any) => {
+	const toggleInput = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		setChangePassword((prevState) => !prevState);
 		setPasswordData({ password: '' });
@@ -181,9 +210,12 @@ const Profile = () => {
 		e.preventDefault();
 		try {
 			const resData = await axiosDelete(`/api/users/picture/${pictureId}`);
-			setUserData(resData);
+			setProfileData(resData);
 			setUser(resData);
 		} catch (error: any) {
+			if (error.response.status === 401) {
+				navigate('/');
+			}
 			console.error(error);
 		}
 	};
@@ -204,30 +236,30 @@ const Profile = () => {
 									<div className='profile-pic-style'>
 										<img
 											src={
-												userData?.profile_picture
-													? `http://localhost:4000/photos/users/${userData.profile_picture}`
-													: '/placeholder_profile_pic.png'
+												profileData?.profile_picture_url ||
+												'/placeholder_profile_pic.png'
 											}
 											alt='User profile pic'
 										/>
-										{userData?._id === user._id && userData.profile_picture && (
-											<button
-												type='button'
-												className={styles.delete_btn}
-												onClick={(e) =>
-													handlePictureDelete(e, userData.profile_picture)
-												}
-											>
-												<span></span>
-											</button>
-										)}
+										{profileData?._id === user._id &&
+											profileData.profile_picture && (
+												<button
+													type='button'
+													className={styles.delete_btn}
+													onClick={(e) =>
+														handlePictureDelete(e, profileData.profile_picture)
+													}
+												>
+													<span></span>
+												</button>
+											)}
 									</div>
 								</div>
 								<h2>
-									{userData?.first_name} {userData?.last_name}
+									{profileData?.first_name} {profileData?.last_name}
 								</h2>
 							</div>
-							{userData?._id === user._id && (
+							{profileData?._id === user._id && (
 								<div className={styles.user_edit_profile_controls}>
 									{changePassword ? (
 										<form
@@ -303,47 +335,51 @@ const Profile = () => {
 								</NavLink>
 							</li>
 						</ul>
-						{userData &&
-							(userData._id === user._id ? null : (
+						{profileData &&
+							(profileData._id === user._id ? null : (
 								<div className={styles.user_controls}>
 									{user._id &&
-										userData &&
-										(userData.blocked_by_other_list.includes(user._id) ? (
+										profileData &&
+										(profileData.blocked_by_other_list.includes(user._id) ? (
 											<button
 												type='button'
 												className={`btn-default btn-disabled btn-w180 ${styles.blocked}`}
-												onClick={(e) => handleBlockStatus(e, userData._id)}
+												onClick={(e) => handleBlockStatus(e, profileData._id)}
 											>
 												<span>Blocked User</span>
 											</button>
-										) : userData.blocked_user_list.includes(user._id) ? (
+										) : profileData.blocked_user_list.includes(user._id) ? (
 											<button
 												type='button'
 												className='btn-default btn-disabled btn-w180'
 											>
 												Blocked by User
 											</button>
-										) : userData.friend_list.includes(user._id) ? (
+										) : profileData.friend_list.includes(user._id) ? (
 											<button
 												type='button'
 												className={`btn-default btn-confirm btn-w180 ${styles.friend}`}
-												onClick={(e) => handleRemoveFriend(e, userData._id)}
+												onClick={(e) => handleRemoveFriend(e, profileData._id)}
 											>
 												<span>Friend</span>
 											</button>
-										) : userData.incoming_friend_requests.includes(user._id) ? (
+										) : profileData.incoming_friend_requests.includes(
+												user._id
+										  ) ? (
 											<button
 												type='button'
 												className={`btn-default btn-active btn-w180 ${styles.sent}`}
-												onClick={(e) => handleCancelRequest(e, userData._id)}
+												onClick={(e) => handleCancelRequest(e, profileData._id)}
 											>
 												<span>Request Sent</span>
 											</button>
-										) : userData.outgoing_friend_requests.includes(user._id) ? (
+										) : profileData.outgoing_friend_requests.includes(
+												user._id
+										  ) ? (
 											<button
 												type='button'
 												className='btn-default btn-confirm btn-w180'
-												onClick={(e) => handleAcceptRequest(e, userData._id)}
+												onClick={(e) => handleAcceptRequest(e, profileData._id)}
 											>
 												Accept Request
 											</button>
@@ -351,7 +387,7 @@ const Profile = () => {
 											<button
 												type='button'
 												className='btn-default btn-confirm btn-w180'
-												onClick={(e) => handleSendRequest(e, userData._id)}
+												onClick={(e) => handleSendRequest(e, profileData._id)}
 											>
 												Add Friend
 											</button>
@@ -369,50 +405,62 @@ const Profile = () => {
 											</g>
 										</svg>
 									</span>
-									{showOptions && user._id && userData && (
+									{showOptions && user._id && profileData && (
 										<div ref={optionsRef} className={styles.options_menu}>
-											{userData.incoming_friend_requests.includes(user._id) && (
+											{profileData.incoming_friend_requests.includes(
+												user._id
+											) && (
 												<div
 													className={styles.cancel_btn}
-													onClick={(e) => handleCancelRequest(e, userData._id)}
+													onClick={(e) =>
+														handleCancelRequest(e, profileData._id)
+													}
 												>
 													Cancel request
 												</div>
 											)}
-											{userData.outgoing_friend_requests.includes(user._id) && (
+											{profileData.outgoing_friend_requests.includes(
+												user._id
+											) && (
 												<div
 													className={styles.cancel_btn}
-													onClick={(e) => handleCancelRequest(e, userData._id)}
+													onClick={(e) =>
+														handleCancelRequest(e, profileData._id)
+													}
 												>
 													Decline request
 												</div>
 											)}
-											{userData.friend_list.includes(user._id) ? (
+											{profileData.friend_list.includes(user._id) ? (
 												<div
 													className={styles.cancel_btn}
-													onClick={(e) => handleRemoveFriend(e, userData._id)}
+													onClick={(e) =>
+														handleRemoveFriend(e, profileData._id)
+													}
 												>
 													Remove friend
 												</div>
 											) : (
 												<div
 													className={styles.cancel_btn}
-													onClick={(e) => handleRemoveFriend(e, userData._id)}
+													onClick={(e) =>
+														handleRemoveFriend(e, profileData._id)
+													}
 												>
 													Add friend
 												</div>
 											)}
-											{userData.blocked_by_other_list.includes(user._id) ? (
+											{profileData.blocked_by_other_list.includes(user._id) ? (
 												<div
 													className={styles.block_btn}
-													onClick={(e) => handleBlockStatus(e, userData._id)}
+													onClick={(e) => handleBlockStatus(e, profileData._id)}
 												>
 													Unblock user
 												</div>
 											) : (
 												<div
 													className={styles.block_btn}
-													onClick={(e) => handleBlockStatus(e, userData._id)}
+													onClick={(e) => handleBlockStatus(e, profileData._id)}
 												>
 													Block user
 												</div>
@@ -423,11 +471,11 @@ const Profile = () => {
 							))}
 					</div>
 				</div>
-				{showModal && userData && (
+				{showModal && profileData && (
 					<EditProfileModal
 						closeModal={closeModal}
-						setData={setUserData}
-						data={userData}
+						setData={setProfileData}
+						data={profileData}
 					/>
 				)}
 			</div>
