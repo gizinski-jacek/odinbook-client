@@ -7,6 +7,8 @@ type Props = {
 	closeModal: (e: React.MouseEvent<HTMLButtonElement>) => void;
 	handleUpdate: (
 		e: React.FormEvent<HTMLFormElement>,
+		postId: string,
+		commentId: string,
 		data: CommentFull
 	) => void;
 	comment: CommentFull;
@@ -33,15 +35,18 @@ const EditCommentForm: React.FC<Props> = ({
 				<div className='profile-pic-style'>
 					<img
 						src={
-							comment.author.profile_picture
-								? `http://localhost:4000/photos/users/${comment.author.profile_picture}`
-								: '/placeholder_profile_pic.png'
+							comment.author.profile_picture_url ||
+							'/placeholder_profile_pic.png'
 						}
 						alt='User profile pic'
 					/>
 				</div>
 			</Link>
-			<form onSubmit={(e) => handleUpdate(e, formData)}>
+			<form
+				onSubmit={(e) =>
+					handleUpdate(e, formData.post_ref, formData._id, formData)
+				}
+			>
 				<textarea
 					name='text'
 					minLength={1}
