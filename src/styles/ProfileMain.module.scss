@@ -177,10 +177,8 @@
 				margin: 4px;
 			}
 
-			.blocked:hover span,
-			.friend:hover span,
-			.sent:hover span {
-				display: none;
+			.blocked:after {
+				content: 'Blocked User';
 			}
 
 			.blocked:hover {
@@ -192,22 +190,48 @@
 				content: 'Unblock User';
 			}
 
+			.blocked_by:after {
+				content: 'Blocked by User';
+				cursor: not-allowed;
+			}
+
+			.friend:after {
+				content: 'Friend';
+			}
+
 			.friend:hover {
-				background-color: variables.$black-a60;
-				color: variables.$white;
+				background-color: variables.$red;
+				color: variables.$black;
 			}
 
 			.friend:hover:after {
 				content: 'Remove Friend';
 			}
 
+			.sent:after {
+				content: 'Request Sent';
+			}
+
 			.sent:hover:after {
 				content: 'Cancel Request';
 			}
+
+			.request:after {
+				content: 'Accept Request';
+			}
+
+			.not_friend:after {
+				content: 'Add Friend';
+			}
+		}
+
+		.right {
+			height: fit-content;
+			position: relative;
+			border-radius: 50%;
 		}
 
 		.options_toggle {
-			position: relative;
 			display: block;
 			height: fit-content;
 			padding: 8px;
