@@ -1,10 +1,5 @@
 import { Socket } from 'socket.io-client';
 
-export type ContextProps = {
-	user: User | null;
-	setUser: (userData: User | null) => void;
-};
-
 export type PostFull = {
 	_id: string;
 	author: User;
@@ -78,10 +73,8 @@ export type SignUpForm = {
 
 export type Chatroom = {
 	_id: string;
-	participants: string[];
+	participants: User[];
 	message_list: Message[];
-	createdAt: string;
-	updatedAt: string;
 };
 
 export type Message = {
