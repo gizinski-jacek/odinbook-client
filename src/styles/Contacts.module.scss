@@ -47,6 +47,74 @@
 	}
 }
 
+.chat_list_container {
+	position: fixed;
+	bottom: 40px;
+	right: 12px;
+	width: 320px;
+	height: fit-content;
+	display: flex;
+	flex-direction: column;
+	background-color: variables.$white;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px 0 variables.$black-a20;
+
+	hr {
+		margin-top: 0;
+	}
+
+	.open_chat_list {
+		display: flex;
+		flex-direction: row;
+		overflow-x: scroll;
+		scrollbar-color: variables.$black-a20 variables.$white;
+
+		.chat_list_item {
+			display: flex;
+			flex-direction: row;
+			padding: 4px;
+			margin-top: 4px;
+			margin-left: 4px;
+			border-radius: 4px;
+			background-color: variables.$blue-a30;
+			color: variables.$blue;
+			cursor: pointer;
+		}
+
+		.isActiveChat {
+			background-color: variables.$blue;
+			color: variables.$white;
+		}
+
+		.close_btn {
+			margin-left: 8px;
+			padding: 4px;
+			background-color: variables.$white;
+			border-radius: 50%;
+			cursor: pointer;
+
+			span {
+				width: 8px;
+				height: 8px;
+				display: block;
+				background-size: auto;
+				background-repeat: no-repeat;
+				background-image: url('../../public/multi_icons/icons_6.png');
+				background-position: -111px -73px;
+			}
+		}
+
+		.close_btn:hover {
+			background-color: variables.$red;
+		}
+	}
+
+	.container {
+		display: flex;
+		flex-direction: row;
+	}
+}
+
 @media only screen and (max-width: 800px) {
 	.contacts {
 		display: none;
