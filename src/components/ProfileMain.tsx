@@ -60,14 +60,13 @@ const Profile = () => {
 	};
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
-		e.stopPropagation();
 		setShowOptions((prevState) => !prevState);
 		document.addEventListener('click', closeOptionsListener);
 	};
 
 	const closeOptionsListener = (e: any) => {
 		e.stopPropagation();
-		if (optionsRef.current !== e.target) {
+		if (e.target.closest('div') !== optionsRef.current) {
 			document.removeEventListener('click', closeOptionsListener);
 			setShowOptions(false);
 		}
@@ -112,7 +111,6 @@ const Profile = () => {
 		e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>,
 		userId: string
 	) => {
-		e.stopPropagation();
 		try {
 			const resData = await axiosPut(`/api/users/friends/cancel`, {
 				userId,
@@ -132,7 +130,6 @@ const Profile = () => {
 		e: React.MouseEvent<HTMLButtonElement>,
 		userId: string
 	) => {
-		e.stopPropagation();
 		try {
 			const resData = await axiosPut(`/api/users/friends/accept`, {
 				userId,
@@ -151,7 +148,6 @@ const Profile = () => {
 		e: React.MouseEvent<HTMLButtonElement>,
 		userId: string
 	) => {
-		e.stopPropagation();
 		try {
 			const resData = await axiosPut(`/api/users/friends/request`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
@@ -242,12 +238,15 @@ const Profile = () => {
 											alt='User profile pic'
 										/>
 										{profileData?._id === user._id &&
-											profileData.profile_picture && (
+											profileData.profile_picture_name && (
 												<button
 													type='button'
 													className={styles.delete_btn}
 													onClick={(e) =>
-														handlePictureDelete(e, profileData.profile_picture)
+														handlePictureDelete(
+															e,
+															profileData.profile_picture_name
+														)
 													}
 												>
 													<span></span>
@@ -345,24 +344,18 @@ const Profile = () => {
 												type='button'
 												className={`btn-default btn-disabled btn-w180 ${styles.blocked}`}
 												onClick={(e) => handleBlockStatus(e, profileData._id)}
-											>
-												<span>Blocked User</span>
-											</button>
+											></button>
 										) : profileData.blocked_user_list.includes(user._id) ? (
 											<button
 												type='button'
-												className='btn-default btn-disabled btn-w180'
-											>
-												Blocked by User
-											</button>
+												className={`btn-default btn-disabled btn-w180 ${styles.blocked_by}`}
+											></button>
 										) : profileData.friend_list.includes(user._id) ? (
 											<button
 												type='button'
 												className={`btn-default btn-confirm btn-w180 ${styles.friend}`}
 												onClick={(e) => handleRemoveFriend(e, profileData._id)}
-											>
-												<span>Friend</span>
-											</button>
+											></button>
 										) : profileData.incoming_friend_requests.includes(
 												user._id
 										  ) ? (
@@ -370,103 +363,102 @@ const Profile = () => {
 												type='button'
 												className={`btn-default btn-active btn-w180 ${styles.sent}`}
 												onClick={(e) => handleCancelRequest(e, profileData._id)}
-											>
-												<span>Request Sent</span>
-											</button>
+											></button>
 										) : profileData.outgoing_friend_requests.includes(
 												user._id
 										  ) ? (
 											<button
 												type='button'
-												className='btn-default btn-confirm btn-w180'
+												className={`btn-default btn-confirm btn-w180 ${styles.request}`}
 												onClick={(e) => handleAcceptRequest(e, profileData._id)}
-											>
-												Accept Request
-											</button>
+											></button>
 										) : (
 											<button
 												type='button'
-												className='btn-default btn-confirm btn-w180'
+												className={`btn-default btn-confirm btn-w180 ${styles.not_friend}`}
 												onClick={(e) => handleSendRequest(e, profileData._id)}
-											>
-												Add Friend
-											</button>
+											></button>
 										))}
-									<button type='button' className='btn-default btn-decline'>
-										Message
-									</button>
-									<span
-										className={styles.options_toggle}
-										onClick={(e) => toggleOptions(e)}
-									>
-										<svg viewBox='0 0 20 20' width='20' height='20'>
-											<g transform='translate(-446 -350)'>
-												<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
-											</g>
-										</svg>
-									</span>
-									{showOptions && user._id && profileData && (
-										<div ref={optionsRef} className={styles.options_menu}>
-											{profileData.incoming_friend_requests.includes(
-												user._id
-											) && (
-												<div
-													className={styles.cancel_btn}
-													onClick={(e) =>
-														handleCancelRequest(e, profileData._id)
-													}
-												>
-													Cancel request
-												</div>
-											)}
-											{profileData.outgoing_friend_requests.includes(
-												user._id
-											) && (
-												<div
-													className={styles.cancel_btn}
-													onClick={(e) =>
-														handleCancelRequest(e, profileData._id)
-													}
-												>
-													Decline request
-												</div>
-											)}
-											{profileData.friend_list.includes(user._id) ? (
-												<div
-													className={styles.cancel_btn}
-													onClick={(e) =>
-														handleRemoveFriend(e, profileData._id)
-													}
-												>
-													Remove friend
-												</div>
-											) : (
-												<div
-													className={styles.cancel_btn}
-													onClick={(e) =>
-														handleRemoveFriend(e, profileData._id)
-													}
-												>
-													Add friend
-												</div>
-											)}
-											{profileData.blocked_by_other_list.includes(user._id) ? (
-												<div
-													className={styles.block_btn}
-													onClick={(e) => handleBlockStatus(e, profileData._id)}
-												>
-													Unblock user
-												</div>
-											) : (
-												<div
-													className={styles.block_btn}
-													onClick={(e) => handleBlockStatus(e, profileData._id)}
-												>
-													Block user
-												</div>
-											)}
-										</div>
-									)}
+									<div ref={optionsRef} className={styles.right}>
+										<span
+											className={styles.options_toggle}
+											onClick={(e) => toggleOptions(e)}
+										>
+											<svg viewBox='0 0 20 20' width='20' height='20'>
+												<g transform='translate(-446 -350)'>
+													<path d='M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0'></path>
+												</g>
+											</svg>
+										</span>
+										{showOptions && user._id && profileData && (
+											<div className={styles.options_menu}>
+												{profileData.incoming_friend_requests.includes(
+													user._id
+												) && (
+													<div
+														className={styles.cancel_btn}
+														onClick={(e) =>
+															handleCancelRequest(e, profileData._id)
+														}
+													>
+														Cancel request
+													</div>
+												)}
+												{profileData.outgoing_friend_requests.includes(
+													user._id
+												) && (
+													<div
+														className={styles.cancel_btn}
+														onClick={(e) =>
+															handleCancelRequest(e, profileData._id)
+														}
+													>
+														Decline request
+													</div>
+												)}
+												{profileData.friend_list.includes(user._id) ? (
+													<div
+														className={styles.cancel_btn}
+														onClick={(e) =>
+															handleRemoveFriend(e, profileData._id)
+														}
+													>
+														Remove friend
+													</div>
+												) : (
+													<div
+														className={styles.cancel_btn}
+														onClick={(e) =>
+															handleRemoveFriend(e, profileData._id)
+														}
+													>
+														Add friend
+													</div>
+												)}
+												{profileData.blocked_by_other_list.includes(
+													user._id
+												) ? (
+													<div
+														className={styles.block_btn}
+														onClick={(e) =>
+															handleBlockStatus(e, profileData._id)
+														}
+													>
+														Unblock user
+													</div>
+												) : (
+													<div
+														className={styles.block_btn}
+														onClick={(e) =>
+															handleBlockStatus(e, profileData._id)
+														}
+													>
+														Block user
+													</div>
+												)}
+											</div>
+										)}
+									</div>
 								</div>
 							))}
 					</div>
