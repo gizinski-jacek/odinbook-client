@@ -8,7 +8,7 @@ type ContextProps = {
 
 const UserContext = createContext<ContextProps>({
 	user: null,
-	updateUser: () => null,
+	updateUser: (userData) => null,
 });
 
 const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
