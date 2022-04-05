@@ -2,21 +2,37 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { UserContext } from './hooks/UserProvider';
-import type { SocketType, User } from '../myTypes';
+import { ChatContext } from './hooks/ChatProvider';
+import type { Chatroom, SocketType, User } from '../myTypes';
 import { axiosGet, axiosPut } from './utils/axiosFunctions';
 import RequestWrapper from './utils/RequestWrapper';
 import FriendWrapper from './utils/FriendWrapper';
+import Chat from './Chat';
 import styles from '../styles/Contacts.module.scss';
 
 const Contacts = () => {
-	const { user, setUser } = useContext(UserContext);
+	const { user, updateUser } = useContext(UserContext);
+	const { chatList, removeChat, activeChatId, changeActiveChat } =
+		useContext(ChatContext);
 
 	const navigate = useNavigate();
 
 	const [requestsData, setRequestsData] = useState<User[]>([]);
 	const [friendsData, setFriendsData] = useState<User[]>([]);
-
 	const [socket, setSocket] = useState<SocketType | null>(null);
+	const [activeChat, setActiveChat] = useState<Chatroom | null>();
+	const [activeParticipant, setActiveParticipant] = useState<User | null>();
+
+	useEffect(() => {
+		const chat = chatList.find((chat) => chat._id === activeChatId);
+		if (!chat) {
+			setActiveChat(null);
+			setActiveParticipant(null);
+			return;
+		}
+		setActiveChat(chat);
+		setActiveParticipant(chat.participants.find((u) => u._id !== user?._id));
+	}, [chatList, activeChatId, user]);
 
 	useEffect(() => {
 		const newSocket = io(`${process.env.REACT_APP_API_URI}/chats`, {
@@ -65,7 +81,7 @@ const Contacts = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [user, navigate]);
+	}, [navigate]);
 
 	const handleAcceptRequest = async (
 		e: React.MouseEvent<HTMLButtonElement>,
@@ -82,7 +98,7 @@ const Contacts = () => {
 			const data = resData.find((u: User) => u._id === user._id);
 			setRequestsData(data.incoming_friend_requests);
 			setFriendsData(data.friend_list);
-			setUser(data);
+			updateUser(data);
 		} catch (error: any) {
 			if (error.response && error.response.status === 401) {
 				navigate('/');
@@ -106,7 +122,7 @@ const Contacts = () => {
 			const data = resData.find((u: User) => u._id === user._id);
 			setRequestsData(data.incoming_friend_requests);
 			setFriendsData(data.friend_list);
-			setUser(data);
+			updateUser(data);
 		} catch (error: any) {
 			if (error.response && error.response.status === 401) {
 				navigate('/');
@@ -128,7 +144,7 @@ const Contacts = () => {
 			const data = resData.find((u: User) => u._id === user._id);
 			setRequestsData(data.incoming_friend_requests);
 			setFriendsData(data.friend_list);
-			setUser(data);
+			updateUser(data);
 		} catch (error: any) {
 			if (error.response && error.response.status === 401) {
 				navigate('/');
@@ -159,6 +175,43 @@ const Contacts = () => {
 		);
 	});
 
+	const setChatAsActive = (
+		e: React.MouseEvent<HTMLLIElement>,
+		chatId: string
+	) => {
+		e.stopPropagation();
+		changeActiveChat(chatId);
+	};
+
+	const closeChat = (
+		e: React.MouseEvent<HTMLButtonElement>,
+		chatId: string
+	) => {
+		e.stopPropagation();
+		removeChat(chatId);
+	};
+
+	const openChatListDisplay = chatList?.map((chat) => {
+		return (
+			<li
+				key={chat._id}
+				className={`${styles.chat_list_item} ${
+					chat._id === activeChatId && styles.isOpen
+				}`}
+				onClick={(e) => setChatAsActive(e, chat._id)}
+			>
+				{chat.participants.find((u) => u._id !== user?._id)?.first_name}
+				<button
+					type='button'
+					className={styles.close_btn}
+					onClick={(e) => closeChat(e, chat._id)}
+				>
+					<span></span>
+				</button>
+			</li>
+		);
+	});
+
 	return (
 		<div className={styles.contacts}>
 			{requestsDisplay.length > 0 && (
@@ -184,6 +237,15 @@ const Contacts = () => {
 				</div>
 				<ul>{friendsDisplay}</ul>
 			</div>
+			{chatList && activeParticipant && activeChat && (
+				<div className={styles.chat_list_container}>
+					<ul className={styles.open_chat_list}>{openChatListDisplay}</ul>
+					<hr />
+					<div className={styles.container}>
+						<Chat recipient={activeParticipant} data={activeChat} />
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };
