@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../hooks/UserProvider';
 import { ChatContext } from '../hooks/ChatProvider';
 import type { Chatroom, SocketType, User } from '../../myTypes';
@@ -84,14 +84,13 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 	}, [socket, friend, user, updateChat]);
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
-		e.stopPropagation();
 		setShowOptions((prevState) => !prevState);
 		document.addEventListener('click', closeOptionsListener);
 	};
 
 	const closeOptionsListener = (e: any) => {
 		e.stopPropagation();
-		if (optionsRef.current !== e.target) {
+		if (e.target.closest('div') !== optionsRef.current) {
 			document.removeEventListener('click', closeOptionsListener);
 			setShowOptions(false);
 		}
@@ -101,7 +100,10 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 		e: React.MouseEvent<HTMLLIElement>,
 		friendId: string
 	) => {
-		e.stopPropagation();
+		const target = e.target as HTMLLIElement;
+		if (target.closest('div') === optionsRef.current) {
+			return;
+		}
 		const resData = await axiosGet('/api/chats', {
 			withCredentials: true,
 			params: { recipientId: friendId },
@@ -114,17 +116,22 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 	return (
 		<>
 			<li className={styles.friend} onClick={(e) => openChat(e, friend._id)}>
-				<div className={`profile-pic-style ${styles.picture}`}>
-					<img
-						src={friend.profile_picture_url || '/placeholder_profile_pic.png'}
-						alt='User profile pic'
-					/>
-					{newMessageAlert && <span className={styles.new_message}></span>}
-				</div>
+				<Link
+					to={`/profile/${friend._id}`}
+					onClick={(e) => e.stopPropagation()}
+				>
+					<div className={`profile-pic-style ${styles.picture}`}>
+						<img
+							src={friend.profile_picture_url || '/placeholder_profile_pic.png'}
+							alt='User profile pic'
+						/>
+						{newMessageAlert && <span className={styles.new_message}></span>}
+					</div>
+				</Link>
 				<div className={styles.contents}>
 					{friend.first_name} {friend.last_name}
 				</div>
-				<div className={styles.right}>
+				<div ref={optionsRef} className={styles.right}>
 					<span
 						className={styles.options_toggle}
 						onClick={(e) => toggleOptions(e)}
@@ -136,7 +143,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 						</svg>
 					</span>
 					{showOptions && (
-						<span ref={optionsRef} className={styles.options_menu}>
+						<span className={styles.options_menu}>
 							<div
 								className={styles.remove_btn}
 								onClick={(e) => handleRemove(e, friend._id)}
