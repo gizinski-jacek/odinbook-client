@@ -1,9 +1,9 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../hooks/UserProvider';
+import { ChatContext } from '../hooks/ChatProvider';
 import type { Chatroom, SocketType, User } from '../../myTypes';
 import { axiosGet } from './axiosFunctions';
-import Chat from '../Chat';
 import styles from '../../styles/Friend.module.scss';
 
 type Props = {
@@ -14,25 +14,25 @@ type Props = {
 
 const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 	const { user } = useContext(UserContext);
+	const { addChat, updateChat, changeActiveChat } = useContext(ChatContext);
 
 	const navigate = useNavigate();
 
 	const optionsRef = useRef<HTMLDivElement>(null);
 
 	const [showOptions, setShowOptions] = useState(false);
-	const [showChat, setShowChat] = useState(false);
-	const [chatClosedByUser, setChatClosedByUser] = useState(false);
 	const [newMessageAlert, setNewMessageAlert] = useState(false);
-	const [chatData, setChatData] = useState<Chatroom | null>(null);
 
 	useEffect(() => {
 		if (!user || !friend) {
 			return;
 		}
+		const controller = new AbortController();
 		(async () => {
 			try {
 				const resData: Chatroom = await axiosGet('/api/chats', {
 					params: { recipientId: friend._id },
+					signal: controller.signal,
 				});
 				if (
 					resData.message_list.some(
@@ -43,7 +43,6 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 				) {
 					setNewMessageAlert(true);
 				}
-				setChatData(resData);
 			} catch (error: any) {
 				if (error.response && error.response.status === 401) {
 					navigate('/');
@@ -51,33 +50,38 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 				console.error(error);
 			}
 		})();
+
+		return () => {
+			controller.abort();
+		};
 	}, [user, friend, navigate]);
 
 	useEffect(() => {
-		if (!socket) {
+		if (!socket || !user) {
 			return;
 		}
-
 		socket.emit('subscribe_chat', friend._id);
 
 		socket.on('receive_message', (data) => {
-			if (!data.participants.includes(friend._id)) {
+			if (!data.participants.find((p) => p._id === friend._id)) {
 				return;
 			}
-			if (!chatClosedByUser) {
-				setChatData(data);
-				setShowChat(true);
-			} else if (!showChat) {
+			if (
+				data.message_list.some(
+					(message) =>
+						!message.readBy.includes(user._id) &&
+						message.author._id !== user._id
+				)
+			) {
 				setNewMessageAlert(true);
-			} else {
-				setChatData(data);
 			}
+			updateChat(data);
 		});
 
 		return () => {
 			socket.off();
 		};
-	}, [socket, showChat, chatClosedByUser, friend, user]);
+	}, [socket, friend, user, updateChat]);
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
@@ -98,20 +102,13 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 		friendId: string
 	) => {
 		e.stopPropagation();
-		setChatData(
-			await axiosGet('/api/chats', {
-				withCredentials: true,
-				params: { recipientId: friendId },
-			})
-		);
-		setShowChat(true);
+		const resData = await axiosGet('/api/chats', {
+			withCredentials: true,
+			params: { recipientId: friendId },
+		});
+		addChat(resData);
+		changeActiveChat(resData._id);
 		setNewMessageAlert(false);
-	};
-
-	const closeChat = (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.stopPropagation();
-		setChatClosedByUser(true);
-		setShowChat(false);
 	};
 
 	return (
@@ -150,9 +147,6 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 					)}
 				</div>
 			</li>
-			{showChat && chatData && (
-				<Chat data={chatData} closeChat={closeChat} recipient={friend} />
-			)}
 		</>
 	);
 };
