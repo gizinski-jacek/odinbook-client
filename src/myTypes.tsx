@@ -4,7 +4,7 @@ export type PostFull = {
 	_id: string;
 	author: User;
 	text: string;
-	picture: string;
+	picture_name: string;
 	picture_url: string;
 	comments: CommentFull[];
 	likes: string[];
@@ -16,7 +16,7 @@ export type PostNew = {
 	_id?: string;
 	author?: User;
 	text: string;
-	picture?: string;
+	picture_name?: string;
 	picture_url?: string;
 	comments?: CommentFull[];
 	likes?: string[];
@@ -48,7 +48,7 @@ export type User = {
 	_id: string;
 	first_name: string;
 	last_name: string;
-	profile_picture: string;
+	profile_picture_name: string;
 	profile_picture_url: string;
 	friend_list: string[];
 	blocked_user_list: string[];
@@ -75,6 +75,8 @@ export type Chatroom = {
 	_id: string;
 	participants: User[];
 	message_list: Message[];
+	createdAt: string;
+	updatedAt: string;
 };
 
 export type Message = {
