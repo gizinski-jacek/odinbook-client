@@ -14,9 +14,10 @@ import People from './components/People';
 import ProfileMain from './components/ProfileMain';
 import ProfilePosts from './components/ProfilePosts';
 import ProfileFriends from './components/ProfileFriends';
+import { ChatProvider } from './components/hooks/ChatProvider';
 
 const App = () => {
-	const { user, setUser } = useContext(UserContext);
+	const { user, updateUser } = useContext(UserContext);
 
 	const location = useLocation();
 
@@ -26,12 +27,12 @@ const App = () => {
 		const controller = new AbortController();
 		(async () => {
 			try {
-				setUser(
+				updateUser(
 					await axiosGet('/api/verify-token', { signal: controller.signal })
 				);
 				setIsLoading(false);
 			} catch (error: any) {
-				setUser(null);
+				updateUser(null);
 				setIsLoading(false);
 				console.error(error);
 			}
@@ -40,56 +41,58 @@ const App = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [location, setUser]);
+	}, [location, updateUser]);
 
 	return (
-		<Routes>
-			<Route
-				path='/'
-				element={
-					<main className='main'>
-						{isLoading ? (
-							<LoadingIcon />
-						) : user ? (
-							<>
-								<Navbar />
-								<Outlet />
-								<Footer />
-							</>
-						) : (
-							<>
-								<FrontPage />
-								<Footer />
-							</>
-						)}
-					</main>
-				}
-			>
+		<ChatProvider>
+			<Routes>
 				<Route
-					path=''
+					path='/'
 					element={
-						<div className='home-container'>
-							<SideBar />
-							<Timeline />
-							<Contacts />
-						</div>
-					}
-				></Route>
-				<Route
-					path='profile/:userid'
-					element={
-						<div className='profile-container'>
-							<ProfileMain />
-							<Outlet />
-						</div>
+						<main className='main'>
+							{isLoading ? (
+								<LoadingIcon />
+							) : user ? (
+								<>
+									<Navbar />
+									<Outlet />
+									<Footer />
+								</>
+							) : (
+								<>
+									<FrontPage />
+									<Footer />
+								</>
+							)}
+						</main>
 					}
 				>
-					<Route path='' element={<ProfilePosts />}></Route>
-					<Route path='friends' element={<ProfileFriends />}></Route>
+					<Route
+						path=''
+						element={
+							<div className='home-container'>
+								<SideBar />
+								<Timeline />
+								<Contacts />
+							</div>
+						}
+					></Route>
+					<Route
+						path='profile/:userid'
+						element={
+							<div className='profile-container'>
+								<ProfileMain />
+								<Outlet />
+							</div>
+						}
+					>
+						<Route path='' element={<ProfilePosts />}></Route>
+						<Route path='friends' element={<ProfileFriends />}></Route>
+					</Route>
+					<Route path='friends' element={<People />}></Route>
 				</Route>
-				<Route path='friends' element={<People />}></Route>
-			</Route>
-		</Routes>
+			</Routes>
+		</ChatProvider>
 	);
 };
 
