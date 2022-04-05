@@ -35,7 +35,7 @@ const RequestWrapper: React.FC<Props> = ({
 						Confirm
 					</button>
 					<button
-						className='btn-default btn-decline'
+						className='btn-default btn-danger'
 						onClick={(e) => handleCancel(e, request._id)}
 					>
 						Decline
