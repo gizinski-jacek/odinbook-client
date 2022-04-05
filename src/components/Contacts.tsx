@@ -196,7 +196,7 @@ const Contacts = () => {
 			<li
 				key={chat._id}
 				className={`${styles.chat_list_item} ${
-					chat._id === activeChatId && styles.isOpen
+					chat._id === activeChatId && styles.isActiveChat
 				}`}
 				onClick={(e) => setChatAsActive(e, chat._id)}
 			>
