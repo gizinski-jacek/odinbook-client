@@ -82,7 +82,7 @@
 			}
 
 			h4 {
-				margin: 0 12px;
+				margin-left: 8px;
 			}
 		}
 
@@ -95,7 +95,7 @@
 			flex-direction: row;
 			align-items: center;
 			font-weight: 600;
-			padding: 12px 16px;
+			padding: 12px;
 			border-radius: 24px;
 			background-color: variables.$black-a10;
 		}
@@ -105,8 +105,13 @@
 		}
 
 		@media only screen and (max-width: 1500px) {
-			.me_link,
 			.friends_link {
+				display: none;
+			}
+		}
+
+		@media only screen and (max-width: 1200px) {
+			.me_link {
 				display: none;
 			}
 		}

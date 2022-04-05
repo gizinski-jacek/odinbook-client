@@ -42,7 +42,7 @@
 		}
 
 		.blocked:hover {
-			background-color: variables.$black-a20 !important;
+			background-color: variables.$black-a20;
 			color: variables.$black-a40;
 		}
 
@@ -52,6 +52,7 @@
 
 		.blocked_by:after {
 			content: 'Blocked by User';
+			cursor: not-allowed;
 		}
 
 		.friend:after {
@@ -59,8 +60,8 @@
 		}
 
 		.friend:hover {
-			background-color: variables.$blue-a30 !important;
-			color: variables.$blue;
+			background-color: variables.$red;
+			color: variables.$black;
 		}
 
 		.friend:hover:after {
@@ -110,6 +111,7 @@
 
 			.blocked_by:after {
 				content: 'Blocked';
+				cursor: not-allowed;
 			}
 
 			.friend:after {

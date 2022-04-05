@@ -57,10 +57,12 @@
 				}
 			}
 		}
+	}
 
-		.right {
-			position: relative;
-		}
+	.right {
+		height: fit-content;
+		position: relative;
+		border-radius: 50%;
 	}
 
 	.options_toggle {
@@ -87,7 +89,7 @@
 		top: 32px;
 		right: 0;
 		padding: 8px;
-		width: 200px;
+		width: 240px;
 		border-radius: 8px;
 		background-color: variables.$white;
 		box-shadow: 0 4px 16px 0 variables.$black-a20;
