@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from './hooks/UserProvider';
 import type { Chatroom, User } from '../myTypes';
 import { axiosPost, axiosPut } from './utils/axiosFunctions';
@@ -7,12 +7,11 @@ import ChatMessageWrapper from './utils/ChatMessageWrapper';
 import styles from '../styles/Chat.module.scss';
 
 type Props = {
-	closeChat: (e: React.MouseEvent<HTMLButtonElement>) => void;
 	recipient: User;
 	data: Chatroom;
 };
 
-const Chat: React.FC<Props> = ({ closeChat, recipient, data }) => {
+const Chat: React.FC<Props> = ({ recipient, data }) => {
 	const { user } = useContext(UserContext);
 
 	const navigate = useNavigate();
@@ -93,22 +92,6 @@ const Chat: React.FC<Props> = ({ closeChat, recipient, data }) => {
 
 	return (
 		<div className={styles.chat_window}>
-			<div className={styles.top}>
-				<div className={styles.left}>
-					<h3>
-						Chatting with:{' '}
-						<Link to={`/profile/${recipient._id}`}>{recipient.first_name}</Link>
-					</h3>
-				</div>
-				<button
-					type='button'
-					className={styles.close_btn}
-					onClick={(e) => closeChat(e)}
-				>
-					<span></span>
-				</button>
-			</div>
-			<hr />
 			<div className={styles.body}>
 				<ul className={styles.message_list}>
 					{messageDisplay && messageDisplay.length > 0 && messageDisplay}
