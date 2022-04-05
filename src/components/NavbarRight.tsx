@@ -20,7 +20,7 @@ const NavbarRight = () => {
 	const menuContainerRef = useRef<HTMLDivElement>(null);
 
 	const [openMenuContainer, setOpenMenuContainer] = useState(false);
-	const [openMenuId, setOpenMenuId] = useState(0);
+	const [openMenuId, setOpenMenuId] = useState<number>(0);
 
 	const [messageAlert, setMessageAlert] = useState(false);
 	const [notificationAlert, setNotificationAlert] = useState(false);
