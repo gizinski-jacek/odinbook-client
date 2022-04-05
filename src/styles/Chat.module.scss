@@ -3,69 +3,20 @@
 .chat_window {
 	display: flex;
 	flex-direction: column;
-	position: fixed;
-	bottom: 40px;
-	right: 12px;
-	width: 300px;
-	height: 360px;
-	background-color: variables.$white;
-	border-radius: 8px;
-	box-shadow: 0 4px 12px 0 variables.$black-a20;
+	width: 100%;
 	padding: 8px;
 	z-index: 10;
 
-	.top {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		position: relative;
-
-		.left {
-			max-width: 250px;
-
-			a {
-				color: variables.$blue;
-			}
-		}
-
-		button {
-			align-self: flex-start;
-		}
-	}
-
-	.close_btn {
-		padding: 8px;
-		background-color: variables.$black-a10;
-		border-radius: 50%;
-		cursor: pointer;
-
-		span {
-			width: 8px;
-			height: 8px;
-			display: block;
-			background-size: auto;
-			background-repeat: no-repeat;
-			background-image: url('../../public/multi_icons/icons_6.png');
-			background-position: -111px -73px;
-		}
-	}
-
-	.close_btn:hover {
-		background-color: variables.$black-a20;
-	}
-
 	.body {
-		flex: 1;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 	}
 
 	.message_list {
-		flex: 1;
 		display: flex;
 		flex-direction: column;
-		max-height: 260px;
+		height: 260px;
 		overflow-y: auto;
 		scrollbar-width: thin;
 		scrollbar-color: variables.$black-a20 variables.$black-a10;
