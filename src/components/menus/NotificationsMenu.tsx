@@ -7,7 +7,7 @@ import RequestWrapper from '../utils/RequestWrapper';
 import styles from '../../styles/menus/NotificationsMenu.module.scss';
 
 const NotificationsMenu = () => {
-	const { user, setUser } = useContext(UserContext);
+	const { user, updateUser } = useContext(UserContext);
 
 	const navigate = useNavigate();
 
@@ -48,7 +48,7 @@ const NotificationsMenu = () => {
 			});
 			const data = resData.find((u: User) => u._id === user._id);
 			setRequestsData(data.incoming_friend_requests);
-			setUser(data);
+			updateUser(data);
 		} catch (error: any) {
 			if (error.response && error.response.status === 401) {
 				navigate('/');
@@ -71,7 +71,7 @@ const NotificationsMenu = () => {
 			});
 			const data = resData.find((u: User) => u._id === user._id);
 			setRequestsData(data.incoming_friend_requests);
-			setUser(data);
+			updateUser(data);
 		} catch (error: any) {
 			if (error.response && error.response.status === 401) {
 				navigate('/');

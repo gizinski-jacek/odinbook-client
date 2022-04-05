@@ -16,7 +16,7 @@ type Props = {
 };
 
 const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
-	const { setUser } = useContext(UserContext);
+	const { updateUser } = useContext(UserContext);
 
 	const pictureRef = useRef<HTMLInputElement>(null);
 
@@ -82,7 +82,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 			}
 			const resData = await axiosPut(`/api/users`, profileData);
 			setData(resData);
-			setUser(resData);
+			updateUser(resData);
 			closeModal(e);
 		} catch (error: any) {
 			if (

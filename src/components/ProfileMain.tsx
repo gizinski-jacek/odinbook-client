@@ -8,7 +8,7 @@ import FormErrorWrapper from './utils/FormErrorWrapper';
 import styles from '../styles/ProfileMain.module.scss';
 
 const Profile = () => {
-	const { user, setUser } = useContext(UserContext);
+	const { user, updateUser } = useContext(UserContext);
 
 	const params = useParams();
 
@@ -211,7 +211,7 @@ const Profile = () => {
 		try {
 			const resData = await axiosDelete(`/api/users/picture/${pictureId}`);
 			setProfileData(resData);
-			setUser(resData);
+			updateUser(resData);
 		} catch (error: any) {
 			if (error.response.status === 401) {
 				navigate('/');

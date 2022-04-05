@@ -5,7 +5,7 @@ import { axiosGet } from '../utils/axiosFunctions';
 import styles from '../../styles/menus/AccountMenu.module.scss';
 
 const AccountMenu = () => {
-	const { user, setUser } = useContext(UserContext);
+	const { user, updateUser } = useContext(UserContext);
 
 	const navigate = useNavigate();
 
@@ -13,10 +13,10 @@ const AccountMenu = () => {
 		e.stopPropagation();
 		try {
 			await axiosGet('/api/log-out');
-			setUser(null);
+			updateUser(null);
 			navigate('/');
 		} catch (error: any) {
-			setUser(null);
+			updateUser(null);
 			navigate('/');
 			console.error(error);
 		}

@@ -16,7 +16,7 @@ type FormData = {
 };
 
 const LogIn: React.FC<Props> = ({ toggleForm }) => {
-	const { setUser } = useContext(UserContext);
+	const { updateUser } = useContext(UserContext);
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [errors, setErrors] = useState<FormError[]>([]);
@@ -39,7 +39,7 @@ const LogIn: React.FC<Props> = ({ toggleForm }) => {
 	) => {
 		e.preventDefault();
 		try {
-			setUser(await axiosPost('/api/log-in/email', data));
+			updateUser(await axiosPost('/api/log-in/email', data));
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {
 				if (typeof error.response.data === 'object') {
@@ -60,8 +60,7 @@ const LogIn: React.FC<Props> = ({ toggleForm }) => {
 		e.preventDefault();
 		try {
 			setIsLoading(true);
-			setUser(await axiosGet('/api/test-user'));
-			setIsLoading(false);
+			updateUser(await axiosGet('/api/test-user'));
 		} catch (error: any) {
 			setIsLoading(false);
 			console.error(error);
