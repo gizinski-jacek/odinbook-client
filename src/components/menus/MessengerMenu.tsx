@@ -172,7 +172,7 @@ const MessengerMenu = () => {
 						<button
 							type='button'
 							style={{
-								visibility: searchInput || showResults ? 'visible' : 'hidden',
+								display: searchInput || showResults ? 'block' : 'none',
 							}}
 							className={styles.clear_btn}
 							onClick={(e) => clearSearch(e)}
