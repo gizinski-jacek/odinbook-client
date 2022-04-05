@@ -105,7 +105,6 @@ const NavbarRight = () => {
 		e: React.MouseEvent<HTMLLIElement>,
 		menuNumber: number
 	) => {
-		e.stopPropagation();
 		if (!openMenuContainer) {
 			setOpenMenuContainer(true);
 			setOpenMenuId(menuNumber);
@@ -129,7 +128,10 @@ const NavbarRight = () => {
 
 	const closeMenuContainerListener = (e: any) => {
 		e.stopPropagation();
-		if (!menuContainerRef.current?.contains(e.target)) {
+		if (
+			!menuContainerRef.current?.contains(e.target) &&
+			!e.target.closest('li')?.id.includes('menu-')
+		) {
 			setOpenMenuContainer(false);
 			setOpenMenuId(0);
 			document.removeEventListener('click', closeMenuContainerListener);

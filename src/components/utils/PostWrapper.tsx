@@ -58,14 +58,13 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 	}, [post, params, navigate]);
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
-		e.stopPropagation();
 		setShowOptions((prevState) => !prevState);
 		document.addEventListener('click', closeOptionsListener);
 	};
 
 	const closeOptionsListener = (e: any) => {
 		e.stopPropagation();
-		if (optionsRef.current !== e.target) {
+		if (e.target.closest('div') !== optionsRef.current) {
 			document.removeEventListener('click', closeOptionsListener);
 			setShowOptions(false);
 		}
@@ -115,7 +114,6 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 	};
 
 	const toggleComments = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
 		setShowCommentsList((prevState) => !prevState);
 		commentInputRef.current?.focus();
 	};
@@ -218,7 +216,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 						</div>
 					</div>
 				</div>
-				<div className={stylesPost.right}>
+				<div ref={optionsRef} className={stylesPost.right}>
 					{user._id === postData.author._id && (
 						<>
 							<span
@@ -232,7 +230,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 								</svg>
 							</span>
 							{showOptions && (
-								<span ref={optionsRef} className={stylesPost.options_menu}>
+								<span className={stylesPost.options_menu}>
 									<div
 										className={stylesPost.edit_btn}
 										onClick={(e) => openEditModal(e)}
@@ -245,11 +243,15 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 									>
 										Delete post
 									</div>
-									{postData.picture_url && (
+									{postData.picture_name && (
 										<div
 											className={stylesPost.delete_btn}
 											onClick={(e) =>
-												handlePictureDelete(e, postData._id, postData.picture)
+												handlePictureDelete(
+													e,
+													postData._id,
+													postData.picture_name
+												)
 											}
 										>
 											Delete picture

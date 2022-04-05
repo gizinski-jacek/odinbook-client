@@ -25,14 +25,13 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 	const [showModal, setShowModal] = useState(false);
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
-		e.stopPropagation();
 		setShowOptions((prevState) => !prevState);
 		document.addEventListener('click', closeOptionsListener);
 	};
 
 	const closeOptionsListener = (e: any) => {
 		e.stopPropagation();
-		if (optionsRef.current !== e.target) {
+		if (e.target.closest('div') !== optionsRef.current) {
 			document.removeEventListener('click', closeOptionsListener);
 			setShowOptions(false);
 		}
@@ -143,7 +142,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 								</div>
 							)}
 						</div>
-						<div className={styles.right}>
+						<div ref={optionsRef} className={styles.right}>
 							{user._id === commentData.author._id && (
 								<>
 									<span
@@ -157,7 +156,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 										</svg>
 									</span>
 									{showOptions && (
-										<div ref={optionsRef} className={styles.options_menu}>
+										<div className={styles.options_menu}>
 											<div
 												className={styles.edit_btn}
 												onClick={(e) => openEditForm(e)}

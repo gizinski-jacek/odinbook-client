@@ -8,8 +8,8 @@ import styles from '../styles/NavbarLeft.module.scss';
 const NavbarLeft = () => {
 	const navigate = useNavigate();
 
-	const resultsRef = useRef<HTMLInputElement>(null);
-	const searchRef = useRef<HTMLInputElement>(null);
+	const searchRef = useRef<HTMLDivElement>(null);
+	const resultsRef = useRef<HTMLDivElement>(null);
 
 	const [searchInput, setSearchInput] = useState('');
 	const [searchData, setSearchData] = useState<PostFull[]>([]);
@@ -27,7 +27,7 @@ const NavbarLeft = () => {
 		try {
 			setSearchData(await axiosGet(`/api/search/posts?q=${query}`));
 			setShowResults(true);
-			document.addEventListener('click', closeSearchContainerListener);
+			document.addEventListener('click', closeSearchResultContainerListener);
 		} catch (error: any) {
 			if (error.response && error.response.status === 401) {
 				navigate('/');
@@ -37,29 +37,33 @@ const NavbarLeft = () => {
 	};
 
 	const clearSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.stopPropagation();
 		setSearchInput('');
 		setSearchData([]);
 		setShowResults(false);
 	};
 
-	const closeSearchContainerListener = (e: any) => {
+	const closeSearchResultContainerListener = (e: any) => {
 		e.stopPropagation();
-		if (resultsRef.current !== e.target) {
+		if (
+			e.target.closest('div') !== searchRef.current &&
+			e.target !== resultsRef.current
+		) {
 			setShowResults(false);
-			document.removeEventListener('click', closeSearchContainerListener);
+			document.removeEventListener('click', closeSearchResultContainerListener);
 		}
 	};
 
 	const inputFocus = (e: React.MouseEvent<HTMLLabelElement>) => {
-		e.stopPropagation();
 		setFocused(true);
 		document.addEventListener('click', inputFocusListener);
 	};
 
 	const inputFocusListener = (e: any) => {
 		e.stopPropagation();
-		if (searchRef.current !== e.target && resultsRef.current !== e.target) {
+		if (
+			e.target.closest('div') !== searchRef.current &&
+			e.target !== resultsRef.current
+		) {
 			setFocused(false);
 			document.removeEventListener('click', inputFocusListener);
 		}
@@ -94,7 +98,7 @@ const NavbarLeft = () => {
 					</svg>
 				</div>
 			</Link>
-			<div className={styles.search_posts}>
+			<div ref={searchRef} className={styles.search_posts}>
 				<form onSubmit={(e) => handleSearch(e, searchInput)}>
 					<label onClick={(e) => inputFocus(e)}>
 						<span>
@@ -122,7 +126,6 @@ const NavbarLeft = () => {
 							</svg>
 						</span>
 						<input
-							ref={searchRef}
 							className={focused ? styles.isFocused : ''}
 							type='text'
 							name='search_posts'
@@ -135,7 +138,7 @@ const NavbarLeft = () => {
 						<button
 							type='button'
 							style={{
-								visibility: searchInput || showResults ? 'visible' : 'hidden',
+								display: searchInput || showResults ? 'block' : 'none',
 							}}
 							className={`${styles.clear_btn} ${
 								focused ? styles.isFocused : ''
