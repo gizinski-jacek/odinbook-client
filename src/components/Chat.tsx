@@ -1,16 +1,13 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from './hooks/UserProvider';
-import type { Chatroom } from '../myTypes';
+import { ChatContext } from './hooks/ChatProvider';
 import { axiosPost, axiosPut } from './utils/axiosFunctions';
 import ChatMessageWrapper from './utils/ChatMessageWrapper';
 import styles from '../styles/Chat.module.scss';
 
-type Props = {
-	chat: Chatroom;
-};
-
-const Chat: React.FC<Props> = ({ chat }) => {
+const Chat = () => {
 	const { user } = useContext(UserContext);
+	const { activeChat } = useContext(ChatContext);
 
 	const lastMessage = useRef<HTMLLIElement>(null);
 
@@ -18,16 +15,16 @@ const Chat: React.FC<Props> = ({ chat }) => {
 
 	useEffect(() => {
 		lastMessage.current?.scrollIntoView({ behavior: 'smooth' });
-	}, [chat, user]);
+	}, [activeChat]);
 
 	useEffect(() => {
-		if (!user) {
+		if (!user || !activeChat) {
 			return;
 		}
 		const controller = new AbortController();
 		(async () => {
 			try {
-				const unReadMessageData = chat.message_list.filter(
+				const unReadMessageData = activeChat.message_list.filter(
 					(message) =>
 						!message.readBy.includes(user._id) &&
 						message.author._id !== user._id
@@ -52,7 +49,7 @@ const Chat: React.FC<Props> = ({ chat }) => {
 		return () => {
 			controller.abort();
 		};
-	}, [chat, user]);
+	}, [activeChat, user]);
 
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
@@ -77,51 +74,53 @@ const Chat: React.FC<Props> = ({ chat }) => {
 		}
 	};
 
-	const messageDisplay = chat?.message_list
+	const messageDisplay = activeChat?.message_list
 		.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
 		.map((message) => {
 			return <ChatMessageWrapper key={message._id} message={message} />;
 		});
 
 	return (
-		<div className={styles.chat_window}>
-			<div className={styles.body}>
-				<ul className={styles.message_list}>
-					{messageDisplay && messageDisplay.length > 0 && messageDisplay}
-					<li ref={lastMessage}></li>
-				</ul>
-				<form
-					onSubmit={(e) =>
-						handleSubmit(
-							e,
-							chat._id,
-							messageInput,
-							chat.participants.find((u) => u._id !== user?._id)?._id
-						)
-					}
-				>
-					<label>
-						<input
-							type='text'
-							name='message'
-							minLength={1}
-							maxLength={64}
-							value={messageInput}
-							onChange={(e) => setMessageInput(e.target.value)}
-							required
-							placeholder='Message'
-						/>
-					</label>
-					<button
-						type='submit'
-						className='btn-default btn-confirm'
-						disabled={messageInput ? false : true}
+		activeChat && (
+			<div className={styles.chat_window}>
+				<div className={styles.body}>
+					<ul className={styles.message_list}>
+						{messageDisplay && messageDisplay.length > 0 && messageDisplay}
+						<li ref={lastMessage}></li>
+					</ul>
+					<form
+						onSubmit={(e) =>
+							handleSubmit(
+								e,
+								activeChat._id,
+								messageInput,
+								activeChat.participants.find((u) => u._id !== user?._id)?._id
+							)
+						}
 					>
-						Send
-					</button>
-				</form>
+						<label>
+							<input
+								type='text'
+								name='message'
+								minLength={1}
+								maxLength={64}
+								value={messageInput}
+								onChange={(e) => setMessageInput(e.target.value)}
+								required
+								placeholder='Message'
+							/>
+						</label>
+						<button
+							type='submit'
+							className='btn-default btn-confirm'
+							disabled={messageInput ? false : true}
+						>
+							Send
+						</button>
+					</form>
+				</div>
 			</div>
-		</div>
+		)
 	);
 };
 
