@@ -1,5 +1,6 @@
 import { createContext, useCallback, useState } from 'react';
 import { User } from '../../myTypes';
+import lodash from 'lodash';
 
 type ContextProps = {
 	user: User | null;
@@ -14,9 +15,14 @@ const UserContext = createContext<ContextProps>({
 const UserProvider: React.FC<React.ReactNode> = ({ children }) => {
 	const [user, setUser] = useState<User | null>(null);
 
-	const updateUser = useCallback((userData: User | null) => {
-		setUser(userData);
-	}, []);
+	const updateUser = useCallback(
+		(userData: User | null) => {
+			if (!lodash.isEqual(user, userData)) {
+				setUser(userData);
+			}
+		},
+		[user]
+	);
 
 	return (
 		<UserContext.Provider value={{ user, updateUser }}>
