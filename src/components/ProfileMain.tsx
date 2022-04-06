@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { UserContext } from './hooks/UserProvider';
 import type { FormError, User } from '../myTypes';
 import { axiosDelete, axiosGet, axiosPut } from './utils/axiosFunctions';
@@ -11,8 +11,6 @@ const Profile = () => {
 	const { user, updateUser } = useContext(UserContext);
 
 	const params = useParams();
-
-	const navigate = useNavigate();
 
 	const optionsRef = useRef<HTMLDivElement>(null);
 
@@ -33,9 +31,6 @@ const Profile = () => {
 					})
 				);
 			} catch (error: any) {
-				if (error.response.status === 401) {
-					navigate('/');
-				}
 				console.error(error);
 			}
 		})();
@@ -43,7 +38,7 @@ const Profile = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [params, navigate]);
+	}, [params]);
 
 	const openModal = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();
@@ -82,9 +77,6 @@ const Profile = () => {
 			setProfileData(data);
 			setShowOptions(false);
 		} catch (error: any) {
-			if (error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};
@@ -100,9 +92,6 @@ const Profile = () => {
 			setProfileData(data);
 			setShowOptions(false);
 		} catch (error: any) {
-			if (error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};
@@ -119,9 +108,6 @@ const Profile = () => {
 			setProfileData(data);
 			setShowOptions(false);
 		} catch (error: any) {
-			if (error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};
@@ -137,9 +123,6 @@ const Profile = () => {
 			const data = resData.find((u: User) => u._id === userId);
 			setProfileData(data);
 		} catch (error: any) {
-			if (error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};
@@ -153,9 +136,6 @@ const Profile = () => {
 			const data = resData.find((u: User) => u._id === userId);
 			setProfileData(data);
 		} catch (error: any) {
-			if (error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};
@@ -209,9 +189,6 @@ const Profile = () => {
 			setProfileData(resData);
 			updateUser(resData);
 		} catch (error: any) {
-			if (error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};
