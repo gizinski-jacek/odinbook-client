@@ -206,12 +206,12 @@ const Contacts = () => {
 				</div>
 				<ul>{friendsDisplay}</ul>
 			</div>
-			{chatList && activeChat && (
+			{chatList.length > 0 && (
 				<div className={styles.chat_list_container}>
 					<ul className={styles.open_chat_list}>{openChatListDisplay}</ul>
 					<hr />
 					<div className={styles.container}>
-						<Chat chat={activeChat} />
+						<Chat />
 					</div>
 				</div>
 			)}
