@@ -7,17 +7,13 @@ import styles from '../../styles/menus/AccountMenu.module.scss';
 const AccountMenu = () => {
 	const { user, updateUser } = useContext(UserContext);
 
-	const navigate = useNavigate();
-
 	const handleLogOut = async (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		try {
 			await axiosGet('/api/log-out');
 			updateUser(null);
-			navigate('/');
 		} catch (error: any) {
 			updateUser(null);
-			navigate('/');
 			console.error(error);
 		}
 	};
