@@ -37,6 +37,7 @@ const ChatProvider: React.FC<React.ReactNode> = ({ children }) => {
 			const state = [...chatList];
 			const oldIndex = state.findIndex((chat) => chat._id === updatedChat._id);
 			state.splice(oldIndex, 1, updatedChat);
+			changeActiveChat(updatedChat);
 			setChatList(state);
 		},
 		[chatList]
