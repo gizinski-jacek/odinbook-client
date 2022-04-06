@@ -45,7 +45,9 @@ const ChatProvider: React.FC<React.ReactNode> = ({ children }) => {
 		const index = chatList.findIndex((chat) => chat._id === chatId);
 		const state = [...chatList.filter((chat) => chat._id !== chatId)];
 		if (state.length > 0) {
-			setActiveChatId(state[index - 1]._id);
+			if (index === 0) {
+				setActiveChatId(state[index]._id);
+			} else setActiveChatId(state[index - 1]._id);
 		} else {
 			setActiveChatId('');
 		}
