@@ -1,16 +1,15 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from './hooks/UserProvider';
-import type { Chatroom, User } from '../myTypes';
+import type { Chatroom } from '../myTypes';
 import { axiosPost, axiosPut } from './utils/axiosFunctions';
 import ChatMessageWrapper from './utils/ChatMessageWrapper';
 import styles from '../styles/Chat.module.scss';
 
 type Props = {
-	recipient: User;
-	data: Chatroom;
+	chat: Chatroom;
 };
 
-const Chat: React.FC<Props> = ({ recipient, data }) => {
+const Chat: React.FC<Props> = ({ chat }) => {
 	const { user } = useContext(UserContext);
 
 	const lastMessage = useRef<HTMLLIElement>(null);
@@ -19,7 +18,7 @@ const Chat: React.FC<Props> = ({ recipient, data }) => {
 
 	useEffect(() => {
 		lastMessage.current?.scrollIntoView({ behavior: 'smooth' });
-	}, [data]);
+	}, [chat, user]);
 
 	useEffect(() => {
 		if (!user) {
@@ -28,7 +27,7 @@ const Chat: React.FC<Props> = ({ recipient, data }) => {
 		const controller = new AbortController();
 		(async () => {
 			try {
-				const unReadMessageData = data.message_list.filter(
+				const unReadMessageData = chat.message_list.filter(
 					(message) =>
 						!message.readBy.includes(user._id) &&
 						message.author._id !== user._id
@@ -53,15 +52,18 @@ const Chat: React.FC<Props> = ({ recipient, data }) => {
 		return () => {
 			controller.abort();
 		};
-	}, [data, user]);
+	}, [chat, user]);
 
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
 		chatId: string,
 		input: string,
-		recipientId: string
+		recipientId: string | undefined
 	) => {
 		e.preventDefault();
+		if (!recipientId) {
+			return;
+		}
 		try {
 			const message = {
 				chat_ref: chatId,
@@ -75,7 +77,7 @@ const Chat: React.FC<Props> = ({ recipient, data }) => {
 		}
 	};
 
-	const messageDisplay = data?.message_list
+	const messageDisplay = chat?.message_list
 		.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
 		.map((message) => {
 			return <ChatMessageWrapper key={message._id} message={message} />;
@@ -90,7 +92,12 @@ const Chat: React.FC<Props> = ({ recipient, data }) => {
 				</ul>
 				<form
 					onSubmit={(e) =>
-						handleSubmit(e, data._id, messageInput, recipient._id)
+						handleSubmit(
+							e,
+							chat._id,
+							messageInput,
+							chat.participants.find((u) => u._id !== user?._id)?._id
+						)
 					}
 				>
 					<label>
