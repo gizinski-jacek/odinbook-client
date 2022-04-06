@@ -11,25 +11,12 @@ import styles from '../styles/Contacts.module.scss';
 
 const Contacts = () => {
 	const { user, updateUser } = useContext(UserContext);
-	const { chatList, removeChat, activeChatId, changeActiveChat } =
+	const { chatList, removeChat, activeChat, changeActiveChat } =
 		useContext(ChatContext);
 
 	const [requestsData, setRequestsData] = useState<User[]>([]);
 	const [friendsData, setFriendsData] = useState<User[]>([]);
 	const [socket, setSocket] = useState<SocketType | null>(null);
-	const [activeChat, setActiveChat] = useState<Chatroom | null>();
-	const [activeParticipant, setActiveParticipant] = useState<User | null>();
-
-	useEffect(() => {
-		const chat = chatList.find((chat) => chat._id === activeChatId);
-		if (!chat) {
-			setActiveChat(null);
-			setActiveParticipant(null);
-			return;
-		}
-		setActiveChat(chat);
-		setActiveParticipant(chat.participants.find((u) => u._id !== user?._id));
-	}, [chatList, activeChatId, user]);
 
 	useEffect(() => {
 		const newSocket = io(`${process.env.REACT_APP_API_URI}/chats`, {
@@ -159,10 +146,10 @@ const Contacts = () => {
 
 	const setChatAsActive = (
 		e: React.MouseEvent<HTMLLIElement>,
-		chatId: string
+		chat: Chatroom
 	) => {
 		e.stopPropagation();
-		changeActiveChat(chatId);
+		changeActiveChat(chat);
 	};
 
 	const closeChat = (
@@ -178,9 +165,9 @@ const Contacts = () => {
 			<li
 				key={chat._id}
 				className={`${styles.chat_list_item} ${
-					chat._id === activeChatId && styles.isActiveChat
+					chat._id === activeChat?._id && styles.isActiveChat
 				}`}
-				onClick={(e) => setChatAsActive(e, chat._id)}
+				onClick={(e) => setChatAsActive(e, chat)}
 			>
 				{chat.participants.find((u) => u._id !== user?._id)?.first_name}
 				<button
@@ -219,12 +206,12 @@ const Contacts = () => {
 				</div>
 				<ul>{friendsDisplay}</ul>
 			</div>
-			{chatList && activeParticipant && activeChat && (
+			{chatList && activeChat && (
 				<div className={styles.chat_list_container}>
 					<ul className={styles.open_chat_list}>{openChatListDisplay}</ul>
 					<hr />
 					<div className={styles.container}>
-						<Chat recipient={activeParticipant} data={activeChat} />
+						<Chat chat={activeChat} />
 					</div>
 				</div>
 			)}
