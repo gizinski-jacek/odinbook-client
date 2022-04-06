@@ -30,6 +30,7 @@ const NavbarRight = () => {
 			withCredentials: true,
 		});
 		setSocket(newSocket);
+
 		return () => {
 			newSocket.disconnect();
 		};
@@ -57,15 +58,28 @@ const NavbarRight = () => {
 		return () => {
 			socket.off();
 		};
-	}, [socket]);
+	}, [socket, openMenuId]);
 
 	useEffect(() => {
-		if (!user) {
-			return;
-		}
-		if (user.incoming_friend_requests.length > 0) {
-			setNotificationAlert(true);
-		}
+		const controller = new AbortController();
+		(async () => {
+			try {
+				const resData = await axiosGet('/api/users/contacts', {
+					signal: controller.signal,
+				});
+				if (resData.incoming_friend_requests.length > 0) {
+					setNotificationAlert(true);
+				} else {
+					setNotificationAlert(false);
+				}
+			} catch (error: any) {
+				console.error(error);
+			}
+		})();
+
+		return () => {
+			controller.abort();
+		};
 	}, [user]);
 
 	useEffect(() => {
@@ -244,8 +258,10 @@ const NavbarRight = () => {
 				{!openMenuContainer ? null : (
 					<div ref={menuContainerRef} className={styles.menu_container}>
 						{openMenuId === 1 && <AccountMenu />}
-						{openMenuId === 2 && <NotificationsMenu />}
-						{openMenuId === 3 && <MessengerMenu />}
+						{openMenuId === 2 && (
+							<NotificationsMenu alert={notificationAlert} />
+						)}
+						{openMenuId === 3 && <MessengerMenu alert={messageAlert} />}
 						{openMenuId === 4 && <MainMenu />}
 					</div>
 				)}
