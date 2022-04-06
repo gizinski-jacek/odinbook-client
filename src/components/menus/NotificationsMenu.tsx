@@ -5,7 +5,11 @@ import { axiosGet, axiosPut } from '../utils/axiosFunctions';
 import RequestWrapper from '../utils/RequestWrapper';
 import styles from '../../styles/menus/NotificationsMenu.module.scss';
 
-const NotificationsMenu = () => {
+type Props = {
+	alert: boolean;
+};
+
+const NotificationsMenu: React.FC<Props> = ({ alert }) => {
 	const { user, updateUser } = useContext(UserContext);
 
 	const [requestsData, setRequestsData] = useState<User[]>([]);
@@ -26,7 +30,7 @@ const NotificationsMenu = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [user]);
+	}, [alert]);
 
 	const handleAcceptRequest = async (
 		e: React.MouseEvent<HTMLButtonElement>,
