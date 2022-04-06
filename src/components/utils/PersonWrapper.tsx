@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { UserContext } from '../hooks/UserProvider';
 import type { User } from '../../myTypes';
 import { axiosPut } from './axiosFunctions';
@@ -11,8 +11,6 @@ type Props = {
 
 const PersonWrapper: React.FC<Props> = ({ person }) => {
 	const { user } = useContext(UserContext);
-
-	const navigate = useNavigate();
 
 	const [personData, setPersonData] = useState<User>(person);
 
@@ -26,9 +24,6 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 			const data = resData.find((u: User) => u._id === userId);
 			setPersonData(data);
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};
@@ -43,9 +38,6 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 			const data = resData.find((u: User) => u._id === userId);
 			setPersonData(data);
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};
@@ -62,9 +54,6 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 			const data = resData.find((u: User) => u._id === userId);
 			setPersonData(data);
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};
@@ -81,9 +70,6 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 			const data = resData.find((u: User) => u._id === userId);
 			setPersonData(data);
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};
@@ -98,9 +84,6 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 			const data = resData.find((u: User) => u._id === userId);
 			setPersonData(data);
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};

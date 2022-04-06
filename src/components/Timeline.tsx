@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { UserContext } from './hooks/UserProvider';
 import type { PostFull, PostNew } from '../myTypes';
 import { axiosGet } from './utils/axiosFunctions';
@@ -9,8 +9,6 @@ import styles from '../styles/Timeline.module.scss';
 
 const Timeline = () => {
 	const { user } = useContext(UserContext);
-
-	const navigate = useNavigate();
 
 	const [timelinePostsData, setTimelinePostsData] = useState<PostFull[]>([]);
 	const [newPostData, setFormData] = useState<PostNew>({ text: '' });
@@ -28,9 +26,6 @@ const Timeline = () => {
 					await axiosGet('/api/posts/timeline', { signal: controller.signal })
 				);
 			} catch (error: any) {
-				if (error.response && error.response.status === 401) {
-					navigate('/');
-				}
 				console.error(error);
 			}
 		})();
@@ -38,7 +33,7 @@ const Timeline = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [navigate]);
+	}, []);
 
 	const openModal = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();

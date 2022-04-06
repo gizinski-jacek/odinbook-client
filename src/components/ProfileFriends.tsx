@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import type { User } from '../myTypes';
 import { axiosGet } from './utils/axiosFunctions';
 import PersonWrapper from './utils/PersonWrapper';
@@ -7,8 +7,6 @@ import styles from '../styles/ProfileFriends.module.scss';
 
 const ProfileFriends = () => {
 	const params = useParams();
-
-	const navigate = useNavigate();
 
 	const [friendsData, setFriendsData] = useState<User[]>([]);
 	const [searchData, setSearchData] = useState<User[]>([]);
@@ -25,9 +23,6 @@ const ProfileFriends = () => {
 					})
 				);
 			} catch (error: any) {
-				if (error.response && error.response.status === 401) {
-					navigate('/');
-				}
 				console.error(error);
 			}
 		})();
@@ -35,7 +30,7 @@ const ProfileFriends = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [params, navigate]);
+	}, [params]);
 
 	const handleSearch = async (
 		e: React.FormEvent<HTMLFormElement>,
@@ -51,9 +46,6 @@ const ProfileFriends = () => {
 			);
 			setShowResults(true);
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};

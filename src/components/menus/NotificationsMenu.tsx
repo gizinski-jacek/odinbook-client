@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../hooks/UserProvider';
 import { User } from '../../myTypes';
 import { axiosGet, axiosPut } from '../utils/axiosFunctions';
@@ -8,8 +7,6 @@ import styles from '../../styles/menus/NotificationsMenu.module.scss';
 
 const NotificationsMenu = () => {
 	const { user, updateUser } = useContext(UserContext);
-
-	const navigate = useNavigate();
 
 	const [requestsData, setRequestsData] = useState<User[]>([]);
 
@@ -22,9 +19,6 @@ const NotificationsMenu = () => {
 				});
 				setRequestsData(resData.incoming_friend_requests);
 			} catch (error: any) {
-				if (error.response && error.response.status === 401) {
-					navigate('/');
-				}
 				console.error(error);
 			}
 		})();
@@ -32,7 +26,7 @@ const NotificationsMenu = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [user, navigate]);
+	}, [user]);
 
 	const handleAcceptRequest = async (
 		e: React.MouseEvent<HTMLButtonElement>,
@@ -50,9 +44,6 @@ const NotificationsMenu = () => {
 			setRequestsData(data.incoming_friend_requests);
 			updateUser(data);
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};
@@ -73,9 +64,6 @@ const NotificationsMenu = () => {
 			setRequestsData(data.incoming_friend_requests);
 			updateUser(data);
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};

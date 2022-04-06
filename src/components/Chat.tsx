@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { UserContext } from './hooks/UserProvider';
 import type { Chatroom, User } from '../myTypes';
 import { axiosPost, axiosPut } from './utils/axiosFunctions';
@@ -13,8 +12,6 @@ type Props = {
 
 const Chat: React.FC<Props> = ({ recipient, data }) => {
 	const { user } = useContext(UserContext);
-
-	const navigate = useNavigate();
 
 	const lastMessage = useRef<HTMLLIElement>(null);
 
@@ -49,9 +46,6 @@ const Chat: React.FC<Props> = ({ recipient, data }) => {
 					);
 				}
 			} catch (error: any) {
-				if (error.response && error.response.status === 401) {
-					navigate('/');
-				}
 				console.error(error);
 			}
 		})();
@@ -59,7 +53,7 @@ const Chat: React.FC<Props> = ({ recipient, data }) => {
 		return () => {
 			controller.abort();
 		};
-	}, [data, user, navigate]);
+	}, [data, user]);
 
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
@@ -77,9 +71,6 @@ const Chat: React.FC<Props> = ({ recipient, data }) => {
 			await axiosPost('/api/chats/messages', message);
 			setMessageInput('');
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};

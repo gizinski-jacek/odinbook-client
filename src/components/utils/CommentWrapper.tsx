@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { UserContext } from '../hooks/UserProvider';
 import type { CommentFull } from '../../myTypes';
 import { axiosPut } from './axiosFunctions';
@@ -14,8 +14,6 @@ type Props = {
 
 const CommentWrapper: React.FC<Props> = ({ comment }) => {
 	const { user } = useContext(UserContext);
-
-	const navigate = useNavigate();
 
 	const optionsRef = useRef<HTMLDivElement>(null);
 
@@ -75,9 +73,6 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 				)
 			);
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};
@@ -95,9 +90,6 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 			);
 			setEditComment(false);
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};

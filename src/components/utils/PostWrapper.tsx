@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { UserContext } from '../hooks/UserProvider';
 import { CommentNew, FormError, PostFull } from '../../myTypes';
 import { axiosDelete, axiosGet, axiosPost, axiosPut } from './axiosFunctions';
@@ -19,8 +19,6 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 	const { user } = useContext(UserContext);
 
 	const params = useParams();
-
-	const navigate = useNavigate();
 
 	const commentInputRef = useRef<HTMLTextAreaElement>(null);
 	const optionsRef = useRef<HTMLDivElement>(null);
@@ -44,9 +42,6 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 						})
 					);
 				} catch (error: any) {
-					if (error.response && error.response.status === 401) {
-						navigate('/');
-					}
 					console.error(error);
 				}
 			}
@@ -55,7 +50,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		return () => {
 			controller.abort();
 		};
-	}, [post, params, navigate]);
+	}, [post, params]);
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		setShowOptions((prevState) => !prevState);
@@ -106,9 +101,6 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 		try {
 			setPostData(await axiosPut(`/api/posts/${postId}/like`, { postId }));
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};
@@ -166,9 +158,6 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 				})
 			);
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 

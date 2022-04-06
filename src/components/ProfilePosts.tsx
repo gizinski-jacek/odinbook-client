@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import type { PostFull, User } from '../myTypes';
 import { axiosGet } from './utils/axiosFunctions';
 import PostWrapper from './utils/PostWrapper';
@@ -7,8 +7,6 @@ import styles from '../styles/ProfilePosts.module.scss';
 
 const ProfilePosts = () => {
 	const params = useParams();
-
-	const navigate = useNavigate();
 
 	const [profileData, setProfileData] = useState<User>();
 	const [postsData, setPostsData] = useState<PostFull[]>([]);
@@ -28,9 +26,6 @@ const ProfilePosts = () => {
 					})
 				);
 			} catch (error: any) {
-				if (error.response && error.response.status === 401) {
-					navigate('/');
-				}
 				console.error(error);
 			}
 		})();
@@ -38,7 +33,7 @@ const ProfilePosts = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [params, navigate]);
+	}, [params]);
 
 	const postsDisplay = postsData?.map((post) => {
 		return <PostWrapper key={post._id} post={post} />;

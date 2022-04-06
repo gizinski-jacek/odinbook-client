@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { UserContext } from './hooks/UserProvider';
 import { io } from 'socket.io-client';
 import type { SocketType } from '../myTypes';
@@ -14,8 +14,6 @@ const NavbarRight = () => {
 	const { user } = useContext(UserContext);
 
 	const location = useLocation();
-
-	const navigate = useNavigate();
 
 	const menuContainerRef = useRef<HTMLDivElement>(null);
 
@@ -43,9 +41,6 @@ const NavbarRight = () => {
 		}
 
 		socket.on('oops', (error) => {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		});
 
@@ -62,7 +57,7 @@ const NavbarRight = () => {
 		return () => {
 			socket.off();
 		};
-	}, [socket, navigate]);
+	}, [socket]);
 
 	useEffect(() => {
 		if (!user) {
@@ -84,9 +79,6 @@ const NavbarRight = () => {
 					setMessageAlert(true);
 				}
 			} catch (error: any) {
-				if (error.response && error.response.status === 401) {
-					navigate('/');
-				}
 				console.error(error);
 			}
 		})();
@@ -94,7 +86,7 @@ const NavbarRight = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [navigate]);
+	}, []);
 
 	useEffect(() => {
 		setOpenMenuContainer(false);

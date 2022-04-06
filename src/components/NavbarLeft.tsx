@@ -1,13 +1,11 @@
 import { useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import type { PostFull } from '../myTypes';
 import { axiosGet } from './utils/axiosFunctions';
 import SearchPostResultWrapper from './utils/SearchPostResultWrapper';
 import styles from '../styles/NavbarLeft.module.scss';
 
 const NavbarLeft = () => {
-	const navigate = useNavigate();
-
 	const searchRef = useRef<HTMLDivElement>(null);
 	const resultsRef = useRef<HTMLDivElement>(null);
 
@@ -29,9 +27,6 @@ const NavbarLeft = () => {
 			setShowResults(true);
 			document.addEventListener('click', closeSearchResultContainerListener);
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};

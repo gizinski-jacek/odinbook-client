@@ -1,5 +1,4 @@
 import { CommentFull, PostFull } from '../../myTypes';
-import { useNavigate } from 'react-router-dom';
 import { axiosDelete } from './axiosFunctions';
 import styles from '../../styles/DeleteModal.module.scss';
 
@@ -18,8 +17,6 @@ const DeleteModal: React.FC<Props> = ({
 	post,
 	comment,
 }) => {
-	const navigate = useNavigate();
-
 	const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		try {
@@ -33,9 +30,6 @@ const DeleteModal: React.FC<Props> = ({
 				setData(null);
 			}
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};

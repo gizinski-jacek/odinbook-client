@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { UserContext } from './hooks/UserProvider';
 import { ChatContext } from './hooks/ChatProvider';
@@ -14,8 +13,6 @@ const Contacts = () => {
 	const { user, updateUser } = useContext(UserContext);
 	const { chatList, removeChat, activeChatId, changeActiveChat } =
 		useContext(ChatContext);
-
-	const navigate = useNavigate();
 
 	const [requestsData, setRequestsData] = useState<User[]>([]);
 	const [friendsData, setFriendsData] = useState<User[]>([]);
@@ -50,16 +47,13 @@ const Contacts = () => {
 			return;
 		}
 		socket.on('oops', (error) => {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		});
 
 		return () => {
 			socket.off();
 		};
-	}, [socket, navigate]);
+	}, [socket]);
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -71,9 +65,6 @@ const Contacts = () => {
 				setRequestsData(resData.incoming_friend_requests);
 				setFriendsData(resData.friend_list);
 			} catch (error: any) {
-				if (error.response && error.response.status === 401) {
-					navigate('/');
-				}
 				console.error(error);
 			}
 		})();
@@ -81,7 +72,7 @@ const Contacts = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [navigate]);
+	}, []);
 
 	const handleAcceptRequest = async (
 		e: React.MouseEvent<HTMLButtonElement>,
@@ -100,9 +91,6 @@ const Contacts = () => {
 			setFriendsData(data.friend_list);
 			updateUser(data);
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};
@@ -124,9 +112,6 @@ const Contacts = () => {
 			setFriendsData(data.friend_list);
 			updateUser(data);
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};
@@ -146,9 +131,6 @@ const Contacts = () => {
 			setFriendsData(data.friend_list);
 			updateUser(data);
 		} catch (error: any) {
-			if (error.response && error.response.status === 401) {
-				navigate('/');
-			}
 			console.error(error);
 		}
 	};
