@@ -14,7 +14,7 @@ type Props = {
 
 const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 	const { user } = useContext(UserContext);
-	const { addChat, updateChat, changeActiveChat } = useContext(ChatContext);
+	const { addChat, updateChat } = useContext(ChatContext);
 
 	const optionsRef = useRef<HTMLDivElement>(null);
 
@@ -104,7 +104,6 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 			params: { recipientId: friendId },
 		});
 		addChat(resData);
-		changeActiveChat(resData._id);
 		setNewMessageAlert(false);
 	};
 
