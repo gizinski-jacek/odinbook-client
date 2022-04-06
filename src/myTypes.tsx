@@ -1,5 +1,36 @@
 import { Socket } from 'socket.io-client';
 
+export type LogInForm = {
+	email: string;
+	password: string;
+};
+
+export type SignUpForm = {
+	first_name: string;
+	last_name: string;
+	email: string;
+	password: string;
+};
+
+export type FormError = {
+	msg: string;
+};
+
+export type User = {
+	_id: string;
+	first_name: string;
+	last_name: string;
+	profile_picture_name: string;
+	profile_picture_url: string;
+	friend_list: string[];
+	blocked_user_list: string[];
+	blocked_by_other_list: string[];
+	incoming_friend_requests: string[];
+	outgoing_friend_requests: string[];
+	bio?: string;
+	hobbies?: string[];
+};
+
 export type PostFull = {
 	_id: string;
 	author: User;
@@ -44,33 +75,6 @@ export type CommentNew = {
 	updatedAt?: string;
 };
 
-export type User = {
-	_id: string;
-	first_name: string;
-	last_name: string;
-	profile_picture_name: string;
-	profile_picture_url: string;
-	friend_list: string[];
-	blocked_user_list: string[];
-	blocked_by_other_list: string[];
-	incoming_friend_requests: string[];
-	outgoing_friend_requests: string[];
-	bio?: string;
-	hobbies?: string[];
-};
-
-export type LogInForm = {
-	email: string;
-	password: string;
-};
-
-export type SignUpForm = {
-	first_name: string;
-	last_name: string;
-	email: string;
-	password: string;
-};
-
 export type Chatroom = {
 	_id: string;
 	participants: User[];
@@ -97,10 +101,6 @@ export type MessageNew = {
 	readBy: string[];
 	createdAt?: string;
 	updatedAt?: string;
-};
-
-export type FormError = {
-	msg: string;
 };
 
 export type SocketType = Socket<ServerToClientEvents, ClientToServerEvents>;
