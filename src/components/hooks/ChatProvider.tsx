@@ -6,8 +6,8 @@ type ContextProps = {
 	addChat: (data: Chatroom) => void;
 	updateChat: (data: Chatroom) => void;
 	removeChat: (id: string) => void;
-	activeChatId: string;
-	changeActiveChat: (id: string) => void;
+	activeChat: Chatroom | null;
+	changeActiveChat: (data: Chatroom | null) => void;
 };
 
 const ChatContext = createContext<ContextProps>({
@@ -15,18 +15,19 @@ const ChatContext = createContext<ContextProps>({
 	addChat: (data) => null,
 	updateChat: (data) => null,
 	removeChat: (id) => null,
-	activeChatId: '',
-	changeActiveChat: (id) => null,
+	activeChat: null,
+	changeActiveChat: (data) => null,
 });
 
 const ChatProvider: React.FC<React.ReactNode> = ({ children }) => {
 	const [chatList, setChatList] = useState<Chatroom[]>([]);
-	const [activeChatId, setActiveChatId] = useState<string>('');
+	const [activeChat, setActiveChat] = useState<Chatroom | null>(null);
 
 	const addChat = (newChat: Chatroom) => {
 		if (chatList.find((chat) => chat._id === newChat._id)) {
 			return;
 		}
+		changeActiveChat(newChat);
 		const state = [...chatList, newChat];
 		setChatList(state);
 	};
@@ -45,17 +46,21 @@ const ChatProvider: React.FC<React.ReactNode> = ({ children }) => {
 		const index = chatList.findIndex((chat) => chat._id === chatId);
 		const state = [...chatList.filter((chat) => chat._id !== chatId)];
 		if (state.length > 0) {
-			if (index === 0) {
-				setActiveChatId(state[index]._id);
-			} else setActiveChatId(state[index - 1]._id);
+			if (activeChat?._id === chatId) {
+				if (index === 0) {
+					changeActiveChat(state[index]);
+				} else {
+					changeActiveChat(state[index - 1]);
+				}
+			}
 		} else {
-			setActiveChatId('');
+			changeActiveChat(null);
 		}
 		setChatList(state);
 	};
 
-	const changeActiveChat = (chatId: string) => {
-		setActiveChatId(chatId);
+	const changeActiveChat = (chat: Chatroom | null) => {
+		setActiveChat(chat);
 	};
 
 	const contextValue = {
@@ -63,7 +68,7 @@ const ChatProvider: React.FC<React.ReactNode> = ({ children }) => {
 		addChat,
 		updateChat,
 		removeChat,
-		activeChatId,
+		activeChat,
 		changeActiveChat,
 	};
 
