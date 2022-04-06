@@ -38,7 +38,7 @@ const Profile = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [params]);
+	}, [params.userid]);
 
 	const openModal = (e: React.MouseEvent<HTMLSpanElement>) => {
 		e.stopPropagation();

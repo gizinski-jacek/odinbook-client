@@ -33,7 +33,7 @@ const ProfilePosts = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [params]);
+	}, [params.userid]);
 
 	const postsDisplay = postsData?.map((post) => {
 		return <PostWrapper key={post._id} post={post} />;
