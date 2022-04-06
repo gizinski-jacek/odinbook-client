@@ -5,7 +5,11 @@ import { axiosGet, axiosPut } from '../utils/axiosFunctions';
 import MessengerMessageWrapper from '../utils/MessengerMessageWrapper';
 import styles from '../../styles/menus/MessengerMenu.module.scss';
 
-const MessengerMenu = () => {
+type Props = {
+	alert: boolean;
+};
+
+const MessengerMenu: React.FC<Props> = ({ alert }) => {
 	const [newMessagesData, setNewMessagesData] = useState<Message[]>([]);
 
 	const [searchInput, setSearchInput] = useState('');
@@ -29,7 +33,7 @@ const MessengerMenu = () => {
 		return () => {
 			controller.abort();
 		};
-	}, []);
+	}, [alert]);
 
 	const markMessageAsRead = async (
 		e: React.MouseEvent<HTMLButtonElement>,
