@@ -54,18 +54,13 @@ const Chat = () => {
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
 		chatId: string,
-		input: string,
-		recipientId: string | undefined
+		input: string
 	) => {
 		e.preventDefault();
-		if (!recipientId) {
-			return;
-		}
 		try {
 			const message = {
 				chat_ref: chatId,
 				text: input,
-				recipient: recipientId,
 			};
 			await axiosPost('/api/chats/messages', message);
 			setMessageInput('');
@@ -88,16 +83,7 @@ const Chat = () => {
 						{messageDisplay && messageDisplay.length > 0 && messageDisplay}
 						<li ref={lastMessage}></li>
 					</ul>
-					<form
-						onSubmit={(e) =>
-							handleSubmit(
-								e,
-								activeChat._id,
-								messageInput,
-								activeChat.participants.find((u) => u._id !== user?._id)?._id
-							)
-						}
-					>
+					<form onSubmit={(e) => handleSubmit(e, activeChat._id, messageInput)}>
 						<label>
 							<input
 								type='text'
