@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { UserContext } from './components/hooks/UserProvider';
+import { ChatContext, ChatProvider } from './components/hooks/ChatProvider';
 import { axiosGet } from './components/utils/axiosFunctions';
 import './App.scss';
 import LoadingIcon from './components/utils/LoadingIcon';
@@ -14,10 +15,10 @@ import People from './components/People';
 import ProfileMain from './components/ProfileMain';
 import ProfilePosts from './components/ProfilePosts';
 import ProfileFriends from './components/ProfileFriends';
-import { ChatProvider } from './components/hooks/ChatProvider';
 
 const App = () => {
 	const { user, updateUser } = useContext(UserContext);
+	const { clearData } = useContext(ChatContext);
 
 	const location = useLocation();
 
@@ -33,6 +34,7 @@ const App = () => {
 				setIsLoading(false);
 			} catch (error: any) {
 				updateUser(null);
+				clearData();
 				setIsLoading(false);
 				console.error(error);
 			}
@@ -41,7 +43,7 @@ const App = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [location, updateUser]);
+	}, [location, updateUser, clearData]);
 
 	return (
 		<ChatProvider>
