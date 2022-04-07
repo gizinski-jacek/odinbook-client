@@ -9,14 +9,19 @@ type Props = {
 		messageId: string
 	) => void;
 	message: Message;
+	openChat: (e: React.MouseEvent<HTMLLIElement>, senderId: string) => void;
 };
 
 const MessengerMessageWrapper: React.FC<Props> = ({
 	dismissMessage,
 	message,
+	openChat,
 }) => {
 	return (
-		<li className={styles.message}>
+		<li
+			className={styles.message}
+			onClick={(e) => openChat(e, message.author._id)}
+		>
 			<div className='profile-pic-style'>
 				<img
 					src={
@@ -29,7 +34,10 @@ const MessengerMessageWrapper: React.FC<Props> = ({
 				</h6>
 			</div>
 			<div className={styles.contents}>
-				<Link to={`/profile/${message.author._id}`}>
+				<Link
+					to={`/profile/${message.author._id}`}
+					onClick={(e) => e.stopPropagation()}
+				>
 					{message.author.first_name} {message.author.last_name}
 				</Link>
 				<p>{message.text}</p>
