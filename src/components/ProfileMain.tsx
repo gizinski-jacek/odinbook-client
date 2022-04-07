@@ -72,7 +72,7 @@ const Profile = () => {
 		userId: string
 	) => {
 		try {
-			const resData = await axiosPut(`/api/users/block`, { userId });
+			const resData: User[] = await axiosPut(`/api/users/block`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
 			setProfileData(data);
 			setShowOptions(false);
@@ -87,7 +87,9 @@ const Profile = () => {
 	) => {
 		e.stopPropagation();
 		try {
-			const resData = await axiosPut(`/api/users/friends/remove`, { userId });
+			const resData: User[] = await axiosPut(`/api/users/friends/remove`, {
+				userId,
+			});
 			const data = resData.find((u: User) => u._id === userId);
 			setProfileData(data);
 			setShowOptions(false);
@@ -101,7 +103,7 @@ const Profile = () => {
 		userId: string
 	) => {
 		try {
-			const resData = await axiosPut(`/api/users/friends/cancel`, {
+			const resData: User[] = await axiosPut(`/api/users/friends/cancel`, {
 				userId,
 			});
 			const data = resData.find((u: User) => u._id === userId);
@@ -117,7 +119,7 @@ const Profile = () => {
 		userId: string
 	) => {
 		try {
-			const resData = await axiosPut(`/api/users/friends/accept`, {
+			const resData: User[] = await axiosPut(`/api/users/friends/accept`, {
 				userId,
 			});
 			const data = resData.find((u: User) => u._id === userId);
@@ -132,7 +134,9 @@ const Profile = () => {
 		userId: string
 	) => {
 		try {
-			const resData = await axiosPut(`/api/users/friends/request`, { userId });
+			const resData: User[] = await axiosPut(`/api/users/friends/request`, {
+				userId,
+			});
 			const data = resData.find((u: User) => u._id === userId);
 			setProfileData(data);
 		} catch (error: any) {
@@ -185,7 +189,9 @@ const Profile = () => {
 	) => {
 		e.preventDefault();
 		try {
-			const resData = await axiosDelete(`/api/users/picture/${pictureId}`);
+			const resData: User = await axiosDelete(
+				`/api/users/picture/${pictureId}`
+			);
 			setProfileData(resData);
 			updateUser(resData);
 		} catch (error: any) {

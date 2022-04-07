@@ -23,7 +23,9 @@ const NavbarLeft = () => {
 			return;
 		}
 		try {
-			const resData = await axiosGet(`/api/search/posts?q=${query}`);
+			const resData: PostFull[] = await axiosGet(
+				`/api/search/posts?q=${query}`
+			);
 			setSearchData([]);
 			setSearchData(resData);
 			setShowResults(true);

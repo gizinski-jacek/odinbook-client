@@ -20,8 +20,11 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 	) => {
 		e.stopPropagation();
 		try {
-			const resData = await axiosPut(`/api/users/block`, { userId });
+			const resData: User[] = await axiosPut(`/api/users/block`, { userId });
 			const data = resData.find((u: User) => u._id === userId);
+			if (!data) {
+				return;
+			}
 			setPersonData(data);
 		} catch (error: any) {
 			console.error(error);
@@ -34,8 +37,13 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 	) => {
 		e.stopPropagation();
 		try {
-			const resData = await axiosPut(`/api/users/friends/remove`, { userId });
+			const resData: User[] = await axiosPut(`/api/users/friends/remove`, {
+				userId,
+			});
 			const data = resData.find((u: User) => u._id === userId);
+			if (!data) {
+				return;
+			}
 			setPersonData(data);
 		} catch (error: any) {
 			console.error(error);
@@ -48,10 +56,13 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 	) => {
 		e.stopPropagation();
 		try {
-			const resData = await axiosPut(`/api/users/friends/cancel`, {
+			const resData: User[] = await axiosPut(`/api/users/friends/cancel`, {
 				userId,
 			});
 			const data = resData.find((u: User) => u._id === userId);
+			if (!data) {
+				return;
+			}
 			setPersonData(data);
 		} catch (error: any) {
 			console.error(error);
@@ -64,10 +75,13 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 	) => {
 		e.stopPropagation();
 		try {
-			const resData = await axiosPut(`/api/users/friends/accept`, {
+			const resData: User[] = await axiosPut(`/api/users/friends/accept`, {
 				userId,
 			});
 			const data = resData.find((u: User) => u._id === userId);
+			if (!data) {
+				return;
+			}
 			setPersonData(data);
 		} catch (error: any) {
 			console.error(error);
@@ -80,8 +94,13 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 	) => {
 		e.stopPropagation();
 		try {
-			const resData = await axiosPut(`/api/users/friends/request`, { userId });
+			const resData: User[] = await axiosPut(`/api/users/friends/request`, {
+				userId,
+			});
 			const data = resData.find((u: User) => u._id === userId);
+			if (!data) {
+				return;
+			}
 			setPersonData(data);
 		} catch (error: any) {
 			console.error(error);

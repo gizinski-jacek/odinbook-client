@@ -80,7 +80,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 			if (profile_picture) {
 				profileData.append('profile_picture', profile_picture);
 			}
-			const resData = await axiosPut(`/api/users`, profileData);
+			const resData: User = await axiosPut(`/api/users`, profileData);
 			setData(resData);
 			updateUser(resData);
 			closeModal(e);

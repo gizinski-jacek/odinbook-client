@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ChatContext } from '../hooks/ChatProvider';
-import { Message } from '../../myTypes';
+import { Chatroom, Message } from '../../myTypes';
 import { axiosGet, axiosPut } from '../utils/axiosFunctions';
 import MessengerMessageWrapper from '../utils/MessengerMessageWrapper';
 import styles from '../../styles/menus/MessengerMenu.module.scss';
@@ -76,7 +76,9 @@ const MessengerMenu: React.FC<Props> = ({ alert }) => {
 			return;
 		}
 		try {
-			const resData = await axiosGet(`/api/search/messages?q=${query}`);
+			const resData: Message[] = await axiosGet(
+				`/api/search/messages?q=${query}`
+			);
 			setSearchData([]);
 			setSearchData(resData);
 			setShowResults(true);
@@ -110,8 +112,7 @@ const MessengerMenu: React.FC<Props> = ({ alert }) => {
 		const controller = new AbortController();
 		(async () => {
 			try {
-				const resData = await axiosGet('/api/chats', {
-					params: { friendId: senderId },
+				const resData: Chatroom = await axiosGet(`/api/chats/${senderId}`, {
 					signal: controller.signal,
 				});
 				addChat(resData);

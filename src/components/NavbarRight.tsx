@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { UserContext } from './hooks/UserProvider';
 import { io } from 'socket.io-client';
-import type { SocketType } from '../myTypes';
+import type { SocketType, User } from '../myTypes';
 import { axiosGet } from './utils/axiosFunctions';
 import AccountMenu from './menus/AccountMenu';
 import NotificationsMenu from './menus/NotificationsMenu';
@@ -64,7 +64,7 @@ const NavbarRight = () => {
 		const controller = new AbortController();
 		(async () => {
 			try {
-				const resData = await axiosGet('/api/users/contacts', {
+				const resData: User = await axiosGet('/api/users/contacts', {
 					signal: controller.signal,
 				});
 				if (resData.incoming_friend_requests.length > 0) {
