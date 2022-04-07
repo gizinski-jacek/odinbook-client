@@ -29,7 +29,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 		(async () => {
 			try {
 				const resData: Chatroom = await axiosGet('/api/chats', {
-					params: { recipientId: friend._id },
+					params: { friendId: friend._id },
 					signal: controller.signal,
 				});
 				if (
@@ -49,7 +49,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 		return () => {
 			controller.abort();
 		};
-	}, [user, friend]);
+	}, [friend]);
 
 	useEffect(() => {
 		if (!socket || !user) {
@@ -76,7 +76,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 		return () => {
 			socket.off();
 		};
-	}, [socket, friend, user, updateChat]);
+	}, [socket, friend, updateChat]);
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		setShowOptions((prevState) => !prevState);
@@ -101,7 +101,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 		}
 		const resData = await axiosGet('/api/chats', {
 			withCredentials: true,
-			params: { recipientId: friendId },
+			params: { friendId: friendId },
 		});
 		addChat(resData);
 		setNewMessageAlert(false);
