@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ChatContext } from '../hooks/ChatProvider';
 import { Message } from '../../myTypes';
 import { axiosGet, axiosPut } from '../utils/axiosFunctions';
 import MessengerMessageWrapper from '../utils/MessengerMessageWrapper';
@@ -10,6 +11,10 @@ type Props = {
 };
 
 const MessengerMenu: React.FC<Props> = ({ alert }) => {
+	const { addChat, updateChat } = useContext(ChatContext);
+
+	const navigate = useNavigate();
+
 	const [newMessagesData, setNewMessagesData] = useState<Message[]>([]);
 
 	const [searchInput, setSearchInput] = useState('');
@@ -95,12 +100,38 @@ const MessengerMenu: React.FC<Props> = ({ alert }) => {
 		);
 	};
 
+	const openChat = async (
+		e: React.MouseEvent<HTMLLIElement>,
+		senderId: string
+	) => {
+		e.stopPropagation();
+		const controller = new AbortController();
+		(async () => {
+			try {
+				const resData = await axiosGet('/api/chats', {
+					params: { friendId: senderId },
+					signal: controller.signal,
+				});
+				addChat(resData);
+				updateChat(resData);
+				navigate('/');
+			} catch (error: any) {
+				console.error(error);
+			}
+		})();
+
+		return () => {
+			controller.abort();
+		};
+	};
+
 	const messageListDisplay = newMessagesData.map((message) => {
 		return (
 			<MessengerMessageWrapper
 				key={message._id}
 				dismissMessage={markMessageAsRead}
 				message={message}
+				openChat={openChat}
 			/>
 		);
 	});
@@ -111,6 +142,7 @@ const MessengerMenu: React.FC<Props> = ({ alert }) => {
 				key={message._id}
 				dismissMessage={removeFromSearchResults}
 				message={message}
+				openChat={openChat}
 			/>
 		);
 	});
