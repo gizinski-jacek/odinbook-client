@@ -114,5 +114,5 @@ type ServerToClientEvents = {
 
 type ClientToServerEvents = {
 	subscribe_alerts: () => void;
-	subscribe_chat: (recipientId: string) => void;
+	subscribe_chat: (friendId: string) => void;
 };
