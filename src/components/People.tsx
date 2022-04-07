@@ -36,7 +36,9 @@ const People = () => {
 			return;
 		}
 		try {
-			setSearchData(await axiosGet(`/api/search/users?q=${query}`));
+			const resData = await axiosGet(`/api/search/users?q=${query}`);
+			setSearchData([]);
+			setSearchData(resData);
 			setShowResults(true);
 		} catch (error: any) {
 			console.error(error);

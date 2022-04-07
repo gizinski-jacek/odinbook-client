@@ -41,9 +41,11 @@ const ProfileFriends = () => {
 			return;
 		}
 		try {
-			setSearchData(
-				await axiosGet(`/api/search/${params.userid}/friends?q=${query}`)
+			const resData = await axiosGet(
+				`/api/search/${params.userid}/friends?q=${query}`
 			);
+			setSearchData([]);
+			setSearchData(resData);
 			setShowResults(true);
 		} catch (error: any) {
 			console.error(error);

@@ -23,7 +23,9 @@ const NavbarLeft = () => {
 			return;
 		}
 		try {
-			setSearchData(await axiosGet(`/api/search/posts?q=${query}`));
+			const resData = await axiosGet(`/api/search/posts?q=${query}`);
+			setSearchData([]);
+			setSearchData(resData);
 			setShowResults(true);
 			document.addEventListener('click', closeSearchResultContainerListener);
 		} catch (error: any) {

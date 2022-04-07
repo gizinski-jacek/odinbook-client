@@ -76,7 +76,9 @@ const MessengerMenu: React.FC<Props> = ({ alert }) => {
 			return;
 		}
 		try {
-			setSearchData(await axiosGet(`/api/search/messages?q=${query}`));
+			const resData = await axiosGet(`/api/search/messages?q=${query}`);
+			setSearchData([]);
+			setSearchData(resData);
 			setShowResults(true);
 		} catch (error: any) {
 			console.error(error);
