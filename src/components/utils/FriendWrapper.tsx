@@ -28,8 +28,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 		const controller = new AbortController();
 		(async () => {
 			try {
-				const resData: Chatroom = await axiosGet('/api/chats', {
-					params: { friendId: friend._id },
+				const resData: Chatroom = await axiosGet(`/api/chats/${friend._id}`, {
 					signal: controller.signal,
 				});
 				if (
@@ -99,10 +98,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 		if (target.closest('div') === optionsRef.current) {
 			return;
 		}
-		const resData = await axiosGet('/api/chats', {
-			withCredentials: true,
-			params: { friendId: friendId },
-		});
+		const resData: Chatroom = await axiosGet(`/api/chats/${friendId}`);
 		addChat(resData);
 		setNewMessageAlert(false);
 	};
