@@ -17,6 +17,7 @@ const Contacts = () => {
 	const [requestsData, setRequestsData] = useState<User[]>([]);
 	const [friendsData, setFriendsData] = useState<User[]>([]);
 	const [socket, setSocket] = useState<SocketType | null>(null);
+	const [chatClosedByUser, setChatClosedByUser] = useState(false);
 
 	useEffect(() => {
 		const newSocket = io(`${process.env.REACT_APP_API_URI}/chats`, {
@@ -157,6 +158,9 @@ const Contacts = () => {
 		chatId: string
 	) => {
 		e.stopPropagation();
+		if (chatList.length === 1) {
+			setChatClosedByUser(true);
+		}
 		removeChat(chatId);
 	};
 
@@ -206,7 +210,7 @@ const Contacts = () => {
 				</div>
 				<ul>{friendsDisplay}</ul>
 			</div>
-			{chatList.length > 0 && (
+			{!chatClosedByUser && chatList.length > 0 && (
 				<div className={styles.chat_list_container}>
 					<ul className={styles.open_chat_list}>{openChatListDisplay}</ul>
 					<hr />
