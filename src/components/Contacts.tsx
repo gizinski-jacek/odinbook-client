@@ -60,7 +60,7 @@ const Contacts = () => {
 		return () => {
 			controller.abort();
 		};
-	}, []);
+	}, [user]);
 
 	const handleAcceptRequest = async (
 		e: React.MouseEvent<HTMLButtonElement>,
