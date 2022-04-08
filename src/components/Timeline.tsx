@@ -10,7 +10,7 @@ import styles from '../styles/Timeline.module.scss';
 const Timeline = () => {
 	const { user } = useContext(UserContext);
 
-	const [timelinePostsData, setTimelinePostsData] = useState<PostFull[]>([]);
+	const [timelineData, setTimelineData] = useState<PostFull[]>([]);
 	const [newPostData, setFormData] = useState<PostNew>({ text: '' });
 	const [newPostPictureData, setPictureData] = useState<{
 		preview: string;
@@ -22,7 +22,7 @@ const Timeline = () => {
 		const controller = new AbortController();
 		(async () => {
 			try {
-				setTimelinePostsData(
+				setTimelineData(
 					await axiosGet('/api/posts/timeline', { signal: controller.signal })
 				);
 			} catch (error: any) {
@@ -45,7 +45,7 @@ const Timeline = () => {
 		data: PostFull[]
 	) => {
 		e.stopPropagation();
-		setTimelinePostsData(data);
+		setTimelineData(data);
 	};
 
 	const closeModal = (
@@ -70,7 +70,7 @@ const Timeline = () => {
 		setShowModal(false);
 	};
 
-	const postsDisplay = timelinePostsData?.map((post) => {
+	const postsDisplay = timelineData?.map((post) => {
 		return <PostWrapper key={post._id} post={post} />;
 	});
 
