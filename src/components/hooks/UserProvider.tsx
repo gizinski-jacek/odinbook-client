@@ -1,5 +1,5 @@
 import { createContext, useCallback, useState } from 'react';
-import { User } from '../../myTypes';
+import { User } from '../utils/myTypes';
 import lodash from 'lodash';
 
 type ContextProps = {

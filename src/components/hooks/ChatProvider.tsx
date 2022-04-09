@@ -1,5 +1,5 @@
 import { createContext, useCallback, useState } from 'react';
-import { Chatroom } from '../../myTypes';
+import { Chatroom } from '../utils/myTypes';
 
 type ContextProps = {
 	chatList: Chatroom[];

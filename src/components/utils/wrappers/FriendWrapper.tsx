@@ -1,10 +1,10 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../hooks/UserProvider';
-import { ChatContext } from '../hooks/ChatProvider';
-import type { Chatroom, SocketType, User } from '../../myTypes';
-import { axiosGet } from './axiosFunctions';
-import styles from '../../styles/Friend.module.scss';
+import { UserContext } from '../../hooks/UserProvider';
+import { ChatContext } from '../../hooks/ChatProvider';
+import type { Chatroom, SocketType, User } from '../myTypes';
+import { axiosGet } from '../axiosFunctions';
+import styles from '../../../styles/Friend.module.scss';
 
 type Props = {
 	handleRemove: (e: React.MouseEvent<HTMLDivElement>, id: string) => void;

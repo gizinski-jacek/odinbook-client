@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import type { User } from '../myTypes';
+import type { User } from './utils/myTypes';
 import { axiosGet } from './utils/axiosFunctions';
-import PersonWrapper from './utils/PersonWrapper';
+import PersonWrapper from './utils/wrappers/PersonWrapper';
 import styles from '../styles/ProfileFriends.module.scss';
 
 const ProfileFriends = () => {

@@ -2,10 +2,10 @@ import { useContext, useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { UserContext } from './hooks/UserProvider';
 import { ChatContext } from './hooks/ChatProvider';
-import type { Chatroom, SocketType, User } from '../myTypes';
+import type { Chatroom, SocketType, User } from './utils/myTypes';
 import { axiosGet, axiosPut } from './utils/axiosFunctions';
-import RequestWrapper from './utils/RequestWrapper';
-import FriendWrapper from './utils/FriendWrapper';
+import RequestWrapper from './utils/wrappers/RequestWrapper';
+import FriendWrapper from './utils/wrappers/FriendWrapper';
 import Chat from './Chat';
 import styles from '../styles/Contacts.module.scss';
 

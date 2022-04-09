@@ -1,5 +1,5 @@
-import { CommentFull, PostFull } from '../../myTypes';
-import { axiosDelete } from './axiosFunctions';
+import { CommentFull, PostFull } from '../utils/myTypes';
+import { axiosDelete } from '../utils/axiosFunctions';
 import styles from '../../styles/DeleteModal.module.scss';
 
 type Props = {

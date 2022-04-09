@@ -1,12 +1,12 @@
 import { useContext, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../hooks/UserProvider';
-import type { CommentFull } from '../../myTypes';
-import { axiosPut } from './axiosFunctions';
-import EditCommentForm from './EditCommentForm';
-import DeleteModal from './DeleteModal';
-import timeSinceDate from './timeSinceDate';
-import styles from '../../styles/Comment.module.scss';
+import { UserContext } from '../../hooks/UserProvider';
+import type { CommentFull } from '../myTypes';
+import { axiosPut } from '../axiosFunctions';
+import EditCommentForm from '../EditCommentForm';
+import DeleteModal from '../../modals/DeleteModal';
+import timeSinceDate from '../timeSinceDate';
+import styles from '../../../styles/Comment.module.scss';
 
 type Props = {
 	comment: CommentFull;

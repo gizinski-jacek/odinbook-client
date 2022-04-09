@@ -1,9 +1,9 @@
 import { useContext, useRef, useState } from 'react';
-import { UserContext } from './hooks/UserProvider';
-import type { FormError, User } from '../myTypes';
-import { axiosPut } from './utils/axiosFunctions';
-import FormErrorWrapper from './utils/FormErrorWrapper';
-import styles from '../styles/EditProfileModal.module.scss';
+import { UserContext } from '../hooks/UserProvider';
+import type { FormError, User } from '../utils/myTypes';
+import { axiosPut } from '../utils/axiosFunctions';
+import FormErrorWrapper from '../utils/wrappers/FormErrorWrapper';
+import styles from '../../styles/EditProfileModal.module.scss';
 
 type Props = {
 	closeModal: (

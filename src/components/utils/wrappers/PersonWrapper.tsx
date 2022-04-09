@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../hooks/UserProvider';
-import type { User } from '../../myTypes';
-import { axiosPut } from './axiosFunctions';
-import styles from '../../styles/Person.module.scss';
+import { UserContext } from '../../hooks/UserProvider';
+import type { User } from '../myTypes';
+import { axiosPut } from '../axiosFunctions';
+import styles from '../../../styles/Person.module.scss';
 
 type Props = {
 	person: User;

@@ -1,14 +1,14 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { UserContext } from '../hooks/UserProvider';
-import { CommentNew, FormError, PostFull } from '../../myTypes';
-import { axiosDelete, axiosGet, axiosPost, axiosPut } from './axiosFunctions';
+import { UserContext } from '../../hooks/UserProvider';
+import { CommentNew, FormError, PostFull } from '../myTypes';
+import { axiosDelete, axiosGet, axiosPost, axiosPut } from '../axiosFunctions';
 import CommentWrapper from './CommentWrapper';
-import PostFormModal from './PostFormModal';
-import DeleteModal from './DeleteModal';
-import timeSinceDate from './timeSinceDate';
-import stylesPost from '../../styles/Post.module.scss';
-import stylesCommentForm from '../../styles/CommentForm.module.scss';
+import PostFormModal from '../../modals/PostFormModal';
+import DeleteModal from '../../modals/DeleteModal';
+import timeSinceDate from '../timeSinceDate';
+import stylesPost from '../../../styles/Post.module.scss';
+import stylesCommentForm from '../../../styles/CommentForm.module.scss';
 import FormErrorWrapper from './FormErrorWrapper';
 
 type Props = {

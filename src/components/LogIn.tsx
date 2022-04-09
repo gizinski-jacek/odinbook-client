@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react';
 import { UserContext } from './hooks/UserProvider';
-import type { FormError, LogInForm } from '../myTypes';
+import type { FormError, LogInForm } from './utils/myTypes';
 import { axiosGet, axiosPost } from './utils/axiosFunctions';
-import FormErrorWrapper from './utils/FormErrorWrapper';
+import FormErrorWrapper from './utils/wrappers/FormErrorWrapper';
 import LoadingIcon from './utils/LoadingIcon';
 import styles from '../styles/LogIn.module.scss';
 

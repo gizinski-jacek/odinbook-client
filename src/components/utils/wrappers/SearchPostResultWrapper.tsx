@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { PostFull } from '../../myTypes';
-import styles from '../../styles/SearchPostResult.module.scss';
+import { PostFull } from '../myTypes';
+import styles from '../../../styles/SearchPostResult.module.scss';
 
 type Props = {
 	post: PostFull;

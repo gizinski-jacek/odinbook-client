@@ -1,10 +1,10 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { UserContext } from './hooks/UserProvider';
-import type { FormError, User } from '../myTypes';
+import type { FormError, User } from './utils/myTypes';
 import { axiosDelete, axiosGet, axiosPut } from './utils/axiosFunctions';
-import EditProfileModal from './EditProfileModal';
-import FormErrorWrapper from './utils/FormErrorWrapper';
+import EditProfileModal from './modals/EditProfileModal';
+import FormErrorWrapper from './utils/wrappers/FormErrorWrapper';
 import styles from '../styles/ProfileMain.module.scss';
 
 const Profile = () => {

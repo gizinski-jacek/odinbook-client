@@ -1,9 +1,9 @@
 import { useContext, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../hooks/UserProvider';
-import { FormError, PostFull, PostNew } from '../../myTypes';
-import { axiosPost, axiosPut } from './axiosFunctions';
-import FormErrorWrapper from './FormErrorWrapper';
+import { FormError, PostFull, PostNew } from '../utils/myTypes';
+import { axiosPost, axiosPut } from '../utils/axiosFunctions';
+import FormErrorWrapper from '../utils/wrappers/FormErrorWrapper';
 import styles from '../../styles/PostFormModal.module.scss';
 
 type Props = {

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import type { PostFull, User } from '../myTypes';
+import type { PostFull, User } from './utils/myTypes';
 import { axiosGet } from './utils/axiosFunctions';
-import PostWrapper from './utils/PostWrapper';
+import PostWrapper from './utils/wrappers/PostWrapper';
 import styles from '../styles/ProfilePosts.module.scss';
 
 const ProfilePosts = () => {

@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ChatContext } from '../hooks/ChatProvider';
-import { Chatroom, Message } from '../../myTypes';
+import { Chatroom, Message } from '../utils/myTypes';
 import { axiosGet, axiosPut } from '../utils/axiosFunctions';
-import MessengerMessageWrapper from '../utils/MessengerMessageWrapper';
+import MessengerMessageWrapper from '../utils/wrappers/MessengerMessageWrapper';
 import styles from '../../styles/menus/MessengerMenu.module.scss';
 
 type Props = {

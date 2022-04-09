@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Message } from '../../myTypes';
-import timeSinceDate from './timeSinceDate';
-import styles from '../../styles/MessengerMessage.module.scss';
+import { Message } from '../myTypes';
+import timeSinceDate from '../timeSinceDate';
+import styles from '../../../styles/MessengerMessage.module.scss';
 
 type Props = {
 	dismissMessage: (

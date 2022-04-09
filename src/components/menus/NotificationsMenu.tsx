@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../hooks/UserProvider';
-import { User } from '../../myTypes';
+import { User } from '../utils/myTypes';
 import { axiosGet, axiosPut } from '../utils/axiosFunctions';
-import RequestWrapper from '../utils/RequestWrapper';
+import RequestWrapper from '../utils/wrappers/RequestWrapper';
 import styles from '../../styles/menus/NotificationsMenu.module.scss';
 
 type Props = {

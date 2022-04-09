@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from './hooks/UserProvider';
 import { ChatContext } from './hooks/ChatProvider';
 import { axiosPost, axiosPut } from './utils/axiosFunctions';
-import ChatMessageWrapper from './utils/ChatMessageWrapper';
+import ChatMessageWrapper from './utils/wrappers/ChatMessageWrapper';
 import styles from '../styles/Chat.module.scss';
 
 const Chat = () => {

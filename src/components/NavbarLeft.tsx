@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import type { PostFull } from '../myTypes';
+import type { PostFull } from './utils/myTypes';
 import { axiosGet } from './utils/axiosFunctions';
-import SearchPostResultWrapper from './utils/SearchPostResultWrapper';
+import SearchPostResultWrapper from './utils/wrappers/SearchPostResultWrapper';
 import styles from '../styles/NavbarLeft.module.scss';
 
 const NavbarLeft = () => {

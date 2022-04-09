@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from './hooks/UserProvider';
-import type { PostFull, PostNew } from '../myTypes';
+import type { PostFull, PostNew } from './utils/myTypes';
 import { axiosGet } from './utils/axiosFunctions';
-import PostFormModal from './utils/PostFormModal';
-import PostWrapper from './utils/PostWrapper';
+import PostFormModal from './modals/PostFormModal';
+import PostWrapper from './utils/wrappers/PostWrapper';
 import styles from '../styles/Timeline.module.scss';
 
 const Timeline = () => {

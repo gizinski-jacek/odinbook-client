@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import type { FormError, SignUpForm } from '../myTypes';
+import type { FormError, SignUpForm } from './utils/myTypes';
 import { axiosPost } from './utils/axiosFunctions';
-import FormErrorWrapper from './utils/FormErrorWrapper';
+import FormErrorWrapper from './utils/wrappers/FormErrorWrapper';
 import styles from '../styles/SignUp.module.scss';
 
 type Props = {

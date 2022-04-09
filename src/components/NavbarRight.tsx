@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { UserContext } from './hooks/UserProvider';
 import { io } from 'socket.io-client';
-import type { SocketType, User } from '../myTypes';
+import type { SocketType, User } from './utils/myTypes';
 import { axiosGet } from './utils/axiosFunctions';
 import AccountMenu from './menus/AccountMenu';
 import NotificationsMenu from './menus/NotificationsMenu';

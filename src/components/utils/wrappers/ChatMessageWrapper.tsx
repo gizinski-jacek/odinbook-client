@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import { UserContext } from '../hooks/UserProvider';
-import { Message } from '../../myTypes';
-import timeSinceDate from './timeSinceDate';
-import styles from '../../styles/ChatMessage.module.scss';
+import { UserContext } from '../../hooks/UserProvider';
+import { Message } from '../myTypes';
+import timeSinceDate from '../timeSinceDate';
+import styles from '../../../styles/ChatMessage.module.scss';
 
 type Props = {
 	message: Message;

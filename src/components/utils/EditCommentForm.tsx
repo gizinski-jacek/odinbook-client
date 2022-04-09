@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import type { CommentFull } from '../../myTypes';
+import type { CommentFull } from './myTypes';
 import styles from '../../styles/CommentForm.module.scss';
 
 type Props = {

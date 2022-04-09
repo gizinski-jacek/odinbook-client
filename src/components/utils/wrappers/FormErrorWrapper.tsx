@@ -1,4 +1,4 @@
-import { FormError } from '../../myTypes';
+import { FormError } from '../myTypes';
 
 type Props = {
 	error: FormError;
