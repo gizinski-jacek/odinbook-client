@@ -41,6 +41,9 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 					setNewMessageAlert(true);
 				}
 			} catch (error: any) {
+				if (controller.signal.aborted) {
+					return;
+				}
 				console.error(error);
 			}
 		})();
@@ -48,7 +51,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 		return () => {
 			controller.abort();
 		};
-	}, [friend]);
+	}, [friend, user]);
 
 	useEffect(() => {
 		if (!socket || !user) {
@@ -75,7 +78,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 		return () => {
 			socket.off();
 		};
-	}, [socket, friend, updateChat]);
+	}, [socket, friend, user, updateChat]);
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		setShowOptions((prevState) => !prevState);

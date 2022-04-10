@@ -53,6 +53,9 @@ const Contacts = () => {
 				setRequestsData(resData.incoming_friend_requests);
 				setFriendsData(resData.friend_list);
 			} catch (error: any) {
+				if (controller.signal.aborted) {
+					return;
+				}
 				console.error(error);
 			}
 		})();

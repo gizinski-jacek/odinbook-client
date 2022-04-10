@@ -73,6 +73,9 @@ const NavbarRight = () => {
 					setNotificationAlert(false);
 				}
 			} catch (error: any) {
+				if (controller.signal.aborted) {
+					return;
+				}
 				console.error(error);
 			}
 		})();
