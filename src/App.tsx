@@ -18,7 +18,7 @@ import ProfileFriends from './components/ProfileFriends';
 
 const App = () => {
 	const { user, updateUser } = useContext(UserContext);
-	const { clearData } = useContext(ChatContext);
+	const { clearChatData } = useContext(ChatContext);
 
 	const location = useLocation();
 
@@ -34,7 +34,7 @@ const App = () => {
 				setIsLoading(false);
 			} catch (error: any) {
 				updateUser(null);
-				clearData();
+				clearChatData();
 				setIsLoading(false);
 				console.error(error);
 			}
@@ -43,7 +43,7 @@ const App = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [location, updateUser, clearData]);
+	}, [location, updateUser, clearChatData]);
 
 	return (
 		<ChatProvider>

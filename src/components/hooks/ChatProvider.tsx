@@ -8,7 +8,7 @@ type ContextProps = {
 	removeChat: (id: string) => void;
 	activeChat: Chatroom | null;
 	changeActiveChat: (data: Chatroom | null) => void;
-	clearData: () => void;
+	clearChatData: () => void;
 };
 
 const ChatContext = createContext<ContextProps>({
@@ -18,7 +18,7 @@ const ChatContext = createContext<ContextProps>({
 	removeChat: (id) => null,
 	activeChat: null,
 	changeActiveChat: (data) => null,
-	clearData: () => null,
+	clearChatData: () => null,
 });
 
 const ChatProvider: React.FC<React.ReactNode> = ({ children }) => {
@@ -65,7 +65,7 @@ const ChatProvider: React.FC<React.ReactNode> = ({ children }) => {
 		setChatList(state);
 	};
 
-	const clearData = useCallback(() => {
+	const clearChatData = useCallback(() => {
 		setChatList([]);
 	}, []);
 
@@ -80,7 +80,7 @@ const ChatProvider: React.FC<React.ReactNode> = ({ children }) => {
 		removeChat,
 		activeChat,
 		changeActiveChat,
-		clearData,
+		clearChatData,
 	};
 
 	return (
