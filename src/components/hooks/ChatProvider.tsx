@@ -1,4 +1,4 @@
-import { createContext, useCallback, useState } from 'react';
+import { createContext, useCallback, useReducer, useState } from 'react';
 import { Chatroom } from '../utils/myTypes';
 
 type ContextProps = {
@@ -21,7 +21,44 @@ const ChatContext = createContext<ContextProps>({
 	clearChatData: () => null,
 });
 
+const ACTIONS = {
+	OPEN_CHAT: 'OPEN_CHAT',
+	UPDATE_CHAT: 'UPDATE_CHAT',
+	REMOVE_CHAT: 'REMOVE_CHAT',
+	CHANGE_CHAT: 'CHANGE_CHAT',
+	CLEAR_CHAT_DATA: 'CLEAR_CHAT_DATA',
+};
+
+const reducer = (
+	chatState: { activeChat: Chatroom; chatList: Chatroom[] },
+	action: any
+) => {
+	switch (action.type) {
+		case ACTIONS.OPEN_CHAT:
+			if (
+				chatState.chatList.find((chat) => chat._id === action.payload.chat._id)
+			) {
+				return chatState;
+			}
+			return {
+				activeChat: action.payload.chat,
+				chatList: [...chatState.chatList, action.payload.chat],
+			};
+		case ACTIONS.UPDATE_CHAT:
+			return chatState;
+		case ACTIONS.REMOVE_CHAT:
+			return chatState;
+		case ACTIONS.CHANGE_CHAT:
+			return chatState;
+		case ACTIONS.CLEAR_CHAT_DATA:
+			return {};
+		default:
+			return chatState;
+	}
+};
+
 const ChatProvider: React.FC<React.ReactNode> = ({ children }) => {
+	const [state, dispatch] = useReducer(reducer, {});
 	const [chatList, setChatList] = useState<Chatroom[]>([]);
 	const [activeChat, setActiveChat] = useState<Chatroom | null>(null);
 
