@@ -7,7 +7,7 @@ import styles from '../styles/Chat.module.scss';
 
 const Chat = () => {
 	const { user } = useContext(UserContext);
-	const { activeChat } = useContext(ChatContext);
+	const { state } = useContext(ChatContext);
 
 	const lastMessage = useRef<HTMLLIElement>(null);
 
@@ -15,16 +15,19 @@ const Chat = () => {
 
 	useEffect(() => {
 		lastMessage.current?.scrollIntoView({ behavior: 'smooth' });
-	}, [activeChat]);
+	}, [state.activeChat]);
 
 	useEffect(() => {
-		if (!user || !activeChat) {
+		if (!user) {
 			return;
 		}
 		const controller = new AbortController();
 		(async () => {
 			try {
-				const unReadMessageData = activeChat.message_list.filter(
+				if (!state.activeChat) {
+					return;
+				}
+				const unReadMessageData = state.activeChat.message_list.filter(
 					(message) =>
 						!message.readBy.includes(user._id) &&
 						message.author._id !== user._id
@@ -49,14 +52,17 @@ const Chat = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [activeChat, user]);
+	}, [state.activeChat, user]);
 
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>,
-		chatId: string,
+		chatId: string | undefined,
 		input: string
 	) => {
 		e.preventDefault();
+		if (!chatId) {
+			return;
+		}
 		try {
 			const message = {
 				chat_ref: chatId,
@@ -69,21 +75,25 @@ const Chat = () => {
 		}
 	};
 
-	const messageDisplay = activeChat?.message_list
+	const messageDisplay = state.activeChat?.message_list
 		.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
 		.map((message) => {
 			return <ChatMessageWrapper key={message._id} message={message} />;
 		});
 
 	return (
-		activeChat && (
+		state.activeChat && (
 			<div className={styles.chat_window}>
 				<div className={styles.body}>
 					<ul className={styles.message_list}>
 						{messageDisplay && messageDisplay.length > 0 && messageDisplay}
 						<li ref={lastMessage}></li>
 					</ul>
-					<form onSubmit={(e) => handleSubmit(e, activeChat._id, messageInput)}>
+					<form
+						onSubmit={(e) =>
+							handleSubmit(e, state.activeChat?._id, messageInput)
+						}
+					>
 						<label>
 							<input
 								type='text'

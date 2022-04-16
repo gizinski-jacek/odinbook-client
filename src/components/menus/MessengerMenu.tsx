@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ChatContext } from '../hooks/ChatProvider';
+import { ChatContext, ChatReducerActions } from '../hooks/ChatProvider';
 import { Chatroom, Message } from '../utils/myTypes';
 import { axiosGet, axiosPut } from '../utils/axiosFunctions';
 import MessengerMessageWrapper from '../utils/wrappers/MessengerMessageWrapper';
@@ -11,7 +11,7 @@ type Props = {
 };
 
 const MessengerMenu: React.FC<Props> = ({ alert }) => {
-	const { addChat, updateChat } = useContext(ChatContext);
+	const { dispatch } = useContext(ChatContext);
 
 	const navigate = useNavigate();
 
@@ -115,8 +115,14 @@ const MessengerMenu: React.FC<Props> = ({ alert }) => {
 				const resData: Chatroom = await axiosGet(`/api/chats/${senderId}`, {
 					signal: controller.signal,
 				});
-				addChat(resData);
-				updateChat(resData);
+				dispatch({
+					type: ChatReducerActions.OPEN_CHAT,
+					payload: { chat: resData },
+				});
+				dispatch({
+					type: ChatReducerActions.UPDATE_CHAT,
+					payload: { chat: resData },
+				});
 				navigate('/');
 			} catch (error: any) {
 				console.error(error);

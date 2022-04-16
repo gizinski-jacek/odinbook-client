@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../hooks/UserProvider';
-import { ChatContext } from '../../hooks/ChatProvider';
+import { ChatContext, ChatReducerActions } from '../../hooks/ChatProvider';
 import type { Chatroom, SocketType, User } from '../myTypes';
 import { axiosGet } from '../axiosFunctions';
 import styles from '../../../styles/Friend.module.scss';
@@ -14,7 +14,7 @@ type Props = {
 
 const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 	const { user } = useContext(UserContext);
-	const { addChat, updateChat } = useContext(ChatContext);
+	const { dispatch } = useContext(ChatContext);
 
 	const optionsRef = useRef<HTMLDivElement>(null);
 
@@ -72,13 +72,16 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 			) {
 				setNewMessageAlert(true);
 			}
-			updateChat(data);
+			dispatch({
+				type: ChatReducerActions.UPDATE_CHAT,
+				payload: { chat: data },
+			});
 		});
 
 		return () => {
 			socket.off();
 		};
-	}, [socket, friend, user, updateChat]);
+	}, [socket, friend, user, dispatch]);
 
 	const toggleOptions = (e: React.MouseEvent<HTMLSpanElement>) => {
 		setShowOptions((prevState) => !prevState);
@@ -102,7 +105,10 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 			return;
 		}
 		const resData: Chatroom = await axiosGet(`/api/chats/${friendId}`);
-		addChat(resData);
+		dispatch({
+			type: ChatReducerActions.OPEN_CHAT,
+			payload: { chat: resData },
+		});
 		setNewMessageAlert(false);
 	};
 

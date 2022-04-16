@@ -15,10 +15,11 @@ import People from './components/People';
 import ProfileMain from './components/ProfileMain';
 import ProfilePosts from './components/ProfilePosts';
 import ProfileFriends from './components/ProfileFriends';
+import { ChatReducerActions } from './components/hooks/ChatProvider';
 
 const App = () => {
 	const { user, updateUser } = useContext(UserContext);
-	const { clearChatData } = useContext(ChatContext);
+	const { dispatch } = useContext(ChatContext);
 
 	const location = useLocation();
 
@@ -34,7 +35,7 @@ const App = () => {
 				setIsLoading(false);
 			} catch (error: any) {
 				updateUser(null);
-				clearChatData();
+				dispatch({ type: ChatReducerActions.CLEAR_DATA });
 				setIsLoading(false);
 				console.error(error);
 			}
@@ -43,7 +44,7 @@ const App = () => {
 		return () => {
 			controller.abort();
 		};
-	}, [location, updateUser, clearChatData]);
+	}, [location, updateUser, dispatch]);
 
 	return (
 		<ChatProvider>
