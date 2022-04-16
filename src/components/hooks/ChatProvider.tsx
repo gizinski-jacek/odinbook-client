@@ -45,11 +45,43 @@ const reducer = (
 				chatList: [...chatState.chatList, action.payload.chat],
 			};
 		case ACTIONS.UPDATE_CHAT:
-			return chatState;
+			const chatUpdateIndex = chatState.chatList.findIndex(
+				(chat) => chat._id === action.payload.chat._id
+			);
+			if (chatUpdateIndex === -1) {
+				return chatState;
+			}
+			const updatedChatList = chatState.chatList.splice(
+				chatUpdateIndex,
+				1,
+				action.payload.chat
+			);
+			return { activeChat: action.payload.chat, chatList: updatedChatList };
 		case ACTIONS.REMOVE_CHAT:
-			return chatState;
+			const chatRemoveIndex = chatState.chatList.findIndex(
+				(chat) => chat._id === action.payload.chatId
+			);
+			if (chatRemoveIndex === -1) {
+				return chatState;
+			}
+			const newChatList = chatState.chatList.filter(
+				(chat) => chat._id !== action.payload.chatId
+			);
+			let newActiveChat;
+			if (newChatList.length > 0) {
+				if (chatState.activeChat._id === action.payload.chatId) {
+					if (chatRemoveIndex === 0) {
+						newActiveChat = chatState.chatList[chatRemoveIndex];
+					} else {
+						newActiveChat = chatState.chatList[chatRemoveIndex - 1];
+					}
+				}
+			} else {
+				newActiveChat = null;
+			}
+			return { activeChat: newActiveChat, chatList: newChatList };
 		case ACTIONS.CHANGE_CHAT:
-			return chatState;
+			return { activeChat: action.payload.chat, chatList: chatState.chatList };
 		case ACTIONS.CLEAR_CHAT_DATA:
 			return {};
 		default:
