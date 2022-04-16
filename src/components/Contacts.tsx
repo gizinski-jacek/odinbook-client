@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { UserContext } from './hooks/UserProvider';
-import { ChatContext } from './hooks/ChatProvider';
+import { ChatContext, ChatReducerActions } from './hooks/ChatProvider';
 import type { Chatroom, SocketType, User } from './utils/myTypes';
 import { axiosGet, axiosPut } from './utils/axiosFunctions';
 import RequestWrapper from './utils/wrappers/RequestWrapper';
@@ -11,13 +11,11 @@ import styles from '../styles/Contacts.module.scss';
 
 const Contacts = () => {
 	const { user, updateUser } = useContext(UserContext);
-	const { chatList, removeChat, activeChat, changeActiveChat } =
-		useContext(ChatContext);
+	const { state, dispatch } = useContext(ChatContext);
 
 	const [requestsData, setRequestsData] = useState<User[]>([]);
 	const [friendsData, setFriendsData] = useState<User[]>([]);
 	const [socket, setSocket] = useState<SocketType | null>(null);
-	const [chatClosedByUser, setChatClosedByUser] = useState(false);
 
 	useEffect(() => {
 		const newSocket = io(`${process.env.REACT_APP_API_URI}/chats`, {
@@ -153,26 +151,23 @@ const Contacts = () => {
 		chat: Chatroom
 	) => {
 		e.stopPropagation();
-		changeActiveChat(chat);
+		dispatch({ type: ChatReducerActions.SWITCH_CHAT, payload: { chat: chat } });
 	};
 
 	const closeChat = (
 		e: React.MouseEvent<HTMLButtonElement>,
-		chatId: string
+		chat: Chatroom
 	) => {
 		e.stopPropagation();
-		if (chatList.length === 1) {
-			setChatClosedByUser(true);
-		}
-		removeChat(chatId);
+		dispatch({ type: ChatReducerActions.CLOSE_CHAT, payload: { chat: chat } });
 	};
 
-	const openChatListDisplay = chatList?.map((chat) => {
+	const openChatListDisplay = state.chatList?.map((chat) => {
 		return (
 			<li
 				key={chat._id}
 				className={`${styles.chat_list_item} ${
-					chat._id === activeChat?._id && styles.isActiveChat
+					chat._id === state.activeChat?._id && styles.isActiveChat
 				}`}
 				onClick={(e) => setChatAsActive(e, chat)}
 			>
@@ -180,7 +175,7 @@ const Contacts = () => {
 				<button
 					type='button'
 					className={styles.close_btn}
-					onClick={(e) => closeChat(e, chat._id)}
+					onClick={(e) => closeChat(e, chat)}
 				>
 					<span></span>
 				</button>
@@ -213,7 +208,7 @@ const Contacts = () => {
 				</div>
 				<ul>{friendsDisplay}</ul>
 			</div>
-			{!chatClosedByUser && chatList.length > 0 && (
+			{state.chatList && state.chatList.length > 0 && (
 				<div className={styles.chat_list_container}>
 					<ul className={styles.open_chat_list}>{openChatListDisplay}</ul>
 					<hr />
