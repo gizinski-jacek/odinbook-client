@@ -2,41 +2,45 @@ import { createContext, useCallback, useReducer, useState } from 'react';
 import { Chatroom } from '../utils/myTypes';
 
 type ContextProps = {
-	chatList: Chatroom[];
-	addChat: (data: Chatroom) => void;
-	updateChat: (data: Chatroom) => void;
-	removeChat: (id: string) => void;
-	activeChat: Chatroom | null;
-	changeActiveChat: (data: Chatroom | null) => void;
-	clearChatData: () => void;
+	state: { activeChat: Chatroom | null; chatList: Chatroom[] | undefined };
+	dispatch: (action: ChatReducerTypes) => void;
+};
+
+const initialState = {
+	activeChat: null,
+	chatList: [],
 };
 
 const ChatContext = createContext<ContextProps>({
-	chatList: [],
-	addChat: (data) => null,
-	updateChat: (data) => null,
-	removeChat: (id) => null,
-	activeChat: null,
-	changeActiveChat: (data) => null,
-	clearChatData: () => null,
+	state: initialState,
+	dispatch: (action) => null,
 });
 
-const ACTIONS = {
+type ChatReducerTypes = {
+	type: string;
+	payload?: { chat: Chatroom } | undefined;
+};
+
+const ChatReducerActions = {
 	OPEN_CHAT: 'OPEN_CHAT',
+	CLOSE_CHAT: 'CLOSE_CHAT',
+	SWITCH_CHAT: 'SWITCH_CHAT',
 	UPDATE_CHAT: 'UPDATE_CHAT',
-	REMOVE_CHAT: 'REMOVE_CHAT',
-	CHANGE_CHAT: 'CHANGE_CHAT',
-	CLEAR_CHAT_DATA: 'CLEAR_CHAT_DATA',
+	CLEAR_DATA: 'CLEAR_DATA',
 };
 
 const reducer = (
-	chatState: { activeChat: Chatroom; chatList: Chatroom[] },
-	action: any
+	chatState: { activeChat: Chatroom | null; chatList: Chatroom[] },
+	action: ChatReducerTypes
 ) => {
 	switch (action.type) {
-		case ACTIONS.OPEN_CHAT:
+		case ChatReducerActions.OPEN_CHAT:
+			if (!action.payload) {
+				return chatState;
+			}
+			console.log(chatState);
 			if (
-				chatState.chatList.find((chat) => chat._id === action.payload.chat._id)
+				chatState.chatList.find((chat) => chat._id === action.payload?.chat._id)
 			) {
 				return chatState;
 			}
@@ -44,45 +48,57 @@ const reducer = (
 				activeChat: action.payload.chat,
 				chatList: [...chatState.chatList, action.payload.chat],
 			};
-		case ACTIONS.UPDATE_CHAT:
-			const chatUpdateIndex = chatState.chatList.findIndex(
-				(chat) => chat._id === action.payload.chat._id
-			);
-			if (chatUpdateIndex === -1) {
+		case ChatReducerActions.CLOSE_CHAT:
+			if (!action.payload) {
 				return chatState;
 			}
-			const updatedChatList = chatState.chatList.splice(
-				chatUpdateIndex,
-				1,
-				action.payload.chat
+			const chatIndex = chatState.chatList.findIndex(
+				(chat) => chat._id === action.payload?.chat._id
 			);
-			return { activeChat: action.payload.chat, chatList: updatedChatList };
-		case ACTIONS.REMOVE_CHAT:
-			const chatRemoveIndex = chatState.chatList.findIndex(
-				(chat) => chat._id === action.payload.chatId
-			);
-			if (chatRemoveIndex === -1) {
+			if (chatIndex === -1) {
 				return chatState;
 			}
 			const newChatList = chatState.chatList.filter(
-				(chat) => chat._id !== action.payload.chatId
+				(chat) => chat._id !== action.payload?.chat._id
 			);
 			let newActiveChat;
 			if (newChatList.length > 0) {
-				if (chatState.activeChat._id === action.payload.chatId) {
-					if (chatRemoveIndex === 0) {
-						newActiveChat = chatState.chatList[chatRemoveIndex];
+				if (chatState.activeChat?._id === action.payload.chat._id) {
+					if (chatIndex === 0) {
+						newActiveChat = chatState.chatList[chatIndex];
 					} else {
-						newActiveChat = chatState.chatList[chatRemoveIndex - 1];
+						newActiveChat = chatState.chatList[chatIndex - 1];
 					}
+				} else {
+					newActiveChat = chatState.activeChat;
 				}
 			} else {
 				newActiveChat = null;
 			}
 			return { activeChat: newActiveChat, chatList: newChatList };
-		case ACTIONS.CHANGE_CHAT:
+		case ChatReducerActions.SWITCH_CHAT:
+			if (!action.payload) {
+				return chatState;
+			}
 			return { activeChat: action.payload.chat, chatList: chatState.chatList };
-		case ACTIONS.CLEAR_CHAT_DATA:
+		case ChatReducerActions.UPDATE_CHAT:
+			if (!action.payload) {
+				return chatState;
+			}
+			if (
+				!chatState.chatList.find(
+					(chat) => chat._id === action.payload?.chat._id
+				)
+			) {
+				return chatState;
+			}
+			return {
+				activeChat: action.payload.chat,
+				chatList: chatState.chatList.map((chat) =>
+					chat._id !== action.payload?.chat._id ? chat : action.payload?.chat
+				),
+			};
+		case ChatReducerActions.CLEAR_DATA:
 			return {};
 		default:
 			return chatState;
@@ -90,7 +106,8 @@ const reducer = (
 };
 
 const ChatProvider: React.FC<React.ReactNode> = ({ children }) => {
-	const [state, dispatch] = useReducer(reducer, {});
+	const [state, dispatch] = useReducer(reducer, initialState);
+
 	const [chatList, setChatList] = useState<Chatroom[]>([]);
 	const [activeChat, setActiveChat] = useState<Chatroom | null>(null);
 
@@ -142,19 +159,11 @@ const ChatProvider: React.FC<React.ReactNode> = ({ children }) => {
 		setActiveChat(chat);
 	};
 
-	const contextValue = {
-		chatList,
-		addChat,
-		updateChat,
-		removeChat,
-		activeChat,
-		changeActiveChat,
-		clearChatData,
-	};
+	const contextValue = { state, dispatch };
 
 	return (
 		<ChatContext.Provider value={contextValue}>{children}</ChatContext.Provider>
 	);
 };
 
-export { ChatContext, ChatProvider };
+export { ChatContext, ChatProvider, ChatReducerActions };
