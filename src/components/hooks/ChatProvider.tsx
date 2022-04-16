@@ -1,22 +1,27 @@
-import { createContext, useReducer } from 'react';
+import { createContext, Reducer, useReducer } from 'react';
 import { Chatroom } from '../utils/myTypes';
 
 type ContextProps = {
-	state: { activeChat: Chatroom | null; chatList: Chatroom[] | undefined };
-	dispatch: (action: ChatReducerTypes) => void;
+	state: ReducerState;
+	dispatch: (action: ReducerAction) => void;
 };
 
-const initialState = {
+const defaultState = {
 	activeChat: null,
 	chatList: [],
 };
 
 const ChatContext = createContext<ContextProps>({
-	state: initialState,
+	state: defaultState,
 	dispatch: (action) => null,
 });
 
-type ChatReducerTypes = {
+type ReducerState = {
+	activeChat: Chatroom | null;
+	chatList: Chatroom[];
+};
+
+type ReducerAction = {
 	type: string;
 	payload?: { chat: Chatroom } | undefined;
 };
@@ -30,15 +35,14 @@ const ChatReducerActions = {
 };
 
 const reducer = (
-	chatState: { activeChat: Chatroom | null; chatList: Chatroom[] },
-	action: ChatReducerTypes
-) => {
+	chatState: ReducerState,
+	action: ReducerAction
+): ReducerState => {
 	switch (action.type) {
 		case ChatReducerActions.OPEN_CHAT:
 			if (!action.payload) {
 				return chatState;
 			}
-			console.log(chatState);
 			if (
 				chatState.chatList.find((chat) => chat._id === action.payload?.chat._id)
 			) {
@@ -99,14 +103,17 @@ const reducer = (
 				),
 			};
 		case ChatReducerActions.CLEAR_DATA:
-			return {};
+			return defaultState;
 		default:
 			return chatState;
 	}
 };
 
 const ChatProvider: React.FC<React.ReactNode> = ({ children }) => {
-	const [state, dispatch] = useReducer(reducer, initialState);
+	const [state, dispatch] = useReducer<Reducer<ReducerState, ReducerAction>>(
+		reducer,
+		defaultState
+	);
 
 	const contextValue = { state, dispatch };
 
