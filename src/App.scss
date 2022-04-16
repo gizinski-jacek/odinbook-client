@@ -6,6 +6,7 @@
 
 html {
 	overflow-y: scroll;
+	scrollbar-color: variables.$black-a20 variables.$white-a80;
 	font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
 	font-size: 16px;
 }
