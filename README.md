@@ -1,52 +1,115 @@
-# Odinbook (client)
+# Odinbook (frontend)
 
-### Go to [API](https://github.com/gizinski-jacek/odinbook-api/)
+A small Facebook clone frontend client.
 
-A small Facebook clone.
+### Go to [API](https://github.com/gizinski-jacek/odinbook-api)
 
-# Getting Started with Create React App
+# React CV App
+
+React app which allows users to create and print their own CV.
+
+## Table of contents
+
+- [Github & Live](#github--live)
+- [Getting Started](#getting-started)
+- [React](#react)
+- [Deploy](#deploy)
+- [Features](#features)
+- [Status](#status)
+- [Contact](#contact)
+
+# Github & Live
+
+Github repo can be found [here](https://github.com/gizinski-jacek/odinbook-client)
+
+This repo is live on [Heroku](https://cv-project-react-543266.herokuapp.com)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Getting Started
 
-In the project directory, you can run:
+In the project root directory run the app in development mode with:
+Install all dependancies by running:
 
-### `npm start`
+```bash
+npm install
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+In the project root directory run the app with:
 
+```bash
+npm start dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.\
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
+Build the app for production to the `build` folder with:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm run build
+```
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
+It correctly bundles React in production mode and optimizes the build for the best performance.\
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
+## React
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Deploy
+
+You can easily deploy this app using [Heroku Platform](https://devcenter.heroku.com/articles/git).
+
+Script for running app build after deployment to Heroku is included in package.json.\
+In the project root directory run these commands:
+
+```bash
+heroku create
+git push heroku main
+heroku open
+```
+
+You cannot deploy both Frontend and Backend to Heroku because [Heroku is included in Suffix List](https://devcenter.heroku.com/articles/cookies-and-herokuapp-com), which prevents an app on heroku domain from setting cookies on other heroku apps.\
+You can either use [Custom Domain](https://devcenter.heroku.com/articles/custom-domains) or deploy either app to other hosting service like [Netlify](https://docs.netlify.com/cli/get-started).
+
+To do so run these commands:
+
+```bash
+npm install -g netlify-cli
+netlify login
+npm run build
+netlify deploy --prod
+```
+
+After that just follow the instructions to deploy a built app to Netlify.
+
+## Features
+
+- Responsive UI
+- Logging in with Facebook account
+- Adding posts and comments
+- Liking posts and comments
+- Searching for users and posts
+- Sending and cancelling friend requests
+- Removing and blocking users
+- Real-time notifications about incoming friend requests and chat messages
+- Chatting in real-time with other users
+
+## Status
+
+Project status: **_FINISHED_**
+
+## Contact
+
+Feel free to contact me at:
+
+```
+jacektrg@gmail.com
+```
