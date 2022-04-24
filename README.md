@@ -1,12 +1,8 @@
-# Odinbook (frontend)
+# Odinbook (Frontend)
 
-A small Facebook clone frontend client.
+A small Facebook clone Frontend client.
 
-### Go to [API](https://github.com/gizinski-jacek/odinbook-api)
-
-# React CV App
-
-React app which allows users to create and print their own CV.
+For the Backend API go [here](https://github.com/gizinski-jacek/odinbook-client).
 
 ## Table of contents
 
@@ -20,9 +16,9 @@ React app which allows users to create and print their own CV.
 
 # Github & Live
 
-Github repo can be found [here](https://github.com/gizinski-jacek/odinbook-client)
+Github repo can be found [here](https://github.com/gizinski-jacek/odinbook-client).
 
-This repo is live on [Heroku](https://cv-project-react-543266.herokuapp.com)
+This repo is live on [Heroku](https://cv-project-react-543266.herokuapp.com).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
