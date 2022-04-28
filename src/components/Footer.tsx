@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
 	return (
-		<div className='footer'>
+		<footer className='footer'>
 			<Link to='https://github.com/gizinski-jacek/odinbook-client'>
 				Gizinski Jacek
 				<svg
@@ -17,7 +17,7 @@ const Footer = () => {
 					></path>
 				</svg>
 			</Link>
-		</div>
+		</footer>
 	);
 };
 
