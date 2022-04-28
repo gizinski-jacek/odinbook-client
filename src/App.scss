@@ -130,11 +130,6 @@ button {
 	min-width: 480px;
 }
 
-.footer {
-	width: 100%;
-	text-align: center;
-}
-
 .btn-default {
 	font: inherit;
 	border-radius: 8px;
@@ -228,6 +223,11 @@ button {
 		padding-left: 4px;
 		border-left: 2px solid variables.$red;
 	}
+}
+
+.footer {
+	width: 100%;
+	text-align: center;
 }
 
 .footer {
