@@ -21,6 +21,8 @@ const App = () => {
 	const { user, updateUser } = useContext(UserContext);
 	const { dispatch } = useContext(ChatContext);
 
+	console.log(process.env.REACT_APP_API_URI);
+
 	const location = useLocation();
 
 	const [isLoading, setIsLoading] = useState(true);
