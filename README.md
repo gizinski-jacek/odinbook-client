@@ -85,7 +85,8 @@ netlify deploy
 ```
 
 After that just follow the instructions to deploy a built app to Netlify.
-Don't forget to include environment variables before running build script.
+
+Alternatively You can set environment variables on Netlify's dashboard and link the apps repository to use with Continuous Deployment.
 
 ## Features
 
