@@ -18,7 +18,7 @@ For the Backend API go [here](https://github.com/gizinski-jacek/odinbook-client)
 
 Github repo can be found [here](https://github.com/gizinski-jacek/odinbook-client).
 
-This repo is live on [Heroku](https://cv-project-react-543266.herokuapp.com).
+Live demo can be found on [Heroku](https://cv-project-react-543266.herokuapp.com).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
