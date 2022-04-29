@@ -75,16 +75,17 @@ heroku open
 You cannot deploy both Frontend and Backend to Heroku because [Heroku is included in Suffix List](https://devcenter.heroku.com/articles/cookies-and-herokuapp-com), which prevents an app on heroku domain from setting cookies on other heroku apps.\
 You can either use [Custom Domain](https://devcenter.heroku.com/articles/custom-domains) or deploy either app to other hosting service like [Netlify](https://docs.netlify.com/cli/get-started).
 
-To do so run these commands:
+To do so, add **.env** file with environment variables and run these commands:
 
 ```bash
 npm install -g netlify-cli
 netlify login
 npm run build
-netlify deploy --prod
+netlify deploy
 ```
 
 After that just follow the instructions to deploy a built app to Netlify.
+Don't forget to include environment variables before running build script.
 
 ## Features
 
