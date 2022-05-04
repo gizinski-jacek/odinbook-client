@@ -47,9 +47,10 @@
 	}
 
 	.feedback_link {
-		span {
-			background-image: url('../../../public/multi_icons/icons_1.png');
-			background-position: 0px -25px;
+		svg {
+			width: 20px;
+			height: 20px;
+			box-sizing: content-box;
 		}
 	}
 
