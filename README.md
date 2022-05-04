@@ -2,7 +2,7 @@
 
 A small Facebook clone Frontend client.
 
-For the Backend API go [here](https://github.com/gizinski-jacek/odinbook-client).
+For the Backend API go [here](https://github.com/gizinski-jacek/odinbook-api).
 
 ## Table of contents
 
@@ -18,7 +18,7 @@ For the Backend API go [here](https://github.com/gizinski-jacek/odinbook-client)
 
 Github repo can be found [here](https://github.com/gizinski-jacek/odinbook-client).
 
-Live demo can be found on [Heroku](https://cv-project-react-543266.herokuapp.com).
+Live demo can be found on [Netlify](https://odinbook-client-97346.netlify.app/).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
