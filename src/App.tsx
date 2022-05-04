@@ -59,14 +59,13 @@ const App = () => {
 								<>
 									<Navbar />
 									<Outlet />
-									<Footer />
 								</>
 							) : (
 								<>
 									<FrontPage />
-									<Footer />
 								</>
 							)}
+							<Footer />
 						</main>
 					}
 				>
