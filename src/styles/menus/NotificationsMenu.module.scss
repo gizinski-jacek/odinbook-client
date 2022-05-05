@@ -44,6 +44,11 @@
 				height: 48px;
 			}
 
+			a {
+				height: fit-content;
+				border-radius: 50%;
+			}
+
 			a:hover {
 				background-color: unset;
 			}
