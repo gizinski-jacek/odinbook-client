@@ -152,7 +152,7 @@ const PostFormModal: React.FC<Props> = ({
 					</div>
 					<span className={styles.metadata}>
 						<Link to={`/profile/${user._id}`}>
-							<div className='profile-pic-style'>
+							<div className='profile_pic_style'>
 								<img src='placeholder_profile_pic.png' alt='User profile pic' />
 							</div>
 						</Link>
@@ -194,11 +194,11 @@ const PostFormModal: React.FC<Props> = ({
 								name='post_picture'
 								onChange={handleFileChange}
 							/>
-							{errorsDisplay && <ul className='error-list'>{errorsDisplay}</ul>}
+							{errorsDisplay && <ul className='error_list'>{errorsDisplay}</ul>}
 							{pictureData ? (
 								<button
 									type='button'
-									className='btn-default btn-danger'
+									className='btn_default btn_danger'
 									onClick={(e) => handleRemoveFile(e)}
 								>
 									Remove Selected Picture
@@ -206,7 +206,7 @@ const PostFormModal: React.FC<Props> = ({
 							) : (
 								<button
 									type='button'
-									className='btn-default btn-active'
+									className='btn_default btn_active'
 									onClick={(e) => clickSelectFile(e)}
 								>
 									Add Picture
@@ -214,7 +214,7 @@ const PostFormModal: React.FC<Props> = ({
 							)}
 							<button
 								type='submit'
-								className='btn-default btn-form-submit'
+								className='btn_default btn_form_submit'
 								disabled={formData.text ? false : true}
 							>
 								{postData._id ? 'Save' : 'Post'}

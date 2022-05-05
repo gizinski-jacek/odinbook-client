@@ -140,7 +140,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 									{pictureData && (
 										<button
 											type='button'
-											className='btn-default btn-danger'
+											className='btn_default btn_danger'
 											onClick={(e) => handleRemoveFile(e)}
 										>
 											Remove
@@ -155,7 +155,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 									/>
 									<button
 										type='button'
-										className='btn-default btn-active'
+										className='btn_default btn_active'
 										onClick={(e) => clickSelectFile(e)}
 									>
 										Edit
@@ -163,7 +163,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 								</div>
 							</div>
 							<div
-								className='profile-pic-style'
+								className='profile_pic_style'
 								onClick={(e) => clickSelectFile(e)}
 							>
 								<img
@@ -182,7 +182,7 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 								<div className={styles.controls}>
 									<button
 										type='button'
-										className={`btn-default btn-active ${styles.edit_btn}`}
+										className={`btn_default btn_active ${styles.edit_btn}`}
 										onClick={(e) => toggleBioForm(e)}
 									>
 										{bioForm ? 'Save' : 'Edit'}
@@ -205,10 +205,10 @@ const EditProfileModal: React.FC<Props> = ({ closeModal, setData, data }) => {
 								<p>{bioInput}</p>
 							)}
 						</div>
-						{errorsDisplay && <ul className='error-list'>{errorsDisplay}</ul>}
+						{errorsDisplay && <ul className='error_list'>{errorsDisplay}</ul>}
 						<button
 							type='submit'
-							className='btn-default btn-form-submit'
+							className='btn_default btn_form_submit'
 							disabled={errors?.length > 0 ? true : false}
 						>
 							Save Your Profile Info

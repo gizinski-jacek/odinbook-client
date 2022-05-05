@@ -20,7 +20,7 @@ const ChatMessageWrapper: React.FC<Props> = ({ message }) => {
 						: styles.recipient_message
 				}
 			>
-				<div className='profile-pic-style'>
+				<div className='profile_pic_style'>
 					<img
 						src={
 							message.author.profile_picture_url ||

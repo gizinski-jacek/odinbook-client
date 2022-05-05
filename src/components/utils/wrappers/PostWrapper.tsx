@@ -184,7 +184,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 			<div className={stylesPost.top}>
 				<div className={stylesPost.left}>
 					<Link to={`/profile/${postData.author._id}`}>
-						<div className='profile-pic-style'>
+						<div className='profile_pic_style'>
 							<img
 								src={
 									postData.author.profile_picture_url ||
@@ -316,7 +316,7 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 			)}
 			<div className={stylesCommentForm.comment_form_container}>
 				<Link to={`/profile/${postData.author._id}`}>
-					<div className='profile-pic-style'>
+					<div className='profile_pic_style'>
 						<img
 							src={user.profile_picture_url || '/placeholder_profile_pic.png'}
 							alt='User profile pic'
@@ -335,9 +335,9 @@ const PostWrapper: React.FC<Props> = ({ post }) => {
 						required
 						placeholder='Write a comment...'
 					/>
-					{errorsDisplay && <ul className='error-list'>{errorsDisplay}</ul>}
+					{errorsDisplay && <ul className='error_list'>{errorsDisplay}</ul>}
 					<button
-						className='btn-default btn-form-submit'
+						className='btn_default btn_form_submit'
 						type='submit'
 						disabled={formData.text ? false : true}
 					>

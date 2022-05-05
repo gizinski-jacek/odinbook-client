@@ -108,7 +108,7 @@ const Chat = () => {
 						</label>
 						<button
 							type='submit'
-							className='btn-default btn-confirm'
+							className='btn_default btn_confirm'
 							disabled={messageInput ? false : true}
 						>
 							Send

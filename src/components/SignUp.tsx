@@ -113,8 +113,8 @@ const SignUp: React.FC<Props> = ({ toggleForm }) => {
 						required
 						placeholder='Password'
 					/>
-					{errorsDisplay && <ul className='error-list'>{errorsDisplay}</ul>}
-					<button type='submit' className='btn-default btn-register'>
+					{errorsDisplay && <ul className='error_list'>{errorsDisplay}</ul>}
+					<button type='submit' className='btn_default btn_register'>
 						Register
 					</button>
 				</form>
@@ -124,7 +124,7 @@ const SignUp: React.FC<Props> = ({ toggleForm }) => {
 				<h4>Already have an account?</h4>
 				<button
 					type='button'
-					className='btn-default btn-confirm'
+					className='btn_default btn_confirm'
 					onClick={(e) => toggleForm(e)}
 				>
 					Log in now!

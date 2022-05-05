@@ -119,7 +119,7 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 					to={`/profile/${friend._id}`}
 					onClick={(e) => e.stopPropagation()}
 				>
-					<div className={`profile-pic-style ${styles.picture}`}>
+					<div className={`profile_pic_style ${styles.picture}`}>
 						<img
 							src={friend.profile_picture_url || '/placeholder_profile_pic.png'}
 							alt='User profile pic'

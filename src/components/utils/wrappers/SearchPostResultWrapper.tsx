@@ -10,7 +10,7 @@ const SearchPostResultWrapper: React.FC<Props> = ({ post }) => {
 	return (
 		<li>
 			<Link className={styles.search_result} to={`/profile/${post.author._id}`}>
-				<div className='profile-pic-style'>
+				<div className='profile_pic_style'>
 					<img
 						src={
 							post.author.profile_picture_url || '/placeholder_profile_pic.png'

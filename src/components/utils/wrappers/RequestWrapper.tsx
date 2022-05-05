@@ -16,7 +16,7 @@ const RequestWrapper: React.FC<Props> = ({
 	return (
 		<li className={styles.request}>
 			<Link to={`/profile/${request._id}`}>
-				<div className='profile-pic-style'>
+				<div className='profile_pic_style'>
 					<img
 						src={request.profile_picture_url || '/placeholder_profile_pic.png'}
 						alt='User profile pic'
@@ -29,13 +29,13 @@ const RequestWrapper: React.FC<Props> = ({
 				</h4>
 				<div className={styles.controls}>
 					<button
-						className='btn-default btn-confirm'
+						className='btn_default btn_confirm'
 						onClick={(e) => handleAccept(e, request._id)}
 					>
 						Confirm
 					</button>
 					<button
-						className='btn-default btn-danger'
+						className='btn_default btn_danger'
 						onClick={(e) => handleCancel(e, request._id)}
 					>
 						Decline

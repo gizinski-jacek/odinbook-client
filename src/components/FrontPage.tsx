@@ -13,7 +13,7 @@ const FrontPage = () => {
 	};
 
 	return (
-		<div className='front-page-container'>
+		<div className='front_page_container'>
 			<div className='left'>
 				<h1>Odinbook</h1>
 				<h3>Helps you connect and share with the people in your life</h3>

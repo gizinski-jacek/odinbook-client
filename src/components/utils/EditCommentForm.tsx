@@ -32,7 +32,7 @@ const EditCommentForm: React.FC<Props> = ({
 	return (
 		<div className={styles.comment_form_container}>
 			<Link to={`/profile/${comment.author._id}`}>
-				<div className='profile-pic-style'>
+				<div className='profile_pic_style'>
 					<img
 						src={
 							comment.author.profile_picture_url ||
@@ -61,12 +61,12 @@ const EditCommentForm: React.FC<Props> = ({
 				<div className={styles.edit_controls}>
 					<button
 						type='button'
-						className='btn-default btn-cancel'
+						className='btn_default btn_cancel'
 						onClick={(e) => closeModal(e)}
 					>
 						Cancel
 					</button>
-					<button type='submit' className='btn-default btn-form-submit'>
+					<button type='submit' className='btn_default btn_form_submit'>
 						Save
 					</button>
 				</div>

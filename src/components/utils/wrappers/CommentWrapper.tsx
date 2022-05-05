@@ -104,7 +104,7 @@ const CommentWrapper: React.FC<Props> = ({ comment }) => {
 		) : (
 			<li className={styles.comment}>
 				<Link to={`/profile/${commentData.author._id}`}>
-					<div className='profile-pic-style'>
+					<div className='profile_pic_style'>
 						<img
 							src={
 								commentData.author.profile_picture_url ||

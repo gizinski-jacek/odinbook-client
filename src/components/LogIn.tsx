@@ -107,9 +107,9 @@ const LogIn: React.FC<Props> = ({ toggleForm }) => {
 								/>
 							</fieldset>
 							{errorsDisplay.length > 0 && (
-								<ul className='error-list'>{errorsDisplay}</ul>
+								<ul className='error_list'>{errorsDisplay}</ul>
 							)}
-							<button type='submit' className='btn-default btn-confirm'>
+							<button type='submit' className='btn_default btn_confirm'>
 								Log In
 							</button>
 						</form>
@@ -118,14 +118,14 @@ const LogIn: React.FC<Props> = ({ toggleForm }) => {
 						<h4>Or If You Prefer</h4>
 						<a
 							href={`${process.env.REACT_APP_API_URI}/api/log-in/facebook`}
-							className='btn-default btn-confirm'
+							className='btn_default btn_confirm'
 						>
 							Log In With Facebook
 						</a>
 						<h4>Want To Only Test Site?</h4>
 						<button
 							type='button'
-							className='btn-default btn-confirm'
+							className='btn_default btn_confirm'
 							onClick={(e) => getTestAccount(e)}
 						>
 							Log In With Test User
@@ -135,7 +135,7 @@ const LogIn: React.FC<Props> = ({ toggleForm }) => {
 						<button
 							type='button'
 							onClick={(e) => toggleForm(e)}
-							className='btn-default btn-register'
+							className='btn_default btn_register'
 						>
 							Create One Now!
 						</button>

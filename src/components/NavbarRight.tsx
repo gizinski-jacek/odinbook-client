@@ -159,7 +159,7 @@ const NavbarRight = () => {
 					>
 						<span
 							className={`${styles.icon} ${
-								openMenuId === 1 ? 'btn-active' : ''
+								openMenuId === 1 ? 'btn_active' : ''
 							}`}
 						>
 							<svg viewBox='0 0 20 20' width='20' height='20'>
@@ -175,7 +175,7 @@ const NavbarRight = () => {
 					>
 						<span
 							className={`${styles.icon} ${
-								openMenuId === 2 ? 'btn-active' : ''
+								openMenuId === 2 ? 'btn_active' : ''
 							}`}
 						>
 							<svg viewBox='0 0 28 28' height='20' width='20'>
@@ -194,7 +194,7 @@ const NavbarRight = () => {
 					>
 						<span
 							className={`${styles.icon} ${
-								openMenuId === 3 ? 'btn-active' : ''
+								openMenuId === 3 ? 'btn_active' : ''
 							}`}
 						>
 							<svg viewBox='0 0 28 28' height='20' width='20'>
@@ -211,7 +211,7 @@ const NavbarRight = () => {
 					>
 						<span
 							className={`${styles.icon} ${
-								openMenuId === 4 ? 'btn-active' : ''
+								openMenuId === 4 ? 'btn_active' : ''
 							}`}
 						>
 							<svg viewBox='0 0 44 44' width='20' height='20'>
@@ -231,10 +231,10 @@ const NavbarRight = () => {
 						<NavLink
 							to={`/profile/${user._id}`}
 							className={({ isActive }) =>
-								isActive ? `${styles.me_link} btn-active` : styles.me_link
+								isActive ? `${styles.me_link} btn_active` : styles.me_link
 							}
 						>
-							<div className='profile-pic-style'>
+							<div className='profile_pic_style'>
 								<img
 									src={
 										user.profile_picture_url || '/placeholder_profile_pic.png'
@@ -250,7 +250,7 @@ const NavbarRight = () => {
 							to='/friends'
 							className={({ isActive }) =>
 								isActive
-									? `${styles.friends_link} btn-active`
+									? `${styles.friends_link} btn_active`
 									: styles.friends_link
 							}
 						>

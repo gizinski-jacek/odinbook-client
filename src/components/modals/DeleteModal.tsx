@@ -45,14 +45,14 @@ const DeleteModal: React.FC<Props> = ({
 				<div className={styles.delete_controls}>
 					<button
 						type='button'
-						className='btn-default btn-cancel'
+						className='btn_default btn_cancel'
 						onClick={(e) => closeModal(e)}
 					>
 						Cancel
 					</button>
 					<button
 						type='button'
-						className='btn-default btn-confirm'
+						className='btn_default btn_confirm'
 						onClick={(e) => handleDelete(e)}
 					>
 						Delete

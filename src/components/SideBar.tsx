@@ -12,7 +12,7 @@ const SideBar = () => {
 				<ul>
 					<li>
 						<Link to={`/profile/${user._id}`}>
-							<div className={`profile-pic-style ${styles.icon}`}>
+							<div className={`profile_pic_style ${styles.icon}`}>
 								<img
 									src={
 										user.profile_picture_url || '/placeholder_profile_pic.png'

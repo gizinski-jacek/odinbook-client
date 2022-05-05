@@ -5,7 +5,7 @@ type Props = {
 };
 
 const FormErrorWrapper: React.FC<Props> = ({ error }) => {
-	return <li className='error-msg'>{error.msg}</li>;
+	return <li className='error_msg'>{error.msg}</li>;
 };
 
 export default FormErrorWrapper;

@@ -127,36 +127,36 @@ const PersonWrapper: React.FC<Props> = ({ person }) => {
 					(personData.blocked_by_other_list.includes(user._id) ? (
 						<button
 							type='button'
-							className={`btn-default btn-disabled ${styles.blocked}`}
+							className={`btn_default btn_disabled ${styles.blocked}`}
 							onClick={(e) => handleBlockStatus(e, personData._id)}
 						></button>
 					) : personData.blocked_user_list.includes(user._id) ? (
 						<button
 							type='button'
-							className={`btn-default btn-disabled ${styles.blocked_by}`}
+							className={`btn_default btn_disabled ${styles.blocked_by}`}
 						></button>
 					) : personData.friend_list.includes(user._id) ? (
 						<button
 							type='button'
-							className={`btn-default btn-confirm ${styles.friend}`}
+							className={`btn_default btn_confirm ${styles.friend}`}
 							onClick={(e) => handleRemoveFriend(e, personData._id)}
 						></button>
 					) : personData.incoming_friend_requests.includes(user._id) ? (
 						<button
 							type='button'
-							className={`btn-default btn-active ${styles.sent}`}
+							className={`btn_default btn_active ${styles.sent}`}
 							onClick={(e) => handleCancelRequest(e, personData._id)}
 						></button>
 					) : personData.outgoing_friend_requests.includes(user._id) ? (
 						<button
 							type='button'
-							className={`btn-default btn-active ${styles.request}`}
+							className={`btn_default btn_active ${styles.request}`}
 							onClick={(e) => handleAcceptRequest(e, personData._id)}
 						></button>
 					) : personData._id === user._id ? null : (
 						<button
 							type='button'
-							className={`btn-default btn-confirm ${styles.not_friend}`}
+							className={`btn_default btn_confirm ${styles.not_friend}`}
 							onClick={(e) => handleSendRequest(e, personData._id)}
 						></button>
 					))}

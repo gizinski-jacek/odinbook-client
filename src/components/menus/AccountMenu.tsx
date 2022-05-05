@@ -22,18 +22,18 @@ const AccountMenu = () => {
 		user && (
 			<div className={styles.menu_account}>
 				<Link to={`/profile/${user._id}`} className={styles.me_link}>
-					<div className='profile-pic-style'>
+					<div className='profile_pic_style'>
 						<img
 							src={user.profile_picture_url || '/placeholder_profile_pic.png'}
 							alt='User profile pic'
 						/>
 					</div>
-					<span>
+					<div>
 						<h3>
 							{user.first_name} {user.last_name}
 						</h3>
 						<h5>See your profile</h5>
-					</span>
+					</div>
 				</Link>
 				<hr />
 				<a

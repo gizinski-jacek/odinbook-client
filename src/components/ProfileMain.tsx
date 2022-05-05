@@ -212,7 +212,7 @@ const Profile = () => {
 						<div className={styles.user_panel}>
 							<div className={styles.user_info}>
 								<div className={styles.pic_wrapper}>
-									<div className='profile-pic-style'>
+									<div className='profile_pic_style'>
 										<img
 											src={
 												profileData?.profile_picture_url ||
@@ -249,7 +249,7 @@ const Profile = () => {
 											onSubmit={(e) => handlePasswordChange(e, passwordData)}
 										>
 											{errorsDisplay.length > 0 && (
-												<ul className='error-list'>{errorsDisplay}</ul>
+												<ul className='error_list'>{errorsDisplay}</ul>
 											)}
 											<input
 												type='password'
@@ -261,10 +261,9 @@ const Profile = () => {
 												required
 												placeholder='New password'
 											/>
-
-											<button className='btn-default btn-confirm'>Save</button>
+											<button className='btn_default btn_confirm'>Save</button>
 											<button
-												className='btn-default btn-decline'
+												className='btn_default'
 												onClick={(e) => toggleInput(e)}
 											>
 												Cancel
@@ -274,14 +273,14 @@ const Profile = () => {
 										<div className={styles.profile_controls}>
 											<button
 												type='button'
-												className={`btn-default btn-confirm ${styles.change_password_btn}`}
+												className={`btn_default btn_confirm ${styles.change_password_btn}`}
 												onClick={(e) => toggleInput(e)}
 											>
 												Change Password
 											</button>
 											<button
 												type='button'
-												className={`btn-default btn-confirm ${styles.edit_btn}`}
+												className={`btn_default btn_confirm ${styles.edit_btn}`}
 												onClick={(e) => openModal(e)}
 											>
 												Edit Profile
@@ -325,18 +324,18 @@ const Profile = () => {
 										(profileData.blocked_by_other_list.includes(user._id) ? (
 											<button
 												type='button'
-												className={`btn-default btn-disabled btn-w180 ${styles.blocked}`}
+												className={`btn_default btn_disabled btn_w180 ${styles.blocked}`}
 												onClick={(e) => handleBlockStatus(e, profileData._id)}
 											></button>
 										) : profileData.blocked_user_list.includes(user._id) ? (
 											<button
 												type='button'
-												className={`btn-default btn-disabled btn-w180 ${styles.blocked_by}`}
+												className={`btn_default btn_disabled btn_w180 ${styles.blocked_by}`}
 											></button>
 										) : profileData.friend_list.includes(user._id) ? (
 											<button
 												type='button'
-												className={`btn-default btn-confirm btn-w180 ${styles.friend}`}
+												className={`btn_default btn_confirm btn_w180 ${styles.friend}`}
 												onClick={(e) => handleRemoveFriend(e, profileData._id)}
 											></button>
 										) : profileData.incoming_friend_requests.includes(
@@ -344,7 +343,7 @@ const Profile = () => {
 										  ) ? (
 											<button
 												type='button'
-												className={`btn-default btn-active btn-w180 ${styles.sent}`}
+												className={`btn_default btn_active btn_w180 ${styles.sent}`}
 												onClick={(e) => handleCancelRequest(e, profileData._id)}
 											></button>
 										) : profileData.outgoing_friend_requests.includes(
@@ -352,13 +351,13 @@ const Profile = () => {
 										  ) ? (
 											<button
 												type='button'
-												className={`btn-default btn-confirm btn-w180 ${styles.request}`}
+												className={`btn_default btn_confirm btn_w180 ${styles.request}`}
 												onClick={(e) => handleAcceptRequest(e, profileData._id)}
 											></button>
 										) : (
 											<button
 												type='button'
-												className={`btn-default btn-confirm btn-w180 ${styles.not_friend}`}
+												className={`btn_default btn_confirm btn_w180 ${styles.not_friend}`}
 												onClick={(e) => handleSendRequest(e, profileData._id)}
 											></button>
 										))}

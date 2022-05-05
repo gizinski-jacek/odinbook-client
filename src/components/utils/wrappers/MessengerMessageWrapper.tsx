@@ -22,7 +22,7 @@ const MessengerMessageWrapper: React.FC<Props> = ({
 			className={styles.message}
 			onClick={(e) => openChat(e, message.author._id)}
 		>
-			<div className='profile-pic-style'>
+			<div className='profile_pic_style'>
 				<img
 					src={
 						message.author.profile_picture_url || '/placeholder_profile_pic.png'

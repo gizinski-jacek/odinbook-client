@@ -72,7 +72,7 @@ const App = () => {
 					<Route
 						path=''
 						element={
-							<div className='home-container'>
+							<div className='home_container'>
 								<SideBar />
 								<Timeline />
 								<Contacts />
@@ -82,7 +82,7 @@ const App = () => {
 					<Route
 						path='profile/:userid'
 						element={
-							<div className='profile-container'>
+							<div className='profile_container'>
 								<ProfileMain />
 								<Outlet />
 							</div>
