@@ -41,8 +41,8 @@
 				flex-direction: row;
 
 				.pic_wrapper {
-					width: 160px;
-					margin-right: 12px;
+					width: 168px;
+					margin-right: 48px;
 					position: relative;
 					top: 8px;
 
@@ -87,6 +87,7 @@
 			.user_edit_profile_controls {
 				display: flex;
 				flex-direction: row;
+				height: fit-content;
 
 				.profile_controls {
 					display: flex;
@@ -277,7 +278,7 @@
 	}
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 760px) {
 	.profile_page {
 		.top {
 			.user_panel {
