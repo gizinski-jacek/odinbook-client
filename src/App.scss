@@ -140,10 +140,10 @@ button {
 	text-align: center;
 	cursor: pointer;
 	font-size: 1rem;
-}
 
-.btn_default:hover {
-	filter: brightness(95%);
+	&:hover {
+		filter: brightness(95%);
+	}
 }
 
 .btn_confirm {
@@ -160,10 +160,10 @@ button {
 	background-color: variables.$blue-a30 !important;
 	color: variables.$blue;
 	fill: variables.$blue;
-}
 
-.btn_active:hover {
-	filter: brightness(90%);
+	&:hover {
+		filter: brightness(90%);
+	}
 }
 
 .btn_danger {
