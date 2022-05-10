@@ -8,8 +8,8 @@
 	display: flex;
 	flex-direction: column;
 	height: fit-content;
-	top: calc(variables.$navbar-height + 8px);
 	position: sticky;
+	top: calc(variables.$navbar-height + 8px);
 
 	ul {
 		a {
