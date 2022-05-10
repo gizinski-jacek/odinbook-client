@@ -10,7 +10,7 @@ import Chat from './Chat';
 import styles from '../styles/Contacts.module.scss';
 
 const Contacts = () => {
-	const { user, updateUser } = useContext(UserContext);
+	const { user } = useContext(UserContext);
 	const { state, dispatch } = useContext(ChatContext);
 
 	const [requestsData, setRequestsData] = useState<User[]>([]);
@@ -78,7 +78,6 @@ const Contacts = () => {
 			const data = resData.find((u: User) => u._id === user._id);
 			setRequestsData(data.incoming_friend_requests);
 			setFriendsData(data.friend_list);
-			updateUser(data);
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -99,7 +98,6 @@ const Contacts = () => {
 			const data = resData.find((u: User) => u._id === user._id);
 			setRequestsData(data.incoming_friend_requests);
 			setFriendsData(data.friend_list);
-			updateUser(data);
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -118,7 +116,6 @@ const Contacts = () => {
 			const data = resData.find((u: User) => u._id === user._id);
 			setRequestsData(data.incoming_friend_requests);
 			setFriendsData(data.friend_list);
-			updateUser(data);
 		} catch (error: any) {
 			console.error(error);
 		}
@@ -196,7 +193,7 @@ const Contacts = () => {
 						<ul>
 							<div className={styles.top}>
 								<img
-									src='single_icons/friends_icon.png'
+									src='./single_icons/friends_icon.png'
 									alt='Friend requests'
 								/>
 								<h5>Friend requests</h5>
