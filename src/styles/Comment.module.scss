@@ -48,28 +48,28 @@
 			font-weight: 600;
 			font-size: 0.8rem;
 		}
+
+		.liked {
+			position: absolute;
+			bottom: 0;
+			right: -8px;
+			cursor: pointer;
+
+			span {
+				width: 16px;
+				height: 16px;
+				display: block;
+				background-size: auto;
+				background-repeat: no-repeat;
+				background-image: url('../../public/single_icons/like_icon.png');
+			}
+		}
 	}
 
 	.comment_text {
 		margin-top: 2px;
 		line-height: 1.1rem;
 		font-size: 0.8rem;
-	}
-
-	.liked {
-		position: absolute;
-		bottom: 0;
-		right: -8px;
-		cursor: pointer;
-
-		span {
-			width: 16px;
-			height: 16px;
-			display: block;
-			background-size: auto;
-			background-repeat: no-repeat;
-			background-image: url('../../public/single_icons/like_icon.png');
-		}
 	}
 
 	.controls {
@@ -86,6 +86,10 @@
 		margin-right: 12px;
 		cursor: pointer;
 
+		&.liked {
+			color: variables.$blue;
+		}
+
 		&:hover {
 			text-decoration: underline;
 		}
@@ -93,10 +97,6 @@
 
 	.time {
 		color: variables.$black-a60;
-	}
-
-	.liked {
-		color: variables.$blue;
 	}
 
 	.right {

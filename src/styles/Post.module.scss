@@ -133,26 +133,26 @@
 		align-items: center;
 		height: 16px;
 		margin-bottom: 8px;
-	}
 
-	.liked {
-		display: flex;
-		flex-direction: row;
-		align-items: flex-end;
+		.liked {
+			display: flex;
+			flex-direction: row;
+			align-items: flex-end;
 
-		span {
-			cursor: pointer;
-			margin-right: 8px;
-			width: 16px;
-			height: 16px;
-			display: block;
-			background-size: auto;
-			background-repeat: no-repeat;
-			background-image: url('../../public/single_icons/like_icon.png');
-		}
+			span {
+				cursor: pointer;
+				margin-right: 8px;
+				width: 16px;
+				height: 16px;
+				display: block;
+				background-size: auto;
+				background-repeat: no-repeat;
+				background-image: url('../../public/single_icons/like_icon.png');
+			}
 
-		h5 {
-			color: variables.$blue;
+			h5 {
+				color: variables.$blue;
+			}
 		}
 	}
 
@@ -214,6 +214,14 @@
 	}
 
 	.like_btn {
+		&.liked {
+			background-color: variables.$blue-a30;
+
+			span {
+				background-position: 0px -228px;
+			}
+		}
+
 		span {
 			background-position: 0px -247px;
 		}
@@ -225,18 +233,10 @@
 				background-position: 0px -209px;
 			}
 		}
-	}
 
-	.liked {
-		background-color: variables.$blue-a30;
-
-		span {
-			background-position: 0px -228px;
+		&.shown {
+			background-color: variables.$white-a80;
 		}
-	}
-
-	.shown {
-		background-color: variables.$white-a80;
 	}
 
 	.comments_container {
