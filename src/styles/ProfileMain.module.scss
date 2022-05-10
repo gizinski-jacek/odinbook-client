@@ -57,6 +57,11 @@
 				border-radius: 50%;
 				cursor: pointer;
 
+				&:hover {
+					filter: brightness(125%);
+					box-shadow: 0 0 4px 1px variables.$black-a60;
+				}
+
 				span {
 					width: 8px;
 					height: 8px;
@@ -66,11 +71,6 @@
 					background-image: url('../../public/multi_icons/icons_6.png');
 					background-position: -111px -73px;
 				}
-			}
-
-			.delete_btn:hover {
-				filter: brightness(125%);
-				box-shadow: 0 0 4px 1px variables.$black-a60;
 			}
 		}
 
@@ -141,29 +141,31 @@
 			padding: 20px;
 			border-radius: 8px;
 			cursor: pointer;
-		}
 
-		a:hover {
-			background-color: variables.$black-a05;
-		}
+			&:after {
+				content: '';
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 52px;
+				height: 4px;
+				background-color: transparent;
+			}
 
-		a:after {
-			content: '';
-			position: absolute;
-			left: 0;
-			right: 0;
-			top: 52px;
-			height: 4px;
-			background-color: transparent;
-		}
+			&:hover {
+				background-color: variables.$black-a05;
+			}
 
-		a.isActive:after {
-			height: 0;
-			border-bottom: 4px solid variables.$blue;
-		}
+			&.isActive {
+				&:after {
+					height: 0;
+					border-bottom: 4px solid variables.$blue;
+				}
 
-		a.isActive:hover {
-			background-color: unset;
+				&:hover {
+					background-color: unset;
+				}
+			}
 		}
 	}
 
@@ -185,7 +187,7 @@
 			content: 'Blocked User';
 		}
 
-		:hover {
+		&:hover {
 			background-color: variables.$black-a20;
 			color: variables.$black-a40;
 
