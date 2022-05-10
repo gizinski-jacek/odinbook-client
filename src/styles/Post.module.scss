@@ -133,38 +133,38 @@
 		align-items: center;
 		height: 16px;
 		margin-bottom: 8px;
+	}
 
-		.liked {
-			display: flex;
-			flex-direction: row;
-			align-items: flex-end;
+	.liked {
+		display: flex;
+		flex-direction: row;
+		align-items: flex-end;
 
-			span {
-				cursor: pointer;
-				margin-right: 8px;
-				width: 16px;
-				height: 16px;
-				display: block;
-				background-size: auto;
-				background-repeat: no-repeat;
-				background-image: url('../../public/single_icons/like_icon.png');
-			}
-
-			h5 {
-				color: variables.$blue;
-			}
-		}
-
-		.comment_count {
-			float: right;
-			width: fit-content;
-			text-align: right;
-			color: variables.$black-a60;
-			margin-left: auto;
+		span {
 			cursor: pointer;
+			margin-right: 8px;
+			width: 16px;
+			height: 16px;
+			display: block;
+			background-size: auto;
+			background-repeat: no-repeat;
+			background-image: url('../../public/single_icons/like_icon.png');
 		}
 
-		.comment_count:hover {
+		h5 {
+			color: variables.$blue;
+		}
+	}
+
+	.comment_count {
+		float: right;
+		width: fit-content;
+		text-align: right;
+		color: variables.$black-a60;
+		margin-left: auto;
+		cursor: pointer;
+
+		&:hover {
 			text-decoration: underline;
 		}
 	}
