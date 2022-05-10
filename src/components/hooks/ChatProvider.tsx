@@ -7,6 +7,7 @@ type ContextProps = {
 };
 
 const defaultState = {
+	chatWindowOpen: true,
 	activeChat: null,
 	chatList: [],
 };
@@ -17,6 +18,7 @@ const ChatContext = createContext<ContextProps>({
 });
 
 type ReducerState = {
+	chatWindowOpen: boolean;
 	activeChat: Chatroom | null;
 	chatList: Chatroom[];
 };
@@ -27,6 +29,8 @@ type ReducerAction = {
 };
 
 const ChatReducerActions = {
+	OPEN_CHAT_WINDOW: 'OPEN_CHAT_WINDOW',
+	CLOSE_CHAT_WINDOW: 'CLOSE_CHAT_WINDOW',
 	OPEN_CHAT: 'OPEN_CHAT',
 	CLOSE_CHAT: 'CLOSE_CHAT',
 	SWITCH_CHAT: 'SWITCH_CHAT',
@@ -39,6 +43,16 @@ const reducer = (
 	action: ReducerAction
 ): ReducerState => {
 	switch (action.type) {
+		case ChatReducerActions.OPEN_CHAT_WINDOW:
+			return {
+				...chatState,
+				chatWindowOpen: true,
+			};
+		case ChatReducerActions.CLOSE_CHAT_WINDOW:
+			return {
+				...chatState,
+				chatWindowOpen: false,
+			};
 		case ChatReducerActions.OPEN_CHAT:
 			if (!action.payload) {
 				return chatState;
@@ -50,6 +64,7 @@ const reducer = (
 			}
 			return {
 				activeChat: action.payload.chat,
+				chatWindowOpen: chatState.chatWindowOpen,
 				chatList: [...chatState.chatList, action.payload.chat],
 			};
 		case ChatReducerActions.CLOSE_CHAT:
@@ -79,12 +94,20 @@ const reducer = (
 			} else {
 				newActiveChat = null;
 			}
-			return { activeChat: newActiveChat, chatList: newChatList };
+			return {
+				chatWindowOpen: chatState.chatWindowOpen,
+				activeChat: newActiveChat,
+				chatList: newChatList,
+			};
 		case ChatReducerActions.SWITCH_CHAT:
 			if (!action.payload) {
 				return chatState;
 			}
-			return { activeChat: action.payload.chat, chatList: chatState.chatList };
+			return {
+				chatWindowOpen: chatState.chatWindowOpen,
+				activeChat: action.payload.chat,
+				chatList: chatState.chatList,
+			};
 		case ChatReducerActions.UPDATE_CHAT:
 			if (!action.payload) {
 				return chatState;
@@ -97,6 +120,7 @@ const reducer = (
 				return chatState;
 			}
 			return {
+				chatWindowOpen: chatState.chatWindowOpen,
 				activeChat: action.payload.chat,
 				chatList: chatState.chatList.map((chat) =>
 					chat._id !== action.payload?.chat._id ? chat : action.payload?.chat
