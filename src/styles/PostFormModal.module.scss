@@ -93,9 +93,14 @@
 		textarea {
 			width: 100%;
 			resize: none;
+			padding: 4px;
 			font-size: 1rem;
 			border: none;
 			scrollbar-color: variables.$black-a20 transparent;
+
+			&:focus {
+				outline-width: 1px;
+			}
 		}
 
 		button {
