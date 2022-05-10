@@ -2,13 +2,14 @@
 
 .contacts {
 	flex: 1;
-	padding: 12px;
+	padding: 8px;
+	margin-top: 12px;
 	max-width: 360px;
 	display: flex;
 	flex-direction: column;
 	height: fit-content;
 	position: sticky;
-	top: calc(variables.$navbar-height + 8px);
+	top: calc(variables.$navbar-height + 12px);
 
 	hr {
 		width: 100%;
@@ -81,6 +82,10 @@
 			cursor: pointer;
 		}
 
+		.chat_list_item:nth-last-child(2) {
+			margin-right: 8px;
+		}
+
 		.isActiveChat {
 			background-color: variables.$blue;
 			color: variables.$white;
@@ -107,6 +112,35 @@
 		.close_btn:hover {
 			background-color: variables.$red;
 		}
+	}
+
+	.close_chat_window {
+		margin-top: 4px;
+		margin-left: 4px;
+		margin-right: 4px;
+		margin-left: auto;
+		padding: 1px;
+		border: 1px solid variables.$red;
+		background-color: variables.$red;
+		border-radius: 50%;
+		cursor: pointer;
+
+		span {
+			width: 20px;
+			height: 20px;
+			transform: scale(0.75);
+			display: block;
+			background-size: auto;
+			background-repeat: no-repeat;
+			background-image: url('../../public/multi_icons/icons_6.png');
+			background-position: -105px -67px;
+		}
+	}
+
+	.close_chat_window:hover {
+		filter: brightness(125%);
+		border-color: variables.$black;
+		box-shadow: 0 0 2px 1px variables.$black-a60;
 	}
 
 	.container {
