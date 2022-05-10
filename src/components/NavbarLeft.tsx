@@ -125,7 +125,7 @@ const NavbarLeft = () => {
 							</svg>
 						</span>
 						<input
-							className={focused ? styles.isFocused : ''}
+							className={focused ? styles.focused : styles.notFocused}
 							type='text'
 							name='search_posts'
 							minLength={1}
@@ -139,9 +139,7 @@ const NavbarLeft = () => {
 							style={{
 								display: searchInput || showResults ? 'block' : 'none',
 							}}
-							className={`${styles.clear_btn} ${
-								focused ? styles.isFocused : ''
-							}`}
+							className={styles.clear_btn}
 							onClick={(e) => clearSearch(e)}
 						>
 							<span></span>
