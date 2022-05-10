@@ -37,10 +37,8 @@
 			text-align: center;
 		}
 	}
-}
 
-@media only screen and (max-width: 900px) {
-	.profile_page_posts {
+	@media only screen and (max-width: 900px) {
 		flex-direction: column;
 
 		.bio,

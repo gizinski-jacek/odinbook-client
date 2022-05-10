@@ -36,62 +36,72 @@
 
 	.controls {
 		margin: 16px;
+	}
 
-		.blocked:after {
+	.blocked {
+		&:after {
 			content: 'Blocked User';
 		}
 
-		.blocked:hover {
+		&:hover {
 			background-color: variables.$black-a20;
 			color: variables.$black-a40;
-		}
 
-		.blocked:hover:after {
-			content: 'Unblock User';
+			&:after {
+				content: 'Unblock User';
+			}
 		}
+	}
 
-		.blocked_by:after {
+	.blocked_by {
+		&:after {
 			content: 'Blocked by User';
 			cursor: not-allowed;
 		}
+	}
 
-		.friend:after {
+	.friend {
+		&:after {
 			content: 'Friend';
 		}
 
-		.friend:hover {
+		&:hover {
 			background-color: variables.$red;
 			color: variables.$black;
-		}
 
-		.friend:hover:after {
-			content: 'Remove Friend';
+			&:after {
+				content: 'Remove Friend';
+			}
 		}
+	}
 
-		.sent:after {
+	.sent {
+		&:after {
 			content: 'Request Sent';
 		}
 
-		.sent:hover:after {
+		&:hover:after {
 			content: 'Cancel Request';
 		}
+	}
 
-		.request:after {
+	.request {
+		&:after {
 			content: 'Accept Request';
 		}
+	}
 
-		.not_friend:after {
+	.not_friend {
+		&:after {
 			content: 'Add Friend';
 		}
-
-		button {
-			width: 100%;
-		}
 	}
-}
 
-@media only screen and (max-width: 1000px) {
-	.person {
+	button {
+		width: 100%;
+	}
+
+	@media only screen and (max-width: 1000px) {
 		width: 150px;
 		height: 280px;
 
@@ -100,41 +110,51 @@
 			height: 150px;
 		}
 
-		.controls {
-			.blocked:after {
+		.blocked {
+			&:after {
 				content: 'Blocked';
 			}
 
-			.blocked:hover:after {
+			&:hover:after {
 				content: 'Unblock';
 			}
+		}
 
-			.blocked_by:after {
+		.blocked_by {
+			&:after {
 				content: 'Blocked';
 				cursor: not-allowed;
 			}
+		}
 
-			.friend:after {
+		.friend {
+			&:after {
 				content: 'Friend';
 			}
 
-			.friend:hover:after {
+			&:hover:after {
 				content: 'Remove';
 			}
+		}
 
-			.sent:after {
+		.sent {
+			&:after {
 				content: 'Sent';
 			}
 
-			.sent:hover:after {
+			&:hover:after {
 				content: 'Cancel';
 			}
+		}
 
-			.request:after {
+		.request {
+			&:after {
 				content: 'Accept';
 			}
+		}
 
-			.not_friend:after {
+		.not_friend {
+			&:after {
 				content: 'Add';
 			}
 		}

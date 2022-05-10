@@ -27,10 +27,10 @@
 		img {
 			width: 40px;
 			height: 40px;
-		}
 
-		img:hover {
-			filter: brightness(95%);
+			&:hover {
+				filter: brightness(95%);
+			}
 		}
 
 		span {
@@ -43,6 +43,10 @@
 			text-align: left;
 			cursor: pointer;
 
+			&:hover {
+				filter: brightness(95%);
+			}
+
 			h4 {
 				display: -webkit-box;
 				-webkit-line-clamp: 2;
@@ -51,13 +55,9 @@
 				text-overflow: ellipsis;
 			}
 		}
+	}
 
-		span:hover {
-			filter: brightness(95%);
-		}
-
-		.not_empty {
-			color: variables.$black;
-		}
+	.not_empty {
+		color: variables.$black;
 	}
 }

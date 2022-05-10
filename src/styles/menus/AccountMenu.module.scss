@@ -8,10 +8,10 @@
 
 	a {
 		padding: 8px;
-	}
 
-	a:hover {
-		background-color: variables.$black-a05;
+		&:hover {
+			background-color: variables.$black-a05;
+		}
 	}
 
 	.log_out_btn {
@@ -21,10 +21,10 @@
 		align-items: center;
 		border-radius: 8px;
 		cursor: pointer;
-	}
 
-	.log_out_btn:hover {
-		background-color: variables.$black-a05;
+		&:hover {
+			background-color: variables.$black-a05;
+		}
 	}
 
 	hr {
@@ -107,16 +107,16 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: space-evenly;
+		}
 
-			h3 {
-				margin: 4px 0;
-				font-weight: 600;
-			}
+		h3 {
+			margin: 4px 0;
+			font-weight: 600;
+		}
 
-			h5 {
-				margin: 4px 0;
-				color: variables.$black-a40;
-			}
+		h5 {
+			margin: 4px 0;
+			color: variables.$black-a40;
 		}
 	}
 }

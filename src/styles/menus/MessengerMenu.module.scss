@@ -17,24 +17,19 @@
 		margin: 0 8px;
 		padding: 8px;
 		font-weight: 600;
+	}
 
-		.mark_all {
-			color: variables.$blue;
-			cursor: pointer;
-		}
+	.mark_all {
+		color: variables.$blue;
+		cursor: pointer;
 
-		.mark_all:hover {
+		&:hover {
 			text-decoration: underline;
 		}
 	}
 
 	.search_messenger {
 		margin: 8px 16px;
-
-		svg {
-			display: block;
-			fill: variables.$black-a60;
-		}
 
 		label {
 			display: flex;
@@ -56,26 +51,26 @@
 			font-size: 0.9rem;
 			outline: none;
 		}
+	}
 
-		.clear_btn {
-			padding: 8px;
-			background-color: variables.$black-a10;
-			border-radius: 50%;
-			cursor: pointer;
+	.clear_btn {
+		padding: 8px;
+		background-color: variables.$black-a10;
+		border-radius: 50%;
+		cursor: pointer;
 
-			span {
-				width: 12px;
-				height: 12px;
-				display: block;
-				background-size: auto;
-				background-repeat: no-repeat;
-				background-image: url('../../../public/multi_icons/icons_6.png');
-				background-position: -109px -71px;
-			}
+		&:hover {
+			background-color: variables.$black-a20;
 		}
 
-		.clear_btn:hover {
-			background-color: variables.$black-a20;
+		span {
+			width: 12px;
+			height: 12px;
+			display: block;
+			background-size: auto;
+			background-repeat: no-repeat;
+			background-image: url('../../../public/multi_icons/icons_6.png');
+			background-position: -109px -71px;
 		}
 	}
 
@@ -86,21 +81,21 @@
 		align-items: center;
 		min-height: 60px;
 		margin: 0 8px;
+	}
 
-		.empty {
-			margin: 8px 0;
-			font-weight: 600;
-			color: variables.$black-a60;
-			text-align: center;
-		}
+	.empty {
+		margin: 8px 0;
+		font-weight: 600;
+		color: variables.$black-a60;
+		text-align: center;
+	}
 
-		.message_list {
-			width: 100%;
-			max-height: 50vh;
-			overflow-y: auto;
-			scrollbar-width: thin;
-			scrollbar-color: variables.$black-a20 variables.$black-a10;
-		}
+	.message_list {
+		width: 100%;
+		max-height: 50vh;
+		overflow-y: auto;
+		scrollbar-width: thin;
+		scrollbar-color: variables.$black-a20 variables.$black-a10;
 	}
 
 	a {
@@ -109,10 +104,10 @@
 		color: variables.$blue;
 		margin: 8px;
 		margin-bottom: 16px;
-	}
 
-	a:hover {
-		background-color: unset !important;
-		text-decoration: underline;
+		&:hover {
+			background-color: unset !important;
+			text-decoration: underline;
+		}
 	}
 }

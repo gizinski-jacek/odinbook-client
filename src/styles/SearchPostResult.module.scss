@@ -10,6 +10,10 @@
 	border-radius: 8px;
 	cursor: pointer;
 
+	&:hover {
+		background-color: variables.$black-a10;
+	}
+
 	img {
 		margin-right: 8px;
 		width: 32px;
@@ -23,8 +27,4 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
-}
-
-.search_result:hover {
-	background-color: variables.$black-a10;
 }

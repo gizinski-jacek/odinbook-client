@@ -32,6 +32,21 @@
 			width: 1fr;
 			max-width: 120px;
 
+			&:after {
+				content: '';
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 48px;
+				height: 4px;
+				background-color: transparent;
+				margin: 0 4px;
+			}
+
+			&:hover {
+				background-color: variables.$black-a05;
+			}
+
 			svg {
 				margin: auto;
 			}
@@ -45,46 +60,29 @@
 				display: none;
 				fill: variables.$blue;
 			}
-		}
 
-		a:hover {
-			background-color: variables.$black-a05;
-		}
+			&.isActive {
+				.svg1 {
+					display: none;
+				}
 
-		a.isActive {
-			.svg1 {
-				display: none;
+				.svg2 {
+					display: block;
+				}
+
+				&:after {
+					height: 0;
+					border-bottom: 4px solid variables.$blue;
+				}
+
+				&:hover {
+					background-color: unset;
+				}
 			}
-
-			.svg2 {
-				display: block;
-			}
-		}
-
-		a:after {
-			content: '';
-			position: absolute;
-			left: 0;
-			right: 0;
-			top: 48px;
-			height: 4px;
-			background-color: transparent;
-			margin: 0 4px;
-		}
-
-		a.isActive:after {
-			height: 0;
-			border-bottom: 4px solid variables.$blue;
-		}
-
-		a.isActive:hover {
-			background-color: unset;
 		}
 	}
-}
 
-@media only screen and (max-width: 760px) {
-	.center {
+	@media only screen and (max-width: 760px) {
 		display: none;
 	}
 }

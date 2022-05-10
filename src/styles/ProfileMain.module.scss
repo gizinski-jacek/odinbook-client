@@ -16,107 +16,107 @@
 	.top {
 		display: flex;
 		flex-direction: column;
+	}
 
-		.shade {
-			height: 120px;
-			border-bottom-left-radius: 8px;
-			border-bottom-right-radius: 8px;
-			background-image: linear-gradient(
-				to top,
-				variables.$blue,
-				variables.$blue-a30
-			);
-		}
+	.shade {
+		height: 120px;
+		border-bottom-left-radius: 8px;
+		border-bottom-right-radius: 8px;
+		background-image: linear-gradient(
+			to top,
+			variables.$blue,
+			variables.$blue-a30
+		);
+	}
 
-		.user_panel {
-			display: flex;
-			flex-direction: row;
-			justify-content: space-between;
-			border: 4px solid variables.$white;
-			margin: 12px;
+	.user_panel {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		border: 4px solid variables.$white;
+		margin: 12px;
+		position: relative;
+	}
+
+	.user_info {
+		display: flex;
+		flex-direction: row;
+
+		.pic_wrapper {
+			width: 168px;
+			margin-right: 48px;
 			position: relative;
+			top: 8px;
 
-			.user_info {
-				display: flex;
-				flex-direction: row;
+			.delete_btn {
+				position: absolute;
+				left: 20px;
+				bottom: 0;
+				padding: 8px;
+				background-color: variables.$red;
+				border-radius: 50%;
+				cursor: pointer;
 
-				.pic_wrapper {
-					width: 168px;
-					margin-right: 48px;
-					position: relative;
-					top: 8px;
-
-					.delete_btn {
-						position: absolute;
-						left: 20px;
-						bottom: 0;
-						padding: 8px;
-						background-color: variables.$red;
-						border-radius: 50%;
-						cursor: pointer;
-
-						span {
-							width: 8px;
-							height: 8px;
-							display: block;
-							background-size: auto;
-							background-repeat: no-repeat;
-							background-image: url('../../public/multi_icons/icons_6.png');
-							background-position: -111px -73px;
-						}
-					}
-
-					.delete_btn:hover {
-						filter: brightness(125%);
-						box-shadow: 0 0 4px 1px variables.$black-a60;
-					}
-				}
-
-				img {
-					box-sizing: content-box;
-					border: 4px solid variables.$white;
-					position: absolute;
-					bottom: 0;
-					left: 0;
-					width: 160px;
-					height: 160px;
-					cursor: initial;
+				span {
+					width: 8px;
+					height: 8px;
+					display: block;
+					background-size: auto;
+					background-repeat: no-repeat;
+					background-image: url('../../public/multi_icons/icons_6.png');
+					background-position: -111px -73px;
 				}
 			}
 
-			.user_edit_profile_controls {
-				display: flex;
-				flex-direction: row;
-				height: fit-content;
+			.delete_btn:hover {
+				filter: brightness(125%);
+				box-shadow: 0 0 4px 1px variables.$black-a60;
+			}
+		}
 
-				.profile_controls {
-					display: flex;
-					flex-direction: row;
+		img {
+			box-sizing: content-box;
+			border: 4px solid variables.$white;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 160px;
+			height: 160px;
+			cursor: initial;
+		}
+	}
 
-					.change_password_btn,
-					.edit_btn {
-						margin-left: 8px;
-					}
-				}
+	.user_edit_profile_controls {
+		display: flex;
+		flex-direction: row;
+		height: fit-content;
 
-				.change_password_form {
-					display: flex;
-					flex-direction: row;
-					align-items: center;
+		.profile_controls {
+			display: flex;
+			flex-direction: row;
 
-					input {
-						height: 100%;
-						border-radius: 8px;
-						border: 1px solid variables.$black-a20;
-						padding: 0 4px;
-						font-size: 0.9rem;
-					}
+			.change_password_btn,
+			.edit_btn {
+				margin-left: 8px;
+			}
+		}
 
-					button {
-						margin-left: 12px;
-						padding: 6px 12px;
-					}
-				}
+		.change_password_form {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+
+			input {
+				height: 100%;
+				border-radius: 8px;
+				border: 1px solid variables.$black-a20;
+				padding: 0 4px;
+				font-size: 0.9rem;
+			}
+
+			button {
+				margin-left: 12px;
+				padding: 6px 12px;
 			}
 		}
 	}
@@ -127,176 +127,188 @@
 		justify-content: space-between;
 		align-items: center;
 		width: 100%;
+	}
 
-		.pages {
-			display: flex;
-			flex-direction: row;
-			margin: 0 16px;
+	.pages {
+		display: flex;
+		flex-direction: row;
+		margin: 0 16px;
 
-			a {
-				color: variables.$black-a60;
-				position: relative;
-				display: block;
-				padding: 20px;
-				border-radius: 8px;
-				cursor: pointer;
-			}
-
-			a:hover {
-				background-color: variables.$black-a05;
-			}
-
-			a:after {
-				content: '';
-				position: absolute;
-				left: 0;
-				right: 0;
-				top: 52px;
-				height: 4px;
-				background-color: transparent;
-			}
-
-			a.isActive:after {
-				height: 0;
-				border-bottom: 4px solid variables.$blue;
-			}
-
-			a.isActive:hover {
-				background-color: unset;
-			}
+		a {
+			color: variables.$black-a60;
+			position: relative;
+			display: block;
+			padding: 20px;
+			border-radius: 8px;
+			cursor: pointer;
 		}
 
-		.user_controls {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			margin: 0 12px;
-			position: relative;
+		a:hover {
+			background-color: variables.$black-a05;
+		}
 
-			span {
-				margin: 4px;
-				margin-left: 16px;
-			}
+		a:after {
+			content: '';
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 52px;
+			height: 4px;
+			background-color: transparent;
+		}
 
-			.blocked:after {
-				content: 'Blocked User';
-			}
+		a.isActive:after {
+			height: 0;
+			border-bottom: 4px solid variables.$blue;
+		}
 
-			.blocked:hover {
-				background-color: variables.$black-a20;
-				color: variables.$black-a40;
-			}
+		a.isActive:hover {
+			background-color: unset;
+		}
+	}
 
-			.blocked:hover:after {
+	.user_controls {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		margin: 0 12px;
+		position: relative;
+
+		span {
+			margin: 4px;
+			margin-left: 16px;
+		}
+	}
+
+	.blocked {
+		&:after {
+			content: 'Blocked User';
+		}
+
+		:hover {
+			background-color: variables.$black-a20;
+			color: variables.$black-a40;
+
+			&:after {
 				content: 'Unblock User';
 			}
+		}
+	}
 
-			.blocked_by:after {
-				content: 'Blocked by User';
-				cursor: not-allowed;
-			}
+	.blocked_by {
+		&:after {
+			content: 'Blocked by User';
+			cursor: not-allowed;
+		}
+	}
 
-			.friend:after {
-				content: 'Friend';
-			}
+	.friend {
+		&:after {
+			content: 'Friend';
+		}
 
-			.friend:hover {
-				background-color: variables.$red;
-				color: variables.$black;
-			}
+		&:hover {
+			background-color: variables.$red;
+			color: variables.$black;
 
-			.friend:hover:after {
+			&:after {
 				content: 'Remove Friend';
 			}
+		}
+	}
 
-			.sent:after {
-				content: 'Request Sent';
-			}
+	.sent {
+		&:after {
+			content: 'Request Sent';
+		}
 
-			.sent:hover:after {
+		&:hover {
+			&:after {
 				content: 'Cancel Request';
 			}
-
-			.request:after {
-				content: 'Accept Request';
-			}
-
-			.not_friend:after {
-				content: 'Add Friend';
-			}
 		}
+	}
 
-		.right {
-			height: fit-content;
-			position: relative;
-			border-radius: 50%;
+	.request {
+		&:after {
+			content: 'Accept Request';
 		}
+	}
 
-		.options_toggle {
-			display: block;
-			height: fit-content;
-			padding: 8px;
-			border-radius: 50%;
-			background-color: variables.$black-a10;
-			cursor: pointer;
-
-			svg {
-				display: block;
-				width: 16px;
-				height: 16px;
-				fill: variables.$black-a60;
-			}
+	.not_friend {
+		&:after {
+			content: 'Add Friend';
 		}
+	}
 
-		.options_toggle:hover {
+	.right {
+		height: fit-content;
+		position: relative;
+		border-radius: 50%;
+	}
+
+	.options_toggle {
+		display: block;
+		height: fit-content;
+		padding: 8px;
+		border-radius: 50%;
+		background-color: variables.$black-a10;
+		cursor: pointer;
+
+		&:hover {
 			background-color: variables.$black-a20;
 		}
 
-		.options_menu {
-			position: absolute;
-			top: 40px;
-			right: 0;
-			padding: 8px;
-			width: 260px;
-			border-radius: 8px;
-			background-color: variables.$white;
-			box-shadow: 0 4px 16px 0 variables.$black-a20;
-			z-index: 5;
+		svg {
+			display: block;
+			width: 16px;
+			height: 16px;
+			fill: variables.$black-a60;
+		}
+	}
 
-			.cancel_btn,
-			.block_btn {
-				padding: 8px;
-				border-radius: 8px;
-				cursor: pointer;
-			}
+	.options_menu {
+		position: absolute;
+		top: 40px;
+		right: 0;
+		padding: 8px;
+		width: 260px;
+		border-radius: 8px;
+		background-color: variables.$white;
+		box-shadow: 0 4px 16px 0 variables.$black-a20;
+		z-index: 5;
+	}
 
-			.cancel_btn:hover,
-			.block_btn:hover {
-				background-color: variables.$black-a05;
-			}
+	.cancel_btn,
+	.block_btn {
+		padding: 8px;
+		border-radius: 8px;
+		cursor: pointer;
+
+		&:hover {
+			background-color: variables.$black-a05;
 		}
 	}
 }
 
 @media only screen and (max-width: 760px) {
 	.profile_page {
-		.top {
-			.user_panel {
-				flex-direction: column;
-				align-items: center;
-			}
+		.user_panel {
+			background-color: red;
+			flex-direction: column;
+			align-items: center;
+		}
 
-			.user_info {
-				margin-bottom: 16px;
-			}
+		.user_info {
+			margin-bottom: 16px;
+		}
 
-			.user_edit_profile_controls {
-				margin-top: 16px;
-			}
+		.user_edit_profile_controls {
+			margin-top: 16px;
+		}
 
-			.change_password_form {
-				margin-bottom: 4px;
-			}
+		.change_password_form {
+			margin-bottom: 4px;
 		}
 	}
 }

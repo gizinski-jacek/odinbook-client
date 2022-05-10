@@ -20,21 +20,19 @@
 			border-radius: 8px;
 			cursor: pointer;
 
+			&:hover {
+				background-color: variables.$black-a05;
+			}
+
 			img {
 				margin-right: 12px;
 				width: 36px;
 				height: 36px;
 			}
 		}
-
-		a:hover {
-			background-color: variables.$black-a05;
-		}
 	}
-}
 
-@media only screen and (max-width: 1024px) {
-	.side_menu {
+	@media only screen and (max-width: 1024px) {
 		display: none;
 	}
 }

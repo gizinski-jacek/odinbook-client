@@ -62,6 +62,10 @@
 		border-radius: 50%;
 		cursor: pointer;
 
+		&:hover {
+			background-color: variables.$black-a20;
+		}
+
 		span {
 			width: 20px;
 			height: 20px;
@@ -71,10 +75,6 @@
 			background-image: url('../../public/multi_icons/icons_6.png');
 			background-position: -105px -67px;
 		}
-	}
-
-	.close_btn:hover {
-		background-color: variables.$black-a20;
 	}
 
 	.body {

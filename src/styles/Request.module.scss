@@ -5,6 +5,10 @@
 	border-radius: 8px;
 	padding: 8px;
 
+	&:hover {
+		background-color: variables.$black-a10;
+	}
+
 	a {
 		height: fit-content;
 		border-radius: 50%;
@@ -41,8 +45,4 @@
 		flex: 1;
 		margin: 4px;
 	}
-}
-
-.request:hover {
-	background-color: variables.$black-a10;
 }

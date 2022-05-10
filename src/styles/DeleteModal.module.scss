@@ -41,13 +41,13 @@
 		span {
 			flex: 1;
 		}
+	}
 
-		.delete_controls {
-			align-self: flex-end;
+	.delete_controls {
+		align-self: flex-end;
 
-			button {
-				margin-left: 8px;
-			}
+		button {
+			margin-left: 8px;
 		}
 	}
 }

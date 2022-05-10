@@ -8,6 +8,10 @@
 	padding: 8px;
 	cursor: pointer;
 
+	&:hover {
+		background-color: variables.$black-a05;
+	}
+
 	.picture {
 		position: relative;
 	}
@@ -68,19 +72,15 @@
 		background-color: variables.$white;
 		box-shadow: 0 4px 16px 0 variables.$black-a20;
 		z-index: 5;
+	}
 
-		.remove_btn {
-			padding: 8px;
-			border-radius: 8px;
-			cursor: pointer;
-		}
+	.remove_btn {
+		padding: 8px;
+		border-radius: 8px;
+		cursor: pointer;
 
-		.remove_btn:hover {
+		&:hover {
 			background-color: variables.$black-a05;
 		}
 	}
-}
-
-.friend:hover {
-	background-color: variables.$black-a05;
 }

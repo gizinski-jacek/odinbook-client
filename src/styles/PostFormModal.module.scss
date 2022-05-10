@@ -50,6 +50,10 @@
 		border-radius: 50%;
 		cursor: pointer;
 
+		&:hover {
+			background-color: variables.$black-a20;
+		}
+
 		span {
 			width: 20px;
 			height: 20px;
@@ -59,10 +63,6 @@
 			background-image: url('../../public/multi_icons/icons_6.png');
 			background-position: -105px -67px;
 		}
-	}
-
-	.close_btn:hover {
-		background-color: variables.$black-a20;
 	}
 
 	.metadata {
@@ -98,21 +98,21 @@
 			scrollbar-color: variables.$black-a20 transparent;
 		}
 
-		.post_picture {
-			margin-bottom: 8px;
-			align-self: center;
-			margin-top: 12px;
-			max-width: 240px;
-			height: 160px;
-
-			img {
-				max-width: 100%;
-				max-height: 100%;
-			}
-		}
-
 		button {
 			margin-top: 12px;
+		}
+	}
+
+	.post_picture {
+		margin-bottom: 8px;
+		align-self: center;
+		margin-top: 12px;
+		max-width: 240px;
+		height: 160px;
+
+		img {
+			max-width: 100%;
+			max-height: 100%;
 		}
 	}
 }

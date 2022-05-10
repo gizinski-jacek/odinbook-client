@@ -15,10 +15,10 @@
 		height: 40px;
 		margin-left: 16px;
 		margin-right: 8px;
+	}
 
-		.logo_f {
-			fill: variables.$white;
-		}
+	.logo_f {
+		fill: variables.$white;
 	}
 
 	.search_posts {
@@ -54,6 +54,10 @@
 			border-radius: 50%;
 			cursor: pointer;
 
+			&:hover {
+				background-color: variables.$black-a20;
+			}
+
 			span {
 				width: 12px;
 				height: 12px;
@@ -65,10 +69,6 @@
 			}
 		}
 
-		.clear_btn:hover {
-			background-color: variables.$black-a20;
-		}
-
 		@media only screen and (max-width: 1200px) {
 			label {
 				min-width: 40px;
@@ -76,18 +76,21 @@
 				cursor: pointer;
 			}
 
-			input,
-			.clear_btn {
+			input {
 				display: none;
+
+				&.focused {
+					width: 75%;
+					display: block;
+				}
 			}
 
-			input.isFocused {
-				width: 75%;
+			input.focused + .clear_btn {
 				display: block;
 			}
 
-			.clear_btn.isFocused {
-				display: block;
+			input.notFocused + .clear_btn {
+				display: none !important;
 			}
 		}
 	}

@@ -5,6 +5,10 @@
 	flex-direction: row;
 	margin-bottom: 4px;
 
+	&:hover .options_toggle {
+		visibility: visible;
+	}
+
 	a {
 		height: fit-content;
 		border-radius: 50%;
@@ -44,27 +48,27 @@
 			font-weight: 600;
 			font-size: 0.8rem;
 		}
+	}
 
-		.comment_text {
-			margin-top: 2px;
-			line-height: 1.1rem;
-			font-size: 0.8rem;
-		}
+	.comment_text {
+		margin-top: 2px;
+		line-height: 1.1rem;
+		font-size: 0.8rem;
+	}
 
-		.liked {
-			position: absolute;
-			bottom: 0;
-			right: -8px;
-			cursor: pointer;
+	.liked {
+		position: absolute;
+		bottom: 0;
+		right: -8px;
+		cursor: pointer;
 
-			span {
-				width: 16px;
-				height: 16px;
-				display: block;
-				background-size: auto;
-				background-repeat: no-repeat;
-				background-image: url('../../public/single_icons/like_icon.png');
-			}
+		span {
+			width: 16px;
+			height: 16px;
+			display: block;
+			background-size: auto;
+			background-repeat: no-repeat;
+			background-image: url('../../public/single_icons/like_icon.png');
 		}
 	}
 
@@ -75,24 +79,24 @@
 		flex-direction: row;
 		font-size: 0.7rem;
 		color: variables.$black-a60;
+	}
 
-		.like_btn {
-			font-weight: 600;
-			margin-right: 12px;
-			cursor: pointer;
-		}
+	.like_btn {
+		font-weight: 600;
+		margin-right: 12px;
+		cursor: pointer;
 
-		.like_btn:hover {
+		&:hover {
 			text-decoration: underline;
 		}
+	}
 
-		.time {
-			color: variables.$black-a60;
-		}
+	.time {
+		color: variables.$black-a60;
+	}
 
-		.liked {
-			color: variables.$blue;
-		}
+	.liked {
+		color: variables.$blue;
 	}
 
 	.right {
@@ -110,16 +114,16 @@
 		border-radius: 50%;
 		cursor: pointer;
 
+		&:hover {
+			background-color: variables.$black-a05;
+		}
+
 		svg {
 			display: block;
 			width: 20px;
 			height: 20px;
 			fill: variables.$black-a60;
 		}
-	}
-
-	.options_toggle:hover {
-		background-color: variables.$black-a05;
 	}
 
 	.options_menu {
@@ -132,21 +136,16 @@
 		background-color: variables.$white;
 		box-shadow: 0 4px 16px 0 variables.$black-a20;
 		z-index: 5;
+	}
 
-		.edit_btn,
-		.delete_btn {
-			padding: 8px;
-			border-radius: 8px;
-			cursor: pointer;
-		}
+	.edit_btn,
+	.delete_btn {
+		padding: 8px;
+		border-radius: 8px;
+		cursor: pointer;
 
-		.edit_btn:hover,
-		.delete_btn:hover {
+		&:hover {
 			background-color: variables.$black-a05;
 		}
 	}
-}
-
-.comment:hover .options_toggle {
-	visibility: visible;
 }

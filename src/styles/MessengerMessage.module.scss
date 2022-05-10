@@ -44,6 +44,10 @@
 		border-radius: 50%;
 		cursor: pointer;
 
+		&:hover {
+			background-color: variables.$black-a20;
+		}
+
 		span {
 			width: 8px;
 			height: 8px;
@@ -53,10 +57,5 @@
 			background-image: url('../../public/multi_icons/icons_6.png');
 			background-position: -111px -73px;
 		}
-	}
-
-	.mark_btn:hover,
-	.remove_btn:hover {
-		background-color: variables.$black-a20;
 	}
 }

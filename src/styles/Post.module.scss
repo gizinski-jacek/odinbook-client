@@ -13,48 +13,48 @@
 		justify-content: space-between;
 		margin-top: 8px;
 		margin-bottom: 16px;
+	}
 
-		.left {
-			display: flex;
-			flex-direction: row;
+	.left {
+		display: flex;
+		flex-direction: row;
 
-			a {
-				border-radius: 50%;
-			}
+		a {
+			border-radius: 50%;
+		}
 
-			img {
-				width: 40px;
-				height: 40px;
-			}
+		img {
+			width: 40px;
+			height: 40px;
 
-			img:hover {
+			&:hover {
 				filter: brightness(95%);
 			}
+		}
 
-			.metadata {
-				display: flex;
-				flex-direction: column;
-				justify-content: space-evenly;
-				margin: 0 12px;
+		.metadata {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-evenly;
+			margin: 0 12px;
 
-				a {
-					border-radius: 0;
-				}
+			a {
+				border-radius: 0;
 
-				a:hover {
+				&:hover {
 					h4 {
 						text-decoration: underline 2px;
 					}
 				}
+			}
 
-				h4 {
-					font-weight: 600;
-					margin-bottom: 4px;
-				}
+			h4 {
+				font-weight: 600;
+				margin-bottom: 4px;
+			}
 
-				h5 {
-					color: variables.$black-a60;
-				}
+			h5 {
+				color: variables.$black-a60;
 			}
 		}
 	}
@@ -72,16 +72,16 @@
 		border-radius: 50%;
 		cursor: pointer;
 
+		&:hover {
+			background-color: variables.$black-a05;
+		}
+
 		svg {
 			display: block;
 			width: 20px;
 			height: 20px;
 			fill: variables.$black-a60;
 		}
-	}
-
-	.options_toggle:hover {
-		background-color: variables.$black-a05;
 	}
 
 	.options_menu {
@@ -100,26 +100,23 @@
 			padding: 8px;
 			border-radius: 8px;
 			cursor: pointer;
-		}
 
-		.edit_btn:hover,
-		.delete_btn:hover {
-			background-color: variables.$black-a05;
+			&:hover {
+				background-color: variables.$black-a05;
+			}
 		}
 	}
 
-	.contents {
-		.post_picture {
-			max-width: 240px;
-			height: 160px;
-			float: left;
-			margin-right: 12px;
-			margin-bottom: 12px;
+	.post_picture {
+		max-width: 240px;
+		height: 160px;
+		float: left;
+		margin-right: 12px;
+		margin-bottom: 12px;
 
-			img {
-				max-width: 100%;
-				max-height: 100%;
-			}
+		img {
+			max-width: 100%;
+			max-height: 100%;
 		}
 	}
 
@@ -127,120 +124,119 @@
 		clear: both;
 		margin-top: 16px;
 		margin-bottom: 8px;
+	}
 
-		.likes_and_count {
+	.likes_and_count {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		height: 16px;
+		margin-bottom: 8px;
+
+		.liked {
 			display: flex;
 			flex-direction: row;
-			justify-content: space-between;
-			align-items: center;
-			height: 16px;
-			margin-bottom: 8px;
+			align-items: flex-end;
 
-			.liked {
-				display: flex;
-				flex-direction: row;
-				align-items: flex-end;
-
-				span {
-					cursor: pointer;
-					margin-right: 8px;
-					width: 16px;
-					height: 16px;
-					display: block;
-					background-size: auto;
-					background-repeat: no-repeat;
-					background-image: url('../../public/single_icons/like_icon.png');
-				}
-
-				h5 {
-					color: variables.$blue;
-				}
-			}
-
-			.comment_count {
-				float: right;
-				width: fit-content;
-				text-align: right;
-				color: variables.$black-a60;
-				margin-left: auto;
+			span {
 				cursor: pointer;
-			}
-
-			.comment_count:hover {
-				text-decoration: underline;
-			}
-		}
-
-		.controls {
-			clear: right;
-			font-weight: 600;
-			display: flex;
-			flex-direction: row;
-			color: variables.$black-a40;
-			border-top: 1px solid variables.$black-a20;
-			border-bottom: 1px solid variables.$black-a20;
-
-			.like_btn,
-			.comment_btn {
-				flex: 1;
-				margin: 4px;
-				padding: 8px 0;
-				border-radius: 4px;
-				text-align: center;
-				background-color: variables.$white;
-				cursor: pointer;
-				display: flex;
-				flex-direction: row;
-				justify-content: center;
-				align-items: center;
-			}
-
-			.like_btn:hover,
-			.comment_btn:hover {
-				filter: brightness(95%);
-			}
-
-			.icon {
-				width: fit-content;
-				border-radius: 50%;
 				margin-right: 8px;
-
-				span {
-					width: 18px;
-					height: 18px;
-					display: block;
-					background-size: auto;
-					background-repeat: no-repeat;
-					background-image: url('../../public/multi_icons/icons_10.png');
-				}
+				width: 16px;
+				height: 16px;
+				display: block;
+				background-size: auto;
+				background-repeat: no-repeat;
+				background-image: url('../../public/single_icons/like_icon.png');
 			}
 
-			.like_btn {
-				span {
-					background-position: 0px -247px;
-				}
-			}
-
-			.comment_btn {
-				div {
-					span {
-						background-position: 0px -209px;
-					}
-				}
-			}
-
-			.liked {
-				background-color: variables.$blue-a30;
-
-				span {
-					background-position: 0px -228px;
-				}
-			}
-
-			.shown {
-				background-color: variables.$white-a80;
+			h5 {
+				color: variables.$blue;
 			}
 		}
+
+		.comment_count {
+			float: right;
+			width: fit-content;
+			text-align: right;
+			color: variables.$black-a60;
+			margin-left: auto;
+			cursor: pointer;
+		}
+
+		.comment_count:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.controls {
+		clear: right;
+		font-weight: 600;
+		display: flex;
+		flex-direction: row;
+		color: variables.$black-a40;
+		border-top: 1px solid variables.$black-a20;
+		border-bottom: 1px solid variables.$black-a20;
+	}
+
+	.like_btn,
+	.comment_btn {
+		flex: 1;
+		margin: 4px;
+		padding: 8px 0;
+		border-radius: 4px;
+		text-align: center;
+		background-color: variables.$white;
+		cursor: pointer;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+
+		&:hover {
+			filter: brightness(95%);
+		}
+	}
+
+	.icon {
+		width: fit-content;
+		border-radius: 50%;
+		margin-right: 8px;
+
+		span {
+			width: 18px;
+			height: 18px;
+			display: block;
+			background-size: auto;
+			background-repeat: no-repeat;
+			background-image: url('../../public/multi_icons/icons_10.png');
+		}
+	}
+
+	.like_btn {
+		span {
+			background-position: 0px -247px;
+		}
+	}
+
+	.comment_btn {
+		div {
+			span {
+				background-position: 0px -209px;
+			}
+		}
+	}
+
+	.liked {
+		background-color: variables.$blue-a30;
+
+		span {
+			background-position: 0px -228px;
+		}
+	}
+
+	.shown {
+		background-color: variables.$white-a80;
 	}
 
 	.comments_container {

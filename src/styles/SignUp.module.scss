@@ -34,35 +34,31 @@
 		margin-top: 8px;
 		padding: 0 8px;
 
+		fieldset {
+			display: flex;
+			flex-direction: row;
+		}
+
+		label {
+			display: none;
+		}
+
+		input {
+			border-radius: 8px;
+			border: 1px solid variables.$black-a20;
+			padding: 12px;
+			width: 100%;
+			font-size: 1rem;
+			margin: 8px 0;
+		}
+
+		input[name='first_name'] {
+			margin-right: 12px;
+		}
+
 		button {
 			margin-top: 16px;
 		}
-	}
-
-	button {
-		font-size: 1.1rem;
-	}
-
-	fieldset {
-		display: flex;
-		flex-direction: row;
-	}
-
-	label {
-		display: none;
-	}
-
-	input {
-		border-radius: 8px;
-		border: 1px solid variables.$black-a20;
-		padding: 12px;
-		width: 100%;
-		font-size: 1rem;
-		margin: 8px 0;
-	}
-
-	input[name='first_name'] {
-		margin-right: 12px;
 	}
 
 	.controls {
