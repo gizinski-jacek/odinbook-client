@@ -18,7 +18,7 @@ For the Backend API go [here](https://github.com/gizinski-jacek/odinbook-api).
 
 Github repo can be found [here](https://github.com/gizinski-jacek/odinbook-client).
 
-Live demo can be found on [Netlify](https://odinbook-client-97346.netlify.app/).
+Live demo can be found on [Netlify](https://odinbook-client-97346.netlify.app).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
