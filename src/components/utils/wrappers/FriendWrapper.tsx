@@ -73,6 +73,10 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 				setNewMessageAlert(true);
 			}
 			dispatch({
+				type: ChatReducerActions.OPEN_CHAT,
+				payload: { chat: data },
+			});
+			dispatch({
 				type: ChatReducerActions.UPDATE_CHAT,
 				payload: { chat: data },
 			});
@@ -105,6 +109,9 @@ const FriendWrapper: React.FC<Props> = ({ handleRemove, friend, socket }) => {
 			return;
 		}
 		const resData: Chatroom = await axiosGet(`/api/chats/${friendId}`);
+		dispatch({
+			type: ChatReducerActions.OPEN_CHAT_WINDOW,
+		});
 		dispatch({
 			type: ChatReducerActions.OPEN_CHAT,
 			payload: { chat: resData },

@@ -116,6 +116,9 @@ const MessengerMenu: React.FC<Props> = ({ alert }) => {
 					signal: controller.signal,
 				});
 				dispatch({
+					type: ChatReducerActions.OPEN_CHAT_WINDOW,
+				});
+				dispatch({
 					type: ChatReducerActions.OPEN_CHAT,
 					payload: { chat: resData },
 				});
