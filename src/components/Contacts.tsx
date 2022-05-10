@@ -162,6 +162,11 @@ const Contacts = () => {
 		dispatch({ type: ChatReducerActions.CLOSE_CHAT, payload: { chat: chat } });
 	};
 
+	const closeChatWindow = (e: React.MouseEvent<HTMLElement>) => {
+		e.stopPropagation();
+		dispatch({ type: ChatReducerActions.CLOSE_CHAT_WINDOW });
+	};
+
 	const openChatListDisplay = state.chatList?.map((chat) => {
 		return (
 			<li
@@ -208,9 +213,17 @@ const Contacts = () => {
 				</div>
 				<ul>{friendsDisplay}</ul>
 			</div>
-			{state.chatList && state.chatList.length > 0 && (
+			{state.chatWindowOpen && state.chatList && state.chatList.length > 0 && (
 				<div className={styles.chat_list_container}>
-					<ul className={styles.open_chat_list}>{openChatListDisplay}</ul>
+					<ul className={styles.open_chat_list}>
+						{openChatListDisplay}
+						<li
+							className={styles.close_chat_window}
+							onClick={(e) => closeChatWindow(e)}
+						>
+							<span></span>
+						</li>
+					</ul>
 					<hr />
 					<div className={styles.container}>
 						<Chat />
