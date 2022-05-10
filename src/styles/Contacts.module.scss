@@ -6,6 +6,7 @@
 	max-width: 360px;
 	display: flex;
 	flex-direction: column;
+	height: fit-content;
 	position: sticky;
 	top: calc(variables.$navbar-height + 8px);
 
