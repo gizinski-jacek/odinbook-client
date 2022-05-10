@@ -68,7 +68,7 @@ In the project root directory run these commands:
 
 ```bash
 curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-heroku create <optional app name>
+heroku create
 git push heroku main
 heroku open
 ```
