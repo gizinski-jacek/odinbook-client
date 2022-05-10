@@ -28,7 +28,7 @@ const SideBar = () => {
 					<li>
 						<Link to={`/friends`}>
 							<div className={styles.icon}>
-								<img src='single_icons/friends_icon.png' alt='Find friends' />
+								<img src='./single_icons/friends_icon.png' alt='Find friends' />
 							</div>
 							<h4>Find Friends</h4>
 						</Link>
@@ -36,7 +36,7 @@ const SideBar = () => {
 					<li>
 						<Link to='/'>
 							<div className={styles.icon}>
-								<img src='single_icons/groups_icon.png' alt='Groups' />
+								<img src='./single_icons/groups_icon.png' alt='Groups' />
 							</div>
 							<h4>Groups</h4>
 						</Link>
@@ -44,7 +44,7 @@ const SideBar = () => {
 					<li>
 						<Link to='/'>
 							<div className={styles.icon}>
-								<img src='single_icons/facebook_icon.png' alt='Welcome' />
+								<img src='./single_icons/facebook_icon.png' alt='Welcome' />
 							</div>
 							<h4>Welcome</h4>
 						</Link>
@@ -52,7 +52,7 @@ const SideBar = () => {
 					<li>
 						<Link to='/'>
 							<div className={styles.icon}>
-								<img src='single_icons/pages_icon.png' alt='Pages' />
+								<img src='./single_icons/pages_icon.png' alt='Pages' />
 							</div>
 							<h4>Pages</h4>
 						</Link>
@@ -60,7 +60,7 @@ const SideBar = () => {
 					<li>
 						<Link to='/'>
 							<div className={styles.icon}>
-								<img src='single_icons/events_icon.png' alt='Events' />
+								<img src='./single_icons/events_icon.png' alt='Events' />
 							</div>
 							<h4>Events</h4>
 						</Link>
@@ -69,7 +69,7 @@ const SideBar = () => {
 						<Link to='/'>
 							<div className={styles.icon}>
 								<img
-									src='single_icons/marketplace_icon.png'
+									src='./single_icons/marketplace_icon.png'
 									alt='Marketplace'
 								/>
 							</div>
@@ -79,7 +79,7 @@ const SideBar = () => {
 					<li>
 						<Link to='/'>
 							<div className={styles.icon}>
-								<img src='single_icons/watch_icon.png' alt='Watch' />
+								<img src='./single_icons/watch_icon.png' alt='Watch' />
 							</div>
 							<h4>Watch</h4>
 						</Link>
@@ -87,7 +87,7 @@ const SideBar = () => {
 					<li>
 						<Link to='/'>
 							<div className={styles.icon}>
-								<img src='single_icons/memories_icon.png' alt='Memories' />
+								<img src='./single_icons/memories_icon.png' alt='Memories' />
 							</div>
 							<h4>Memories</h4>
 						</Link>
@@ -96,7 +96,7 @@ const SideBar = () => {
 						<Link to='/'>
 							<div className={styles.icon}>
 								<img
-									src='single_icons/most_recent_icon.png'
+									src='./single_icons/most_recent_icon.png'
 									alt='Most Recent'
 								/>
 							</div>

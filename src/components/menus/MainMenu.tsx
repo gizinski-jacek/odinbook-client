@@ -14,7 +14,10 @@ const MainMenu = () => {
 						<ul>
 							<li>
 								<Link to='/friends'>
-									<img src='single_icons/friends_icon.png' alt='Find friends' />
+									<img
+										src='./single_icons/friends_icon.png'
+										alt='Find friends'
+									/>
 									<span>
 										<h4>Find Friends</h4>
 										<h5>Search for friends or people you may know.</h5>
@@ -23,7 +26,7 @@ const MainMenu = () => {
 							</li>
 							<li>
 								<Link to='/'>
-									<img src='single_icons/groups_icon.png' alt='Groups' />
+									<img src='./single_icons/groups_icon.png' alt='Groups' />
 									<span>
 										<h4>Groups</h4>
 										<h5>Connect with people who share your interests.</h5>
@@ -32,7 +35,7 @@ const MainMenu = () => {
 							</li>
 							<li>
 								<Link to='/'>
-									<img src='single_icons/events_icon.png' alt='Events' />
+									<img src='./single_icons/events_icon.png' alt='Events' />
 									<span>
 										<h4>Events</h4>
 										<h5>
@@ -44,7 +47,10 @@ const MainMenu = () => {
 							</li>
 							<li>
 								<Link to='/'>
-									<img src='single_icons/news_feed_icon.png' alt='News Feed' />
+									<img
+										src='./single_icons/news_feed_icon.png'
+										alt='News Feed'
+									/>
 									<span>
 										<h4>News Feed</h4>
 										<h5>
@@ -55,7 +61,7 @@ const MainMenu = () => {
 							</li>
 							<li>
 								<Link to='/'>
-									<img src='single_icons/pages_icon.png' alt='Pages' />
+									<img src='./single_icons/pages_icon.png' alt='Pages' />
 									<span>
 										<h4>Pages</h4>
 										<h5>Discover and connect with businesses on Odinbook.</h5>
@@ -70,7 +76,7 @@ const MainMenu = () => {
 						<ul>
 							<li>
 								<Link to='/'>
-									<img src='single_icons/watch_icon.png' alt='Watch' />
+									<img src='./single_icons/watch_icon.png' alt='Watch' />
 									<span>
 										<h4>Watch</h4>
 										<h5>
@@ -83,7 +89,7 @@ const MainMenu = () => {
 							<li>
 								<Link to='/'>
 									<img
-										src='single_icons/gaming_video_icon.png'
+										src='./single_icons/gaming_video_icon.png'
 										alt='Gaming video'
 									/>
 									<span>
@@ -97,7 +103,7 @@ const MainMenu = () => {
 							<li>
 								<Link to='/'>
 									<img
-										src='single_icons/play_games_icon.png'
+										src='./single_icons/play_games_icon.png'
 										alt='Play games'
 									/>
 									<span>
@@ -114,7 +120,7 @@ const MainMenu = () => {
 						<ul>
 							<li>
 								<Link to='/'>
-									<img src='single_icons/marketplace_icon.png' alt='Watch' />
+									<img src='./single_icons/marketplace_icon.png' alt='Watch' />
 									<span>
 										<h4>Marketplace</h4>
 										<h5>Buy and sell in your community.</h5>
@@ -129,7 +135,7 @@ const MainMenu = () => {
 						<ul>
 							<li>
 								<Link to='/'>
-									<img src='single_icons/memories_icon.png' alt='Watch' />
+									<img src='./single_icons/memories_icon.png' alt='Watch' />
 									<span>
 										<h4>Memories</h4>
 										<h5>
