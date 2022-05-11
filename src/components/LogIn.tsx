@@ -39,7 +39,7 @@ const LogIn: React.FC<Props> = ({ toggleForm }) => {
 	) => {
 		e.preventDefault();
 		try {
-			updateUser(await axiosPost('/api/log-in/email', data, { mode: 'cors' }));
+			updateUser(await axiosPost('/api/log-in/email', data));
 		} catch (error: any) {
 			if (!Array.isArray(error.response.data)) {
 				if (typeof error.response.data === 'object') {
@@ -60,7 +60,7 @@ const LogIn: React.FC<Props> = ({ toggleForm }) => {
 		e.preventDefault();
 		try {
 			setIsLoading(true);
-			updateUser(await axiosGet('/api/test-user', { mode: 'cors' }));
+			updateUser(await axiosGet('/api/test-user'));
 		} catch (error: any) {
 			setIsLoading(false);
 			console.error(error);
