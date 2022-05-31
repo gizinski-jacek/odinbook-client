@@ -92,7 +92,7 @@ Alternatively you can set environment variables on Netlify's dashboard and link 
 ## Features
 
 - Responsive UI
-- Logging in with Facebook account
+- Sign up and log in with email or Facebook account
 - Adding posts and comments
 - Liking posts and comments
 - Searching for users and posts
