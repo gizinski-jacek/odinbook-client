@@ -65,7 +65,7 @@ const App = () => {
 									<FrontPage />
 								</>
 							)}
-							<Footer />
+							{/* <Footer /> */}
 						</main>
 					}
 				>
