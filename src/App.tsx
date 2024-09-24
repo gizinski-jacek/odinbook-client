@@ -6,7 +6,6 @@ import { axiosGet } from './components/utils/axiosFunctions';
 import './App.scss';
 import LoadingIcon from './components/utils/LoadingIcon';
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 import FrontPage from './components/FrontPage';
 import SideBar from './components/SideBar';
 import Timeline from './components/Timeline';
@@ -65,7 +64,6 @@ const App = () => {
 									<FrontPage />
 								</>
 							)}
-							{/* <Footer /> */}
 						</main>
 					}
 				>
