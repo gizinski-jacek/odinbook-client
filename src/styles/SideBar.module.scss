@@ -3,13 +3,14 @@
 .side_menu {
 	flex: 1;
 	padding: 8px;
-	margin-top: 8px;
+	margin: 8px 0;
 	max-width: 360px;
 	display: flex;
 	flex-direction: column;
-	height: fit-content;
 	position: sticky;
 	top: calc(variables.$navbar-height + 8px);
+	height: calc(100vh - (variables.$navbar-height + 16px));
+	overflow-y: auto;
 
 	ul {
 		a {
