@@ -1,8 +1,8 @@
 # Odinbook (Frontend)
 
-A small Facebook clone Frontend client.
+Frontend client for a Facebook cline app.
 
-For the Backend API go [here](https://github.com/gizinski-jacek/odinbook-api).
+For the API go [here](https://github.com/gizinski-jacek/odinbook-api).
 
 ## Table of contents
 
